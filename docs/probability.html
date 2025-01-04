@@ -202,6 +202,30 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Conditional Probability and Diagnostic Tests</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mlestimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Maximum Likelihood Estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bayes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Bayesian Estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./longitudinal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Longitudinal Data and Rates</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./survival.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -521,19 +545,15 @@ A^\comp = \{\omega \in \Omega : \omega \not\in A\},
     p     &amp;\text{if } x = 1.
   \end{cases}
 \]</span> If a random variable <span class="math inline">\(X\)</span> has a Bernoulli(<span class="math inline">\(p\)</span>) distribution, we write <span class="math inline">\(X \sim \text{Bernoulli}(p)\)</span>. The indicator variable for an event <span class="math inline">\(A\)</span> has a Bernoulli distribution with <span class="math inline">\(p = \Pr(A)\)</span>.</p>
-<p>If <span class="math inline">\(X \sim \Bernoulli(p)\)</span>, then it has mean <span class="math display">\[
-  \begin{align}
-    \E(X)
-    &amp;= 0 \times (1 - p) + 1 \times p \\
-    &amp;= p
-  \end{align}
-\]</span> and variance <span class="math display">\[
-  \begin{align}
-    \Var(X)
-    &amp;= (0 - p)^2(1 - p) + (1 - p)^2 p \\
-    &amp;= p (1 - p).
-  \end{align}
-\]</span> The standard deviation is <span class="math inline">\(\sqrt{p (1 - p)}\)</span>. This standard deviation is greater than zero unless <span class="math inline">\(p = 0\)</span> or <span class="math inline">\(p = 1\)</span>. If <span class="math inline">\(p = 0\)</span>, then <span class="math inline">\(X = 0\)</span> with probability one. If <span class="math inline">\(p = 1\)</span>, then <span class="math inline">\(X = 1\)</span> with probability one.</p>
+<p>If <span class="math inline">\(X \sim \Bernoulli(p)\)</span>, then it has mean <span class="math display">\[\begin{align}
+  \E(X)
+  &amp;= 0 \times (1 - p) + 1 \times p \\
+  &amp;= p
+\end{align}\]</span> and variance <span class="math display">\[\begin{align}
+  \Var(X)
+  &amp;= (0 - p)^2(1 - p) + (1 - p)^2 p \\
+  &amp;= p (1 - p).
+\end{align}\]</span> The standard deviation is <span class="math inline">\(\sqrt{p (1 - p)}\)</span>. This standard deviation is greater than zero unless <span class="math inline">\(p = 0\)</span> or <span class="math inline">\(p = 1\)</span>. If <span class="math inline">\(p = 0\)</span>, then <span class="math inline">\(X = 0\)</span> with probability one. If <span class="math inline">\(p = 1\)</span>, then <span class="math inline">\(X = 1\)</span> with probability one.</p>
 </section>
 </section>
 <section id="joint-and-marginal-distributions" class="level2" data-number="1.4">
@@ -669,7 +689,7 @@ Morabia, Alfredo. 2004. <span>“Epidemiology: An Epistemological Perspective.�
 <hr>
 <ol>
 <li id="fn1"><p> <a href="https://en.wikipedia.org/wiki/Pierre-Simon_Laplace">Pierre-Simone, marquis de Laplace</a> (1749-1827) is often called the Newton of France. He proved that the solar system is stable, developed theories of ocean tides and gravitational potential, proved one of the first general versions of the central limit theorem, and pioneered the Bayesian interpretation of probability. For just six weeks in 1799, he was Minister of the Interior for France under Napoleon. His is one of the 72 names on the Eiffel Tower. <a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p> The natural numbers $ = {0, 1, 2, } are <em>countably infinite</em>, as are the integers <span class="math inline">\(\mathbb{Z}\)</span> and the rational numbers <span class="math inline">\(\mathbb{Q}\)</span>. The real numbers <span class="math inline">\(\mathbb{R}\)</span> are <em>uncountably infinite</em>, as are the real numbers in any interval <span class="math inline">\((a, b)\)</span> with <span class="math inline">\(a &lt; b\)</span> and the irrational numbers. Uncountably infinite sets are infinitely larger than countably infinite sets. This distinction was discovered in the 1870s by the German mathematician <a href="https://en.wikipedia.org/wiki/Georg_Cantor">Georg Cantor</a> (1845–1918). It was considered shocking at the time, but it has become a cornerstone of modern mathematics.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p> The natural numbers <span class="math inline">\(\mathbb{N} = \{0, 1, 2, \ldots\}\)</span> are <em>countably infinite</em>, as are the integers <span class="math inline">\(\mathbb{Z}\)</span> and the rational numbers <span class="math inline">\(\mathbb{Q}\)</span>. The real numbers <span class="math inline">\(\mathbb{R}\)</span> are <em>uncountably infinite</em>, as are the real numbers in any interval <span class="math inline">\((a, b)\)</span> with <span class="math inline">\(a &lt; b\)</span> and the irrational numbers. Uncountably infinite sets are infinitely larger than countably infinite sets. This distinction was discovered in the 1870s by the German mathematician <a href="https://en.wikipedia.org/wiki/Georg_Cantor">Georg Cantor</a> (1845–1918). It was considered shocking at the time, but it has become a cornerstone of modern mathematics.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p> In experiments with uncountably infinite sample spaces, the probability of an event <span class="math inline">\(A\)</span> cannot always be calculated by adding up the probabilities of <span class="math inline">\(\{\omega\}\)</span> for all <span class="math inline">\(\omega \in A\)</span>. For example: If we choose a number at uniformly at random in <span class="math inline">\([0, 1]\)</span>, the probability of getting any particular number <span class="math inline">\(\omega\)</span> is zero. The sum of the probabilities of all <span class="math inline">\(\{\omega\} \subseteq A\)</span> is zero (if <span class="math inline">\(A\)</span> is countable) or undefined (if <span class="math inline">\(A\)</span> is uncountable). By maintaining a distinction between outcomes and events and by limiting probability calculations to countable (i.e., finite or countably infinite) sums, we end up with something coherent and useful.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p> Named after <a href="https://en.wikipedia.org/wiki/John_Venn">John Venn</a> (1834-1923), an English logician and philosopher who was one of the pioneers of the frequentist interpretation of probability. He was ordained as an Anglican priest in 1859 but resigned from the church in 1883. He was a prize-winning gardener of roses and white carrots and a prominent supporter of women’s right to vote. From 1903 until his death, he was President of Fellows in Gonville and Caius College at the University of Cambridge, where he is commemorated with a Venn diagram in a stained glass window.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p> In probability, we only consider unions and intersections of finite or countably infinite sets of events. Although unions and intersections can be defined for uncountably infinite sets of events, it can be impossible to assign probabilities to the resulting sets (see the <a href="https://en.wikipedia.org/wiki/Banach_Tarski_paradox">Banach-Tarski paradox</a>). As an epidemiologist, this should not keep you up at night.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
