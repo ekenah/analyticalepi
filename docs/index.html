@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Eben Kenah">
-<meta name="dcterms.date" content="2025-01-03">
+<meta name="dcterms.date" content="2025-01-04">
 
 <title>Analytical Epidemiology</title>
 <style>
@@ -92,6 +92,23 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
+<script>
+window.MathJax = {
+  tex: {
+    macros: {
+      Bernoulli: ["\\operatorname\{Bernoulli\}"],
+      comp: "\\mathsf\{C\}",
+      Cov: ["\\operatorname\{Cov\}"],
+      E: ["\\operatorname\{\\mathbb\{E\}\}"],
+      indicator: "\\mathbb\{1\}",
+      supp: ["\\operatorname\{supp\}"],
+      Var: ["\\operatorname\{Var\}"],
+      RR: "{\\bf R}",
+      bold: ["{\\bf #1}", 1]
+    }
+  }
+};
+</script>
 
 
 </head>
@@ -139,7 +156,7 @@ div.csl-indent {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">A. One-Sample Statistical Inference for Risks and Rates</span></a>
+ <span class="menu-text">A. One-Sample Inference for Risks and Rates</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -161,7 +178,7 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">B. Two-Sample Statistical Inference and Study Design</span></span>
+ <span class="menu-text">B. Two-Sample Inference and Study Design</span></span>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
@@ -219,7 +236,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 3, 2025</p>
+      <p class="date">January 4, 2025</p>
     </div>
   </div>
   
@@ -239,24 +256,27 @@ div.csl-indent {
 </div>
 <section id="preface" class="level1 unnumbered">
 <h1 class="unnumbered">Preface</h1>
-<p>One day at lunch at the Harvard School of Public Health, I overheard Professor Murray Mittleman say: “I love epidemiology. It all fits together like a diamond.” As a second-year doctoral student in epidemiology, I was surprised to hear the subject described with such perfect enthusiasm. It has taken years of study and experience for me to understand what he meant. On the way, I too have fallen in love.</p>
+<p>One day at lunch at the Harvard School of Public Health, I overheard Professor Murray Mittleman say: “I love epidemiology. It all fits together like a diamond.” As a second-year doctoral student in epidemiology, I was surprised to hear the subject described with such unstrained enthusiasm. It has taken years of study and experience for me to understand what he meant. On the way, I too have fallen in love.</p>
 <section id="who-this-book-is-for" class="level2">
 <h2 class="anchored" data-anchor-id="who-this-book-is-for">Who this book is for</h2>
 <p>This book is intended primarily for two audiences:</p>
 <ul>
-<li>Epidemiologists are often protected from the mathematical foundations of their field. The long-term price of this is “dogmatism, that is, a tendency to rigidly protect a partially understood theoretical heritage” <span class="citation" data-cites="morabia2004epidemiology">(<a href="references.html#ref-morabia2004epidemiology" role="doc-biblioref">Morabia 2004</a>)</span>. The mathematics needed for a deeper understanding of epidemiologic methods is within reach of everyone who has come far enough to need it. Whether you master this material or just learn to approach it with more patience than fear, you will be doing a service to epidemiology and to public health.</li>
-<li>Biostatisticians are familiar with probability and statistical inference, but applying statistics to solve scientific problems in public health requires skills different from those needed to prove that a method works under given assumptions. Epidemiology is a living example of the interplay between theory and practice in applied statistics, and epidemiologists have shown integrity, courage, and ingenuity in confronting causal questions with statistical tools. It is one of the most important applications of statistics, and it has quite possibly already saved your life.</li>
+<li>Epidemiologists are often protected from the mathematical foundations of their field. The long-term price of this is “dogmatism, that is, a tendency to rigidly protect a partially understood theoretical heritage” <span class="citation" data-cites="morabia2004epidemiology">(<a href="references.html#ref-morabia2004epidemiology" role="doc-biblioref">Morabia 2004</a>)</span>. The mathematics needed for a deeper understanding of epidemiologic methods is within reach of anyone who has come far enough to need it. Whether you master this material or just learn to approach it with more patience than fear, you will be doing a service to epidemiology and to public health.</li>
+<li>Biostatisticians are familiar with probability and statistical inference, but applying statistics to solve scientific problems in public health requires skills different from those needed to prove that a method works under given assumptions. Epidemiology is a living example of the interplay between theory and practice in applied statistics, and epidemiologists have shown integrity, courage, and ingenuity in confronting causal questions with statistical tools.</li>
 </ul>
-<p>Beyond these audiences, I hope to explain the logic of epidemiology to any interested reader. Anyone is welcome, and clear thinking about public health is in everyone’s best interest.</p>
+<p>Beyond these audiences, I hope to explain the logic of epidemiology to any interested reader. It is one of the most important applications of statistics, and it has quite possibly already helped save your life.</p>
 </section>
 <section id="how-to-use-this-book" class="level2">
 <h2 class="anchored" data-anchor-id="how-to-use-this-book">How to use this book</h2>
-<p>Difficult chapters, sections, subsections, and exercises are marked with an asterisk (*). These can be skipped without harming the logic of the book, but none of them is beyond the reach of a determined reader. The starring is recursive: Starred sections can be skipped within a starred chapter, starred subsections can be skipped within a starred section, and so on. Footnotes offer context or hint at more advanced material; all of them can be ignored if they do not seem useful or interesting.</p>
+<p>Difficult chapters, sections, subsections, and exercises are marked with an asterisk (*). These can be skipped without harming the logical flow of the book, but none of them is beyond the reach of a determined reader. The starring is recursive: Starred sections can be skipped within a starred chapter, starred subsections can be skipped within a starred section, and so on. Footnotes offer context or hint at more advanced material. All of them can be ignored if they do not seem useful or interesting.</p>
+<p>This is a work in progress, and you may notice that some parts are obviously unfinished. Please report errors (including typos) or submit suggestions (especially good examples) at:</p>
+<p><a href="https://github.com/ekenah/analyticalepi/issues">https://github.com/ekenah/analyticalepi/issues</a>.</p>
 </section>
 <section id="acknowledgements" class="level2">
 <h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
-<p>Devesh Kapur, Paul Farmer, and James H. Maguire guided me to a career in public health when I was an undergraduate. James Robins, Miguel A. Hernán, Marc Lipsitch, and Stephen P. Luby helped me become an epidemiologist, biostatistician, and epidemic modeler in graduate school. My career began under the mentorship of Ira M. Longini, Jr., and M. Elizabeth Halloran as a postdoctoral fellow at the Univerity of Washington and an assistant professor at the University of Florida. My colleagues Yang Yang, Grzegorz Rempała, Forrest Crawford, and Patrick Schnell have all provided useful comments. For their patience with early versions of this material, I will always be grateful to the students of STA 6177/PHC 6937 (Applied Survival Analysis) at the University of Florida in 2013-2016 and PUBHEPI 8430 (Epidemiology 4) at The Ohio State University from 2019 to the present.</p>
-<p>My parents, Chris and Kate Kenah, courageously allowed me to travel to places they had never been to and do things I had been told to avoid. These experiences in the United States, India, South Africa, and especially Bangladesh opened my eyes to the terrible importance of clarity and rigor in public health research. My wife, Asma Aktar, and our sons Rafi, Rayhan, and Rabi remind me every day how important it is to destroy everything that stifles humanity. To that end, I hope this book is useful.</p>
+<p>Devesh Kapur, Paul Farmer, and James H. Maguire guided me to a career in public health when I was an undergraduate. James Robins, Miguel A. Hernán, Marc Lipsitch, and Stephen P. Luby helped me become an epidemiologist, biostatistician, and epidemic modeler in graduate school. My career began under the mentorship of Ira M. Longini, Jr., and M. Elizabeth Halloran as a postdoctoral fellow at the Univerity of Washington and an assistant professor at the University of Florida. My colleagues Yang Yang, Grzegorz Rempała, Forrest Crawford, and Patrick Schnell have all provided useful comments. For their patience with early versions of this material, I am grateful to the students of STA 6177/PHC 6937 (Applied Survival Analysis) at the University of Florida from 2013 to 2016 and PUBHEPI 8430 (Epidemiology 4) at The Ohio State University from 2019 to the present.</p>
+<p>My parents, Chris and Kate Kenah, courageously allowed me to travel to places they had never been to and do things I had been told to avoid. These experiences in the United States, India, South Africa, and especially Bangladesh opened my eyes to the terrible importance of clear thinking in public health. My wife, Asma Aktar, and our sons Rafi, Rayhan, and Rabi remind me every day how important it is to destroy everything that stifles humanity. To that end, I hope this book is useful.</p>
+<p>Any mistakes are my own, and God knows best (الله أعلم).</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">

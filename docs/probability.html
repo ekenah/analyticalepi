@@ -88,6 +88,26 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script>
+window.MathJax = {
+  tex: {
+    macros: {
+      Bernoulli: ["\\operatorname\{Bernoulli\}"],
+      comp: "\\mathsf\{C\}",
+      Cov: ["\\operatorname\{Cov\}"],
+      E: ["\\operatorname\{\\mathbb\{E\}\}"],
+      indicator: "\\mathbb\{1\}",
+      supp: ["\\operatorname\{supp\}"],
+      tonset: "t^\\text\{ons\}",
+      trec: "t^\\text\{rec\}",
+      Var: ["\\operatorname\{Var\}"],
+      RR: "{\\bf R}",
+      bold: ["{\\bf #1}", 1]
+    }
+  }
+};
+</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -130,7 +150,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./probability.html">A. One-Sample Statistical Inference for Risks and Rates</a></li><li class="breadcrumb-item"><a href="./probability.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Probability, Random Variables, and Disease Occurrence</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./probability.html">A. One-Sample Inference for Risks and Rates</a></li><li class="breadcrumb-item"><a href="./probability.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Probability, Random Variables, and Disease Occurrence</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -164,7 +184,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">A. One-Sample Statistical Inference for Risks and Rates</span></a>
+ <span class="menu-text">A. One-Sample Inference for Risks and Rates</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -186,7 +206,7 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">B. Two-Sample Statistical Inference and Study Design</span></span>
+ <span class="menu-text">B. Two-Sample Inference and Study Design</span></span>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
@@ -239,7 +259,7 @@ window.Quarto = {
   <li><a href="#probability-and-disease-occurrence" id="toc-probability-and-disease-occurrence" class="nav-link" data-scroll-target="#probability-and-disease-occurrence"><span class="header-section-number">1.5</span> Probability and disease occurrence</a>
   <ul class="collapse">
   <li><a href="#prevalence" id="toc-prevalence" class="nav-link" data-scroll-target="#prevalence"><span class="header-section-number">1.5.1</span> Prevalence</a></li>
-  <li><a href="#risk" id="toc-risk" class="nav-link" data-scroll-target="#risk"><span class="header-section-number">1.5.2</span> Risk</a></li>
+  <li><a href="#risk-cumulative-incidence" id="toc-risk-cumulative-incidence" class="nav-link" data-scroll-target="#risk-cumulative-incidence"><span class="header-section-number">1.5.2</span> Risk (cumulative incidence)</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -247,7 +267,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./probability.html">A. One-Sample Statistical Inference for Risks and Rates</a></li><li class="breadcrumb-item"><a href="./probability.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Probability, Random Variables, and Disease Occurrence</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./probability.html">A. One-Sample Inference for Risks and Rates</a></li><li class="breadcrumb-item"><a href="./probability.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Probability, Random Variables, and Disease Occurrence</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Probability, Random Variables, and Disease Occurrence</span></h1>
 </div>
@@ -266,10 +286,11 @@ window.Quarto = {
 </header>
 
 
+<!-- {{< include analyticalepi.qmd >}} -->
 <blockquote class="blockquote">
 <p>One sees, from this essay, that probability theory is basically common sense reduced to calculation; it makes us appreciate with exactitude that which fair minds sense with a sort of instinct, often without being able to account for it. <span class="citation" data-cites="marquis1820theorie">(<a href="references.html#ref-marquis1820theorie" role="doc-biblioref">Laplace 1820</a>)</span><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 </blockquote>
-<p>To begin at the beginning, we will start with probability. <span class="citation" data-cites="morabia2004epidemiology">Morabia (<a href="references.html#ref-morabia2004epidemiology" role="doc-biblioref">2004</a>)</span> accurately observed that “Epidemiology came late in human history because it had to wait for the emergence of probability.” This is probably the most difficult chapter of the entire book, but it will make all subsequent chapters easier. Learning to think clearly about probability will give you a reliable compass to find your way through difficult terrain in epidemiologic methods.</p>
+<p>To begin at the beginning, we will start with probability. <span class="citation" data-cites="morabia2004epidemiology">Morabia (<a href="references.html#ref-morabia2004epidemiology" role="doc-biblioref">2004</a>)</span> accurately observed that “Epidemiology came late in human history because it had to wait for the emergence of probability.” This is probably the most difficult chapter of the entire book, but it will make all subsequent chapters easier. You can use it as a reference and come back to the difficult parts when you need them. Learning to think clearly about probability will give you a compass to find your way through epidemiologic methods.</p>
 <section id="sets-experiments-and-events" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="sets-experiments-and-events"><span class="header-section-number">1.1</span> Sets, experiments, and events</h2>
 <p>To speak clearly about probabilities, we need some basic notation for sets. If <span class="math inline">\(A\)</span> is a set that contains an object <span class="math inline">\(a\)</span>, we write <span class="math display">\[\begin{equation}
@@ -288,12 +309,12 @@ window.Quarto = {
 <p>In probability, an <strong>experiment</strong> is any process that will produce one outcome out of a set possible outcomes. The set of possible outcomes is called the <strong>sample space</strong> and is traditionally denoted <span class="math inline">\(\Omega\)</span>. An experiment produces a single outcome <span class="math inline">\(\omega \in \Omega\)</span>. For example, the sample space for a single coin flip is <span class="math display">\[\begin{equation}
   \Omega = \{H, T\},
 \end{equation}\]</span> where <span class="math inline">\(\omega = H\)</span> if we get heads and <span class="math inline">\(\omega = T\)</span> if we get tails.</p>
-<p>The outcomes in the sample space must determine everything about the random outcome of the experiment. If we flip a coin twice, the sample space is not <span class="math inline">\(\{H, T\}\)</span> because each <span class="math inline">\(\omega \in \Omega\)</span> must specify the outcome of both coin flips. Instead, <span class="math display">\[\begin{equation}
+<p>The outcomes in the sample space must determine everything about the random outcome of the experiment. If we flip a coin twice, the sample space cannot be <span class="math inline">\(\{H, T\}\)</span> because each <span class="math inline">\(\omega \in \Omega\)</span> must specify the outcome of both coin flips. Instead, <span class="math display">\[\begin{equation}
   \Omega = \{HH, HT, TH, TT\}
 \end{equation}\]</span> where <span class="math inline">\(\omega = XY\)</span> if we get <span class="math inline">\(X\)</span> on the first flip and <span class="math inline">\(Y\)</span> on the second. This helps us see, for example, that there are two ways to get one <span class="math inline">\(H\)</span> and one <span class="math inline">\(T\)</span> in two coin flips.</p>
 <p>The purpose of probability is to summarize uncertainty about the outcomes of experiments. However, the outcomes themselves do not have probabilities. Probabilities are assigned to <strong>events</strong>, which are subsets of the sample space <span class="math inline">\(\Omega\)</span>. If <span class="math inline">\(A\)</span> is an event, then <span class="math inline">\(A\)</span> occurs if and only if the outcome <span class="math inline">\(\omega\)</span> produced by our experiment is an element of <span class="math inline">\(A\)</span> (i.e., if and only if <span class="math inline">\(\omega \in A\)</span>). If we flip a coin twice, the event that we get two heads is <span class="math inline">\(\{HH\}\)</span>, the event that we get one head is <span class="math inline">\(\{HT, TH\}\)</span>, and the event that we get zero heads is <span class="math inline">\(\{TT\}\)</span>. By definition, the event <span class="math inline">\(\Omega\)</span> always occurs and the event <span class="math inline">\(\varnothing\)</span> never occurs.</p>
-<p>In experiments with a finite or countably infinite sample space, the distinction between the outcome <span class="math inline">\(\omega\)</span> and the event <span class="math inline">\(\{\omega\}\)</span> can be safely ignored. In more complex experiments (e.g., taking a random sample from a standard normal distribution), this distinction is important.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> In all cases, experiments have outcomes and events have probabilities.</p>
-<p>In epidemiology, it is often useful to think of the sample space <span class="math inline">\(\Omega\)</span> as being a population and each <span class="math inline">\(\omega \in \Omega\)</span> as being an individual in this population. In this context, our experiment is to sample a person from <span class="math inline">\(\Omega\)</span> and ask them questions, take measurements, or follow them over time to ascertain disease occurrence. Events would be subpopulations of <span class="math inline">\(\Omega\)</span>, such as <span class="math inline">\(\{\omega \in \Omega: \omega \text{ lives in Ohio}\}\)</span>. This event occurs if the sampled individual <span class="math inline">\(\omega\)</span> lives in Ohio.</p>
+<p>In experiments with a finite or countably infinite sample space,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> the distinction between the outcome <span class="math inline">\(\omega\)</span> and the event <span class="math inline">\(\{\omega\}\)</span> can be safely ignored. In more complex experiments (e.g., taking a random sample from a standard normal distribution), this distinction is important.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> In all cases, experiments have outcomes and events have probabilities.</p>
+<p>In epidemiology, it is often useful to think of the sample space <span class="math inline">\(\Omega\)</span> as being a population and each <span class="math inline">\(\omega \in \Omega\)</span> as an individual in this population. In this context, our experiment is to sample a person from <span class="math inline">\(\Omega\)</span> and ask them questions, take measurements, or follow them over time to ascertain disease occurrence. Events would be subpopulations of <span class="math inline">\(\Omega\)</span>, such as <span class="math inline">\(\{\omega \in \Omega: \omega \text{ lives in Ohio}\}\)</span>. This event occurs if the sampled individual <span class="math inline">\(\omega\)</span> lives in Ohio, and it does not occur if they live somewhere else.</p>
 </section>
 <section id="set-operations-and-logic" class="level3" data-number="1.1.2">
 <h3 data-number="1.1.2" class="anchored" data-anchor-id="set-operations-and-logic"><span class="header-section-number">1.1.2</span> Set operations and logic</h3>
@@ -301,13 +322,13 @@ window.Quarto = {
 <ul>
 <li><p>The <strong>complement</strong> of a set <span class="math inline">\(A\)</span> is <span class="math display">\[\begin{equation}
 A^\comp = \{\omega \in \Omega : \omega \not\in A\},
-\end{equation}\]</span> which can be interpreted logically as “not <span class="math inline">\(A\)</span>”. If <span class="math inline">\(A\)</span> is an event, then the event <span class="math inline">\(A^\comp\)</span> occurs if <span class="math inline">\(\omega \not\in A\)</span>. By the same logic that “not not A” means “A”, we have <span class="math inline">\((A^\comp)^\comp = A\)</span>.</p></li>
+\end{equation}\]</span> which can be interpreted logically as <strong><em>not <span class="math inline">\(A\)</span></em></strong>. If <span class="math inline">\(A\)</span> is an event, then the event <span class="math inline">\(A^\comp\)</span> occurs if <span class="math inline">\(\omega \not\in A\)</span>. For the same reason that “not not A” means “A”, we have <span class="math inline">\((A^\comp)^\comp = A\)</span>.</p></li>
 <li><p>The <strong>intersection</strong> of two sets <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> is <span class="math display">\[\begin{equation}
   A \cap B = \{\omega \in \Omega : \omega \in A \text{ and } \omega \in B\},
-\end{equation}\]</span> which can be interpreted logically as “<span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>”. If <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are events, then the event <span class="math inline">\(A \cap B\)</span> occurs if <span class="math inline">\(\omega \in A\)</span> and <span class="math inline">\(\omega \in B\)</span>.</p></li>
+\end{equation}\]</span> which can be interpreted logically as <strong><em><span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span></em></strong>. If <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are events, then the event <span class="math inline">\(A \cap B\)</span> occurs if <span class="math inline">\(\omega \in A\)</span> and <span class="math inline">\(\omega \in B\)</span>.</p></li>
 <li><p>The <strong>union</strong> of two sets <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> is <span class="math display">\[\begin{equation}
   A \cup B = \{\omega \in \Omega : \omega \in A \text{ or } \omega \in B\},
-\end{equation}\]</span> which can be interpreted logically as “<span class="math inline">\(A\)</span> or <span class="math inline">\(B\)</span>” as long as we interpret “or” in an inclusive sense (i.e., and/or). If <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are events, then the event <span class="math inline">\(A \cup B\)</span> occurs if <span class="math inline">\(\omega \in A\)</span> or <span class="math inline">\(\omega \in B\)</span>.</p></li>
+\end{equation}\]</span> which can be interpreted logically as <strong><em><span class="math inline">\(A\)</span> or <span class="math inline">\(B\)</span></em></strong> as long as we use “or” in an inclusive sense (i.e., and/or). If <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are events, then the event <span class="math inline">\(A \cup B\)</span> occurs if <span class="math inline">\(\omega \in A\)</span> or <span class="math inline">\(\omega \in B\)</span>.</p></li>
 </ul>
 <p>If <span class="math inline">\(A \subseteq B\)</span>, then <span class="math inline">\(A \cap B = A\)</span> and <span class="math inline">\(A \cup B = B\)</span>. An important special case is that <span id="eq-AA"><span class="math display">\[
   A \cap A = A \cup A = A.
@@ -321,22 +342,22 @@ A^\comp = \{\omega \in \Omega : \omega \not\in A\},
 </section>
 <section id="venn-diagrams" class="level3" data-number="1.1.3">
 <h3 data-number="1.1.3" class="anchored" data-anchor-id="venn-diagrams"><span class="header-section-number">1.1.3</span> Venn diagrams</h3>
-<p>A useful tool for understanding events and set operations is the <strong>Venn diagram</strong>.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> An example is shown below.</p>
+<p>A useful tool for understanding events and set operations is the <strong>Venn diagram</strong>.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> An example is shown below.</p>
 </section>
 <section id="sec-evseq" class="level3" data-number="1.1.4">
 <h3 data-number="1.1.4" class="anchored" data-anchor-id="sec-evseq"><span class="header-section-number">1.1.4</span> Sequences of events*</h3>
-<p>Intersections can be written for more than two events. The intersection of <span class="math inline">\(A_1, A_2, \ldots, A_n\)</span> is <span id="eq-Un"><span class="math display">\[
+<p>Intersections can be written for more than two events. The intersection of <span class="math inline">\(A_1, A_2, \ldots, A_n\)</span> is <span id="eq-In"><span class="math display">\[
   I_n = \bigcap_{i = 1}^n A_i.
-\tag{1.2}\]</span></span> Because set intersection is commutative and associative, any ordering of <span class="math inline">\(A_1, \ldots, A_n\)</span> produces the same intersection. The event <span class="math inline">\(I_n\)</span> occurs if and only if all of the events <span class="math inline">\(A_1, \ldots, A_n\)</span> occur. Each new event makes the intersection smaller (i.e., never larger) in the sense that <span id="eq-In"><span class="math display">\[
+\tag{1.2}\]</span></span> Because set intersection is commutative and associative, any ordering of <span class="math inline">\(A_1, \ldots, A_n\)</span> produces the same intersection. The event <span class="math inline">\(I_n\)</span> occurs if and only if all of the events <span class="math inline">\(A_1, \ldots, A_n\)</span> occur. Each new event makes the intersection smaller (i.e., never larger) in the sense that <span class="math display">\[
   \bigcap_{i = 1}^{n + 1} A_i \subseteq I_n.
-\tag{1.3}\]</span></span> whenever <span class="math inline">\(A_{n + 1}\)</span> is another event.</p>
-<p>Similarly, unions can be written for more than two events. If <span class="math inline">\(A_1, A_2, \ldots, A_n\)</span> is a set of events, then their union is <span class="math display">\[
+\]</span> whenever <span class="math inline">\(A_{n + 1}\)</span> is another event.</p>
+<p>Similarly, unions can be written for more than two events. If <span class="math inline">\(A_1, A_2, \ldots, A_n\)</span> is a set of events, then their union is <span id="eq-Un"><span class="math display">\[
   U_n = \bigcup_{i = 1}^n A_i.
-\]</span> Because set union is commutative and associative, any ordering of <span class="math inline">\(A_1, \ldots, A_n\)</span> produces the same union. The event <span class="math inline">\(U_n\)</span> occurs if and only if at least one of the events <span class="math inline">\(A_i\)</span> occurs. Each new event makes the union bigger (i.e., never smaller) in the sense that <span class="math display">\[
+\tag{1.3}\]</span></span> Because set union is commutative and associative, any ordering of <span class="math inline">\(A_1, \ldots, A_n\)</span> produces the same union. The event <span class="math inline">\(U_n\)</span> occurs if and only if at least one of the events <span class="math inline">\(A_i\)</span> occurs. Each new event makes the union bigger (i.e., never smaller) in the sense that <span class="math display">\[
   U_n \subseteq \bigcup_{i = 1}^{n + 1} A_i
 \]</span> whenever <span class="math inline">\(A_{n + 1}\)</span> is another event.</p>
-<p>Both unions and intersections can be defined for infinite sequences of events.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> To describe this, we let <span class="math inline">\(n = \infty\)</span> in the notation from <a href="#eq-Un" class="quarto-xref">Equation&nbsp;<span>1.2</span></a> or <a href="#eq-In" class="quarto-xref">Equation&nbsp;<span>1.3</span></a>. The union of any finite sequence of events can be turned into the union of an infinite sequence of events by adding an endless sequence of empty sets to the finite sequence. The new sequence is still a sequence of disjoint events, and each empty set <span class="math inline">\(\varnothing\)</span> leaves the union unchanged. If <span class="math inline">\((A_1, A_2, \ldots)\)</span> is an infinite sequence of events such that <span class="math inline">\(A_i = \varnothing\)</span> for all <span class="math inline">\(i &gt; n\)</span>, then <span class="math display">\[
-  \bigcup_{i = 1}^\infty A_i = \bigcup_{i = 1}^n A_i
+<p>Both unions and intersections can be defined for infinite sequences of events.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> To describe this, we let <span class="math inline">\(n = \infty\)</span> in the notation from <a href="#eq-In" class="quarto-xref">Equation&nbsp;<span>1.2</span></a> or <a href="#eq-Un" class="quarto-xref">Equation&nbsp;<span>1.3</span></a>. The union of any finite sequence of events can be turned into the union of an infinite sequence of events by adding an endless sequence of empty sets to the finite sequence. The new sequence is still a sequence of disjoint events, and each empty set <span class="math inline">\(\varnothing\)</span> leaves the union unchanged. If <span class="math inline">\((A_1, A_2, \ldots)\)</span> is an infinite sequence of events such that <span class="math inline">\(A_i = \varnothing\)</span> for all <span class="math inline">\(i &gt; n\)</span>, then <span class="math display">\[
+  \bigcup_{i = 1}^\infty A_i = \bigcup_{i = 1}^n A_i.
 \]</span> This turns out to be useful when we try to give a mathematically rigorous definition of probability.</p>
 </section>
 <section id="algebra-of-sets" class="level3" data-number="1.1.5">
@@ -371,16 +392,17 @@ A^\comp = \{\omega \in \Omega : \omega \not\in A\},
 </section>
 <section id="probability" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="probability"><span class="header-section-number">1.2</span> Probability</h2>
-<p>A <em>probability measure</em> is a function that takes an event <span class="math inline">\(A \subseteq \Omega\)</span> and returns a number <span class="math inline">\(\Pr(A) \in [0, 1]\)</span> in a way that conforms to the following rules:</p>
+<p>A <em>probability measure</em> is a function that takes an event <span class="math inline">\(A \subseteq \Omega\)</span> and returns a number <span class="math inline">\(\Pr(A) \in [0, 1]\)</span> in any way that conforms to the following rules:</p>
 <ul>
 <li><span class="math inline">\(\Pr(\Omega) = 1\)</span>.</li>
-<li><span class="math inline">\(\Pr(A) \in [0, 1]\)</span> for any event <span class="math inline">\(A \subseteq \Omega\)</span>.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></li>
+<li><span class="math inline">\(\Pr(A) \in [0, 1]\)</span> for any event <span class="math inline">\(A \subseteq \Omega\)</span>.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></li>
 <li>The <strong>addition rule</strong>: If <span class="math inline">\((A_1, A_2, \ldots)\)</span> is any sequence of disjoint events, then <span class="math display">\[
   \Pr\Biggl( \bigcup_{i = 1}^\infty A_i\Biggr)
   = \sum_{i = 1}^\infty \Pr(A_i).
 \]</span> The addition rule is stated in terms of an infinite sequence of disjoint events because this implies the addition rule for any finite sequence of disjoint events (see <a href="#sec-evseq" class="quarto-xref"><span>Section 1.1.4</span></a>).</li>
 </ul>
-<p>It is useful to think of probability as a generalization of our intuitions about area or volume. When there is no overlap in a set of two-dimensional shapes, we can add up the areas the shapes to get the total area covered by all of them. There is a lot of debate about the meaning of probability, but its definition does not assume any particular interpretation. Probability calculations are based on the rules above no matter what we think it all means, and any interpretation that is consistent with these rules is valid.</p>
+<p>It is useful to think of probability as a generalization of our intuitions about area or volume. When there is no overlap in a set of two-dimensional shapes, we can get the total area they cover by adding up the areas of the individual shapes. Similarly, we can get the total volume taken up by a set of bowling balls by adding up their individual volumes.</p>
+<p>There is a lot of debate about the meaning of probability, but its definition does not assume any particular interpretation. Probability calculations are based on the rules above no matter what we think it all means, and any interpretation that is consistent with these rules is valid.</p>
 <section id="probability-calculations" class="level3" data-number="1.2.1">
 <h3 data-number="1.2.1" class="anchored" data-anchor-id="probability-calculations"><span class="header-section-number">1.2.1</span> Probability calculations</h3>
 <p>Several useful properties of probability follow immediately from the definition above. A short proof follows each result. To follow the proofs, it helps to draw Venn diagrams.</p>
@@ -454,7 +476,7 @@ A^\comp = \{\omega \in \Omega : \omega \not\in A\},
 </section>
 <section id="probability-distributions" class="level3" data-number="1.3.2">
 <h3 data-number="1.3.2" class="anchored" data-anchor-id="probability-distributions"><span class="header-section-number">1.3.2</span> Probability distributions</h3>
-<p>The set of possible values of a random variable <span class="math inline">\(X\)</span> is called the <em>support</em> of <span class="math inline">\(X\)</span> and denoted <span class="math inline">\(\supp(X)\)</span>. For example, the support of an indicator variable is <span class="math inline">\(\{0, 1\}\)</span>. In this section, we will focus on <strong>discrete</strong> random variables, which have a support that is finite or countably infinite (e.g., the nonnegative integers). There are two standard ways to describe the distribution of a discrete random variable:</p>
+<p>The set of possible values of a random variable <span class="math inline">\(X\)</span> is called the <em>support</em> of <span class="math inline">\(X\)</span> and denoted <span class="math inline">\(\supp(X)\)</span>.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> For example, the support of an indicator variable is <span class="math inline">\(\{0, 1\}\)</span>. In this section, we will focus on <strong>discrete</strong> random variables, which have a support on a finite or countably infinite set. There are two standard ways to describe the distribution of a discrete random variable:</p>
 <ul>
 <li><p>The <strong>probability mass function</strong> (PMF) of a discrete random variable <span class="math inline">\(X\)</span> is <span class="math display">\[
   f(x) =
@@ -468,9 +490,13 @@ A^\comp = \{\omega \in \Omega : \omega \not\in A\},
 <li><p>The <strong>cumulative distribution function</strong> (CDF) of <span class="math inline">\(X\)</span> is <span class="math display">\[
   F(x)
   = \Pr(X \leq x).
-\]</span> <span class="math inline">\(F(x)\)</span> is monotonically increasing in <span class="math inline">\(x\)</span>, which means that <span class="math inline">\(F(a) \leq F(b)\)</span> whenever <span class="math inline">\(a &lt; b\)</span>. It has a jump upward of size <span class="math inline">\(f(x)\)</span> at each <span class="math inline">\(x \in \supp(X)\)</span>, and its value at each such <span class="math inline">\(x\)</span> is the value that it jumps to. For sufficiently small <span class="math inline">\(x\)</span>, <span class="math inline">\(F(x)\)</span> is close to zero. For sufficiently large <span class="math inline">\(x\)</span>, <span class="math inline">\(F(x)\)</span> is close to one. More formally, we say that <span class="math inline">\(\lim_{x \rightarrow -\infty} F(x) = 0\)</span> and <span class="math inline">\(\lim_{x \rightarrow \infty} F(x) = 1\)</span>.</p></li>
+\]</span> <span class="math inline">\(F(x)\)</span> is monotonically increasing in <span class="math inline">\(x\)</span>, which means that <span class="math inline">\(F(a) \leq F(b)\)</span> whenever <span class="math inline">\(a &lt; b\)</span>. It has a jump upward of size <span class="math inline">\(f(x)\)</span> at each <span class="math inline">\(x \in \supp(X)\)</span>, and its value at each such <span class="math inline">\(x\)</span> is the value that it jumps to—not the value that it jumps up from. For sufficiently small <span class="math inline">\(x\)</span>, <span class="math inline">\(F(x)\)</span> can be made arbitrarily close to zero. For sufficiently large <span class="math inline">\(x\)</span>, <span class="math inline">\(F(x)\)</span> can be made arbitrarily close to one. More formally, we say that <span class="math inline">\(\lim_{x \downarrow -\infty} F(x) = 0\)</span> and <span class="math inline">\(\lim_{x \uparrow \infty} F(x) = 1\)</span>.</p></li>
 </ul>
-<p>Either of these functions can be used to calculate the other, so the PMF and CDF provide equivalent descriptions of the distribution of <span class="math inline">\(X\)</span>. Given the PMF, the CDF <span class="math inline">\(F(x)\)</span> can be calculated by adding up <span class="math inline">\(f(u)\)</span> for all <span class="math inline">\(u \in \supp(X)\)</span> such that <span class="math inline">\(u \leq x\)</span>. Given the CDF, the PMF <span class="math inline">\(f(x)\)</span> can be calculated by finding the size of the jump at <span class="math inline">\(x\)</span>, which is zero if <span class="math inline">\(x \not\in \supp(X)\)</span> and positive if <span class="math inline">\(x \in \supp(X)\)</span>.</p>
+<p>The PMF and CDF provide equivalent descriptions of the distribution of <span class="math inline">\(X\)</span> in the sense that either of these functions can be used to calculate the other. Given the PMF <span class="math inline">\(f\)</span>, the CDF is defined by <span class="math display">\[
+  F(x) = \sum_{\substack{v \in \supp(X): \\ v \leq x}} f(v).
+\]</span> where the sum is taken over all <span class="math inline">\(u \in \supp(X)\)</span> such that <span class="math inline">\(u \leq x\)</span>. Given the CDF <span class="math inline">\(F\)</span>, the PMF is defined by <span class="math display">\[
+  f(x) = F(x) - \max_{v \leq x} F(v)
+\]</span> where the maximum is <span class="math inline">\(F(v)\)</span> for the largest <span class="math inline">\(v \in \supp(X)\)</span> such that <span class="math inline">\(v &lt; x\)</span>.</p>
 </section>
 <section id="mean-and-variance" class="level3" data-number="1.3.3">
 <h3 data-number="1.3.3" class="anchored" data-anchor-id="mean-and-variance"><span class="header-section-number">1.3.3</span> Mean and variance</h3>
@@ -478,17 +504,17 @@ A^\comp = \{\omega \in \Omega : \omega \not\in A\},
   \E(X)
   = \sum_{x \in \supp(X)} x \Pr(X = x)
   = \sum_{x \in \supp(X)} x f(x),
-\]</span> where <span class="math inline">\(f\)</span> is the PMF of <span class="math inline">\(X\)</span>. The mean is often written <span class="math inline">\(\mu\)</span>. It is often described as a measure of the “location” or “central tendency” of <span class="math inline">\(X\)</span>.</p>
+\]</span> where <span class="math inline">\(f\)</span> is the PMF of <span class="math inline">\(X\)</span>. The mean is often written <span class="math inline">\(\mu\)</span>, and it is often described as a measure of the “location” or “central tendency” of <span class="math inline">\(X\)</span>.</p>
 <p>If <span class="math inline">\(X\)</span> has <span class="math inline">\(\E(X) = \mu\)</span>, then <span class="math inline">\((X - \mu)^2\)</span> is another random variable. The <strong>variance</strong> of <span class="math inline">\(X\)</span> is the expected value of <span class="math inline">\((X - \mu)^2\)</span>: <span class="math display">\[
   \Var(X)
   = \E\big[(X - \mu)^2\big]
   = \sum_{x \in \supp(X)} (x - \mu)^2 f(x).
-\]</span> Because <span class="math inline">\((x - \mu)^2 \geq 0\)</span> with equality if and only if <span class="math inline">\(x = \mu\)</span>, <span class="math inline">\(\Var(X) \geq 0\)</span> with equality if and only if <span class="math inline">\(X = \mu\)</span> with probability one. The variance is often written <span class="math inline">\(\sigma^2\)</span>. It is often described as a measure of the dispersion of <span class="math inline">\(X\)</span> around the mean.</p>
+\]</span> Because <span class="math inline">\((x - \mu)^2 \geq 0\)</span> with equality if and only if <span class="math inline">\(x = \mu\)</span>, we always have <span class="math inline">\(\Var(X) \geq 0\)</span>. We have <span class="math inline">\(\Var(X) = 0\)</span> if and only if <span class="math inline">\(X = \mu\)</span> with probability one. The variance is often written <span class="math inline">\(\sigma^2\)</span>, and it is often described as a measure of the dispersion of <span class="math inline">\(X\)</span> around the mean.</p>
 <p>The square root of the variance is called the <strong>standard devation</strong>, which is often written <span class="math inline">\(\sigma\)</span>. If a random variable <span class="math inline">\(X\)</span> has units (e.g., length, weight, or time), the mean and the standard deviation have the same units as <span class="math inline">\(X\)</span>. For example, the mean and standard deviation of a length in meters both have units of meters, but the variance has units of <span class="math inline">\(\text{meters}^2\)</span>.</p>
 </section>
 <section id="bernoulli-distribution" class="level3" data-number="1.3.4">
 <h3 data-number="1.3.4" class="anchored" data-anchor-id="bernoulli-distribution"><span class="header-section-number">1.3.4</span> Bernoulli distribution</h3>
-<p>The distribution of an indicator variable is called the <strong>Bernoulli distribution</strong>.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> A random variable with the Bernoulli(<span class="math inline">\(p\)</span>) distribution has the PMF <span class="math display">\[
+<p>The distribution of an indicator variable is called the <strong>Bernoulli distribution</strong>.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> A random variable with the Bernoulli(<span class="math inline">\(p\)</span>) distribution has the PMF <span class="math display">\[
   f(x) =
   \begin{cases}
     1 - p &amp;\text{if } x = 0\\
@@ -496,14 +522,18 @@ A^\comp = \{\omega \in \Omega : \omega \not\in A\},
   \end{cases}
 \]</span> If a random variable <span class="math inline">\(X\)</span> has a Bernoulli(<span class="math inline">\(p\)</span>) distribution, we write <span class="math inline">\(X \sim \text{Bernoulli}(p)\)</span>. The indicator variable for an event <span class="math inline">\(A\)</span> has a Bernoulli distribution with <span class="math inline">\(p = \Pr(A)\)</span>.</p>
 <p>If <span class="math inline">\(X \sim \Bernoulli(p)\)</span>, then it has mean <span class="math display">\[
-  \E(X)
-  = 0 \times (1 - p) + 1 \times p
-  = p
+  \begin{align}
+    \E(X)
+    &amp;= 0 \times (1 - p) + 1 \times p \\
+    &amp;= p
+  \end{align}
 \]</span> and variance <span class="math display">\[
-  \Var(X)
-  = (0 - p)^2(1 - p) + (1 - p)^2 p
-  = p (1 - p).
-\]</span> This variance is greater than zero unless <span class="math inline">\(p = 0\)</span> or <span class="math inline">\(p = 1\)</span>. If <span class="math inline">\(p = 0\)</span>, then <span class="math inline">\(X = 0\)</span> with probability one. If <span class="math inline">\(p = 1\)</span>, then <span class="math inline">\(X = 1\)</span> with probability one. The standard deviation is <span class="math inline">\(\sqrt{p (1 - p)}\)</span>.</p>
+  \begin{align}
+    \Var(X)
+    &amp;= (0 - p)^2(1 - p) + (1 - p)^2 p \\
+    &amp;= p (1 - p).
+  \end{align}
+\]</span> The standard deviation is <span class="math inline">\(\sqrt{p (1 - p)}\)</span>. This standard deviation is greater than zero unless <span class="math inline">\(p = 0\)</span> or <span class="math inline">\(p = 1\)</span>. If <span class="math inline">\(p = 0\)</span>, then <span class="math inline">\(X = 0\)</span> with probability one. If <span class="math inline">\(p = 1\)</span>, then <span class="math inline">\(X = 1\)</span> with probability one.</p>
 </section>
 </section>
 <section id="joint-and-marginal-distributions" class="level2" data-number="1.4">
@@ -522,7 +552,7 @@ A^\comp = \{\omega \in \Omega : \omega \not\in A\},
 \]</span> The marginal distribution of each <span class="math inline">\(X_i\)</span> can be found by adding up the PMF over the support of all the other random variables. For example, <span class="math display">\[
   f_{X_2}(x_2) = \sum_{x_1 \in \supp(X_1)} \sum_{x_3 \in \supp(X_3)} f(x_1, x_2, x_3).
 \]</span> when <span class="math inline">\(n = 3\)</span>. For larger <span class="math inline">\(n\)</span>, the formula gets uglier but the idea is the same.</p>
-<p>The distinction between joint and marginal distributions is extremely important in epidemiology (and any other application of probability). The joint distribution always tell us the marginal distributions, but the marginal distributions cannot tell us the underlying joint distribution.</p>
+<p>The distinction between joint and marginal distributions is extremely important in epidemiology (and other applications of probability). The joint distribution can be used to find any of the the marginal distributions, but the marginal distributions cannot be used to find the joint distribution—unless we make additional assumptions.</p>
 <section id="linear-combinations" class="level3" data-number="1.4.1">
 <h3 data-number="1.4.1" class="anchored" data-anchor-id="linear-combinations"><span class="header-section-number">1.4.1</span> Linear combinations*</h3>
 <p>If <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are constants, then <span class="math inline">\(a X + b Y\)</span> is another random variable on <span class="math inline">\(\Omega\)</span>. It is called a <em>linear combination</em> of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. Linear combinations can be defined for more than two random variables. If <span class="math inline">\(X_1, \ldots, X_n\)</span> are random variables defined on a sample space and <span class="math inline">\(a_1, \ldots, a_n\)</span> are constants, then <span class="math display">\[
@@ -532,7 +562,7 @@ A^\comp = \{\omega \in \Omega : \omega \not\in A\},
 <ul>
 <li><p>The indicator function for <span class="math inline">\(A^\comp\)</span> in <a href="#eq-indcomp" class="quarto-xref">Equation&nbsp;<span>1.7</span></a> is a linear combination of <span class="math inline">\(\indicator_A\)</span> and the random variable <span class="math inline">\(\indicator_\Omega\)</span>, which equals one for all <span class="math inline">\(\omega \in \Omega\)</span>.</p></li>
 <li><p>The indicator function for <span class="math inline">\(A \cup B\)</span> in <a href="#eq-indunion" class="quarto-xref">Equation&nbsp;<span>1.9</span></a> is linear combination of the indicator variables <span class="math inline">\(\indicator_A\)</span>, <span class="math inline">\(\indicator_B\)</span>, and <span class="math inline">\(\indicator_{A \cap B}\)</span>.</p></li>
-<li><p>The indicator function for <span class="math inline">\(A \cap B\)</span> in <a href="#eq-indint" class="quarto-xref">Equation&nbsp;<span>1.8</span></a> is not a linear combination of <span class="math inline">\(\indicator_A\)</span> and <span class="math inline">\(\indicator_B\)</span> because these random variables multiply each other.</p></li>
+<li><p>The indicator function for <span class="math inline">\(A \cap B\)</span> in <a href="#eq-indint" class="quarto-xref">Equation&nbsp;<span>1.8</span></a> is not a linear combination of <span class="math inline">\(\indicator_A\)</span> and <span class="math inline">\(\indicator_B\)</span> because we have to multiply these two variables.</p></li>
 </ul>
 </section>
 <section id="mean-and-covariance" class="level3" data-number="1.4.2">
@@ -547,7 +577,7 @@ A^\comp = \{\omega \in \Omega : \omega \not\in A\},
       + b \sum_{y \in \supp(Y)} \bigg(y \sum_{x \in \supp(X)} f(x, y)\bigg) \\
     &amp;= a \sum_{x \in \supp(X)} x f_X(x) + b \sum_{y \in \supp(Y)} y f_Y(y).
   \end{aligned}
-\]</span> Even though the algebra is not pretty, the logic is straightforward. We split up the sum into parts depending only on <span class="math inline">\(x\)</span> and only on <span class="math inline">\(y\)</span> outside the joint PMF. In each part, we factor out a constant and find the marginal PMF. This same logic extends to a linear combination of any number of random variables.</p>
+\]</span> The algebra is not pretty, but the logic is straightforward. We split up the sum into parts depending only on <span class="math inline">\(x\)</span> and only on <span class="math inline">\(y\)</span> outside the joint PMF. In each part, we factor out a constant and find the marginal PMF. This same logic extends to a linear combination of any number of random variables.</p>
 <p>The variance of <span class="math inline">\(a X + b Y\)</span> is <span class="math display">\[
   \Var(a X + b Y) = a^2 \Var(X) + b^2 \Var(Y) + 2 a b \Cov(X, Y)
 \]</span> where <span class="math display">\[
@@ -570,22 +600,22 @@ A^\comp = \{\omega \in \Omega : \omega \not\in A\},
     \begin{pmatrix}
       a \\ b
     \end{pmatrix}
-\]</span> in matrix and vector notation. This logic extends to linear combinations of any number of random variables.</p>
-<p>The covariance is numerator of the <em>Pearson correlation coefficient</em>,<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> which is <span class="math display">\[
+\]</span> in matrix and vector notation from linear algebra. This logic extends to linear combinations of any number of random variables.</p>
+<p>The covariance is the numerator of the <em>Pearson correlation coefficient</em>,<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> which is <span class="math display">\[
   \rho_{XY} = \rho_{YX}
   = \frac{\Cov(X, Y)}{\sqrt{\Var(X) \Var(Y)}}.
-\]</span> Because of the Cauchy-Schwarz inequality, it turns out that <span class="math inline">\(\rho_{XY} \in [-1, 1]\)</span>.</p>
+\]</span> Because of the <a href="https://en.wikipedia.org/wiki/Cauchy%E2%80%93Schwarz_inequality">Cauchy-Schwarz inequality</a>, it turns out that <span class="math inline">\(\rho_{XY} \in [-1, 1]\)</span>.</p>
 <ul>
 <li><p>We get <span class="math inline">\(\rho_{XY} = -1\)</span> if and only if <span class="math inline">\(Y = c X\)</span> for some negative constant <span class="math inline">\(c\)</span>.</p></li>
-<li><p>We get <span class="math inline">\(\rho_{XY} = 1\)</span> if and only if <span class="math inline">\(Y = c X\)</span> for some positive constant <span class="math inline">\(c\)</span>. An important example of this is <span class="math inline">\(\rho_{XX} = 1\)</span> for any random variable <span class="math inline">\(X\)</span>.</p></li>
-<li><p>We get <span class="math inline">\(\rho_{XY} = 0\)</span> if <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are <em>independent</em> in the sense that the value of one tells us nothing about the value of the other.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> However, it is possible to have <span class="math inline">\(\rho_{XY} = 0\)</span> when <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are not independent.</p></li>
+<li><p>We get <span class="math inline">\(\rho_{XY} = 1\)</span> if and only if <span class="math inline">\(Y = c X\)</span> for some positive constant <span class="math inline">\(c\)</span>. For example, <span class="math inline">\(\rho_{XX} = 1\)</span> for any random variable <span class="math inline">\(X\)</span>.</p></li>
+<li><p>We get <span class="math inline">\(\rho_{XY} = 0\)</span> if <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are <em>independent</em> in the sense that the value of one tells us nothing about the value of the other.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a> However, it is possible to have <span class="math inline">\(\rho_{XY} = 0\)</span> when <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are not independent.</p></li>
 </ul>
-<p>If we divide each entry <span class="math inline">\(\Cov(X, Y)\)</span> in a covariance matrix by <span class="math inline">\(\sqrt{\Var(X) \Var(Y)}\)</span>, when we get a <em>correlation matrix</em>. The entries along the diagonal of a correlation matrix are all ones.</p>
+<p>If we divide each entry <span class="math inline">\(\Cov(X, Y)\)</span> in a covariance matrix by <span class="math inline">\(\sqrt{\Var(X) \Var(Y)}\)</span>, when we get a <em>correlation matrix</em>. Any correlation matrix is symmetric, and the entries along its diagonals are all ones.</p>
 </section>
 </section>
 <section id="probability-and-disease-occurrence" class="level2" data-number="1.5">
 <h2 data-number="1.5" class="anchored" data-anchor-id="probability-and-disease-occurrence"><span class="header-section-number">1.5</span> Probability and disease occurrence</h2>
-<p>In epidemiology, two fundamental measures of disease occurrence that are probabilities: prevalence and risk. In both cases, our experiment is to sample an individual <span class="math inline">\(\omega\)</span> from a population <span class="math inline">\(\Omega\)</span>. The <strong>disease outcome</strong> is a binary random variable <span class="math display">\[
+<p>In epidemiology, there are two fundamental measures of disease occurrence that are probabilities: <strong>prevalence</strong> and <strong>risk</strong>. In both cases, our experiment is to sample an individual <span class="math inline">\(\omega\)</span> from a population <span class="math inline">\(\Omega\)</span>. The <strong>disease outcome</strong> is a binary random variable <span class="math display">\[
   D(\omega) =
   \begin{cases}
     1 &amp; \text{if } \omega \text{ has the disease outcome}, \\
@@ -594,7 +624,7 @@ A^\comp = \{\omega \in \Omega : \omega \not\in A\},
 \]</span> The set of individuals in <span class="math inline">\(\Omega\)</span> who have <span class="math inline">\(D(\omega) = 1\)</span> is an event in <span class="math inline">\(\Omega\)</span>, and the prevalence or risk is its probability <span class="math display">\[
   \Pr(\{\omega \in \Omega: D(\omega) = 1\}).
 \]</span> The most important difference between prevalence and risk is the role of time in the definition of <span class="math inline">\(D\)</span>.</p>
-<p>There is an important technicality to remember when we talk about disease onset and recovery from disease. When a person has disease onset at time <span class="math inline">\(\tonset\)</span>, they have disease at time <span class="math inline">\(t = \tonset\)</span>. When a person recovers from disease at time <span class="math inline">\(\trec\)</span>, they no longer have disease at time <span class="math inline">\(t = \trec\)</span>. They have disease for each <span class="math inline">\(t \in [\tonset, \trec)\)</span>, and we assume that <span class="math inline">\(\trec &gt; \tonset\)</span> so this interval is nonempty. We let the onset and recovery times for person <span class="math inline">\(i\)</span> be <span class="math inline">\(\tonset_i\)</span> and <span class="math inline">\(\trec_i\)</span>, respectively. If a person has disease multiple times, each episode has a separate <span class="math inline">\(\tonset\)</span> and <span class="math inline">\(\trec\)</span></p>
+<p>There is an important technicality to remember when we talk about disease onset and recovery. When a person has disease onset at time <span class="math inline">\(\tonset\)</span> and recovers at time <span class="math inline">\(\trec\)</span>, they have disease for each <span class="math inline">\(t \in [\tonset, \trec)\)</span>. We assume that <span class="math inline">\(\trec &gt; \tonset\)</span> so this interval is nonempty. We let the onset and recovery times for person <span class="math inline">\(i\)</span> be <span class="math inline">\(\tonset_i\)</span> and <span class="math inline">\(\trec_i\)</span>, respectively. If a person has multiple episodes of the disease, each episode has its own <span class="math inline">\(\tonset\)</span> and <span class="math inline">\(\trec\)</span>. For example, the <span class="math inline">\(j^\text{th}\)</span> episode in person <span class="math inline">\(i\)</span> would have onset time <span class="math inline">\(\tonset_{ij}\)</span> and recovery time <span class="math inline">\(\trec_{ij}\)</span>.</p>
 <section id="prevalence" class="level3" data-number="1.5.1">
 <h3 data-number="1.5.1" class="anchored" data-anchor-id="prevalence"><span class="header-section-number">1.5.1</span> Prevalence</h3>
 <p>For prevalence, the disease outcome is defined by choosing a time <span class="math inline">\(t\)</span> and letting <span class="math display">\[
@@ -612,9 +642,9 @@ A^\comp = \{\omega \in \Omega : \omega \not\in A\},
   \end{cases}
 \]</span> In other words, it is the proportion of the population that has disease at any time in the interval <span class="math inline">\((t_a, t_b]\)</span>. This can include people who had disease onset at a time <span class="math inline">\(\tonset \leq t_a\)</span> as long as <span class="math inline">\(\trec &gt; t_a\)</span>. In particular, it includes all individuals who have disease onset at time <span class="math inline">\(t_a\)</span>, who must have <span class="math inline">\(\trec &gt; t_a\)</span>.</p>
 </section>
-<section id="risk" class="level3" data-number="1.5.2">
-<h3 data-number="1.5.2" class="anchored" data-anchor-id="risk"><span class="header-section-number">1.5.2</span> Risk</h3>
-<p>To define <strong>risk</strong> or <em>cumulative incidence</em>, we first choose an nonempty time interval <span class="math inline">\((t_a, t_b]\)</span> and define the population <span class="math inline">\(\Omega\)</span> to consist of individuals who do not have disease at time <span class="math inline">\(t_a\)</span> and are at risk of disease. The disease outcome is defined as <span class="math display">\[
+<section id="risk-cumulative-incidence" class="level3" data-number="1.5.2">
+<h3 data-number="1.5.2" class="anchored" data-anchor-id="risk-cumulative-incidence"><span class="header-section-number">1.5.2</span> Risk (cumulative incidence)</h3>
+<p>To define <strong>risk</strong> or <strong>cumulative incidence</strong>, we first choose an nonempty time interval <span class="math inline">\((t_a, t_b]\)</span> and let the population <span class="math inline">\(\Omega\)</span> consist only of individuals who do not have disease at time <span class="math inline">\(t_a\)</span> and are at risk of disease onset after that. The disease outcome is defined as <span class="math display">\[
   D(\omega) =
   \begin{cases}
     1 &amp; \text{if } \omega \text{ has } \tonset \in (t_a, t_b], \\
@@ -622,7 +652,7 @@ A^\comp = \{\omega \in \Omega : \omega \not\in A\},
   \end{cases}
 \]</span> In the population that is disease-free and at risk of disease at time <span class="math inline">\(t_a\)</span>, it is the proportion who have disease onset at <span class="math inline">\(\tonset \leq t_b\)</span>.</p>
 <p>Point and interval prevalence are affected by both the frequency of disease onset and the duration of disease, the risk in any time interval depends only on the frequency of disease onset (see Figure~<span class="math inline">\(\ref{fig:prevdur}\)</span>). This makes risk a more useful measure for identifying the causes of disease, which is the primary goal of <em>analytic epidemiology</em>.</p>
-<p>Another advantage of risk is that it can be used for outcomes that begin and end very quickly (e.g., traffic accidents or being hit by lightning) or outcomes that remove individuals from the population (e.g., emigration or death). Point prevalence would not be a useful measure of the impact of these outcomes on public health, and period prevalence would either be effectively the same as risk.</p>
+<p>Another advantage of risk is that it can be used for outcomes that begin and end very quickly (e.g., traffic accidents or being hit by lightning) or outcomes that remove individuals from the population (e.g., emigration or death). Point prevalence would not be a useful measure of the impact of these outcomes on public health, and period prevalence would be nearly identical to the risk over the same period.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
@@ -639,13 +669,15 @@ Morabia, Alfredo. 2004. <span>“Epidemiology: An Epistemological Perspective.�
 <hr>
 <ol>
 <li id="fn1"><p> <a href="https://en.wikipedia.org/wiki/Pierre-Simon_Laplace">Pierre-Simone, marquis de Laplace</a> (1749-1827) is often called the Newton of France. He proved that the solar system is stable, developed theories of ocean tides and gravitational potential, proved one of the first general versions of the central limit theorem, and pioneered the Bayesian interpretation of probability. For just six weeks in 1799, he was Minister of the Interior for France under Napoleon. His is one of the 72 names on the Eiffel Tower. <a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p> In experiments with uncountably infinite sample spaces, the probability of an event <span class="math inline">\(A\)</span> cannot always be calculated by adding up the probabilities of <span class="math inline">\(\{\omega\}\)</span> for all <span class="math inline">\(\omega \in A\)</span>. For example: If we choose a number at uniformly at random in <span class="math inline">\([0, 1]\)</span>, the probability of getting any particular number <span class="math inline">\(\omega\)</span> is zero. The sum of the probabilities of all <span class="math inline">\(\omega \in A\)</span> is zero (if <span class="math inline">\(A\)</span> is countable) or undefined (if <span class="math inline">\(A\)</span> is uncountable). By maintaining a distinction between outcomes and events and by limiting probability calculations to countable sums, we end up with something coherent and useful under almost all conditions.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p> Named after English logician and philosopher <a href="https://en.wikipedia.org/wiki/John_Venn">John Venn</a> (1834-1923), who was one of the pioneers of the frequentist interpretation of probability. He was also an prize-winning gardener of roses and white carrots and a prominent supporter of women’s suffrage. From 1903 until his death, he was president of Gonville and Caius College at the University of Cambridge, where he is commemorated with a Venn diagram in stained glass window.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p> In probability, we only consider unions and intersections of finite or countably infinite sets of events. Although unions and intersections can be defined for uncountably infinite sets of events, it can be impossible to assign probabilities to the resulting sets (see the <a href="https://en.wikipedia.org/wiki/Banach_Tarski_paradox">Banach-Tarski paradox</a>). As an epidemiologist (or any other scientist), this should not keep you up at night.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p> Technically, we assign probabilities only to events in a set <span class="math inline">\(\mathcal{F}\)</span> of subsets of <span class="math inline">\(\Omega\)</span> that is required to contain <span class="math inline">\(\Omega\)</span> and to be closed under complements and countable unions. “Closed under complements” means that <span class="math inline">\(A^\comp \in \mathcal{F}\)</span> whenever <span class="math inline">\(A \in \mathcal{F}\)</span>. For example, <span class="math inline">\(\varnothing = \Omega^\comp\)</span> must be in <span class="math inline">\(\mathcal{F}\)</span> because <span class="math inline">\(\Omega \in \mathcal{F}\)</span>. “Closed under countable unions” means that <span class="math inline">\(\bigcup_{i = 1}^\infty A_i \in \mathcal{F}\)</span> whenever <span class="math inline">\((A_1, A_2, \ldots)\)</span> is a sequence of events in <span class="math inline">\(\mathcal{F}\)</span>. The set <span class="math inline">\(\mathcal{F}\)</span> is called a <span class="math inline">\(\sigma\)</span>-algebra, and this restriction on the domain of probability helps avoid internal contradictions like the mind-blowing <a href="https://en.wikipedia.org/wiki/Banach_Tarski_paradox">Banach-Tarski paradox</a>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p> Named after the Swiss mathematician <a href="https://en.wikipedia.org/wiki/Jacob_Bernoulli">Jacob Bernoulli</a> (1655-1705), who derived the first version of the law of large numbers and discovered the constant <span class="math inline">\(e \approx 2.718281828\)</span>, which is the base for natural logarithms. He and his younger brother Johann Bernoulli (1667-1748) were some of the first mathematicians to try to understand and apply calculus, but their relationship eventually curdled into a jealous rivalry. A lunar impact crater called Bernoulli is named jointly after them.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p> This is named after <a href="https://en.wikipedia.org/wiki/Karl_Pearson">Karl Pearson</a> (1857-1936), an English mathematician who founded the modern discipline of mathematical statistics. In 1911, he started the first university department of statistics at University College London. He was an outspoken socialist and supporter of women’s rights, but he was also a proponent of social Darwinism and eugenics who opposed Jewish immigration into Britain.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn8"><p> We will discuss the technical definition of independence of random variables when we discuss conditional probabilities in <a href="condprob.html" class="quarto-xref"><span>Chapter 2</span></a>.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p> The natural numbers $ = {0, 1, 2, } are <em>countably infinite</em>, as are the integers <span class="math inline">\(\mathbb{Z}\)</span> and the rational numbers <span class="math inline">\(\mathbb{Q}\)</span>. The real numbers <span class="math inline">\(\mathbb{R}\)</span> are <em>uncountably infinite</em>, as are the real numbers in any interval <span class="math inline">\((a, b)\)</span> with <span class="math inline">\(a &lt; b\)</span> and the irrational numbers. Uncountably infinite sets are infinitely larger than countably infinite sets. This distinction was discovered in the 1870s by the German mathematician <a href="https://en.wikipedia.org/wiki/Georg_Cantor">Georg Cantor</a> (1845–1918). It was considered shocking at the time, but it has become a cornerstone of modern mathematics.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p> In experiments with uncountably infinite sample spaces, the probability of an event <span class="math inline">\(A\)</span> cannot always be calculated by adding up the probabilities of <span class="math inline">\(\{\omega\}\)</span> for all <span class="math inline">\(\omega \in A\)</span>. For example: If we choose a number at uniformly at random in <span class="math inline">\([0, 1]\)</span>, the probability of getting any particular number <span class="math inline">\(\omega\)</span> is zero. The sum of the probabilities of all <span class="math inline">\(\{\omega\} \subseteq A\)</span> is zero (if <span class="math inline">\(A\)</span> is countable) or undefined (if <span class="math inline">\(A\)</span> is uncountable). By maintaining a distinction between outcomes and events and by limiting probability calculations to countable (i.e., finite or countably infinite) sums, we end up with something coherent and useful.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p> Named after <a href="https://en.wikipedia.org/wiki/John_Venn">John Venn</a> (1834-1923), an English logician and philosopher who was one of the pioneers of the frequentist interpretation of probability. He was ordained as an Anglican priest in 1859 but resigned from the church in 1883. He was a prize-winning gardener of roses and white carrots and a prominent supporter of women’s right to vote. From 1903 until his death, he was President of Fellows in Gonville and Caius College at the University of Cambridge, where he is commemorated with a Venn diagram in a stained glass window.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p> In probability, we only consider unions and intersections of finite or countably infinite sets of events. Although unions and intersections can be defined for uncountably infinite sets of events, it can be impossible to assign probabilities to the resulting sets (see the <a href="https://en.wikipedia.org/wiki/Banach_Tarski_paradox">Banach-Tarski paradox</a>). As an epidemiologist, this should not keep you up at night.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p> Technically, we assign probabilities only to events in a set <span class="math inline">\(\mathcal{F}\)</span> of subsets of <span class="math inline">\(\Omega\)</span> that is required to contain <span class="math inline">\(\Omega\)</span> and to be closed under complements and countable unions. “Closed under complements” means that <span class="math inline">\(A^\comp \in \mathcal{F}\)</span> whenever <span class="math inline">\(A \in \mathcal{F}\)</span>. For example, <span class="math inline">\(\varnothing = \Omega^\comp\)</span> must be in <span class="math inline">\(\mathcal{F}\)</span> because <span class="math inline">\(\Omega \in \mathcal{F}\)</span>. “Closed under countable unions” means that <span class="math inline">\(\bigcup_{i = 1}^\infty A_i \in \mathcal{F}\)</span> whenever <span class="math inline">\((A_1, A_2, \ldots)\)</span> is a sequence of events in <span class="math inline">\(\mathcal{F}\)</span>. The set <span class="math inline">\(\mathcal{F}\)</span> is called a <span class="math inline">\(\sigma\)</span>-algebra, and this restriction on the domain of probability helps avoid internal contradictions like the mind-blowing <a href="https://en.wikipedia.org/wiki/Banach_Tarski_paradox">Banach-Tarski paradox</a>.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p> Technically, the support of <span class="math inline">\(X\)</span> is the smallest closed set <span class="math inline">\(S_X\)</span> such that <span class="math inline">\(\Pr(X \in S_X) = 1\)</span>. For a discrete random variable with support on a finite set, it is just the set of possible values. For a discrete random variable with support on a countably infinite set, it can include points whose probability mass is zero—a pathological case that we can safely ignore. For a continuous random variable, it can include values whose probability density is zero—a case that is not unusual or pathological.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p> Named after <a href="https://en.wikipedia.org/wiki/Jacob_Bernoulli">Jacob Bernoulli</a> (1655-1705), a Swiss mathematician who derived the first version of the law of large numbers and discovered the constant <span class="math inline">\(e \approx 2.718281828\)</span>, which is the base for natural logarithms. He and his younger brother Johann Bernoulli (1667-1748) were some of the first mathematicians to try to understand and apply calculus, but their relationship eventually curdled into a jealous rivalry. A lunar impact crater called Bernoulli is named jointly after them.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p> Named after <a href="https://en.wikipedia.org/wiki/Karl_Pearson">Karl Pearson</a> (1857-1936), an English mathematician who founded the modern discipline of mathematical statistics. In 1911, he started the world’s first university department of statistics at University College London. He was an outspoken socialist and supporter of women’s rights, but he was also a vocal proponent of social Darwinism and eugenics who opposed Jewish immigration into Britain.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p> We will define independence of random variables more rigorously when we discuss conditional probabilities in <a href="condprob.html" class="quarto-xref"><span>Chapter 2</span></a>.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
@@ -1089,4 +1121,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>
