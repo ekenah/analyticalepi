@@ -61,6 +61,9 @@ div.csl-indent {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-27896f7bfb4f984e41754f49ae4beae8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -90,23 +93,21 @@ div.csl-indent {
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 <script>
-window.MathJax = {
-  tex: {
-    macros: {
-      Bernoulli: ["\\operatorname\{Bernoulli\}"],
-      comp: "\\mathsf\{C\}",
-      Cov: ["\\operatorname\{Cov\}"],
-      E: ["\\operatorname\{\\mathbb\{E\}\}"],
-      indicator: "\\mathbb\{1\}",
-      supp: ["\\operatorname\{supp\}"],
-      tonset: "t^\\text\{ons\}",
-      trec: "t^\\text\{rec\}",
-      Var: ["\\operatorname\{Var\}"],
-      RR: "{\\bf R}",
-      bold: ["{\\bf #1}", 1]
+  window.MathJax = {
+    tex: {
+      macros: {
+        Bernoulli: ["\\operatorname\{Bernoulli\}"],
+        comp: "\\mathsf\{C\}",
+        Cov: ["\\operatorname\{Cov\}"],
+        E: ["\\operatorname\{\\mathbb\{E\}\}"],
+        indicator: "\\mathbb\{1\}",
+        supp: ["\\operatorname\{supp\}"],
+        tonset: "t^\\text\{ons\}",
+        trec: "t^\\text\{rec\}",
+        Var: ["\\operatorname\{Var\}"]
+      }
     }
-  }
-};
+  };
 </script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
@@ -166,6 +167,9 @@ window.Quarto = {
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Analytical Epidemiology</a> 
+        <div class="sidebar-tools-main">
+    <a href="./Analytical-Epidemiology.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+</div>
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -317,9 +321,9 @@ window.Quarto = {
 <p>To begin at the beginning, we will start with probability. <span class="citation" data-cites="morabia2004epidemiology">Morabia (<a href="references.html#ref-morabia2004epidemiology" role="doc-biblioref">2004</a>)</span> accurately observed that “Epidemiology came late in human history because it had to wait for the emergence of probability.” This is probably the most difficult chapter of the entire book, but it will make all subsequent chapters easier. You can use it as a reference and come back to the difficult parts when you need them. Learning to think clearly about probability will give you a compass to find your way through epidemiologic methods.</p>
 <section id="sets-experiments-and-events" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="sets-experiments-and-events"><span class="header-section-number">1.1</span> Sets, experiments, and events</h2>
-<p>To speak clearly about probabilities, we need some basic notation for sets. If <span class="math inline">\(A\)</span> is a set that contains an object <span class="math inline">\(a\)</span>, we write <span class="math display">\[\begin{equation}
-  a \in A
-\end{equation}\]</span> to indicate that <span class="math inline">\(a\)</span> is an <strong>element</strong> of <span class="math inline">\(A\)</span>. If <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are sets such that every element of <span class="math inline">\(A\)</span> is also an element of <span class="math inline">\(B\)</span>, we write <span class="math display">\[\begin{equation}
+<p>To speak clearly about probabilities, we need some basic notation for sets. If <span class="math inline">\(A\)</span> is a set that contains an <strong>element</strong> <span class="math inline">\(a\)</span>, we write <span class="math display">\[\begin{equation}
+  a \in A.
+\end{equation}\]</span> If <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are sets such that every element of <span class="math inline">\(A\)</span> is also an element of <span class="math inline">\(B\)</span>, we write <span class="math display">\[\begin{equation}
   A \subseteq B.
 \end{equation}\]</span> to indicate that <span class="math inline">\(A\)</span> is a <strong>subset</strong> of <span class="math inline">\(B\)</span>. Sets <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are equal if and only if <span class="math inline">\(A \subseteq B\)</span> and <span class="math inline">\(B \subseteq A\)</span>, which means they contain exactly the same elements. The <em>empty set</em> with no elements is denoted <span class="math inline">\(\varnothing\)</span>. For any set <span class="math inline">\(A\)</span>, it is true that <span class="math inline">\(A \subseteq A\)</span> and <span class="math inline">\(\varnothing \subseteq A\)</span>.</p>
 <p>We use <span class="math inline">\(\mathbb{R}\)</span> to denote the real numbers. Intervals are subsets of <span class="math inline">\(\mathbb{R}\)</span> that take one of the following forms: <span class="math display">\[\begin{align*}
@@ -327,7 +331,7 @@ window.Quarto = {
   [a, b) &amp;= \{x \in \mathbb{R}: a \leq x &lt; b\}, \\
   (a, b] &amp;= \{x \in \mathbb{R}: a &lt; x \leq b\}, \\
   (a, b) &amp;= \{x \in \mathbb{R}: a &lt; x &lt; b\}.
-\end{align*}\]</span> An endpoint with a square bracket is included in the interval and an endpoint with a round bracket is not. We can have <span class="math inline">\(a = -\infty\)</span> or <span class="math inline">\(b = \infty\)</span> as long as we use a round bracket for the corresponding endpoint. For example, it is true that <span class="math inline">\(\mathbb{R} = (-\infty, \infty)\)</span>. However, <span class="math inline">\(\mathbb{R} \neq [-\infty, \infty]\)</span> because <span class="math inline">\(\pm \infty\)</span> are not real numbers.</p>
+\end{align*}\]</span> An endpoint with a square bracket is included in the interval; an endpoint with a round bracket is not. We can have <span class="math inline">\(a = -\infty\)</span> or <span class="math inline">\(b = \infty\)</span> as long as we use a round bracket for the corresponding endpoint. For example, it is true that <span class="math inline">\(\mathbb{R} = (-\infty, \infty)\)</span>. However, <span class="math inline">\(\mathbb{R} \neq [-\infty, \infty]\)</span> because <span class="math inline">\(\pm \infty\)</span> are not real numbers.</p>
 <section id="experiments-and-events" class="level3" data-number="1.1.1">
 <h3 data-number="1.1.1" class="anchored" data-anchor-id="experiments-and-events"><span class="header-section-number">1.1.1</span> Experiments and events</h3>
 <p>In probability, an <strong>experiment</strong> is any process that will produce one outcome out of a set possible outcomes. The set of possible outcomes is called the <strong>sample space</strong> and is traditionally denoted <span class="math inline">\(\Omega\)</span>. An experiment produces a single outcome <span class="math inline">\(\omega \in \Omega\)</span>. For example, the sample space for a single coin flip is <span class="math display">\[\begin{equation}
@@ -342,17 +346,17 @@ window.Quarto = {
 </section>
 <section id="set-operations-and-logic" class="level3" data-number="1.1.2">
 <h3 data-number="1.1.2" class="anchored" data-anchor-id="set-operations-and-logic"><span class="header-section-number">1.1.2</span> Set operations and logic</h3>
-<p>There are three basic set operations that take one or more given sets and define another set: complement, intersection, and union. Each operation has a simple interpretation in terms of logic.</p>
+<p>There are three basic set operations that take one or more sets and define another set: complement, intersection, and union. Each operation has a simple interpretation in terms of logic.</p>
 <ul>
 <li><p>The <strong>complement</strong> of a set <span class="math inline">\(A\)</span> is <span class="math display">\[\begin{equation}
 A^\comp = \{\omega \in \Omega : \omega \not\in A\},
-\end{equation}\]</span> which can be interpreted logically as <strong><em>not <span class="math inline">\(A\)</span></em></strong>. If <span class="math inline">\(A\)</span> is an event, then the event <span class="math inline">\(A^\comp\)</span> occurs if <span class="math inline">\(\omega \not\in A\)</span>. For the same reason that “not not A” means “A”, we have <span class="math inline">\((A^\comp)^\comp = A\)</span>.</p></li>
+\end{equation}\]</span> which can be interpreted logically as <strong>not <span class="math inline">\(A\)</span></strong>. If <span class="math inline">\(A\)</span> is an event, then the event <span class="math inline">\(A^\comp\)</span> occurs if <span class="math inline">\(\omega \not\in A\)</span>. For the same reason that “not not A” means “A”, we have <span class="math inline">\((A^\comp)^\comp = A\)</span>.</p></li>
 <li><p>The <strong>intersection</strong> of two sets <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> is <span class="math display">\[\begin{equation}
   A \cap B = \{\omega \in \Omega : \omega \in A \text{ and } \omega \in B\},
-\end{equation}\]</span> which can be interpreted logically as <strong><em><span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span></em></strong>. If <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are events, then the event <span class="math inline">\(A \cap B\)</span> occurs if <span class="math inline">\(\omega \in A\)</span> and <span class="math inline">\(\omega \in B\)</span>.</p></li>
+\end{equation}\]</span> which can be interpreted logically as <strong><span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span></strong>. If <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are events, then the event <span class="math inline">\(A \cap B\)</span> occurs if <span class="math inline">\(\omega \in A\)</span> and <span class="math inline">\(\omega \in B\)</span>.</p></li>
 <li><p>The <strong>union</strong> of two sets <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> is <span class="math display">\[\begin{equation}
   A \cup B = \{\omega \in \Omega : \omega \in A \text{ or } \omega \in B\},
-\end{equation}\]</span> which can be interpreted logically as <strong><em><span class="math inline">\(A\)</span> or <span class="math inline">\(B\)</span></em></strong> as long as we use “or” in an inclusive sense (i.e., and/or). If <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are events, then the event <span class="math inline">\(A \cup B\)</span> occurs if <span class="math inline">\(\omega \in A\)</span> or <span class="math inline">\(\omega \in B\)</span>.</p></li>
+\end{equation}\]</span> which can be interpreted logically as <strong><span class="math inline">\(A\)</span> or <span class="math inline">\(B\)</span></strong> as long as we use an <em>inclusive</em> “or” (i.e., and/or). If <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are events, then the event <span class="math inline">\(A \cup B\)</span> occurs if <span class="math inline">\(\omega \in A\)</span> or <span class="math inline">\(\omega \in B\)</span>.</p></li>
 </ul>
 <p>If <span class="math inline">\(A \subseteq B\)</span>, then <span class="math inline">\(A \cap B = A\)</span> and <span class="math inline">\(A \cup B = B\)</span>. An important special case is that <span id="eq-AA"><span class="math display">\[
   A \cap A = A \cup A = A.
@@ -361,12 +365,22 @@ A^\comp = \{\omega \in \Omega : \omega \not\in A\},
   A \cup B = B \cup A
 \]</span> and <span class="math display">\[
   A \cap B = B \cap A.
-\]</span> Events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are <strong>disjoint</strong> or <em>mutually exclusive</em> when <span class="math inline">\(A \cap B = \varnothing\)</span>. If <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are disjoint, then at most of one of them can occur in a single experiment. Any set and its complement are disjoint, and the empty set <span class="math inline">\(\varnothing\)</span> is disjoint with itself and all other sets.</p>
-<p>If <span class="math inline">\(\Omega\)</span> is a population, these set operations allow us to define subpopulations in terms of multiple traits. If the event <span class="math inline">\(A = \{\omega \in \Omega: \omega \text{ lives in Ohio}\}\)</span>, then its complement <span class="math inline">\(A^\comp\)</span> contains all individuals in <span class="math inline">\(\Omega\)</span> who live outside Ohio. If the event <span class="math inline">\(B = \{\omega \in \Omega: \omega \text{ is 42 years old}\}\)</span>, then the intersection <span class="math inline">\(A \cap B\)</span> contains everyone in <span class="math inline">\(\Omega\)</span> who is 42 years old and lives in Ohio. If <span class="math inline">\(\Omega\)</span> does not contain any such individual, then <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are disjoint. The union <span class="math inline">\(A \cup B\)</span> contains everyone in <span class="math inline">\(\Omega\)</span> who lives in Ohio or is 42 years old. This could include both a 24-year-old who lives Ohio and a 42-year-old who lives Michigan.</p>
+\]</span> Events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are <strong>disjoint</strong> or <strong>mutually exclusive</strong> when <span class="math inline">\(A \cap B = \varnothing\)</span>. If <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are disjoint, then at most of one of them can occur in a single experiment. Any set and its complement are disjoint, and the empty set <span class="math inline">\(\varnothing\)</span> is disjoint with itself and all other sets.</p>
+<p>If <span class="math inline">\(\Omega\)</span> is a population, these set operations allow us to define subpopulations in terms of multiple traits. If the event <span class="math inline">\(A = \{\omega \in \Omega: \omega \text{ lives in Ohio}\}\)</span>, then its complement <span class="math inline">\(A^\comp\)</span> contains all individuals in <span class="math inline">\(\Omega\)</span> who live outside Ohio. If the event <span class="math inline">\(B = \{\omega \in \Omega: \omega \text{ is 42 years old}\}\)</span>, then the intersection <span class="math inline">\(A \cap B\)</span> contains everyone in <span class="math inline">\(\Omega\)</span> who is 42 years old and lives in Ohio. If <span class="math inline">\(\Omega\)</span> does not contain any 42-year-old Ohio residents, then <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are disjoint. The union <span class="math inline">\(A \cup B\)</span> contains everyone in <span class="math inline">\(\Omega\)</span> who lives in Ohio or is 42 years old. This could include both a 24-year-old who lives Ohio and a 42-year-old who lives Michigan.</p>
 </section>
 <section id="venn-diagrams" class="level3" data-number="1.1.3">
 <h3 data-number="1.1.3" class="anchored" data-anchor-id="venn-diagrams"><span class="header-section-number">1.1.3</span> Venn diagrams</h3>
-<p>A useful tool for understanding events and set operations is the <strong>Venn diagram</strong>.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> An example is shown below.</p>
+<p>A useful tool for understanding events and set operations is the <strong>Venn diagram</strong>.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> An example is shown in <a href="#fig-Venn" class="quarto-xref">Figure&nbsp;<span>1.1</span></a>. The rectangle represents <span class="math inline">\(\Omega\)</span>, and the circles <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> represent events. <span class="math inline">\(A^\comp\)</span> is everything in <span class="math inline">\(\Omega\)</span> outside the circle <span class="math inline">\(A\)</span>, and <span class="math inline">\(B^\comp\)</span> is everything outside the circle <span class="math inline">\(B\)</span>. Their intersection <span class="math inline">\(A \cap B\)</span> is the area where the two circles overlap. Their union <span class="math inline">\(A \cup B\)</span> is everything contained in at least one of <span class="math inline">\(A\)</span> or <span class="math inline">\(B\)</span>.</p>
+<div id="fig-Venn" class="lightbox quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-Venn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="./images/Venn.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1.1: Venn diagram showing events A and B. The area contained in both events is their intersection A \cap B. The union A \cup B is all area contained in at least one of A and B, including A \cap B."><img src="./images/Venn.png" class="img-fluid figure-img" style="width:70.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-Venn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.1: Venn diagram showing events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>. The area contained in both events is their intersection <span class="math inline">\(A \cap B\)</span>. The union <span class="math inline">\(A \cup B\)</span> is all area contained in at least one of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, including <span class="math inline">\(A \cap B\)</span>.
+</figcaption>
+</figure>
+</div>
 </section>
 <section id="sec-evseq" class="level3" data-number="1.1.4">
 <h3 data-number="1.1.4" class="anchored" data-anchor-id="sec-evseq"><span class="header-section-number">1.1.4</span> Sequences of events*</h3>
@@ -487,9 +501,9 @@ A^\comp = \{\omega \in \Omega : \omega \not\in A\},
 <li>The indicator function for the complement of <span class="math inline">\(A\)</span> is <span id="eq-indcomp"><span class="math display">\[
   \indicator_{A^\comp} = 1 - \indicator_A.
 \tag{1.7}\]</span></span></li>
-<li>If <span class="math inline">\(B\)</span> is another event and <span class="math inline">\(\indicator_B\)</span> is its indicator variable, then the indicator variable for the intersection <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> is <span id="eq-indint"><span class="math display">\[
+<li>If <span class="math inline">\(B\)</span> is another event and <span class="math inline">\(\indicator_B\)</span> is its indicator variable, then the indicator variable for the intersection <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> is the product of their indicator variables: <span id="eq-indint"><span class="math display">\[
   \indicator_{A \cap B}
-  = \indicator_A \indicator_B,
+  = \indicator_A \indicator_B.
 \tag{1.8}\]</span></span></li>
 <li>The indicator variable for the union <span class="math inline">\(A \cup B\)</span> is <span id="eq-indunion"><span class="math display">\[
   \indicator_{A \cup B}
@@ -534,7 +548,7 @@ A^\comp = \{\omega \in \Omega : \omega \not\in A\},
   = \E\big[(X - \mu)^2\big]
   = \sum_{x \in \supp(X)} (x - \mu)^2 f(x).
 \]</span> Because <span class="math inline">\((x - \mu)^2 \geq 0\)</span> with equality if and only if <span class="math inline">\(x = \mu\)</span>, we always have <span class="math inline">\(\Var(X) \geq 0\)</span>. We have <span class="math inline">\(\Var(X) = 0\)</span> if and only if <span class="math inline">\(X = \mu\)</span> with probability one. The variance is often written <span class="math inline">\(\sigma^2\)</span>, and it is often described as a measure of the dispersion of <span class="math inline">\(X\)</span> around the mean.</p>
-<p>The square root of the variance is called the <strong>standard devation</strong>, which is often written <span class="math inline">\(\sigma\)</span>. If a random variable <span class="math inline">\(X\)</span> has units (e.g., length, weight, or time), the mean and the standard deviation have the same units as <span class="math inline">\(X\)</span>. For example, the mean and standard deviation of a length in meters both have units of meters, but the variance has units of <span class="math inline">\(\text{meters}^2\)</span>.</p>
+<p>The square root of the variance is called the <strong>standard devation</strong>, which is often written <span class="math inline">\(\sigma\)</span>. If a random variable <span class="math inline">\(X\)</span> has units (e.g., length, weight, or time), the mean and the standard deviation have the same units as <span class="math inline">\(X\)</span>. For example, the mean and standard deviation of a length in meters both have units of <span class="math inline">\(\text{meters}\)</span>, but the variance has units of <span class="math inline">\(\text{meters}^2\)</span>.</p>
 </section>
 <section id="bernoulli-distribution" class="level3" data-number="1.3.4">
 <h3 data-number="1.3.4" class="anchored" data-anchor-id="bernoulli-distribution"><span class="header-section-number">1.3.4</span> Bernoulli distribution</h3>
@@ -689,7 +703,7 @@ Morabia, Alfredo. 2004. <span>“Epidemiology: An Epistemological Perspective.�
 <hr>
 <ol>
 <li id="fn1"><p> <a href="https://en.wikipedia.org/wiki/Pierre-Simon_Laplace">Pierre-Simone, marquis de Laplace</a> (1749-1827) is often called the Newton of France. He proved that the solar system is stable, developed theories of ocean tides and gravitational potential, proved one of the first general versions of the central limit theorem, and pioneered the Bayesian interpretation of probability. For just six weeks in 1799, he was Minister of the Interior for France under Napoleon. His is one of the 72 names on the Eiffel Tower. <a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p> The natural numbers <span class="math inline">\(\mathbb{N} = \{0, 1, 2, \ldots\}\)</span> are <em>countably infinite</em>, as are the integers <span class="math inline">\(\mathbb{Z}\)</span> and the rational numbers <span class="math inline">\(\mathbb{Q}\)</span>. The real numbers <span class="math inline">\(\mathbb{R}\)</span> are <em>uncountably infinite</em>, as are the real numbers in any interval <span class="math inline">\((a, b)\)</span> with <span class="math inline">\(a &lt; b\)</span> and the irrational numbers. Uncountably infinite sets are infinitely larger than countably infinite sets. This distinction was discovered in the 1870s by the German mathematician <a href="https://en.wikipedia.org/wiki/Georg_Cantor">Georg Cantor</a> (1845–1918). It was considered shocking at the time, but it has become a cornerstone of modern mathematics.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p> The natural numbers <span class="math inline">\(\mathbb{N} = \{0, 1, 2, \ldots\}\)</span> are <em>countably infinite</em>, as are the integers <span class="math inline">\(\mathbb{Z}\)</span> and the rational numbers <span class="math inline">\(\mathbb{Q}\)</span>. The real numbers <span class="math inline">\(\mathbb{R}\)</span> are <em>uncountably infinite</em>, as are the real numbers in any nonempty interval <span class="math inline">\((a, b)\)</span> and the irrational numbers. Uncountably infinite sets are infinitely larger than countably infinite sets. This distinction was discovered in the 1870s by the German mathematician <a href="https://en.wikipedia.org/wiki/Georg_Cantor">Georg Cantor</a> (1845–1918). It was considered shocking, but it has become a cornerstone of modern mathematics.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p> In experiments with uncountably infinite sample spaces, the probability of an event <span class="math inline">\(A\)</span> cannot always be calculated by adding up the probabilities of <span class="math inline">\(\{\omega\}\)</span> for all <span class="math inline">\(\omega \in A\)</span>. For example: If we choose a number at uniformly at random in <span class="math inline">\([0, 1]\)</span>, the probability of getting any particular number <span class="math inline">\(\omega\)</span> is zero. The sum of the probabilities of all <span class="math inline">\(\{\omega\} \subseteq A\)</span> is zero (if <span class="math inline">\(A\)</span> is countable) or undefined (if <span class="math inline">\(A\)</span> is uncountable). By maintaining a distinction between outcomes and events and by limiting probability calculations to countable (i.e., finite or countably infinite) sums, we end up with something coherent and useful.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p> Named after <a href="https://en.wikipedia.org/wiki/John_Venn">John Venn</a> (1834-1923), an English logician and philosopher who was one of the pioneers of the frequentist interpretation of probability. He was ordained as an Anglican priest in 1859 but resigned from the church in 1883. He was a prize-winning gardener of roses and white carrots and a prominent supporter of women’s right to vote. From 1903 until his death, he was President of Fellows in Gonville and Caius College at the University of Cambridge, where he is commemorated with a Venn diagram in a stained glass window.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p> In probability, we only consider unions and intersections of finite or countably infinite sets of events. Although unions and intersections can be defined for uncountably infinite sets of events, it can be impossible to assign probabilities to the resulting sets (see the <a href="https://en.wikipedia.org/wiki/Banach_Tarski_paradox">Banach-Tarski paradox</a>). As an epidemiologist, this should not keep you up at night.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -1137,6 +1151,38 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 
