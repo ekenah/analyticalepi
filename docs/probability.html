@@ -94,7 +94,7 @@ div.csl-indent {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-27896f7bfb4f984e41754f49ae4beae8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-747bc48f972f7c4036e4d8e8c6d9e55a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
@@ -290,7 +290,7 @@ window.Quarto = {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="2">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
@@ -317,13 +317,14 @@ window.Quarto = {
   <li><a href="#joint-and-marginal-distributions" id="toc-joint-and-marginal-distributions" class="nav-link" data-scroll-target="#joint-and-marginal-distributions"><span class="header-section-number">1.4</span> Joint and marginal distributions</a>
   <ul class="collapse">
   <li><a href="#linear-combinations" id="toc-linear-combinations" class="nav-link" data-scroll-target="#linear-combinations"><span class="header-section-number">1.4.1</span> Linear combinations*</a></li>
-  <li><a href="#mean-and-covariance" id="toc-mean-and-covariance" class="nav-link" data-scroll-target="#mean-and-covariance"><span class="header-section-number">1.4.2</span> Mean and covariance*</a></li>
+  <li><a href="#variance-and-covariance" id="toc-variance-and-covariance" class="nav-link" data-scroll-target="#variance-and-covariance"><span class="header-section-number">1.4.2</span> Variance and covariance*</a></li>
   </ul></li>
   <li><a href="#probability-and-disease-occurrence" id="toc-probability-and-disease-occurrence" class="nav-link" data-scroll-target="#probability-and-disease-occurrence"><span class="header-section-number">1.5</span> Probability and disease occurrence</a>
   <ul class="collapse">
   <li><a href="#prevalence" id="toc-prevalence" class="nav-link" data-scroll-target="#prevalence"><span class="header-section-number">1.5.1</span> Prevalence</a></li>
   <li><a href="#risk-cumulative-incidence-and-the-survival-function" id="toc-risk-cumulative-incidence-and-the-survival-function" class="nav-link" data-scroll-target="#risk-cumulative-incidence-and-the-survival-function"><span class="header-section-number">1.5.2</span> Risk (cumulative incidence) and the survival function</a></li>
-  <li><a href="#prevalence-and-duration-of-disease" id="toc-prevalence-and-duration-of-disease" class="nav-link" data-scroll-target="#prevalence-and-duration-of-disease"><span class="header-section-number">1.5.3</span> Prevalence and duration of disease</a></li>
+  <li><a href="#prevalence-and-the-duration-of-disease" id="toc-prevalence-and-the-duration-of-disease" class="nav-link" data-scroll-target="#prevalence-and-the-duration-of-disease"><span class="header-section-number">1.5.3</span> Prevalence and the duration of disease</a></li>
+  <li><a href="#descriptive-and-analytic-epidemiology" id="toc-descriptive-and-analytic-epidemiology" class="nav-link" data-scroll-target="#descriptive-and-analytic-epidemiology"><span class="header-section-number">1.5.4</span> Descriptive and analytic epidemiology</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -551,7 +552,11 @@ Figure&nbsp;1.1: Venn diagram showing events <span class="math inline">\(A\)</sp
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">R</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Indicator variables for events A and B, etc.</span></span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>indicators.R</strong></pre>
+</div>
+<div class="sourceCode" id="cb1" data-filename="indicators.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Indicator variables for events A and B, etc.</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting the seed ensures that everyone gets the same random samples.</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Functions are called using parentheses (round brackets).</span></span>
@@ -597,6 +602,7 @@ Figure&nbsp;1.1: Venn diagram showing events <span class="math inline">\(A\)</sp
 </div>
 </div>
 </div>
+</div>
 </section>
 <section id="probability-distributions" class="level3" data-number="1.3.2">
 <h3 data-number="1.3.2" class="anchored" data-anchor-id="probability-distributions"><span class="header-section-number">1.3.2</span> Probability distributions</h3>
@@ -633,41 +639,50 @@ Figure&nbsp;1.1: Venn diagram showing events <span class="math inline">\(A\)</sp
   \Pr(A)
   = 0 \Pr(\indicator_A = 0) + 1 \Pr(\indicator_A = 1)
   = \E(\indicator_A).
-\]</span></p>
+\]</span> This is a common way to calculate probabilities in data analyses.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">R</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
-<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in CSV file with indicator variables using the function read.csv()</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The argument can be a path (e.g., "./data/indicators.csv" in Linux).</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"indicators.csv"</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate probabilities from indicator variables using the function mean()</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># This will also work with TRUE/FALSE (i.e., logical) variables, which are</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># converted to TRUE = 1 and FALSE = 0 in calculations.</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>prob_A <span class="ot">&lt;-</span> <span class="fu">mean</span>(dat<span class="sc">$</span>A)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>prob_B <span class="ot">&lt;-</span> <span class="fu">mean</span>(dat<span class="sc">$</span>B)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>prob_Acomp <span class="ot">&lt;-</span> <span class="fu">mean</span>(dat<span class="sc">$</span>Acomp)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>prob_ABintersect <span class="ot">&lt;-</span> <span class="fu">mean</span>(dat<span class="sc">$</span>ABintersect)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>prob_ABunion <span class="ot">&lt;-</span> <span class="fu">mean</span>(dat<span class="sc">$</span>ABunion)</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Pr(A complement) = 1 - Pr(A)</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>prob_Acomp</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> prob_A</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Pr(A union B) = Pr(A) + Pr(B) - Pr(A intersect B)</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>prob_ABunion</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>prob_A <span class="sc">+</span> prob_B <span class="sc">-</span> prob_ABintersect</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Beware of numerical error when comparing floating-point numbers!</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co"># This example is from The R Inferno by Patrick Burns.</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co"># https://www.burns-stat.com/pages/Tutor/R_inferno.pdf</span></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="fl">0.1</span> <span class="sc">==</span> <span class="fl">0.3</span> <span class="sc">/</span> <span class="dv">3</span></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="fu">sprintf</span>(<span class="st">"%.20f"</span>, <span class="fl">0.1</span>)</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="fu">sprintf</span>(<span class="st">"%.20f"</span>, <span class="fl">0.3</span> <span class="sc">/</span> <span class="dv">3</span>)</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="fu">sprintf</span>(<span class="st">"%.20f"</span>, prob_ABunion)</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="fu">sprintf</span>(<span class="st">"%.20f"</span>, prob_A <span class="sc">+</span> prob_B <span class="sc">-</span> prob_ABintersect)</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>probabilities.R</strong></pre>
+</div>
+<div class="sourceCode" id="cb2" data-filename="probabilities.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Indicator variables and probability calculations</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># read in CSV file with indicator variables using the function read.csv()</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># The argument can be a path (e.g., "./data/indicators.csv" in Linux).</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"indicators.csv"</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate probabilities from indicator variables using the function mean()</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># This will also work with TRUE/FALSE (i.e., logical) variables, which are</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># converted to TRUE = 1 and FALSE = 0 in calculations.</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>prob_A <span class="ot">&lt;-</span> <span class="fu">mean</span>(dat<span class="sc">$</span>A)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>prob_B <span class="ot">&lt;-</span> <span class="fu">mean</span>(dat<span class="sc">$</span>B)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>prob_Acomp <span class="ot">&lt;-</span> <span class="fu">mean</span>(dat<span class="sc">$</span>Acomp)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>prob_ABintersect <span class="ot">&lt;-</span> <span class="fu">mean</span>(dat<span class="sc">$</span>ABintersect)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>prob_ABunion <span class="ot">&lt;-</span> <span class="fu">mean</span>(dat<span class="sc">$</span>ABunion)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Pr(A complement) = 1 - Pr(A)</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>prob_Acomp</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> prob_A</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Pr(A union B) = Pr(A) + Pr(B) - Pr(A intersect B)</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>prob_ABunion</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>prob_A <span class="sc">+</span> prob_B <span class="sc">-</span> prob_ABintersect</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Beware of numerical error when comparing floating-point numbers!</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="co"># This example is from The R Inferno by Patrick Burns.</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="co"># https://www.burns-stat.com/pages/Tutor/R_inferno.pdf</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="fl">0.1</span> <span class="sc">==</span> <span class="fl">0.3</span> <span class="sc">/</span> <span class="dv">3</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="fu">sprintf</span>(<span class="st">"%.20f"</span>, <span class="fl">0.1</span>)</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="fu">sprintf</span>(<span class="st">"%.20f"</span>, <span class="fl">0.3</span> <span class="sc">/</span> <span class="dv">3</span>)</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="co"># math can be more accurate than computers (which is not their fault)</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>prob_ABunion <span class="sc">==</span> prob_A <span class="sc">+</span> prob_B <span class="sc">-</span> probABintersect</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="fu">sprintf</span>(<span class="st">"%.20f"</span>, prob_ABunion)</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="fu">sprintf</span>(<span class="st">"%.20f"</span>, prob_A <span class="sc">+</span> prob_B <span class="sc">-</span> prob_ABintersect)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </div>
 </div>
 </div>
@@ -718,12 +733,64 @@ Figure&nbsp;1.1: Venn diagram showing events <span class="math inline">\(A\)</sp
   f_X(x) = \sum_{y \in \supp(Y)} f(x, y),
 \]</span> and the marginal PMF of <span class="math inline">\(Y\)</span> is <span class="math display">\[
   f_Y(y) = \sum_{x \in \supp(X)} f(x, y).
-\]</span> These are called marginal distributions by analogy to the margins of a table.</p>
+\]</span> These are called marginal distributions by analogy to the margins of a table. The distinction between joint and marginal distributions is extremely important in epidemiology and other applications of probability.</p>
+<p>For example, <a href="#tbl-jointdist" class="quarto-xref">Table&nbsp;<span>1.1</span></a> shows the joint and marginal PMFs for two binary random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. By definition, <span class="math display">\[
+  f(0, 0) + f(0, 1) + f(1, 0) + f(1, 1) = 1.
+\]</span> In the table, it is clear that the joint distribution determines the marginal distributions. However, there are many different joint distributions that are consistent with the same marginal distributions. Thus, the marginal distributions do not determine the joint distribution.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a></p>
+<div id="tbl-jointdist" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-jointdist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1.1: Joint and marginal PMFs for binary random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.
+</figcaption>
+<div aria-describedby="tbl-jointdist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 32%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;"><span class="math inline">\(Y = 0\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(Y = 1\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(X\)</span> margin</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(X = 0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(f(0, 0)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(f(0, 1)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(f_X(0) = f(0, 0) + f(0, 1)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(X = 1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(f(1, 0)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(f(1, 1)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(f_X(1) = f(1, 0) + f(1, 1)\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong><span class="math inline">\(Y\)</span> margin</strong></td>
+<td style="text-align: center;"><span class="math inline">\(f_Y(0) = f(0, 0) + f(1, 0)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(f_Y(1) = f(0, 1) + f(1, 1)\)</span></td>
+<td style="text-align: center;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">R</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
-<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Joint and marginal distributions of indicators for events A and B</span></span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>jointdist.R</strong></pre>
+</div>
+<div class="sourceCode" id="cb3" data-filename="jointdist.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Joint and marginal distributions of indicators for events A and B</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># read indicator variable data from the CSV file</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"indicators.csv"</span>)</span>
@@ -734,16 +801,18 @@ Figure&nbsp;1.1: Venn diagram showing events <span class="math inline">\(A\)</sp
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="at">A =</span> dat<span class="sc">$</span>A)</span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="at">B =</span> dat<span class="sc">$</span>B)</span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># In table(), the first argument defines rows and the second defines columns.</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># The addmargins() functions adds the row, column, and overall sums.</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="at">A =</span> dat<span class="sc">$</span>A, <span class="at">B =</span> dat<span class="sc">$</span>B)</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="fu">addmargins</span>(<span class="fu">table</span>(<span class="at">A =</span> dat<span class="sc">$</span>A, <span class="at">B =</span> dat<span class="sc">$</span>B))</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co"># tables of probabilities</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Table margins match the distributions of A (rows) and B (columns).</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="at">Adist =</span> dat<span class="sc">$</span>A) <span class="sc">/</span> n    <span class="co"># marginal distribution of A indicator</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="at">Bdist =</span> dat<span class="sc">$</span>B) <span class="sc">/</span> n    <span class="co"># marginal distribution of B indicator</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="fu">addmargins</span>(<span class="fu">table</span>(<span class="at">A =</span> dat<span class="sc">$</span>A, <span class="at">B =</span> dat<span class="sc">$</span>B)) <span class="sc">/</span> n   <span class="co"># joint distribution</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># joint table of counts</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># In table(), the first argument defines rows and the second defines columns.</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># The addmargins() functions adds the row, column, and overall sums.</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="at">A =</span> dat<span class="sc">$</span>A, <span class="at">B =</span> dat<span class="sc">$</span>B)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="fu">addmargins</span>(<span class="fu">table</span>(<span class="at">A =</span> dat<span class="sc">$</span>A, <span class="at">B =</span> dat<span class="sc">$</span>B))</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co"># tables of probabilities</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Table margins match the distributions of A (rows) and B (columns).</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="at">Adist =</span> dat<span class="sc">$</span>A) <span class="sc">/</span> n    <span class="co"># marginal distribution of A indicator</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="at">Bdist =</span> dat<span class="sc">$</span>B) <span class="sc">/</span> n    <span class="co"># marginal distribution of B indicator</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="fu">addmargins</span>(<span class="fu">table</span>(<span class="at">A =</span> dat<span class="sc">$</span>A, <span class="at">B =</span> dat<span class="sc">$</span>B)) <span class="sc">/</span> n   <span class="co"># joint distribution</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </div>
 </div>
 </div>
@@ -754,7 +823,6 @@ Figure&nbsp;1.1: Venn diagram showing events <span class="math inline">\(A\)</sp
 \]</span> when <span class="math inline">\(n = 3\)</span>. In this same case, we can talk about the joint distribution of any two variables marginalized over the third. For example, <span class="math display">\[
   f_{X_2, X_3}(x_2, x_3) = \sum_{x_1 \in \supp(X_1)} f(x_1, x_2, x_3).
 \]</span> For larger <span class="math inline">\(n\)</span>, the formulas gets uglier but the ideas are the same.</p>
-<p>The distinction between joint and marginal distributions is extremely important in epidemiology and other applications of probability. The joint distribution can be used to find any of the the marginal distributions, but the marginal distributions cannot be used to find the joint distribution—unless we make additional assumptions.</p>
 <section id="linear-combinations" class="level3" data-number="1.4.1">
 <h3 data-number="1.4.1" class="anchored" data-anchor-id="linear-combinations"><span class="header-section-number">1.4.1</span> Linear combinations*</h3>
 <p>If <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are constants, then <span class="math inline">\(a X + b Y\)</span> is another random variable on <span class="math inline">\(\Omega\)</span>. It is called a <em>linear combination</em> of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. Linear combinations can be defined for more than two random variables. If <span class="math inline">\(X_1, \ldots, X_n\)</span> are random variables defined on a sample space and <span class="math inline">\(a_1, \ldots, a_n\)</span> are constants, then <span class="math display">\[
@@ -766,9 +834,6 @@ Figure&nbsp;1.1: Venn diagram showing events <span class="math inline">\(A\)</sp
 <li><p>The indicator function for <span class="math inline">\(A \cup B\)</span> in <a href="#eq-indunion" class="quarto-xref">Equation&nbsp;<span>1.9</span></a> is linear combination of the indicator variables <span class="math inline">\(\indicator_A\)</span>, <span class="math inline">\(\indicator_B\)</span>, and <span class="math inline">\(\indicator_{A \cap B}\)</span>.</p></li>
 <li><p>The indicator function for <span class="math inline">\(A \cap B\)</span> in <a href="#eq-indint" class="quarto-xref">Equation&nbsp;<span>1.8</span></a> is not a linear combination of <span class="math inline">\(\indicator_A\)</span> and <span class="math inline">\(\indicator_B\)</span> because we have to multiply these two variables.</p></li>
 </ul>
-</section>
-<section id="mean-and-covariance" class="level3" data-number="1.4.2">
-<h3 data-number="1.4.2" class="anchored" data-anchor-id="mean-and-covariance"><span class="header-section-number">1.4.2</span> Mean and covariance*</h3>
 <p>If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are random variables defined on the same sample space and <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are constants, the mean of the linear combination <span class="math inline">\(a X + b Y\)</span> is <span class="math display">\[
   \E(a X + b Y) = a \E(X) + b \E(Y).
 \]</span> This is a direct consequence of the definition of expected value: <span class="math display">\[
@@ -780,6 +845,9 @@ Figure&nbsp;1.1: Venn diagram showing events <span class="math inline">\(A\)</sp
     &amp;= a \sum_{x \in \supp(X)} x f_X(x) + b \sum_{y \in \supp(Y)} y f_Y(y).
   \end{aligned}
 \]</span> The algebra is not pretty, but the logic is straightforward. We split up the sum into parts depending only on <span class="math inline">\(x\)</span> and only on <span class="math inline">\(y\)</span> outside the joint PMF. In each part, we factor out a constant and find the marginal PMF. This same logic extends to a linear combination of any number of random variables.</p>
+</section>
+<section id="variance-and-covariance" class="level3" data-number="1.4.2">
+<h3 data-number="1.4.2" class="anchored" data-anchor-id="variance-and-covariance"><span class="header-section-number">1.4.2</span> Variance and covariance*</h3>
 <p>The variance of <span class="math inline">\(a X + b Y\)</span> is <span class="math display">\[
   \Var(a X + b Y) = a^2 \Var(X) + b^2 \Var(Y) + 2 a b \Cov(X, Y)
 \]</span> where <span class="math display">\[
@@ -802,22 +870,22 @@ Figure&nbsp;1.1: Venn diagram showing events <span class="math inline">\(A\)</sp
     \begin{pmatrix}
       a \\ b
     \end{pmatrix}
-\]</span> in matrix and vector notation from linear algebra. This logic extends to linear combinations of any number of random variables.</p>
-<p>The covariance is the numerator of the <em>Pearson correlation coefficient</em>,<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> which is <span class="math display">\[
+\]</span> in matrix and vector notation from <a href="https://en.wikipedia.org/wiki/Linear_algebra">linear algebra</a>. This logic extends to linear combinations of any number of random variables.</p>
+<p>The covariance is the numerator of the <em>Pearson correlation coefficient</em>,<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a> which is <span class="math display">\[
   \rho_{XY} = \rho_{YX}
   = \frac{\Cov(X, Y)}{\sqrt{\Var(X) \Var(Y)}}.
 \]</span> Because of the <a href="https://en.wikipedia.org/wiki/Cauchy%E2%80%93Schwarz_inequality">Cauchy-Schwarz inequality</a>, it turns out that <span class="math inline">\(\rho_{XY} \in [-1, 1]\)</span>.</p>
 <ul>
 <li><p>We get <span class="math inline">\(\rho_{XY} = -1\)</span> if and only if <span class="math inline">\(Y = c X\)</span> for some negative constant <span class="math inline">\(c\)</span>.</p></li>
 <li><p>We get <span class="math inline">\(\rho_{XY} = 1\)</span> if and only if <span class="math inline">\(Y = c X\)</span> for some positive constant <span class="math inline">\(c\)</span>. For example, <span class="math inline">\(\rho_{XX} = 1\)</span> for any random variable <span class="math inline">\(X\)</span>.</p></li>
-<li><p>We get <span class="math inline">\(\rho_{XY} = 0\)</span> if <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are <em>independent</em> in the sense that the value of one tells us nothing about the value of the other.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a> However, it is possible to have <span class="math inline">\(\rho_{XY} = 0\)</span> when <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are not independent.</p></li>
+<li><p>We get <span class="math inline">\(\rho_{XY} = 0\)</span> if <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are <em>independent</em> in the sense that the value of one tells us nothing about the value of the other.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> However, it is possible to have <span class="math inline">\(\rho_{XY} = 0\)</span> when <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are not independent.</p></li>
 </ul>
 <p>If we divide each entry <span class="math inline">\(\Cov(X, Y)\)</span> in a covariance matrix by <span class="math inline">\(\sqrt{\Var(X) \Var(Y)}\)</span>, when we get a <em>correlation matrix</em>. Any correlation matrix is symmetric, and the entries along its diagonals are all ones.</p>
 </section>
 </section>
 <section id="probability-and-disease-occurrence" class="level2" data-number="1.5">
 <h2 data-number="1.5" class="anchored" data-anchor-id="probability-and-disease-occurrence"><span class="header-section-number">1.5</span> Probability and disease occurrence</h2>
-<p>In epidemiology, there are two fundamental measures of disease occurrence that are probabilities: <strong>prevalence</strong> and <strong>risk</strong>. In both cases, our experiment is to sample an individual <span class="math inline">\(\omega\)</span> from a population <span class="math inline">\(\Omega\)</span>. The <strong>disease outcome</strong> is a binary random variable <span class="math display">\[
+<p>In epidemiology, there are two fundamental measures of disease occurrence that are probabilities: <strong>prevalence</strong> and <strong>risk</strong>. In both cases, our experiment is to sample an individual <span class="math inline">\(\omega\)</span> from a population <span class="math inline">\(\Omega\)</span>. The <em>disease outcome</em> is a binary random variable <span class="math display">\[
   D(\omega) =
   \begin{cases}
     1 &amp; \text{if } \omega \text{ has the disease outcome}, \\
@@ -827,6 +895,7 @@ Figure&nbsp;1.1: Venn diagram showing events <span class="math inline">\(A\)</sp
   \Pr(\{\omega \in \Omega: D(\omega) = 1\}).
 \]</span> The most important difference between prevalence and risk is the role of time in the definition of <span class="math inline">\(D\)</span>.</p>
 <p>There is an important technical detail to remember when we talk about disease onset and recovery. When a person has disease onset at time <span class="math inline">\(\tonset\)</span> and recovers at time <span class="math inline">\(\trec\)</span>, they have disease for each <span class="math inline">\(t \in [\tonset, \trec)\)</span>. We assume that <span class="math inline">\(\trec &gt; \tonset\)</span> so this interval is nonempty. We let the onset and recovery times for person <span class="math inline">\(i\)</span> be <span class="math inline">\(\tonset_i\)</span> and <span class="math inline">\(\trec_i\)</span>, respectively. If a person has multiple episodes of the disease, each episode has its own <span class="math inline">\(\tonset\)</span> and <span class="math inline">\(\trec\)</span>. For example, the <span class="math inline">\(j^\text{th}\)</span> episode in person <span class="math inline">\(i\)</span> would have onset time <span class="math inline">\(\tonset_{ij}\)</span> and recovery time <span class="math inline">\(\trec_{ij}\)</span>.</p>
+<p>The time scale used to define disease onset is flexible, and this flexibility is useful. The most obvious time scale is <em>calendar time</em> or <em>absolute time</em>. Another common time scale is age, which is an important determinant of the risk of many diseases. In some cases, time since an event is a useful time scale. The event that defines time scale could be a single event (e.g., exposure to contaminated food at a party) or an event that occurs at different times for different individuals (e.g., time since menopause). In general, it is wise to choose the time scale that corresponds to the most important time-varying determinant of disease onset. The chosen time scale is often called the <em>analysis time scale</em>.</p>
 <section id="prevalence" class="level3" data-number="1.5.1">
 <h3 data-number="1.5.1" class="anchored" data-anchor-id="prevalence"><span class="header-section-number">1.5.1</span> Prevalence</h3>
 <p>For prevalence, the disease outcome is defined by choosing a time <span class="math inline">\(t\)</span> and letting <span class="math display">\[
@@ -842,91 +911,267 @@ Figure&nbsp;1.1: Venn diagram showing events <span class="math inline">\(A\)</sp
     1 &amp; \text{if } \omega \text{ has disease at any time } t \in (t_a, t_b], \\
     0 &amp; \text{otherwise}.
   \end{cases}
-\]</span> In other words, it is the proportion of the population that has disease at any time in the interval <span class="math inline">\((t_a, t_b]\)</span>. This can include people who had disease onset at a time <span class="math inline">\(\tonset \leq t_a\)</span> as long as <span class="math inline">\(\trec &gt; t_a\)</span>. In particular, it includes all individuals who have disease onset at time <span class="math inline">\(t_a\)</span>, who must have <span class="math inline">\(\trec &gt; t_a\)</span>.</p>
-<p>The period prevalence in <span class="math inline">\((t_a, t_b]\)</span> is the point prevalence at time <span class="math inline">\(t_a\)</span> plus the risk of disease onset in the interval <span class="math inline">\((t_a, t_b]\)</span>, which we turn to next.</p>
+\]</span> In other words, it is the proportion of the population that has disease at any time in the interval <span class="math inline">\((t_a, t_b]\)</span>. This includes prevalent cases at time <span class="math inline">\(t_a\)</span> and cases with disease onset in <span class="math inline">\((t_a, t_b]\)</span>. The period prevalence in <span class="math inline">\((t_a, t_b]\)</span> is the point prevalence at <span class="math inline">\(t_a\)</span> plus the risk of disease onset in <span class="math inline">\((t_a, t_b]\)</span>, to which we now turn.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>prevalence.R</strong></pre>
+</div>
+<div class="sourceCode" id="cb4" data-filename="prevalence.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Point and period prevalence</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># generate onset and recovery data for 100 individuals</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting the seed ensures that everyone gets the same random numbers,</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># but it is strictly optional.</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># The function rexp() randomly samples from an exponential distribution.</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>cohort <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">onset =</span> <span class="fu">rexp</span>(<span class="dv">100</span>, <span class="at">rate =</span> <span class="fl">0.4</span>))</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>cohort<span class="sc">$</span>duration <span class="ot">&lt;-</span> <span class="fu">rexp</span>(<span class="dv">100</span>, <span class="at">rate =</span> <span class="dv">2</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>cohort<span class="sc">$</span>recovery <span class="ot">&lt;-</span> cohort<span class="sc">$</span>onset <span class="sc">+</span> cohort<span class="sc">$</span>duration</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># statistical summaries (mean, quartiles, range)</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cohort<span class="sc">$</span>onset)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cohort<span class="sc">$</span>duration)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cohort<span class="sc">$</span>recovery)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co"># highest and lowest recovery times</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co"># The function sort() sorts the vector from lowest to highest.</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co"># head() returns the first 6 values of a vector; tails() returns the last 6.</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(cohort<span class="sc">$</span>onset)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">sort</span>(cohort<span class="sc">$</span>onset))    <span class="co"># lowest 6 values (first 6 in the sorted vector)</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(<span class="fu">sort</span>(cohort<span class="sc">$</span>onset))    <span class="co"># highest 6 values (last 6 in the sorted vector)</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(cohort<span class="sc">$</span>onset)</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co"># With a long vector, sorting repeatedly can be slow.</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="co"># You can also control the number of elements returned by head() or tail().</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>onset_ordered <span class="ot">&lt;-</span> <span class="fu">sort</span>(cohort<span class="sc">$</span>onset)</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(onset_ordered, <span class="at">n =</span> <span class="dv">10</span>)</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(onset_ordered, <span class="at">n =</span> <span class="dv">10</span>)</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="co"># seeing rows and columns of the data frame</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>cohort[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="fu">c</span>(<span class="st">"onset"</span>, <span class="st">"duration"</span>, <span class="st">"recovery"</span>)]</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>cohort[<span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">50</span>), <span class="fu">c</span>(<span class="st">"onset"</span>, <span class="st">"recovery"</span>)]</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>cohort[<span class="fu">which</span>(cohort<span class="sc">$</span>recovery <span class="sc">&lt;</span> <span class="dv">1</span>), <span class="fu">c</span>(<span class="st">"onset"</span>, <span class="st">"recovery"</span>)]</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>cohort[, <span class="fu">c</span>(<span class="st">"onset"</span>, <span class="st">"recovery"</span>)]    <span class="co"># all rows</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>cohort[<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">11</span>), ]         <span class="co"># all columns</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="co"># point prevalence</span></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>prev <span class="ot">&lt;-</span> <span class="cf">function</span>(t) {</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>  <span class="co"># vector of TRUE/FALSE for prevalent cases at time t</span></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>  prevalent <span class="ot">&lt;-</span> cohort<span class="sc">$</span>onset <span class="sc">&lt;=</span> t <span class="sc">&amp;</span> cohort<span class="sc">$</span>recovery <span class="sc">&gt;</span> t</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(prevalent)</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="fu">prev</span>(<span class="dv">0</span>)</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="fu">prev</span>(<span class="dv">1</span>)</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a><span class="fu">prev</span>(<span class="dv">2</span>)</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a><span class="fu">prev</span>(<span class="dv">6</span>)</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a><span class="co"># period prevalence</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="co"># The parentheses around the logical tests are just for readability.</span></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>pdprev <span class="ot">&lt;-</span> <span class="cf">function</span>(ta, tb) {</span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>  <span class="co"># prevalent cases at t_a</span></span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>  prevalent_ta <span class="ot">&lt;-</span> (cohort<span class="sc">$</span>onset <span class="sc">&lt;=</span> ta <span class="sc">&amp;</span> cohort<span class="sc">$</span>recovery <span class="sc">&gt;</span> ta)</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>  <span class="co"># incident cases in (t_a, t_b]</span></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>  incident_ab <span class="ot">&lt;-</span> (cohort<span class="sc">$</span>onset <span class="sc">&gt;</span> ta <span class="sc">&amp;</span> cohort<span class="sc">$</span>onset <span class="sc">&lt;=</span> tb)</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>  <span class="co"># mean indicator for prevalent at t_a or incident in (t_a, t_b]</span></span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(prevalent_ta <span class="sc">|</span> incident_ab)</span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a><span class="fu">pdprev</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a><span class="fu">pdprev</span>(<span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a><span class="fu">pdprev</span>(<span class="dv">0</span>, <span class="dv">6</span>)</span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a><span class="co"># save the data as a CSV file</span></span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(cohort, <span class="st">"cohort.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="risk-cumulative-incidence-and-the-survival-function" class="level3" data-number="1.5.2">
 <h3 data-number="1.5.2" class="anchored" data-anchor-id="risk-cumulative-incidence-and-the-survival-function"><span class="header-section-number">1.5.2</span> Risk (cumulative incidence) and the survival function</h3>
-<p>To define <strong>risk</strong> or <strong>cumulative incidence</strong>, we first choose an nonempty time interval <span class="math inline">\((t_a, t_b]\)</span> and let the population <span class="math inline">\(\Omega\)</span> consist only of individuals who do not have disease at time <span class="math inline">\(t_a\)</span> and are at risk of disease onset after that. The disease outcome is defined as <span class="math display">\[
+<p>To define <strong>risk</strong> or <strong>cumulative incidence</strong>, we first choose an nonempty time interval <span class="math inline">\((t_a, t_b]\)</span>. The disease outcome is defined as <span class="math display">\[
   D(\omega) =
   \begin{cases}
     1 &amp; \text{if } \omega \text{ has } \tonset \in (t_a, t_b], \\
     0 &amp; \text{otherwise}.
   \end{cases}
 \]</span> In the population that is disease-free and at risk of disease at time <span class="math inline">\(t_a\)</span>, it is the proportion who have disease onset at <span class="math inline">\(\tonset \leq t_b\)</span>. The risk is sometimes called the <em>incidence proportion</em>.</p>
-<p>The risk depends on a specified interval <span class="math inline">\((t_a, t_b]\)</span>. We can always define our time scale so that <span class="math inline">\(t_a = 0\)</span>, so the risk in <span class="math inline">\((t_a, t_b]\)</span> on the original time scale is the same as the risk in the interval <span class="math inline">\((0, t_b - t_a]\)</span> on the <em>analysis time</em> scale. On the analysis time scale, the <strong>cumulative incidence function</strong> <span class="math inline">\(F(t)\)</span> is the risk of disease in <span class="math inline">\((0, t]\)</span>. The corresponding <strong>survival function</strong> is <span class="math display">\[
+<p>The risk depends on a specified interval <span class="math inline">\((t_a, t_b]\)</span>. We can always define our time scale so that <span class="math inline">\(t_a = 0\)</span>, so the risk in <span class="math inline">\((t_a, t_b]\)</span> on the original time scale is the same as the risk in the interval <span class="math inline">\((0, t_b - t_a]\)</span> on the analysis time scale. On the analysis time scale, the <strong>cumulative incidence function</strong> <span class="math inline">\(F(t)\)</span> is the risk of disease in <span class="math inline">\((0, t]\)</span> for any possible <span class="math inline">\(t\)</span>. The corresponding <strong>survival function</strong> is <span class="math display">\[
   S(t)
   = 1 - F(t),
 \]</span> which is the probability of no disease onset in <span class="math inline">\((0, t]\)</span>. In practice, it is often easier to calculate the survival function than to calculate the cumulative incidence function directly. There is only one way to survive disease-free through the interval <span class="math inline">\((0, t]\)</span>, but you can have disease onset at any time.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>risk.R</strong></pre>
+</div>
+<div class="sourceCode" id="cb5" data-filename="risk.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Risk, survival function, and cumulative incidence function</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># read data from CSV file</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Change or remove ".R/" in the path as needed to locate the cohort.csv file.</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># You can also re-generate the data as in prevalence.R using the same seed.</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>cohort <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"./R/cohort.csv"</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># risk (cumpulative incidence)</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>risk <span class="ot">&lt;-</span> <span class="cf">function</span>(t) {</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># vector of TRUE/FALSE for incident cases in (0, t]</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  incident <span class="ot">&lt;-</span> cohort<span class="sc">$</span>onset <span class="sc">&lt;=</span> t</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(incident)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="fu">risk</span>(<span class="dv">0</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="fu">risk</span>(<span class="dv">1</span>)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="fu">risk</span>(<span class="dv">2</span>)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="fu">risk</span>(<span class="dv">6</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co"># cumulative incidence function</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Vectorize() takes a function like risk() that takes a single number as input</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co"># and creates a function that can take a number or vector as input.</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>cuminc <span class="ot">&lt;-</span> <span class="fu">Vectorize</span>(risk)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="fu">cuminc</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">6</span>))</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="co"># survival function</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="co"># A simple function can be put on one line.</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="co"># It takes the same input as cuminc(), so it can take a vector</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>surv <span class="ot">&lt;-</span> <span class="cf">function</span>(t) <span class="dv">1</span> <span class="sc">-</span> <span class="fu">cuminc</span>(t)</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="fu">surv</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">6</span>))</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the survival and cumulative incidence functions</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">20</span>, <span class="at">by =</span> <span class="fl">0.1</span>)</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(t, <span class="fu">surv</span>(t), <span class="at">type =</span> <span class="st">"l"</span>,</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Time"</span>, <span class="at">ylab =</span> <span class="st">"Probability"</span>)</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t, <span class="fu">cuminc</span>(t), <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"right"</span>, <span class="at">bg =</span> <span class="st">"white"</span>, <span class="at">lty =</span> <span class="fu">c</span>(<span class="st">"dashed"</span>, <span class="st">"solid"</span>),</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Cumulative incidence"</span>, <span class="st">"Survival"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
 <p>The survival function has several important properties:</p>
 <ul>
 <li><p><span class="math inline">\(S(0) = 1\)</span> because <span class="math inline">\((0, 0]\)</span> is an empty interval where no one can have disease onset.</p></li>
 <li><p>Because <span class="math inline">\(S(t)\)</span> is a probability, <span class="math inline">\(S(t) \in [0, 1]\)</span> for all <span class="math inline">\(t\)</span>.</p></li>
-<li><p><span class="math inline">\(S(t)\)</span> monotonically decreases (i.e., never increases) with increasing <span class="math inline">\(t\)</span>. If <span class="math inline">\(t_a &lt; t_b\)</span>, then the time interval <span class="math inline">\((0, t_a]\)</span> is contained <span class="math inline">\((0, t_b]\)</span>. Everyone who survives disease-free through <span class="math inline">\((0, t_b]\)</span> must have survived disease-free through <span class="math inline">\((0, t_a]\)</span>, but some people who survived through <span class="math inline">\((0, t_a]\)</span> might have disease onset in <span class="math inline">\((t_a, t_b]\)</span>. Thus, <span class="math inline">\(S(t_a) \geq S(t_b)\)</span> whenever <span class="math inline">\(t_a &lt; t_b\)</span>.</p></li>
-<li><p>If the disease or event occurs eventually in all individuals (e.g., death), then <span class="math inline">\(S(t) \rightarrow 0\)</span> as <span class="math inline">\(t \rightarrow \infty\)</span>.</p></li>
+<li><p><span class="math inline">\(S(t)\)</span> monotonically decreases (i.e., never increases) with increasing <span class="math inline">\(t\)</span>. If <span class="math inline">\(t_a &lt; t_b\)</span>, then the time interval <span class="math inline">\((0, t_a]\)</span> is contained <span class="math inline">\((0, t_b]\)</span>. Everyone who survives disease-free through <span class="math inline">\((0, t_b]\)</span> must have survived disease-free through <span class="math inline">\((0, t_a]\)</span>, but some people who survived through <span class="math inline">\((0, t_a]\)</span> might not make it all the way through <span class="math inline">\((0, t_b]\)</span>. Thus, <span class="math inline">\(S(t_a) \geq S(t_b)\)</span> whenever <span class="math inline">\(t_a &lt; t_b\)</span>.</p></li>
+<li><p>If the disease or event occurs eventually for all individuals in our population <span class="math inline">\(\Omega\)</span> (e.g., death), then <span class="math inline">\(S(t) \rightarrow 0\)</span> as <span class="math inline">\(t \rightarrow \infty\)</span>.</p></li>
 </ul>
-<p>Each of these probabilities follows directly from the definition of <span class="math inline">\(S(t)\)</span>. Similarly, the cumulative incidence function <span class="math inline">\(F\)</span> has <span class="math inline">\(F(0) = 0\)</span>, <span class="math inline">\(F(t) \in [0, 1]\)</span>, and it is monotonically increasing (i.e., never decreasing) with increasing <span class="math inline">\(t\)</span>. If the disease or event occurs eventually in all individuals, then <span class="math inline">\(F(t) \rightarrow 1\)</span> as <span class="math inline">\(t \rightarrow \infty\)</span>.</p>
-<p>Here, I will generally use the word <em>risk</em> to refer to the probability of disease onset in a specified interval. When there is possible confusion about the meaning of “risk”, I will use <em>cumulative incidence</em> instead. The terms <em>cumulative incidence function</em> and <em>survival function</em> are standard in survival analysis, which is the branch of statistics that studies times to events. There is an important distinction between <em>risks</em> and <em>rates</em> in epidemiology, so it is helpful to use terminology that maintains this distinction. However, you should be aware that these words are sometimes used interchangeably.</p>
-<p>Another advantage of risk is that it can be used for outcomes that begin and end very quickly (e.g., traffic accidents or being hit by lightning) or outcomes that remove individuals from the population (e.g., emigration or death). Point prevalence would not be a useful measure of the impact of these outcomes on public health, and period prevalence would be nearly identical to the risk over the same period.</p>
-</section>
-<section id="prevalence-and-duration-of-disease" class="level3" data-number="1.5.3">
-<h3 data-number="1.5.3" class="anchored" data-anchor-id="prevalence-and-duration-of-disease"><span class="header-section-number">1.5.3</span> Prevalence and duration of disease</h3>
-<p>Point and period prevalence are both affected by the duration of disease. Both measures will increase if the duration of disease increases. A simple illustration of this is given in <a href="#fig-prevdur" class="quarto-xref">Figure&nbsp;<span>1.2</span></a>. For a fixed set of onset times, the point prevalence of disease at any time <span class="math inline">\(t\)</span> either stays the same or increases when the duration of disease increases. The risk of disease in any interval is not affected by the duration of disease.</p>
-<div id="fig-prevdur" class="lightbox quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-prevdur-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="./images/prevdur.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;1.2: Each black horizontal line shows the onset of disease and recovery of disease in a single individual. The gray lines show recoveries from disease if the disease duration increases. The prevalence at time t = 5 is 2/5 = 0.4 under the shorter duration of disease but 3/5 = 0.6 under the longer duration of disease. The risk of disease onset in any time interval is unaffected by the duration of disease."><img src="./images/prevdur.png" class="img-fluid figure-img" style="width:80.0%"></a>
+<p>Each of these probabilities follows directly from the definition of <span class="math inline">\(S(t)\)</span>. Similarly, the cumulative incidence function <span class="math inline">\(F\)</span> has <span class="math inline">\(F(0) = 0\)</span> and <span class="math inline">\(F(t) \in [0, 1]\)</span>, and it is monotonically increasing (i.e., never decreasing) with increasing <span class="math inline">\(t\)</span>. If the disease or event occurs eventually in all individuals, then <span class="math inline">\(F(t) \rightarrow 1\)</span> as <span class="math inline">\(t \rightarrow \infty\)</span>. <a href="#fig-surv" class="quarto-xref">Figure&nbsp;<span>1.2</span></a> shows the survival and cumulative hazard curves for the data generated in the prevalence example above.</p>
+<div class="cell">
+<div class="code-with-filename">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-with-filename-file">
+<pre><strong>surv-fig.R</strong></pre>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prevdur-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1.2: Each black horizontal line shows the onset of disease and recovery of disease in a single individual. The gray lines show recoveries from disease if the disease duration increases. The prevalence at time <span class="math inline">\(t = 5\)</span> is <span class="math inline">\(2/5 = 0.4\)</span> under the shorter duration of disease but <span class="math inline">\(3/5 = 0.6\)</span> under the longer duration of disease. The risk of disease onset in any time interval is unaffected by the duration of disease.
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Plot of survival and cumulative incidence functions</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># read data from CSV file</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Change or remove ".R/" in the path as needed to locate the cohort.csv file.</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># You can also re-generate the data as in prevalence.R using the same seed.</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>cohort <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"./R/cohort.csv"</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># risk (cumpulative incidence)</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>risk <span class="ot">&lt;-</span> <span class="cf">function</span>(t) {</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># vector of TRUE/FALSE for incident cases in (0, t]</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  incident <span class="ot">&lt;-</span> cohort<span class="sc">$</span>onset <span class="sc">&lt;=</span> t</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(incident)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co"># cumulative incidence function</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>cuminc <span class="ot">&lt;-</span> <span class="fu">Vectorize</span>(risk)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co"># survival function</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>surv <span class="ot">&lt;-</span> <span class="cf">function</span>(t) <span class="dv">1</span> <span class="sc">-</span> <span class="fu">cuminc</span>(t)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the survival and cumulative incidence functions</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">20</span>, <span class="at">by =</span> <span class="fl">0.1</span>)</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(t, <span class="fu">surv</span>(t), <span class="at">type =</span> <span class="st">"l"</span>,</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Time"</span>, <span class="at">ylab =</span> <span class="st">"Probability"</span>)</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t, <span class="fu">cuminc</span>(t), <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"right"</span>, <span class="at">bg =</span> <span class="st">"white"</span>, <span class="at">lty =</span> <span class="fu">c</span>(<span class="st">"dashed"</span>, <span class="st">"solid"</span>),</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Cumulative incidence"</span>, <span class="st">"Survival"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output-display">
+<div id="fig-surv" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-surv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="probability_files/figure-html/fig-surv-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;1.2: Survival and cumulative incidence curves for the data from the prevalence example."><img src="probability_files/figure-html/fig-surv-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-surv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.2: Survival and cumulative incidence curves for the data from the prevalence example.
 </figcaption>
 </figure>
 </div>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">R</a></li></ul>
-<div class="tab-content">
-<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
-<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>, the risk <span class="cf">in</span> any time interval depends only on the frequency of disease <span class="fu">onset</span> (see Figure<span class="sc">~</span>\ref{fig<span class="sc">:</span>prevdur}).</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>This makes risk a more useful measure <span class="cf">for</span> identifying the causes of disease, which is the primary goal of <span class="sc">*</span>analytic epidemiology<span class="sc">*</span>. <span class="sc">-</span><span class="ot">-&gt;</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>Prevalence is an important measure <span class="cf">in</span> <span class="sc">**</span>descriptive epidemiology<span class="sc">**</span>, which measures the distribution of disease over person, place, and time. </span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>As shown <span class="cf">in</span> Figure, prevalence depends on both the <span class="sc">**</span>incidence<span class="sc">**</span> (i.e., the frequency of disease onset) and the duration of <span class="fu">disease</span> (i.e., the distribution of times from onset to recovery).</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>Figure<span class="sc">~</span>\ref{fig<span class="sc">:</span>prevdur} shows how prevalence can depend on the duration of disease.</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>All <span class="cf">else</span> being equal, prevalence will increase <span class="cf">if</span> either frequency of <span class="fu">onset</span> (incidence) or duration of disease increases, and prevalence will decrease <span class="cf">if</span> either frequency of onset or duration decreases.</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>In a given population, the relationship between prevalence, frequency of disease <span class="fu">onset</span> (incidence), and the duration of disease can be complex [<span class="sc">@</span>freeman1980prevalence, <span class="sc">@</span>preston1987relations, <span class="sc">@</span>keiding1991age, <span class="sc">@</span>alho1992prevalence].</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="sc">:::</span> {.panel<span class="sc">-</span>tabset}</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="do">## R</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="st">```</span><span class="at"> {.r}</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="at">## Prevalence and duration plot</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="at">png(file = "prevdur.png")</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="at">plot(0, 0, type = "n", xlim = c(0.5, 10), ylim = c(0, 5.5),</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="at">     xlab = "Time", ylab = "Individual", yaxt = "n")</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="at">Axis(side = 2, at = 1:5, labels = 1:5)</span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="at">grid()</span></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="at">start &lt;- c(4, 1, 3, 2, 6)</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="at">stop1 &lt;- c(7, 3, 6, 4, 7)</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="at">stop2 &lt;- c(9, 4, 8, 7, 9)</span></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="at">arrows(x0 = start, y0 = 1:5, x1 = stop1, code = 3, length = 0.2, angle = 90)</span></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="at">arrows(x0 = stop1, y0 = 1:5, x1 = stop2, code = 2, length = 0.2, angle = 90,</span></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="at">       col = "darkgray")</span></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="at">abline(v = 5, lty = "dashed")</span></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="at">text(5.5, 0.5, label = "t = 5")</span></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="at">dev.off()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Here, I will generally use the word “risk” to refer to the probability of disease onset in a specified interval. When there is possible confusion about the meaning of “risk”, I will use “cumulative incidence” instead. The terms “cumulative incidence function” and “survival function” are standard in survival analysis, which is the branch of statistics that studies times to events. The creative use of “risk” in public health and medicine should not make you shy away from using the word correctly.</p>
+</section>
+<section id="prevalence-and-the-duration-of-disease" class="level3" data-number="1.5.3">
+<h3 data-number="1.5.3" class="anchored" data-anchor-id="prevalence-and-the-duration-of-disease"><span class="header-section-number">1.5.3</span> Prevalence and the duration of disease</h3>
+<p>Point and period prevalence are both affected by the duration of disease. Both measures will increase if the duration of disease increases. A simple illustration of this is given in <a href="#fig-prevdur" class="quarto-xref">Figure&nbsp;<span>1.3</span></a>. For a fixed set of onset times, the point prevalence of disease at any time <span class="math inline">\(t\)</span> either stays the same or increases when the duration of disease increases. The prevalence at time <span class="math inline">\(t = 5\)</span> is <span class="math inline">\(\frac{2}{5} = 0.4\)</span> under the shorter duration of disease but <span class="math inline">\(\frac{3}{5} = 0.6\)</span> under the longer duration of disease. Period prevalence over any interval <span class="math inline">\((t_a, t_b]\)</span> is affected by the duration of disease because it is the point prevalence at <span class="math inline">\(t_a\)</span> (which is affected by disease duration) plus the risk of disease onset over <span class="math inline">\((t_a, t_b]\)</span>. In a given population, the relationship between prevalence, frequency of disease onset (incidence), and the duration of disease can be complex <span class="citation" data-cites="freeman1980prevalence preston1987relations keiding1991age alho1992prevalence">(<a href="references.html#ref-freeman1980prevalence" role="doc-biblioref">Freeman and Hutchison 1980</a>; <a href="references.html#ref-preston1987relations" role="doc-biblioref">Preston 1987</a>; <a href="references.html#ref-keiding1991age" role="doc-biblioref">Keiding 1991</a>; <a href="references.html#ref-alho1992prevalence" role="doc-biblioref">Alho 1992</a>)</span>. The risk of disease in any given interval is not affected by the duration of disease.</p>
+<div class="cell">
+<div class="code-with-filename">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-with-filename-file">
+<pre><strong>prevdur-fig.R</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">## R code for prevalence and duration plot</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="at">type =</span> <span class="st">"n"</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">5.5</span>),</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Time"</span>, <span class="at">ylab =</span> <span class="st">"Individual"</span>, <span class="at">yaxt =</span> <span class="st">"n"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">Axis</span>(<span class="at">side =</span> <span class="dv">2</span>, <span class="at">at =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">labels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>start <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">6</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>stop1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">4</span>, <span class="dv">7</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>stop2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">9</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">7</span>, <span class="dv">9</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(<span class="at">x0 =</span> start, <span class="at">y0 =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">x1 =</span> stop1, <span class="at">code =</span> <span class="dv">3</span>, <span class="at">length =</span> <span class="fl">0.2</span>, <span class="at">angle =</span> <span class="dv">90</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(<span class="at">x0 =</span> stop1, <span class="at">y0 =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">x1 =</span> stop2, <span class="at">code =</span> <span class="dv">2</span>, <span class="at">length =</span> <span class="fl">0.2</span>, <span class="at">angle =</span> <span class="dv">90</span>,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">"darkgray"</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">5</span>, <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">5.5</span>, <span class="fl">0.5</span>, <span class="at">label =</span> <span class="st">"t = 5"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output-display">
+<div id="fig-prevdur" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-prevdur-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="probability_files/figure-html/fig-prevdur-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;1.3: Each black horizonal line shows the onset of disease and recovery from disease in a single individual. The gray lines show recoveries from disease if the disease duration increases."><img src="probability_files/figure-html/fig-prevdur-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prevdur-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.3: Each black horizonal line shows the onset of disease and recovery from disease in a single individual. The gray lines show recoveries from disease if the disease duration increases.
+</figcaption>
+</figure>
 </div>
 </div>
 </div>
-<p>Because prevalence depends on both incidence and duration of disease, a change in the prevalence of disease can generally be explained several different ways <span class="citation" data-cites="macmahon1958application">Dunn Jr (<a href="references.html#ref-dunn1962use" role="doc-biblioref">1962</a>)</span>. For example, an increase in prevalence of human immunodeficiency virus (HIV) infection could be cause by an increase in the incidence of HIV infection (which is bad) or an increase in the life expectancy of HIV-infected people (which is good). In contrast, the risk of disease onset in any given interval depends only on incidence. This makes cumulative incidence a more useful measure for identifying the causes of disease, which is the primary goal of <strong>analytic epidemiology</strong>.</p>
+</section>
+<section id="descriptive-and-analytic-epidemiology" class="level3" data-number="1.5.4">
+<h3 data-number="1.5.4" class="anchored" data-anchor-id="descriptive-and-analytic-epidemiology"><span class="header-section-number">1.5.4</span> Descriptive and analytic epidemiology</h3>
+<p>Prevalence is often a useful measure for <strong>descriptive epidemiology</strong>, which measures the distribution of disease over person, place, and time. Because prevalence depends on both incidence and duration of disease, a change in the prevalence of disease can generally be explained several different ways <span class="citation" data-cites="macmahon1958application dunn1962use">(<a href="references.html#ref-macmahon1958application" role="doc-biblioref">MacMahon and Terry 1958</a>; <a href="references.html#ref-dunn1962use" role="doc-biblioref">Dunn Jr 1962</a>)</span>. For example, an increase in prevalence of human immunodeficiency virus (HIV) infection could be cause by an increase in the incidence of HIV infection (which is bad) or an increase in the life expectancy of HIV-infected people (which is good).</p>
+<p>Risk (cumulative incidence) is generally more useful than prevalence for <strong>analytic epidemiology</strong>, which attempts to identify the causes of a disease. Another advantage of risk is that it can be used for outcomes that begin and end very quickly (e.g., traffic accidents or being hit by lightning) and for outcomes that remove individuals from the population (e.g., emigration or death). Prevalence is not a useful measure of the public health impact of these events.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-alho1992prevalence" class="csl-entry" role="listitem">
+Alho, Juha M. 1992. <span>“On Prevalence, Incidence, and Duration in General Stable Populations.”</span> <em>Biometrics</em> 48 (2): 587–92.
+</div>
 <div id="ref-dunn1962use" class="csl-entry" role="listitem">
 Dunn Jr, John E. 1962. <span>“The Use of Incidence and Prevalence in the Study of Disease Development in a Population.”</span> <em>American Journal of Public Health</em> 52 (7): 1107–18.
+</div>
+<div id="ref-freeman1980prevalence" class="csl-entry" role="listitem">
+Freeman, Jonathan, and George B Hutchison. 1980. <span>“Prevalence, Incidence and Duration.”</span> <em>American Journal of Epidemiology</em> 112 (5): 707–23.
+</div>
+<div id="ref-keiding1991age" class="csl-entry" role="listitem">
+Keiding, Niels. 1991. <span>“Age-Specific Incidence and Prevalence: A Statistical Perspective.”</span> <em>Journal of the Royal Statistical Society: Series A (Statistics in Society)</em> 154 (3): 371–96.
 </div>
 <div id="ref-marquis1820theorie" class="csl-entry" role="listitem">
 Laplace, Pierre Simon. 1820. <em>Th<span>é</span>orie Analytique Des Probabilit<span>é</span>s</em>. Vol. 7. Courcier.
@@ -936,6 +1181,9 @@ MacMahon, Brian, and William D Terry. 1958. <span>“Application of Cohort Analy
 </div>
 <div id="ref-morabia2004epidemiology" class="csl-entry" role="listitem">
 Morabia, Alfredo. 2004. <span>“Epidemiology: An Epistemological Perspective.”</span> In <em>A History of Epidemiologic Methods and Concepts</em>, edited by Alfredo Morabia, 3–125. Springer.
+</div>
+<div id="ref-preston1987relations" class="csl-entry" role="listitem">
+Preston, Samuel H. 1987. <span>“Relations Among Standard Epidemiologic Measures in a Population.”</span> <em>American Journal of Epidemiology</em> 126 (2): 336–45.
 </div>
 </div>
 </section>
@@ -951,8 +1199,9 @@ Morabia, Alfredo. 2004. <span>“Epidemiology: An Epistemological Perspective.�
 <li id="fn6"><p> Technically, we assign probabilities only to events in a set <span class="math inline">\(\mathcal{F}\)</span> of subsets of <span class="math inline">\(\Omega\)</span> that is required to contain <span class="math inline">\(\Omega\)</span> and to be closed under complements and countable unions. “Closed under complements” means that <span class="math inline">\(A^\comp \in \mathcal{F}\)</span> whenever <span class="math inline">\(A \in \mathcal{F}\)</span>. For example, <span class="math inline">\(\varnothing = \Omega^\comp\)</span> must be in <span class="math inline">\(\mathcal{F}\)</span> because <span class="math inline">\(\Omega \in \mathcal{F}\)</span>. “Closed under countable unions” means that <span class="math inline">\(\bigcup_{i = 1}^\infty A_i \in \mathcal{F}\)</span> whenever <span class="math inline">\((A_1, A_2, \ldots)\)</span> is a sequence of events in <span class="math inline">\(\mathcal{F}\)</span>. The set <span class="math inline">\(\mathcal{F}\)</span> is called a <span class="math inline">\(\sigma\)</span>-algebra, and this restriction on the domain of probability helps avoid internal contradictions like the mind-blowing <a href="https://en.wikipedia.org/wiki/Banach_Tarski_paradox">Banach-Tarski paradox</a>.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn7"><p> Technically, the support of <span class="math inline">\(X\)</span> is the smallest closed set <span class="math inline">\(S_X\)</span> such that <span class="math inline">\(\Pr(X \in S_X) = 1\)</span>. For a discrete random variable with support on a finite set, it is just the set of possible values. For a discrete random variable with support on a countably infinite set, it can include points whose probability mass is zero—a pathological case that we can safely ignore. For a continuous random variable, it can include values whose probability density is zero—a case that is not unusual or pathological.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn8"><p> Named after <a href="https://en.wikipedia.org/wiki/Jacob_Bernoulli">Jacob Bernoulli</a> (1655-1705), a Swiss mathematician who derived the first version of the law of large numbers and discovered the constant <span class="math inline">\(e \approx 2.718281828\)</span>, which is the base for natural logarithms. He and his younger brother Johann Bernoulli (1667-1748) were some of the first mathematicians to try to understand and apply calculus, but their relationship eventually curdled into a jealous rivalry. A lunar impact crater called Bernoulli is named jointly after them.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9"><p> Named after <a href="https://en.wikipedia.org/wiki/Karl_Pearson">Karl Pearson</a> (1857-1936), an English mathematician who founded the modern discipline of mathematical statistics. In 1911, he started the world’s first university department of statistics at University College London. He was an outspoken socialist and supporter of women’s rights, but he was also a vocal proponent of social Darwinism and eugenics who opposed Jewish immigration into Britain.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn10"><p> We will define independence of random variables more rigorously when we discuss conditional probabilities in <a href="condprob.html" class="quarto-xref"><span>Chapter 2</span></a>.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p> This becomes a fundamental insight when we discuss hypothesis tests for independence as well as confounding and selection bias.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p> Named after <a href="https://en.wikipedia.org/wiki/Karl_Pearson">Karl Pearson</a> (1857-1936), an English mathematician who founded the modern discipline of mathematical statistics. In 1911, he started the world’s first university department of statistics at University College London. He was an outspoken socialist and supporter of women’s rights, but he was also a vocal proponent of social Darwinism and eugenics who opposed Jewish immigration into Britain.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p> We will define independence of random variables more rigorously when we discuss conditional probabilities in <a href="condprob.html" class="quarto-xref"><span>Chapter 2</span></a>.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
