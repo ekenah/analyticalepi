@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -61,6 +95,9 @@ div.csl-indent {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-747bc48f972f7c4036e4d8e8c6d9e55a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -97,16 +134,48 @@ div.csl-indent {
         comp: "\\mathsf\{C\}",
         Cov: ["\\operatorname\{Cov\}"],
         E: ["\\operatorname\{\\mathbb\{E\}\}"],
+        given: ["\\, #1| \\, ", 1],
         indicator: "\\mathbb\{1\}",
         supp: ["\\operatorname\{supp\}"],
         tonset: "t^\\text\{ons\}",
         trec: "t^\\text\{rec\}",
+        twobytwo: "2 \\times 2",
+        vand: "\\text\{ and \}",
         Var: ["\\operatorname\{Var\}"]
       }
     }
   };
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -119,7 +188,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./probability.html">A. One-Sample Inference for Risks and Rates</a></li><li class="breadcrumb-item"><a href="./condprob.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Conditional Probability and Diagnostic Tests</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./probability.html">One-Sample Inference for Risks and Rates</a></li><li class="breadcrumb-item"><a href="./condprob.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Conditional Probability and Diagnostic Tests</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -156,7 +225,7 @@ div.csl-indent {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">A. One-Sample Inference for Risks and Rates</span></a>
+ <span class="menu-text">One-Sample Inference for Risks and Rates</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -202,15 +271,15 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">B. Two-Sample Inference and Study Design</span></span>
+ <span class="menu-text">Two-Sample Inference and Study Design</span></span>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">C. Principles of Causal Inference</span></span>
+ <span class="menu-text">Principles of Causal Inference</span></span>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">D. Epidemologic and Statistical Methods for Causal Inference</span></span>
+ <span class="menu-text">Epidemologic and Statistical Methods for Causal Inference</span></span>
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
@@ -218,18 +287,65 @@ div.csl-indent {
  <span class="menu-text">References</span></a>
   </div>
 </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./calculus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="2">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#contingency-tables" id="toc-contingency-tables" class="nav-link active" data-scroll-target="#contingency-tables"><span class="header-section-number">2.1</span> Contingency tables</a>
+  <ul class="collapse">
+  <li><a href="#x2-tables" id="toc-x2-tables" class="nav-link" data-scroll-target="#x2-tables"><span class="header-section-number">2.1.1</span> 2x2 tables</a></li>
+  <li><a href="#conditional-and-marginal-probabilities-on-a-2x2-table" id="toc-conditional-and-marginal-probabilities-on-a-2x2-table" class="nav-link" data-scroll-target="#conditional-and-marginal-probabilities-on-a-2x2-table"><span class="header-section-number">2.1.2</span> Conditional and marginal probabilities on a 2x2 table</a></li>
+  </ul></li>
+  <li><a href="#multiplication-of-conditional-probabilities" id="toc-multiplication-of-conditional-probabilities" class="nav-link" data-scroll-target="#multiplication-of-conditional-probabilities"><span class="header-section-number">2.2</span> Multiplication of conditional probabilities</a>
+  <ul class="collapse">
+  <li><a href="#decision-trees" id="toc-decision-trees" class="nav-link" data-scroll-target="#decision-trees"><span class="header-section-number">2.2.1</span> Decision trees</a></li>
+  <li><a href="#independence-of-events" id="toc-independence-of-events" class="nav-link" data-scroll-target="#independence-of-events"><span class="header-section-number">2.2.2</span> Independence of events</a></li>
+  </ul></li>
+  <li><a href="#sensitivity-and-specificity" id="toc-sensitivity-and-specificity" class="nav-link" data-scroll-target="#sensitivity-and-specificity"><span class="header-section-number">2.3</span> Sensitivity and specificity</a>
+  <ul class="collapse">
+  <li><a href="#example-diabetes-testing" id="toc-example-diabetes-testing" class="nav-link" data-scroll-target="#example-diabetes-testing"><span class="header-section-number">2.3.1</span> Example: Diabetes testing</a></li>
+  <li><a href="#receiver-operating-characteristic-roc-curves" id="toc-receiver-operating-characteristic-roc-curves" class="nav-link" data-scroll-target="#receiver-operating-characteristic-roc-curves"><span class="header-section-number">2.3.2</span> Receiver operating characteristic (ROC) curves*</a></li>
+  </ul></li>
+  <li><a href="#law-of-total-probability" id="toc-law-of-total-probability" class="nav-link" data-scroll-target="#law-of-total-probability"><span class="header-section-number">2.4</span> Law of total probability</a>
+  <ul class="collapse">
+  <li><a href="#example-probability-of-a-positive-or-negative-test" id="toc-example-probability-of-a-positive-or-negative-test" class="nav-link" data-scroll-target="#example-probability-of-a-positive-or-negative-test"><span class="header-section-number">2.4.1</span> Example: probability of a positive or negative test</a></li>
+  <li><a href="#standardization" id="toc-standardization" class="nav-link" data-scroll-target="#standardization"><span class="header-section-number">2.4.2</span> Standardization</a></li>
+  </ul></li>
+  <li><a href="#bayes-rule" id="toc-bayes-rule" class="nav-link" data-scroll-target="#bayes-rule"><span class="header-section-number">2.5</span> Bayes’ rule</a>
+  <ul class="collapse">
+  <li><a href="#positive-and-negative-predictive-values" id="toc-positive-and-negative-predictive-values" class="nav-link" data-scroll-target="#positive-and-negative-predictive-values"><span class="header-section-number">2.5.1</span> Positive and negative predictive values</a></li>
+  <li><a href="#likelihood-ratios" id="toc-likelihood-ratios" class="nav-link" data-scroll-target="#likelihood-ratios"><span class="header-section-number">2.5.2</span> Likelihood ratios*</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./probability.html">A. One-Sample Inference for Risks and Rates</a></li><li class="breadcrumb-item"><a href="./condprob.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Conditional Probability and Diagnostic Tests</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./probability.html">One-Sample Inference for Risks and Rates</a></li><li class="breadcrumb-item"><a href="./condprob.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Conditional Probability and Diagnostic Tests</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span id="sec-condprob" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Conditional Probability and Diagnostic Tests</span></span></h1>
 </div>
@@ -249,19 +365,865 @@ div.csl-indent {
 
 
 <blockquote class="blockquote">
-<p>The probability that two subsequent events will happen is a ratio compounded of the probability of the 1st and the probability of the 2d on supposition the 1st happens. <span class="citation" data-cites="bayes1763lii">(<a href="references.html#ref-bayes1763lii" role="doc-biblioref">Bayes 1763</a>)</span><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>The probability that two subsequent events will happen is a ratio compounded of the probability of the 1st and the probability of the 2d on supposition the 1st happens. <span class="citation" data-cites="bayes1763lii">(<a href="#ref-bayes1763lii" role="doc-biblioref">Bayes 1763</a>)</span><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 </blockquote>
+<p>Suppose we know that an event <span class="math inline">\(A\)</span> occurred and want calculate the probability that <span class="math inline">\(B\)</span> also occurred. The <strong>conditional probability</strong> of <span class="math inline">\(B\)</span> given <span class="math inline">\(A\)</span> is <span id="eq-cond"><span class="math display">\[
+    \Pr(B \given{} A) = \frac{\Pr(A \cap B)}{\Pr(A)}.
+\tag{2.1}\]</span></span> Note that this is well-defined only if <span class="math inline">\(\Pr(A) &gt; 0\)</span>. Conditional probabilities given <span class="math inline">\(A\)</span> are just probabilities where the original sample space <span class="math inline">\(\Omega\)</span> has been replaced with an event <span class="math inline">\(A \subseteq \Omega\)</span>. Everything we have learned about probabilities applies to all of the conditional probabilities given the same event <span class="math inline">\(A\)</span>. Conditional probability is arguably the most important mathematical tool in epidemiology.</p>
+<section id="contingency-tables" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="contingency-tables"><span class="header-section-number">2.1</span> Contingency tables</h2>
+<p>In statistics, a <strong>contingency table</strong> classifies individuals by two discrete variables, one that defines the rows and one that defines the columns. Each cell in the table contains the number of individuals who are in the intersection of the corresponding categories of the row and column variables. These numbers are called <em>cell counts</em>. The margins of the table contain row or column totals.</p>
+<section id="x2-tables" class="level3" data-number="2.1.1">
+<h3 data-number="2.1.1" class="anchored" data-anchor-id="x2-tables"><span class="header-section-number">2.1.1</span> 2x2 tables</h3>
+<p>In epidemiology, a <strong>2x2 table</strong> is a contingency table based on a binary exposure variable and a binary disease outcome. We denote exposure by <span class="math inline">\(X = 1\)</span> and no exposure by <span class="math inline">\(X = 0\)</span>, and we denote disease by <span class="math inline">\(D = 1\)</span> and no disease by <span class="math inline">\(D = 0\)</span>. The precise definition of “disease” depends on context. In descriptive epidemiology, <span class="math inline">\(D_i = 1\)</span> might mean that person <span class="math inline">\(i\)</span> is a prevalent case of disease. In analytic epidemiology, <span class="math inline">\(D_i = 1\)</span> might mean that person <span class="math inline">\(i\)</span> had an onset of disease in an interval <span class="math inline">\((t_\text{start}, t_\text{stop}]\)</span> on a relevant time scale. We put exposure in the rows and disease in the columns,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> and the exposure and disease categories are ordered so that individuals with <span class="math inline">\(X = 1\)</span> and <span class="math inline">\(D = 1\)</span> go in the top left corner. This is the most common arrangement in epidemiologic research, but it is not universal.</p>
+<p><a href="#tbl-2by2" class="quarto-xref">Table&nbsp;<span class="quarto-unresolved-ref">tbl-2by2</span></a> shows an example of a 2x2 table. There are <span class="math inline">\(a\)</span> individuals with both exposure and disease, <span class="math inline">\(b\)</span> individuals with exposure but not disease, <span class="math inline">\(c\)</span> individuals with disease but no exposure, and <span class="math inline">\(d\)</span> individuals with neither. In the rows, there are <span class="math inline">\(r_1 = a + b\)</span> exposed individuals and <span class="math inline">\(r_0 = c + d\)</span> unexposed individuals. In the columns, there are <span class="math inline">\(k_1 = a + c\)</span> individuals who had a disease onset and <span class="math inline">\(k_0 = b + d\)</span> individuals who did not. The row and column totals are called the <em>margins</em> of the table. The total number of individuals is <span class="math inline">\(n = a + b + c + d\)</span>.</p>
+<div id="tbl-2by2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-2by2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2.1: 2x2 contingency table of exposure (<span class="math inline">\(X\)</span>) and disease (<span class="math inline">\(D\)</span>).
+</figcaption>
+<div aria-describedby="tbl-2by2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: center;"><span class="math inline">\(D = 1\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(D = 0\)</span></th>
+<th style="text-align: center;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(X = 1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(a\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(b\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(r_1 = a + b\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(X = 0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(c\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(d\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(r_0 = c + d\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Total</strong></td>
+<td style="text-align: center;"><span class="math inline">\(k_1 = a + c\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(k_0 = b + d\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n = a + b + c + d\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="conditional-and-marginal-probabilities-on-a-2x2-table" class="level3" data-number="2.1.2">
+<h3 data-number="2.1.2" class="anchored" data-anchor-id="conditional-and-marginal-probabilities-on-a-2x2-table"><span class="header-section-number">2.1.2</span> Conditional and marginal probabilities on a 2x2 table</h3>
+<p>For simplicity, we will assume that <a href="#tbl-2by2" class="quarto-xref">Table&nbsp;<span class="quarto-unresolved-ref">tbl-2by2</span></a> represents the entire population <span class="math inline">\(\Omega\)</span>. The conditional probability of disease given exposure is <span class="math display">\[
+    \Pr(D = 1 \given{} X = 1)
+    = \frac{Pr(D = 1 \vand X = 1)}{\Pr(X = 1)}
+    = \frac{a / n}{r_1 / n}
+    = \frac{a}{r_1},
+\]</span> and the conditional probability of disease given no exposure is <span class="math display">\[
+  \Pr(D = 1 \given{} X = 0)
+  = \frac{Pr(D = 1 \vand X = 0)}{\Pr(X = 0)}
+  = \frac{c / n}{r_0 / n}
+  = \frac{c}{r_0},
+\]</span> Similarly, the conditional probability of exposure given disease is <span class="math display">\[
+  \Pr(X = 1 \given{} D = 1)
+  = \frac{\Pr(X = 1 \vand D = 1)}{\Pr(D = 1)}
+  = \frac{a / n}{k_1 / n}
+  = \frac{a}{k_1},
+\]</span> and the conditional probabilty of exposure given no disease is <span class="math display">\[
+  \Pr(X = 1 \given{} D = 0)
+  = \frac{\Pr(X = 1 \vand D = 0)}{\Pr(D = 0)}
+  = \frac{b / n}{k_0 / n}
+  = \frac{b}{k_0}.
+\]</span> In all cases, the table total cancels out and we get a calculation in one row or one column.</p>
+<p>Probabilities in the original sample space <span class="math inline">\(\Omega\)</span> are called <strong>marginal probabilities</strong> because they are calculated using the margins of the contingency table. Marginal probabilities were used in the denominators of the conditional probabilities above. In <a href="#tbl-2by2" class="quarto-xref">Table&nbsp;<span class="quarto-unresolved-ref">tbl-2by2</span></a>, the marginal probability of exposure is <span class="math display">\[
+  \Pr(X = 1) = \frac{a + b}{a + b + c + d} = \frac{r_1}{n},
+\]</span> and the marginal probability of disease is <span class="math display">\[
+  \Pr(D = 1) = \frac{a + c}{a + b + c + d} = \frac{k_1}{n}.
+\]</span> Here, the marginal probabilities are probability masses from the marginal distribution of <span class="math inline">\(X\)</span> (based on the row totals) or <span class="math inline">\(D\)</span> (based on the column totals).</p>
+</section>
+</section>
+<section id="multiplication-of-conditional-probabilities" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="multiplication-of-conditional-probabilities"><span class="header-section-number">2.2</span> Multiplication of conditional probabilities</h2>
+<p><a href="#eq-cond" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-cond</span></a> can be rearranged into <span id="eq-cmult"><span class="math display">\[
+    \Pr(A \cap B) = \Pr(B \given{} A) \Pr(A),
+\tag{2.2}\]</span></span> exactly as described by Bayes at the beginning of this chapter (if we let <span class="math inline">\(A\)</span> be the “1st event” and <span class="math inline">\(B\)</span> be the “2d”). This depends only on the definition of conditional probability in equation~<a href="#eq:cond" data-reference-type="eqref" data-reference="eq:cond">[eq:cond]</a>, not on any assumptions about the relationship between the events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>. This multiplication rule for conditional probabilities extends to any number of events. For three events <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, and <span class="math inline">\(C\)</span> such that <span class="math inline">\(B \cap C\)</span> and <span class="math inline">\(C\)</span> have probabilities greater than zero, we have <span class="math display">\[\begin{aligned}
+  \Pr(A \cap B \cap C)
+  &amp;= \Pr(A \given{} B \cap C) \Pr(B \cap C) \\
+  &amp;= \Pr(A \given{} B \cap C) \Pr(B \given{} C) \Pr(C).
+\end{aligned}\]</span> To ensure that all of these conditional probabilities are well-defined, we need <span class="math inline">\(B \cap C\)</span> and <span class="math inline">\(C\)</span> to have probabilities greater than zero. In practice, <span class="math inline">\(\Pr(A \given{} B \cap C)\)</span> is usually written <span class="math inline">\(\Pr(A \given{} B, C)\)</span>.</p>
+<section id="decision-trees" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="decision-trees"><span class="header-section-number">2.2.1</span> Decision trees</h3>
+<p><a href="#fig-decisiontree" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-decisiontree</span></a> shows an example of a <strong>decision tree</strong>. The <em>root</em> of the tree is on the left and the <em>leaves</em> of the tree are on the right. Each node where two or more branches meet represents a decision. In the example, the root represents the decision <span class="math inline">\(A\)</span> or <span class="math inline">\(A^C\)</span> (i.e., not <span class="math inline">\(A\)</span>). The two nodes connected to the root each represent the decision <span class="math inline">\(B\)</span> or <span class="math inline">\(B^C\)</span> (i.e., not <span class="math inline">\(B\)</span>). Each branch of the tree is labeled with the conditional probability of the branch given the event that it branches out from. Because of the multiplication rule for conditional probabilities, the probability of each leaf is equal to the product of the probabilities along the branches connecting it to the root.</p>
+<div id="fig-decisiontree" class="lightbox quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-decisiontree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="./images/decisiontree.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;2.1: A decision tree for events A and B. The probability of each leaf is found by multiplying the probabilities along the branches leading from the root to the leaf."><img src="./images/decisiontree.png" class="img-fluid figure-img" style="width:70.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-decisiontree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.1: A decision tree for events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>. The probability of each leaf is found by multiplying the probabilities along the branches leading from the root to the leaf.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="independence-of-events" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="independence-of-events"><span class="header-section-number">2.2.2</span> Independence of events</h3>
+<p>The events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are <strong>independent</strong> if <span id="eq-indep"><span class="math display">\[
+  \Pr(A \cap B) = \Pr(A) \Pr(B).
+\tag{2.3}\]</span></span> When two events are independent, the occurrence (or not) of one event tells us nothing about whether the other event occurred: If <span class="math inline">\(\Pr(A) &gt; 0\)</span>, equation <a href="#eq-indep" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-indep</span></a> is equivalent to <span class="math inline">\(\Pr(B \given{} A) = \Pr(B)\)</span>. If <span class="math inline">\(\Pr(B) &gt; 0\)</span>, it is equivalent to <span class="math inline">\(\Pr(A \given{} B) = \Pr(A)\)</span>. If <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are not independent, the occurrence of <span class="math inline">\(A\)</span> contains information about the occurrence of <span class="math inline">\(B\)</span> and vice versa.</p>
+<p>Independence of events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> implies that the events <span class="math inline">\(A\)</span> and <span class="math inline">\(B^\comp\)</span> are also independent: <span class="math display">\[
+  \begin{aligned}
+    \Pr\bigl(A \cap B^\comp\bigr)
+    &amp;= \Pr(A) - \Pr(A \cap B) \\
+    &amp;= \Pr(A) - \Pr(A) \Pr(B) \\
+    &amp;= \Pr(A) \big(1 - \Pr(B)\big) \\
+    &amp;= \Pr(A) \Pr\bigl(B^\comp\bigr).
+  \end{aligned}
+\]</span> A similar argument shows that <span class="math inline">\(A^\comp\)</span> and <span class="math inline">\(B\)</span> are independent. Because <span class="math inline">\(A^\comp \cap B^\comp = (A \cup B)^\comp\)</span> by DeMorgan’s laws (see <a href="#sec-setalgebra" class="quarto-xref"><span class="quarto-unresolved-ref">sec-setalgebra</span></a>), <span class="math display">\[
+  \begin{aligned}
+    \Pr\bigl(A^\comp \cap B^\comp\bigr)
+    &amp;= 1 - \Pr(A \cup B) \\
+    &amp;= 1 - \Pr(A) - \Pr(B) - \Pr(A \cap B) \\\
+    &amp;= 1 - \Pr(A) - \Pr(B) - \Pr(A) \Pr(B) \\
+    &amp;= \big(1 - \Pr(A)\big) \big(1 - \Pr(B)\big) \\
+    &amp;= \Pr\bigl(A^\comp\bigr) \Pr\bigl(B^\comp\bigr).
+  \end{aligned}
+\]</span> Therefore, independence of two events implies independence between any combination of themselves or their complements.</p>
+</section>
+</section>
+<section id="sensitivity-and-specificity" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="sensitivity-and-specificity"><span class="header-section-number">2.3</span> Sensitivity and specificity</h2>
+<p>In the epidemiology of screening and diagnostic tests, several of the most important concepts are conditional probabilities. If we classify disease status into diseased (<span class="math inline">\(D^+\)</span>) and nondiseased (<span class="math inline">\(D^-\)</span>) and the test result into positive (<span class="math inline">\(T^+\)</span>) and negative (<span class="math inline">\(T^-\)</span>), we have the four possible combinations <a href="#tbl-screening" class="quarto-xref">Table&nbsp;<span class="quarto-unresolved-ref">tbl-screening</span></a>.</p>
+<div id="tbl-screening" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-screening-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2.2: Disease status (<span class="math inline">\(D^+\)</span>/<span class="math inline">\(D^-\)</span>) and test result (<span class="math inline">\(T^+\)</span>/<span class="math inline">\(T^-\)</span>).
+</figcaption>
+<div aria-describedby="tbl-screening-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;"><span class="math inline">\(T^+\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(T^-\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(D^+\)</span></td>
+<td style="text-align: center;">True positive</td>
+<td style="text-align: center;">False negative</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(D^-\)</span></td>
+<td style="text-align: center;">False positive</td>
+<td style="text-align: center;">True negative</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>The <strong>sensitivity</strong> of a test is the conditional probability that the test is positive given that the individual tested has the disease: <span class="math display">\[
+  \text{sensitivity} = \Pr(T^+ \given{} D^+).
+\]</span> The <strong>specificity</strong> of a test is the conditional probability that the test is negative given that the individual tested does not have the disease: <span class="math display">\[
+  \text{specificity} = \Pr(T^- \given{} D^-).
+\]</span> In both cases, we are conditioning on the disease status of the individual being tested. These concepts were introduced by <span class="citation" data-cites="yerushalmy1947statistical">Yerushalmy (<a href="#ref-yerushalmy1947statistical" role="doc-biblioref">1947</a>)</span> in a comparison of different types of chest X-rays for tuberculosis case detection.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>sensspec.R</strong></pre>
+</div>
+<div class="sourceCode" id="cb1" data-filename="sensspec.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Sensitivity and specificity</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># generate diagnostic testing data</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">500</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>dtdat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">disease =</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="fl">0.5</span>))</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>dtdat<span class="sc">$</span>testpos <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(dtdat<span class="sc">$</span>disease,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="fl">0.85</span>), <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="fl">0.05</span>))</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># prevalence</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(dtdat<span class="sc">$</span>disease)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Pr(T+)</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(dtdat<span class="sc">$</span>testpos)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># sensitivity</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(dtdat<span class="sc">$</span>testpos[dtdat<span class="sc">$</span>disease <span class="sc">==</span> <span class="cn">TRUE</span>])</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(dtdat<span class="sc">$</span>disease <span class="sc">&amp;</span> dtdat<span class="sc">$</span>testpos) <span class="sc">/</span> <span class="fu">sum</span>(dtdat<span class="sc">$</span>disease)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># specificity</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">mean</span>(dtdat<span class="sc">$</span>testpos[dtdat<span class="sc">$</span>disease <span class="sc">==</span> <span class="cn">FALSE</span>])</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="sc">!</span>dtdat<span class="sc">$</span>testpos[dtdat<span class="sc">$</span>disease <span class="sc">==</span> <span class="cn">FALSE</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p>Maximizing either sensitivity or specificity alone does not necessarily lead to good screening or diagnostic test: A test where everyone tests positive has perfect sensitivity but zero specificity, and a test where everyone tests negative has perfect specificity but zero sensitivity. There is almost always a tradeoff where higher sensitivity leads to lower specificity and vice versa.</p>
+<section id="example-diabetes-testing" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="example-diabetes-testing"><span class="header-section-number">2.3.1</span> Example: Diabetes testing</h3>
+<p><span class="citation" data-cites="remein1961efficiency">Remein and Wilkerson (<a href="#ref-remein1961efficiency" role="doc-biblioref">1961</a>)</span> describe an early study of diabetes screening conducted by the United States Public Health Service in Boston City Hospital between 1954 and 1957. They recruited early-morning patients who were not febrile or acutely ill. Those willing to participate gave urine and blood samples. Next, they were given a meal meant to approximate an average breakfast or light lunch (a sandwich, 5~grams of butter, 60~grams of cheese, and three filled cookies). After the meal, they gave further urine and blood samples at one, two, and three hours after eating. The samples were analyzed using four different blood tests and six different urine tests. Participants returned for a follow-up visit between 3 and 21 days after the screening tests, where a definitive diagnosis of diabetes was made using an oral glucose tolerance test and a physical examination according to criteria established by a group of experts.</p>
+<p>A total of 595 participants completed both visits. <a href="#tbl-diabetes" class="quarto-xref">Table&nbsp;<span class="quarto-unresolved-ref">tbl-diabetes</span></a> is a reconstruction of the data for the Somogyi-Nelson blood test based on the 580 participants (70 with diabetes and 510 without) who took the test at all four time points. In the table, a positive test is defined as a blood glucose concentration above 130 mg/dL (milligrams per deciliter).</p>
+<div id="tbl-diabetes" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-diabetes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2.3: Sensitivity and specificity of the Somogyi-Nelson blood glucose test for diabetes where <span class="math inline">\(T^+\)</span> corresponds to a concentration above 130 mg/dL.
+</figcaption>
+<div aria-describedby="tbl-diabetes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: right;"><span class="math inline">\(T^+\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(T^-\)</span></th>
+<th style="text-align: right;">Sensitivity and specificity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td colspan="4" style="text-align: left;"><em>Before meal</em></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(D^+\)</span></td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;"><span class="math inline">\(\text{sens} = 31 / 70 \approx 0.443\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(D^-\)</span></td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">505</td>
+<td style="text-align: right;"><span class="math inline">\(\text{spec} = 505 / 510 \approx 0.990\)</span></td>
+</tr>
+<tr class="even">
+<td colspan="4" style="text-align: left;"><em>One hour after meal</em></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(D^+\)</span></td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;"><span class="math inline">\(\text{sens} = 55 / 70 \approx 0.786\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(D^-\)</span></td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">462</td>
+<td style="text-align: right;"><span class="math inline">\(\text{spec} = 462 / 510 \approx 0.906\)</span></td>
+</tr>
+<tr class="odd">
+<td colspan="4" style="text-align: left;"><em>Two hours after meal</em></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(D^+\)</span></td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;"><span class="math inline">\(\text{sens} = 45 / 70 \approx 0.643\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(D^-\)</span></td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">494</td>
+<td style="text-align: right;"><span class="math inline">\(\text{spec} = 494 / 510 \approx 0.969\)</span></td>
+</tr>
+<tr class="even">
+<td colspan="4" style="text-align: left;"><em>Three hours after meal</em></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(D^+\)</span></td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;"><span class="math inline">\(\text{sens} = 34 / 70 \approx 0.486\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(D^-\)</span></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">509</td>
+<td style="text-align: right;"><span class="math inline">\(\text{spec} = 509 / 510 \approx 0.998\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>RWtable.R</strong></pre>
+</div>
+<div class="sourceCode" id="cb2" data-filename="RWtable.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Table 2 from Remein and Wilkerson (Journal of Chronic Disease, 1961)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># function to generate numbers based on sensitivity and specificity</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>RWtable <span class="ot">&lt;-</span> <span class="cf">function</span>(sens, spec, <span class="at">n1=</span><span class="dv">70</span>, <span class="at">n0=</span><span class="dv">510</span>) {</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># arguments:  sensitivity, specificity,</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">#             n1 is number of diabetics, n0 is number of nondiabetics</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  tp <span class="ot">&lt;-</span> <span class="fu">round</span>(sens <span class="sc">*</span> n1)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  fp <span class="ot">&lt;-</span> <span class="fu">round</span>((<span class="dv">1</span> <span class="sc">-</span> spec) <span class="sc">*</span> n0)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  tn <span class="ot">&lt;-</span> <span class="fu">round</span>(spec <span class="sc">*</span> n0)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  fn <span class="ot">&lt;-</span> <span class="fu">round</span>((<span class="dv">1</span> <span class="sc">-</span> sens) <span class="sc">*</span> n1)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">c</span>(<span class="at">truepos =</span> tp, <span class="at">falsepos =</span> fp, <span class="at">trueneg =</span> tn, <span class="at">falseneg =</span> fn))</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">RWtable</span>(<span class="fl">0.443</span>, <span class="fl">0.990</span>)   <span class="co"># before meal</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="fu">RWtable</span>(<span class="fl">0.786</span>, <span class="fl">0.906</span>)   <span class="co"># one hour after</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu">RWtable</span>(<span class="fl">0.643</span>, <span class="fl">0.969</span>)   <span class="co"># two hours after</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">RWtable</span>(<span class="fl">0.486</span>, <span class="fl">0.998</span>)   <span class="co"># three hours after</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="receiver-operating-characteristic-roc-curves" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="receiver-operating-characteristic-roc-curves"><span class="header-section-number">2.3.2</span> Receiver operating characteristic (ROC) curves*</h3>
+<p>The tradeoff between sensitivity and sensitivity in choosing a cutoff to distinguish positive and negative tests can be seen using a <strong>receiver operating characteristic</strong> (ROC) curve <span class="citation" data-cites="lusted1971decision lusted1971signal swets1988measuring zweig1993receiver">(<a href="#ref-lusted1971decision" role="doc-biblioref">Lusted 1971a</a>, <a href="#ref-lusted1971signal" role="doc-biblioref">1971b</a>; <a href="#ref-swets1988measuring" role="doc-biblioref">Swets 1988</a>; <a href="#ref-zweig1993receiver" role="doc-biblioref">Zweig and Campbell 1993</a>)</span>. These curves were originally used in World War II to analyze the performance of radar systems locating ships and airplanes. They were applied to diagnostic tests in the late 1950s in the first attempt to automate the classification of Pap smears to detect cervical cancer <span class="citation" data-cites="bostrom1959instrumentation lusted1984roc bengtsson2014screening">(<a href="#ref-bostrom1959instrumentation" role="doc-biblioref">Bostrom, Sawyer, and Tolles 1959</a>; <a href="#ref-lusted1984roc" role="doc-biblioref">Lusted 1984</a>; <a href="#ref-bengtsson2014screening" role="doc-biblioref">Bengtsson and Malm 2014</a>)</span>.</p>
+<p>The horizontal axis of an ROC curve plots <span class="math display">\[
+  1 - \text{specificity} = \Pr(T^+ \given{} D^-),
+\]</span> and its vertical axis plots sensitivity, which is <span class="math inline">\(\Pr(T^+ \given{} D^+)\)</span>. In general, the best test is the one whose ROC curve stays closest to the top left corner, which represents a test with perfect sensitivity and specificity.</p>
+<p><a href="#fig-roc" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-roc</span></a> shows four ROC curves based on data from <span class="citation" data-cites="remein1961efficiency">Remein and Wilkerson (<a href="#ref-remein1961efficiency" role="doc-biblioref">1961</a>)</span>: one for the Somogyi-Nelson blood test before the meal and one each for the tests one, two, and three hours after the meal. For all four tests, the curves are based on the combinations of sensitivity and specificity for glucose concentration thresholds from 70 mg/dL to 200 mg/dL. In these tests, using a higher glucose concentration threshold to define a positive test leads to lower sensitivity and higher specificity.</p>
+<div class="cell">
+<div class="code-with-filename">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-with-filename-file">
+<pre><strong>ROCcurve.R</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data from Table 2 in Remein and Wilkerson (Journal of Chronic Disease, 1961)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>SNdat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">cutoff =</span> <span class="fu">seq</span>(<span class="dv">70</span>, <span class="dv">200</span>, <span class="at">by =</span> <span class="dv">10</span>))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>SNdat<span class="sc">$</span>sens_pre <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">95.7</span>, <span class="fl">91.4</span>, <span class="fl">82.9</span>, <span class="fl">65.7</span>, <span class="fl">54.3</span>, <span class="fl">50.0</span>, <span class="fl">44.3</span>, <span class="fl">37.1</span>, <span class="fl">30.0</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                    <span class="fl">25.7</span>, <span class="fl">25.7</span>, <span class="fl">22.9</span>, <span class="fl">21.4</span>, <span class="fl">17.1</span>) <span class="sc">/</span> <span class="dv">100</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>SNdat<span class="sc">$</span>spec_pre <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">11.0</span>, <span class="fl">36.3</span>, <span class="fl">65.7</span>, <span class="fl">84.7</span>, <span class="fl">92.7</span>, <span class="fl">96.7</span>, <span class="fl">99.0</span>, <span class="fl">99.6</span>, <span class="fl">99.8</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                    <span class="fl">99.8</span>, <span class="fl">99.8</span>, <span class="fl">99.8</span>, <span class="fl">100.0</span>, <span class="fl">100.0</span>) <span class="sc">/</span> <span class="dv">100</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>SNdat<span class="sc">$</span>sens_1hr <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">100.0</span>, <span class="fl">97.1</span>, <span class="fl">97.1</span>, <span class="fl">95.7</span>, <span class="fl">92.9</span>, <span class="fl">88.6</span>, <span class="fl">78.6</span>, <span class="fl">68.6</span>, <span class="fl">57.1</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                    <span class="fl">52.9</span>, <span class="fl">47.1</span>, <span class="fl">40.0</span>, <span class="fl">34.3</span>, <span class="fl">28.6</span>) <span class="sc">/</span> <span class="dv">100</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>SNdat<span class="sc">$</span>spec_1hr <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">8.2</span>, <span class="fl">22.4</span>, <span class="fl">39.0</span>, <span class="fl">57.3</span>, <span class="fl">70.6</span>, <span class="fl">83.3</span>, <span class="fl">90.6</span>, <span class="fl">95.1</span>, <span class="fl">97.8</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>                    <span class="fl">99.4</span>, <span class="fl">99.6</span>, <span class="fl">99.8</span>, <span class="fl">100.0</span>, <span class="fl">100.0</span>) <span class="sc">/</span> <span class="dv">100</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>SNdat<span class="sc">$</span>sens_2hr <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">98.6</span>, <span class="fl">97.1</span>, <span class="fl">94.3</span>, <span class="fl">88.6</span>, <span class="fl">85.7</span>, <span class="fl">71.4</span>, <span class="fl">64.3</span>, <span class="fl">57.1</span>, <span class="fl">50.0</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>                    <span class="fl">47.1</span>, <span class="fl">42.9</span>, <span class="fl">38.6</span>, <span class="fl">34.3</span>, <span class="fl">27.1</span>) <span class="sc">/</span> <span class="dv">100</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>SNdat<span class="sc">$</span>spec_2hr <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">8.8</span>, <span class="fl">25.5</span>, <span class="fl">47.6</span>, <span class="fl">69.8</span>, <span class="fl">84.1</span>, <span class="fl">92.5</span>, <span class="fl">96.9</span>, <span class="fl">99.4</span>, <span class="fl">99.6</span>,</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>                    <span class="fl">99.8</span>, <span class="fl">100.0</span>, <span class="fl">100.0</span>, <span class="fl">100.0</span>, <span class="fl">100.0</span>) <span class="sc">/</span> <span class="dv">100</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>SNdat<span class="sc">$</span>sens_3hr <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">94.3</span>, <span class="fl">91.4</span>, <span class="fl">82.9</span>, <span class="fl">70.0</span>, <span class="fl">60.0</span>, <span class="fl">51.4</span>, <span class="fl">48.6</span>, <span class="fl">41.4</span>, <span class="fl">32.9</span>,</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>                    <span class="fl">28.6</span>, <span class="fl">28.6</span>, <span class="fl">28.6</span>, <span class="fl">24.3</span>, <span class="fl">20.0</span>) <span class="sc">/</span> <span class="dv">100</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>SNdat<span class="sc">$</span>spec_3hr <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">8.6</span>, <span class="fl">34.7</span>, <span class="fl">67.5</span>, <span class="fl">86.5</span>, <span class="fl">95.3</span>, <span class="fl">98.2</span>, <span class="fl">99.8</span>,</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">rep</span>(<span class="fl">100.0</span>, <span class="dv">7</span>)) <span class="sc">/</span> <span class="dv">100</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(SNdat, "SNdat.csv", row.names = FALSE)</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co"># ROC curves with labels</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span> <span class="sc">-</span> SNdat<span class="sc">$</span>spec_pre, SNdat<span class="sc">$</span>sens_pre, <span class="at">type =</span> <span class="st">"n"</span>,</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"1 - Specificity = Pr(T+ | D-)"</span>,</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Sensitivity = Pr(T+ | D+)"</span>)</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="dv">1</span> <span class="sc">-</span> SNdat<span class="sc">$</span>spec_pre, SNdat<span class="sc">$</span>sens_pre, <span class="at">col =</span> <span class="st">"darkgray"</span>)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="dv">1</span> <span class="sc">-</span> SNdat<span class="sc">$</span>spec_1hr, SNdat<span class="sc">$</span>sens_1hr, <span class="at">lty =</span> <span class="st">"solid"</span>)</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="dv">1</span> <span class="sc">-</span> SNdat<span class="sc">$</span>spec_2hr, SNdat<span class="sc">$</span>sens_2hr, <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="dv">1</span> <span class="sc">-</span> SNdat<span class="sc">$</span>spec_3hr, SNdat<span class="sc">$</span>sens_3hr, <span class="at">lty =</span> <span class="st">"dotted"</span>)</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="dv">1</span> <span class="sc">-</span> SNdat[SNdat<span class="sc">$</span>cutoff <span class="sc">==</span> <span class="dv">130</span>, <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">9</span>)],</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>       SNdat[SNdat<span class="sc">$</span>cutoff <span class="sc">==</span> <span class="dv">130</span>, <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>)])</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="dv">1</span> <span class="sc">-</span> SNdat<span class="sc">$</span>spec_pre[<span class="fu">seq</span>(<span class="dv">2</span>, <span class="dv">12</span>, <span class="at">by =</span> <span class="dv">2</span>)],</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>       SNdat<span class="sc">$</span>sens_pre[<span class="fu">seq</span>(<span class="dv">2</span>, <span class="dv">12</span>, <span class="at">by =</span> <span class="dv">2</span>)], <span class="at">pch =</span> <span class="dv">8</span>)</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">1</span> <span class="sc">-</span> SNdat<span class="sc">$</span>spec_pre[<span class="fu">seq</span>(<span class="dv">2</span>, <span class="dv">12</span>, <span class="at">by =</span> <span class="dv">2</span>)] <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">09</span>, .<span class="dv">09</span>, .<span class="dv">1</span>, .<span class="dv">1</span>, .<span class="dv">1</span>),</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>     SNdat<span class="sc">$</span>sens_pre[<span class="fu">seq</span>(<span class="dv">2</span>, <span class="dv">12</span>, <span class="at">by =</span> <span class="dv">2</span>)] <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span>.<span class="dv">05</span>, <span class="sc">-</span>.<span class="dv">02</span>, <span class="sc">-</span>.<span class="dv">02</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="sc">-</span>.<span class="dv">01</span>),</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"80 mg/dL"</span>, <span class="st">"100 mg/dL"</span>, <span class="st">"120 mg/dL"</span>, <span class="st">"140 mg/dL"</span>,</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>                <span class="st">"160 mg/dL"</span>, <span class="st">"180 mg/dL"</span>))</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">lty =</span> <span class="st">"dotted"</span>, <span class="at">col =</span> <span class="st">"darkgray"</span>)</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(.<span class="dv">51</span>, .<span class="dv">49</span>, <span class="at">adj =</span> <span class="fu">c</span>(.<span class="dv">5</span>, <span class="dv">1</span>), <span class="at">srt =</span> <span class="dv">42</span>,</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>     <span class="at">label =</span> <span class="st">"Useless tests (T and D independent)"</span>)</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="at">pch =</span> <span class="dv">3</span>)</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(.<span class="dv">01</span>, .<span class="dv">99</span>, <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">label =</span> <span class="st">"Perfect test"</span>)</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(.<span class="dv">01</span>, .<span class="dv">01</span>, <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">label =</span> <span class="st">"Everyone tests negative"</span>)</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(.<span class="dv">99</span>, .<span class="dv">99</span>, <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>), <span class="at">srt =</span> <span class="dv">90</span>, <span class="at">label =</span> <span class="st">"Everyone tests positive"</span>)</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomright"</span>, <span class="at">bg =</span> <span class="st">"white"</span>,</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty =</span> <span class="fu">c</span>(<span class="st">"solid"</span>, <span class="st">"solid"</span>, <span class="st">"dashed"</span>, <span class="st">"dotted"</span>, <span class="cn">NA</span>),</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"darkgray"</span>, <span class="fu">rep</span>(<span class="st">"black"</span>, <span class="dv">4</span>)), <span class="at">pch =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">4</span>), <span class="dv">1</span>),</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Before meal  (AUC = 0.825)"</span>,</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"1 hour after   (AUC = 0.923)"</span>,</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"2 hours after (AUC = 0.904)"</span>,</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"3 hours after (AUC = 0.839)"</span>, <span class="st">"130 mg/dL cutoff"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output-display">
+<div id="fig-roc" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-roc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="condprob_files/figure-html/fig-roc-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2.2: ROC curves for Somogyi-Nelson blood tests conducted before the mean and at 1-3 hours after the meal. Cutoff values for the before-meal ROC curve are labeled, and the points corresponding to the 130 mg/dL cutoff along each curve are circled."><img src="condprob_files/figure-html/fig-roc-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-roc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.2: ROC curves for Somogyi-Nelson blood tests conducted before the mean and at 1-3 hours after the meal. Cutoff values for the before-meal ROC curve are labeled, and the points corresponding to the 130 mg/dL cutoff along each curve are circled.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>ROC curves are sometimes compared using the area under the curve (AUC), with greater area under the curve corresponding roughly to a better test <span class="citation" data-cites="bamber1975area hanley1982meaning">(<a href="#ref-bamber1975area" role="doc-biblioref">Bamber 1975</a>; <a href="#ref-hanley1982meaning" role="doc-biblioref">Hanley and McNeil 1982</a>)</span>.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> The ROC curves in <a href="#fig-roc" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-roc</span></a> show clearly that the tests one and two hours after the meal, which have curves above and to the left of the other two curves, are more accurate than the tests before and three hours after the meal. This is biologically plausible: Before the meal, there is no glucose load. Three hours after the meal, the glucose from the meal has largely been processed.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>auc.R</strong></pre>
+</div>
+<div class="sourceCode" id="cb4" data-filename="auc.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">## areas under the ROC curves</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># load Somogyi-Nelson test data generated for Figure 2.2 (if needed)</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># The argument can contain a path before the file name.</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>SNdat <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"SNdat.csv"</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>auc <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) {</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># x is an increasing list of specificities</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># y is a decreasing list of sensitivities</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  roc <span class="ot">&lt;-</span> <span class="fu">approxfun</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span> <span class="sc">-</span> x, <span class="dv">0</span>), <span class="fu">c</span>(<span class="dv">1</span>, y, <span class="dv">0</span>), <span class="at">ties =</span> <span class="st">"max"</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  area <span class="ot">&lt;-</span> <span class="fu">integrate</span>(<span class="cf">function</span>(x) <span class="fu">roc</span>(x), <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(area)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="fu">auc</span>(SNdat<span class="sc">$</span>spec_pre, SNdat<span class="sc">$</span>sens_pre)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="fu">auc</span>(SNdat<span class="sc">$</span>spec_1hr, SNdat<span class="sc">$</span>sens_1hr)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="fu">auc</span>(SNdat<span class="sc">$</span>spec_2hr, SNdat<span class="sc">$</span>sens_2hr)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="fu">auc</span>(SNdat<span class="sc">$</span>spec_3hr, SNdat<span class="sc">$</span>sens_3hr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p>The test one hour after the meal with a 130~mg/dL cutoff has a good combination of sensitivity and specificity. It is near the top left corner, where perfect tests live. If a diagnostic test was completely useless, the test results (<span class="math inline">\(T^+\)</span> or <span class="math inline">\(T^-\)</span>) would be independent of disease status (<span class="math inline">\(D^+\)</span> or <span class="math inline">\(D^-\)</span>). In that case, <span class="math display">\[
+  \Pr(T^+ \given{} D^+) = \Pr(T^+ \given{} D^-) = \Pr(T^+).
+\]</span> Thus, the ROC curve for a useless test follows the diagonal line from the lower left corner <span class="math inline">\((0, 0)\)</span> to the upper right corner <span class="math inline">\((1, 1)\)</span>, and it has an AUC of 0.5. Tests below the diagonal on an ROC curve are worse than useless: the definitions of positive and negative should be switched around.</p>
+<p>The sensitivity and specificity of a test tell us how accurate it is with a given definition of positive and negative. The ROC curve shows us how this accuracy depends on the cutoff between positive and negative tests, and the area under the curve shows us how well the underlying clinical measurement (e.g., blood glucose concentration) can distinguish between people with and without disease. However, the best cutoff for a test depends on its purpose, the population to be tested, and the benefit of identifying a true positive or negative versus the harm of a false positive or negative <span class="citation" data-cites="blumberg1957evaluating kessel1962diabetes">(<a href="#ref-blumberg1957evaluating" role="doc-biblioref">Blumberg 1957</a>; <a href="#ref-kessel1962diabetes" role="doc-biblioref">Kessel 1962</a>)</span>.</p>
+</section>
+</section>
+<section id="law-of-total-probability" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="law-of-total-probability"><span class="header-section-number">2.4</span> Law of total probability</h2>
+<p>Suppose <span class="math inline">\(A_1, \ldots, A_n\)</span> are disjoint events such that their union is <span class="math inline">\(\Omega\)</span>. This is called a <strong>partition</strong> of <span class="math inline">\(\Omega\)</span>. An important special case is when we partition <span class="math inline">\(\Omega\)</span> into <span class="math inline">\(A\)</span> and <span class="math inline">\(A^\comp\)</span>.</p>
+<p>Let <span class="math inline">\(B\)</span> be another event. Every <span class="math inline">\(\omega \in B\)</span> is in exactly one of the <span class="math inline">\(A_i\)</span>. For each <span class="math inline">\(i\)</span>, <span class="math inline">\(B \cap A_i\)</span> is the part of <span class="math inline">\(B\)</span> that is contained in <span class="math inline">\(A_i\)</span>. The event <span class="math inline">\(B\)</span> is the union of these subsets: <span class="math display">\[
+  B = \bigcup_{i = 1}^n (B \cap A_i).
+\]</span> Because <span class="math inline">\(A_i\)</span> are disjoint, so are the subsets <span class="math inline">\(B \cap A_i\)</span>. By the addition rule for probabilities of disjoint sets, we have <span class="math display">\[
+  \Pr(B) = \sum_{i = 1}^n \Pr(B \cap A_i)
+\]</span> which is the sum of the <span class="math inline">\(\Pr(B \cap A_i)\)</span>.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> Using the multiplication rule for conditional probabilities in <a href="#eq-cmult" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-cmult</span></a> on each <span class="math inline">\(\Pr(B \cap A_i)\)</span>, we get <span class="math display">\[
+  \Pr(B) = \sum_{i = 1}^n \Pr(B \given{} A_i) \Pr(A_i).
+\]</span> This is called the <strong>law of total probability</strong>.</p>
+<section id="example-probability-of-a-positive-or-negative-test" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="example-probability-of-a-positive-or-negative-test"><span class="header-section-number">2.4.1</span> Example: probability of a positive or negative test</h3>
+<p>We can use the law of total probability to calculate the probability of a positive or negative test based on the sensitivity and specificity of the test and the prevalence of disease. Because all individuals either do or do not have the disease,<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> we have <span class="math display">\[
+  T^+ = (T^+ \cap D^+) \cup (T^+ \cap D^-).
+\]</span> These two groups are mutually exclusive, so <span class="math display">\[
+  \Pr(T^+) = \Pr(T^+ \cap D^+) + \Pr(T^+ \cap D^-).
+\]</span> We can calculate each probability on the right-hand side using the multiplication rule in <a href="#eq-cmult" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-cmult</span></a>: <span class="math display">\[
+  \begin{aligned}
+    \Pr(T^+ \cap D^+)
+    &amp;= \Pr(T^+ \given{} D^+) \Pr(D^+)
+      = \text{sensitivity} \times \text{prevalence},\\
+    \Pr(T^+ \cap D^-)
+    &amp;= \Pr(T^+ \given{} D^-) \Pr(D^-)
+      = (1 - \text{specificity}) \times (1 - \text{prevalence}).
+  \end{aligned}
+\]</span> Putting everything together, we get <span id="eq-prtplus"><span class="math display">\[
+  \begin{aligned}
+    \Pr(T^+)
+    &amp;= \Pr(T^+ \given{} D^+) \Pr(D^+) + \Pr(T^+ \given{} D^-) \Pr(D^-)
+      \label{eq:prt+} \\
+    &amp;= \text{sensitivity} \times \text{prevalence}
+      + (1 - \text{specificity}) \times (1 - \text{prevalence}).
+  \end{aligned}
+\tag{2.4}\]</span></span> A similar chain of reasoning shows that <span class="math display">\[
+  \Pr(T^-) = (1 - \text{sensitivity}) \times \text{prevalence} + \text{specificity} \times (1 - \text{prevalence}),
+\]</span> which equals <span class="math inline">\(1 - \Pr(T^+)\)</span>.</p>
+<p><a href="#fig-testpos" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-testpos</span></a> shows how the probability of a positive test depends on the prevalence of disease using the example of the Somogyi-Nelson test one hour after the meal in <a href="#tbl-diabetes" class="quarto-xref">Table&nbsp;<span class="quarto-unresolved-ref">tbl-diabetes</span></a>. With a cutoff of 130 mg/dL, the test has a sensitivity of 0.786 and a specificity of 0.906. At low prevalences, the test overestimates the prevalence of diabetes due to imperfect specificity. A high prevalences, it underestimates the prevalence of diabetes due to imperfect sensitivity. The errors cancel out somewhere near a prevalence of 30%.</p>
+<div class="cell">
+<div class="code-with-filename">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-with-filename-file">
+<pre><strong>testpos.R</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## probability of testing positive as a function of prevalence</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># function to generate testing data</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>tdat <span class="ot">&lt;-</span> <span class="cf">function</span>(prev, <span class="at">sens=</span><span class="fl">0.786</span>, <span class="at">spec=</span><span class="fl">0.906</span>) {</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># defaults are sensitivity and sensitivity one hour after the meal</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  truepos <span class="ot">&lt;-</span> sens <span class="sc">*</span> prev</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  falsepos <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">-</span> spec) <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> prev)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  trueneg <span class="ot">&lt;-</span> spec <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> prev)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  falseneg <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">-</span> spec) <span class="sc">*</span> prev</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  pos <span class="ot">&lt;-</span> truepos <span class="sc">+</span> falsepos</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  neg <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> pos</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  ppv <span class="ot">&lt;-</span> truepos <span class="sc">/</span> pos</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  npv <span class="ot">&lt;-</span> trueneg <span class="sc">/</span> neg</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">data.frame</span>(<span class="at">prev =</span> prev, <span class="at">sens =</span> sens, <span class="at">spec =</span> spec,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>                    <span class="at">truepos =</span> truepos, <span class="at">falsepos =</span> falsepos,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>                    <span class="at">trueneg =</span> trueneg, <span class="at">falseneg =</span> falseneg,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>                    <span class="at">pos =</span> pos, <span class="at">neg =</span> neg, <span class="at">ppv =</span> ppv, <span class="at">npv =</span> npv))</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>tdat_1hr <span class="ot">&lt;-</span> <span class="fu">tdat</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> .<span class="dv">01</span>))</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(tdat_1hr, <span class="st">"R/tdat_1hr.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tdat_1hr<span class="sc">$</span>prev, tdat_1hr<span class="sc">$</span>pos, <span class="at">type =</span> <span class="st">"n"</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Prevalence of disease = Pr(D+)"</span>,</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Probability of positive test = Pr(T+)"</span>)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="fu">polygon</span>(<span class="fu">c</span>(tdat_1hr<span class="sc">$</span>prev, <span class="dv">1</span>, <span class="dv">0</span>), <span class="fu">c</span>(tdat_1hr<span class="sc">$</span>pos, <span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">border =</span> <span class="cn">NA</span>, <span class="at">col =</span> <span class="st">"gray"</span>)</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="fu">polygon</span>(<span class="fu">c</span>(tdat_1hr<span class="sc">$</span>prev, <span class="dv">1</span>, <span class="dv">0</span>), <span class="fu">c</span>(tdat_1hr<span class="sc">$</span>falsepos, <span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>        <span class="at">border =</span> <span class="cn">NA</span>, <span class="at">col =</span> <span class="st">"darkgray"</span>)</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(tdat_1hr<span class="sc">$</span>prev, tdat_1hr<span class="sc">$</span>falsepos, <span class="at">col =</span> <span class="st">"gray"</span>)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(tdat_1hr<span class="sc">$</span>prev, tdat_1hr<span class="sc">$</span>pos)</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">lty =</span> <span class="st">"dotted"</span>)</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">0.1</span>, <span class="fl">0.02</span>, <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">label =</span> <span class="st">"False positives"</span>)</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">label =</span> <span class="st">"True positives"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output-display">
+<div id="fig-testpos" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-testpos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="condprob_files/figure-html/fig-testpos-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;2.3: The probability of a positive Somogyi-Nelson diabetes test one hour after the meal as a function of the hypothetical prevalence of diabetes. The black dotted line shows the true prevalence of diabetes."><img src="condprob_files/figure-html/fig-testpos-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-testpos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.3: The probability of a positive Somogyi-Nelson diabetes test one hour after the meal as a function of the hypothetical prevalence of diabetes. The black dotted line shows the true prevalence of diabetes.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="standardization" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="standardization"><span class="header-section-number">2.4.2</span> Standardization</h3>
+<p>In epidemiology, it is often useful to think of our sample space <span class="math inline">\(\Omega\)</span> as a population and the outcomes <span class="math inline">\(\omega \in \Omega\)</span> as individuals. The sets <span class="math inline">\(A_1, \ldots, A_n\)</span> into which we partition the sample space are disjoint subpopulations (e.g., age groups). Let <span class="math inline">\(\Pr(D \given{} A_i)\)</span> be the prevalence of disease in subpopulation <span class="math inline">\(A_i\)</span> at a given time point. Then the overall prevalence of disease is <span id="eq-totalprob"><span class="math display">\[
+  \Pr(D) = \sum_{i = 1}^n \Pr(D \given{} A_i) \Pr(A_i).
+\tag{2.5}\]</span></span> This application of the law of total probability is called <strong>standardization</strong>. By changing the <span class="math inline">\(\Pr(A_i)\)</span>, we can use the subpopulation prevalences to calculate the prevalence of disease in a population with any desired composition of subpopulations. <a href="#eq-totalprob" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-totalprob</span></a> can also be used to calculate population-level risk from the subpopulation-specific risks in any given time interval. In the form of standardization, the law of total probability is one of the most important tools in epidemiology.</p>
+</section>
+</section>
+<section id="bayes-rule" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="bayes-rule"><span class="header-section-number">2.5</span> Bayes’ rule</h2>
+<p>Bayes’ rule <span class="citation" data-cites="bayes1763lii">(<a href="#ref-bayes1763lii" role="doc-biblioref">Bayes 1763</a>)</span> relates the two conditional probabilities <span class="math inline">\(\Pr(A \given{} B)\)</span> and <span class="math inline">\(\Pr(B \given{} A)\)</span>: <span id="eq-Bayes"><span class="math display">\[
+  \Pr(A \given{} B) = \frac{\Pr(B \cap A)}{\Pr(B)} = \frac{\Pr(B \given{} A) \Pr(A)}{\Pr(B)}.
+\tag{2.6}\]</span></span> Often, the law of total probability is used to calculate <span class="math inline">\(\Pr(B)\)</span> in the denominator. For example: <span class="math display">\[
+  \Pr(A \given{} B) = \frac{\Pr(B \given{} A) \Pr(A)}{\Pr(B \given{} A) \Pr(A) + \Pr(B \given{} A^\comp) \Pr(A^\comp)}.
+\]</span> Bayes’ rule is an incredibly useful application of conditional probabilities, and it forms the theoretical foundation for Bayesian statistical inference.</p>
+<section id="positive-and-negative-predictive-values" class="level3" data-number="2.5.1">
+<h3 data-number="2.5.1" class="anchored" data-anchor-id="positive-and-negative-predictive-values"><span class="header-section-number">2.5.1</span> Positive and negative predictive values</h3>
+<p>Sensitivity and specificity tell us how disease status predicts the result of a test, but they do not tell us how to interpret a test result. If you test positive, it is important to know the conditional probability that you truly have disease given that you tested positive. This is called the <strong>positive predictive value</strong> (PPV): <span class="math display">\[
+  \text{PPV} = \Pr(D^+ \given{} T^+).
+\]</span> If you test negative, it is important to know the conditional probability that you are truly disease-free given that you tested negative. This is called the <strong>negative predictive value</strong> (NPV): <span class="math display">\[
+  \text{NPV} = \Pr(D^- \given{} T^-).
+\]</span> These terms were introduced by <span class="citation" data-cites="vecchio1966predictive">Vecchio (<a href="#ref-vecchio1966predictive" role="doc-biblioref">1966</a>)</span>. <a href="#tbl-diabetes2" class="quarto-xref">Table&nbsp;<span class="quarto-unresolved-ref">tbl-diabetes2</span></a> shows the PPV and NPV for the Somogyi-Nelson diabetes tests from <a href="#tbl-diabetes" class="quarto-xref">Table&nbsp;<span class="quarto-unresolved-ref">tbl-diabetes</span></a>.</p>
+<div id="tbl-diabetes2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-diabetes2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2.4: PPV and NPV of the Somogyi-Nelson blood glucose test for diabetes where <span class="math inline">\(T^+\)</span> corresponds to a concentration above 130~mg/dL.
+</figcaption>
+<div aria-describedby="tbl-diabetes2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: right;"><span class="math inline">\(T^+\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(T^-\)</span></th>
+<th style="text-align: right;">PPV and NPV</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td colspan="4" style="text-align: left;"><em>Before meal</em></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(D^+\)</span></td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;"><span class="math inline">\(\text{PPV} = 31 / 36 \approx 0.861\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(D^-\)</span></td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">505</td>
+<td style="text-align: right;"><span class="math inline">\(\text{NPV} = 505 / 544 \approx 0.928\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Total</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;">544</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td colspan="4" style="text-align: left;"><em>One hour after meal</em></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(D^+\)</span></td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;"><span class="math inline">\(\text{PPV} = 55 / 103 \approx 0.534\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(D^-\)</span></td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">462</td>
+<td style="text-align: right;"><span class="math inline">\(\text{NPV} = 462 / 477 \approx 0.969\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Total</td>
+<td style="text-align: right;">103</td>
+<td style="text-align: right;">477</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td colspan="4" style="text-align: left;"><em>Two hours after meal</em></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(D^+\)</span></td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;"><span class="math inline">\(\text{PPV} = 45 / 61 \approx 0.738\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(D^-\)</span></td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">494</td>
+<td style="text-align: right;"><span class="math inline">\(\text{NPV} = 494 / 519 \approx 0.952\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Total</td>
+<td style="text-align: right;">61</td>
+<td style="text-align: right;">519</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td colspan="4" style="text-align: left;"><em>Three hours after meal</em></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(D^+\)</span></td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;"><span class="math inline">\(\text{PPV} = 34 / 35 \approx 0.971\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(D^-\)</span></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">509</td>
+<td style="text-align: right;"><span class="math inline">\(\text{NPV} = 509 / 545 \approx 0.934\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Total</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">545</td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p><span class="citation" data-cites="vecchio1966predictive">Vecchio (<a href="#ref-vecchio1966predictive" role="doc-biblioref">1966</a>)</span> showed that the PPV and NPV depend on the prevalence of disease as well as the sensitivity and specificity of the test. To calculate the PPV and NPV, we use Bayes’ rule to switch the conditional probabilities from <span class="math inline">\(\Pr(T \given{} D)\)</span> to <span class="math inline">\(\Pr(D \given{} T)\)</span>. From the definition of PPV and Bayes’ rule, we get <span class="math display">\[
+  \Pr(D^+ \given{} T^+)
+  = \frac{\Pr(T^+ \cap D^+)}{\Pr(T^+)}
+  = \frac{\Pr(T^+ \given{} D^+) \Pr(D^+)}{\Pr(T^+)}.
+\]</span> The sensitivity of the test and the prevalence of disease are in the numerator, and <span class="math inline">\(\Pr(T+)\)</span> is in <a href="#eq-prtplus" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-prtplus</span></a>. Putting this all together, we get <span class="math display">\[
+  \text{PPV}
+  = \frac{\text{sensitivity} \times \text{prevalence}}{\text{sensitivity} \times \text{prevalence}
+    + (1 - \text{specificity}) \times (1 - \text{prevalence})}.
+\]</span> The numerator is the probability of a true positive test, and the denominator is the probability of a (true or false) positive test. By a similar argument, <span class="math display">\[
+  \text{NPV} = \frac{\text{specificity} \times (1 - \text{prevalence})}{\text{specificity} \times (1 - \text{prevalence})
+    + (1 - \text{sensitivity}) \times \text{prevalence}}.
+  \label{eq:npv}
+\]</span> The numerator is the probability of a true negative test, and the denominator is the probability of a (true or false) negative test.</p>
+<p><a href="#fig-predval" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-predval</span></a> shows how the positive and negative predictive values of a test depend on the prevalence of disease for the Somogyi-Nelson test before the meal and one hour after the meal in <span class="citation" data-cites="remein1961efficiency">Remein and Wilkerson (<a href="#ref-remein1961efficiency" role="doc-biblioref">1961</a>)</span>. With a cutoff of 130 mg/dL, the sensitivity and specificity are <span class="math inline">\(0.443\)</span> and <span class="math inline">\(0.990\)</span> before the meal and <span class="math inline">\(0.786\)</span> and <span class="math inline">\(0.906\)</span> one hour after the meal. As prevalence increases, PPV increases and NPV decreases. A perfect test would have PPV and NPV equal to one at all prevalences.</p>
+<div class="cell">
+<div class="code-with-filename">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-with-filename-file">
+<pre><strong>predval.R</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Predictive values as a function of prevalence</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># uses tdat_1hr data and tdat() function from Figure 2.3 (testpos.R)</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># tdat_1hr &lt;- read.csv("tdat_1hr.csv")</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># generate data using the sensitivity and specificity of the pre-meal test</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>tdat_pre <span class="ot">&lt;-</span> <span class="fu">tdat</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> .<span class="dv">01</span>), <span class="at">sens =</span> <span class="fl">0.443</span>, <span class="at">spec =</span> <span class="fl">0.990</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># plot of PPV and NPV as a function of diabetes prevalence</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tdat_1hr<span class="sc">$</span>prev, tdat_1hr<span class="sc">$</span>ppv, <span class="at">type =</span> <span class="st">"n"</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Prevalence of disease = Pr(D+)"</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Predictive value = Pr(D | T)"</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(tdat_1hr<span class="sc">$</span>prev, tdat_1hr<span class="sc">$</span>ppv)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(tdat_1hr<span class="sc">$</span>prev, tdat_1hr<span class="sc">$</span>npv, <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(tdat_pre<span class="sc">$</span>prev, tdat_pre<span class="sc">$</span>ppv, <span class="at">col =</span> <span class="st">"darkgray"</span>)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(tdat_pre<span class="sc">$</span>prev, tdat_pre<span class="sc">$</span>npv, <span class="at">lty =</span> <span class="st">"dashed"</span>, <span class="at">col =</span> <span class="st">"darkgray"</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottom"</span>, <span class="at">lty =</span> <span class="fu">c</span>(<span class="st">"solid"</span>, <span class="st">"dashed"</span>, <span class="st">"solid"</span>, <span class="st">"dashed"</span>),</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"darkgray"</span>, <span class="st">"darkgray"</span>, <span class="st">"black"</span>, <span class="st">"black"</span>),</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">bg =</span> <span class="st">"white"</span>, <span class="at">inset =</span> <span class="fl">0.05</span>,</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"PPV before meal"</span>, <span class="st">"NPV before meal"</span>,</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"PPV 1 hour after"</span>, <span class="st">"NPV 1 hour after"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output-display">
+<div id="fig-predval" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-predval-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="condprob_files/figure-html/fig-predval-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;2.4: Positive and negative predictive values of the Somogyi-Nelson diabetes test before the meal (gray) and one hour after the meal (black) as a function of diabetes prevalence."><img src="condprob_files/figure-html/fig-predval-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-predval-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.4: Positive and negative predictive values of the Somogyi-Nelson diabetes test before the meal (gray) and one hour after the meal (black) as a function of diabetes prevalence.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="likelihood-ratios" class="level3" data-number="2.5.2">
+<h3 data-number="2.5.2" class="anchored" data-anchor-id="likelihood-ratios"><span class="header-section-number">2.5.2</span> Likelihood ratios*</h3>
+<p>For a probability <span class="math inline">\(p\)</span>, the <strong>odds</strong> is <span class="math display">\[
+  \theta = \frac{p}{1 - p}.
+\]</span> While a probability lives in <span class="math inline">\([0, 1]\)</span>, the odds can go from zero (for <span class="math inline">\(p = 0\)</span>) to infinity (as <span class="math inline">\(p\)</span> approaches one). There is a one-to-one relationship between probabilities and odds, so we can calculate the probability of an event if we know the odds. If the odds is <span class="math inline">\(\theta\)</span>, the corresponding probability is <span class="math display">\[
+  p = \frac{\theta}{1 + \theta}.
+\]</span> Odds and odds ratios have an important role in epidemiology and statistical inference. In a Bayesian statistical framework, odds ratios give us a simple way to update our knowledge about the probability of an event given new information.</p>
+<p>Suppose we know the prevalence of a disease in a population <span class="math inline">\(\Omega\)</span>. We randomly sample an individual <span class="math inline">\(\omega \in \Omega\)</span> and give them a diagnostic test. If we randomly sample an individual <span class="math inline">\(\omega\)</span> from a population <span class="math inline">\(\Omega\)</span>, the odds that <span class="math inline">\(\omega\)</span> has disease is <span class="math display">\[
+  \frac{\Pr(D^+)}{1 - \Pr(D^+)}
+  = \frac{\Pr(D^+)}{\Pr(D^-)}.
+\]</span> where <span class="math inline">\(\Pr(D^+)\)</span> is the prevalence of disease. This is called the <strong>prior odds</strong> of disease. If <span class="math inline">\(\omega\)</span> tests positive for the disease, the conditional odds that they have disease is <span class="math display">\[
+  \frac{PPV}{1 - PPV}
+  = \frac{\Pr(D^+ \given{} T^+)}{\Pr(D^- \given{} T^+)}
+  = \frac{\Pr(D^+ \cap T^+)}{\Pr(D^- \cap T^+)},
+\]</span> where we have cancelled out <span class="math inline">\(\Pr(T^+)\)</span> from the numerator and the denominator in the last expression. This is called the <strong>posterior odds</strong> of disease. The second expression above shows that the probability corresponding to the posterior odds is the PPV.</p>
+<p>Using the multiplication rule for conditional probabilities, we get <span class="math display">\[
+  \frac{\Pr(D^+ \cap T^+)}{\Pr(D^- \cap T^+)}
+  = \frac{\Pr(T^+ \given D^+) \Pr(D^+)}{\Pr(T^+ \given D^-) \Pr(D^-)}
+  = \frac{\text{sensitivity}}{1 - \text{specificity}}
+    \times \frac{\Pr(D^+)}{\Pr(D^-)}.
+\]</span> The term <span class="math inline">\(\text{sensitivity} / (1 - \text{specificity})\)</span> is called the <strong>likelihood ratio</strong>. If our individual <span class="math inline">\(\omega\)</span> tests positive for disease, <span class="math display">\[
+  \text{posterior odds of } D^+
+  = \text{likelihood ratio} \times \text{prior odds of } D^+.
+\]</span> The likelihood ratio is a measure of how much we learn from a positive test result, and it does not depend on the prevalence of disease [<span class="citation" data-cites="lusted1971signal">Lusted (<a href="#ref-lusted1971signal" role="doc-biblioref">1971b</a>)</span>; <span class="citation" data-cites="swets1973relative">Swets (<a href="#ref-swets1973relative" role="doc-biblioref">1973</a>)</span>; <span class="citation" data-cites="fagan1975nomogram">Fagan (<a href="#ref-fagan1975nomogram" role="doc-biblioref">1975</a>)</span>; <span class="citation" data-cites="albert1982use">Albert (<a href="#ref-albert1982use" role="doc-biblioref">1982</a>)</span>; <span class="citation" data-cites="zweig1993receiver">Zweig and Campbell (<a href="#ref-zweig1993receiver" role="doc-biblioref">1993</a>)</span>}. Because an ROC curve plots sensitivity on the vertical axis and <span class="math inline">\(1 - \text{specificity}\)</span> on the horizontal axis, the likelihood ratio for a given test is the slope of the line from the point <span class="math inline">\((0, 0)\)</span> to the point representing the test.</p>
+<p><a href="#tbl-diabetes3" class="quarto-xref">Table&nbsp;<span class="quarto-unresolved-ref">tbl-diabetes3</span></a> shows the prior odds, likelihood ratio, posterior odds, and PPV for the Somogyi-Nelson blood glucose tests for diabetes from 580 participants (70 with diabetes and 510 without) in <span class="citation" data-cites="remein1961efficiency">Remein and Wilkerson (<a href="#ref-remein1961efficiency" role="doc-biblioref">1961</a>)</span>. Note that the tests with the highest likelihood ratios come from the glucose measurements that had the lowest AUCs in <a href="#fig-roc" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-roc</span></a>. These tests have high likelihood ratios despite their low sensitivity because they have specificities near one. The test with the best combination of sensitivity and specificity in <a href="#tbl-diabetes" class="quarto-xref">Table&nbsp;<span class="quarto-unresolved-ref">tbl-diabetes</span></a> has the lowest likelhood ratio. Like other summaries of diagnostic test performance, the likelihood ratio by itself does not determine the best test for a given purpose.</p>
+<div id="tbl-diabetes3" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-diabetes3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2.5: Prior odds, likelihood ratios, posterior odds, and PPV for the Somogyi-Nelson blood glucose test for diabetes where <span class="math inline">\(T^+\)</span> corresponds to a concentration above 130~mg/dL.
+</figcaption>
+<div aria-describedby="tbl-diabetes3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Test</th>
+<th style="text-align: right;">Prior odds</th>
+<th style="text-align: right;">Likelihood ratio</th>
+<th style="text-align: right;">Posterior odds</th>
+<th style="text-align: right;">PPV</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Before meal</td>
+<td style="text-align: right;"><span class="math inline">\(70 / 510 \approx 0.137\)</span></td>
+<td style="text-align: right;">45.171</td>
+<td style="text-align: right;"><span class="math inline">\(31 / 5 = 6.200\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(31 / 36 \approx 0.861\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1 hour after</td>
+<td style="text-align: right;"><span class="math inline">\(70 / 510 \approx 0.137\)</span></td>
+<td style="text-align: right;">8.348</td>
+<td style="text-align: right;"><span class="math inline">\(55 / 48 \approx 1.146\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(55 / 103 \approx 0.534\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2 hours after</td>
+<td style="text-align: right;"><span class="math inline">\(70 / 510 \approx 0.137\)</span></td>
+<td style="text-align: right;">20.491</td>
+<td style="text-align: right;"><span class="math inline">\(45 / 16 \approx 2.813\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(45 / 61 \approx 0.738\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">3 hours after</td>
+<td style="text-align: right;"><span class="math inline">\(70 / 510 \approx 0.137\)</span></td>
+<td style="text-align: right;">247.714</td>
+<td style="text-align: right;"><span class="math inline">\(34 / 1 = 34.000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(34 / 35 \approx 0.971\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-albert1982use" class="csl-entry" role="listitem">
+Albert, Adelin. 1982. <span>“On the Use and Computation of Likelihood Ratios in Clinical Chemistry.”</span> <em>Clinical Chemistry</em> 28 (5): 1113–19.
+</div>
+<div id="ref-bamber1975area" class="csl-entry" role="listitem">
+Bamber, Donald. 1975. <span>“The Area Above the Ordinal Dominance Graph and the Area Below the Receiver Operating Characteristic Graph.”</span> <em>Journal of Mathematical Psychology</em> 12 (4): 387–415.
+</div>
 <div id="ref-bayes1763lii" class="csl-entry" role="listitem">
 Bayes, Thomas. 1763. <span>“<span>LII</span>. <span>A</span>n Essay Towards Solving a Problem in the Doctrine of Chances. By the Late <span>R</span>ev. <span>M</span>r. <span>B</span>ayes, <span>FRS</span> Communicated by <span>M</span>r. <span>P</span>rice, in a Letter to <span>J</span>ohn <span>C</span>anton, <span>AMFRS</span>.”</span> <em>Philosophical Transactions of the Royal Society of London</em> 53: 370–418.
 </div>
+<div id="ref-bengtsson2014screening" class="csl-entry" role="listitem">
+Bengtsson, Ewert, and Patrik Malm. 2014. <span>“Screening for Cervical Cancer Using Automated Analysis of <span>PAP</span>-Smears.”</span> <em>Computational and Mathematical Methods in Medicine</em> 2014: 842037.
 </div>
+<div id="ref-blumberg1957evaluating" class="csl-entry" role="listitem">
+Blumberg, Mark S. 1957. <span>“Evaluating Health Screening Procedures.”</span> <em>Operations Research</em> 5 (3): 351–60.
+</div>
+<div id="ref-bostrom1959instrumentation" class="csl-entry" role="listitem">
+Bostrom, RC, HS Sawyer, and WE Tolles. 1959. <span>“Instrumentation for Automatically Prescreening Cytological Smears.”</span> <em>Proceedings of the IRE</em> 47 (11): 1895–1900.
+</div>
+<div id="ref-fagan1975nomogram" class="csl-entry" role="listitem">
+Fagan, Terrence J. 1975. <span>“Nomogram for <span>B</span>ayes’s Theorem.”</span> <em>New England Journal of Medicine</em> 293 (5): 257.
+</div>
+<div id="ref-hanley1982meaning" class="csl-entry" role="listitem">
+Hanley, James A, and Barbara J McNeil. 1982. <span>“The Meaning and Use of the Area Under a Receiver Operating Characteristic (<span>ROC</span>) Curve.”</span> <em>Radiology</em> 143 (1): 29–36.
+</div>
+<div id="ref-kessel1962diabetes" class="csl-entry" role="listitem">
+Kessel, Elton. 1962. <span>“Diabetes Detection: An Improved Approach.”</span> <em>Journal of Chronic Diseases</em> 15 (12): 1109–21.
+</div>
+<div id="ref-lusted1971decision" class="csl-entry" role="listitem">
+Lusted, Lee B. 1971a. <span>“Decision-Making Studies in Patient Management.”</span> <em>New England Journal of Medicine</em> 284 (8): 416–24.
+</div>
+<div id="ref-lusted1971signal" class="csl-entry" role="listitem">
+———. 1971b. <span>“Signal Detectability and Medical Decision-Making.”</span> <em>Science</em> 171 (3977): 1217–19.
+</div>
+<div id="ref-lusted1984roc" class="csl-entry" role="listitem">
+———. 1984. <span>“<span>ROC</span> Recollected.”</span> <em>Medical Decision Making</em> 4: 131–35.
+</div>
+<div id="ref-remein1961efficiency" class="csl-entry" role="listitem">
+Remein, Quentin R, and Hugh LC Wilkerson. 1961. <span>“The Efficiency of Screening Tests for Diabetes.”</span> <em>Journal of Chronic Diseases</em> 13 (1): 6–21.
+</div>
+<div id="ref-rothman1981induction" class="csl-entry" role="listitem">
+Rothman, Kenneth J. 1981. <span>“Induction and Latent Periods.”</span> <em>American Journal of Epidemiology</em> 114 (2): 253–59.
+</div>
+<div id="ref-swets1973relative" class="csl-entry" role="listitem">
+Swets, John A. 1973. <span>“The Relative Operating Characteristic in Psychology: A Technique for Isolating Effects of Response Bias Finds Wide Use in the Study of Perception and Cognition.”</span> <em>Science</em> 182 (4116): 990–1000.
+</div>
+<div id="ref-swets1988measuring" class="csl-entry" role="listitem">
+———. 1988. <span>“Measuring the Accuracy of Diagnostic Systems.”</span> <em>Science</em> 240 (4857): 1285–93.
+</div>
+<div id="ref-vecchio1966predictive" class="csl-entry" role="listitem">
+Vecchio, Thomas J. 1966. <span>“Predictive Value of a Single Diagnostic Test in Unselected Populations.”</span> <em>New England Journal of Medicine</em> 274 (21): 1171–73.
+</div>
+<div id="ref-yerushalmy1947statistical" class="csl-entry" role="listitem">
+Yerushalmy, Jacob. 1947. <span>“Statistical Problems in Assessing Methods of Medical Diagnosis, with Special Reference to <span>X</span>-Ray Techniques.”</span> <em>Public Health Reports (1896-1970)</em> 62 (40): 1432–49.
+</div>
+<div id="ref-zweig1993receiver" class="csl-entry" role="listitem">
+Zweig, Mark H, and Gregory Campbell. 1993. <span>“Receiver-Operating Characteristic (<span>ROC</span>) Plots: A Fundamental Evaluation Tool in Clinical Medicine.”</span> <em>Clinical Chemistry</em> 39 (4): 561–77.
+</div>
+</div>
+</section>
+</section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p> Thomas Bayes (1701-1761) was an English Presbyterian minister from a family of Nonconformists (i.e., Protestants who did not observe the rules of the Church of England). He studied logic and theology at the University of Edinburgh and served as a minister in Tunbridge Wells near Kent, England. He was elected a Fellow of the Royal Society in 1742 for his defense of Newton’s calculus against a 1734 book called <em>The Analyst: A Discourse Addressed to an Infidel Mathematician</em> by Bishop George Berkeley (1685-1753). Late in life, Bayes became interested in probability and “inverse probability” (statistics). This essay was published posthumously. See <a href="https://en.wikipedia.org/wiki/Thomas_Bayes" class="uri">https://en.wikipedia.org/wiki/Thomas_Bayes</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p> <a href="https://en.wikipedia.org/wiki/Thomas_Bayes">Thomas Bayes</a> (1701-1761) was an English Presbyterian minister from a family of Nonconformists (i.e., Protestants who did not observe the rules of the Church of England). He studied logic and theology at the University of Edinburgh and served as a minister in Tunbridge Wells near Kent, England. He was elected a Fellow of the Royal Society in 1742 for his defense of Newton’s calculus against a 1734 book called <em>The Analyst: A Discourse Addressed to an Infidel Mathematician</em> by Bishop George Berkeley (1685-1753). Late in life, Bayes became interested in probability and “inverse probability” (statistics). This essay was published posthumously, and it has had a profound effect on modern statistics.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p> This is partly to respect the linear algebra convention that rows come before columns in matrix indices, so <span class="math inline">\(M_{ij}\)</span> is the entry in row <span class="math inline">\(i\)</span> and column <span class="math inline">\(j\)</span> of the matrix <span class="math inline">\(M\)</span>. In analytic epidemiology, exposure must occur before any disease that it causes, so we let the exposure define the rows.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p> For a test that is positive when a clinical measurement is above a given threshold, the AUC is the probability that a person with disease has a higher value than a person without disease. In this example, it is the probability that a true diabetic has a higher blood glucose concentration than a true nondiabetic at the time blood glucose concentration is measured. <span class="citation" data-cites="bamber1975area">Bamber (<a href="#ref-bamber1975area" role="doc-biblioref">1975</a>)</span> showed that the AUC is closely related to the Wilcoxon rank sum statistic for testing the null hypothesis that the diseased and nondiseased have the same distribution for the measurement on which the test is based.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p> The symbol <span class="math inline">\(\Sigma\)</span>, which is an upper-case Greek letter <span class="math inline">\(\sigma\)</span> (sigma), stands for a sum. For products, we use <span class="math inline">\(\Pi\)</span>, which is an upper-case Greek letter <span class="math inline">\(\pi\)</span> (pi).<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p> Many diseases are complex processes <span class="citation" data-cites="rothman1981induction">(<a href="#ref-rothman1981induction" role="doc-biblioref">Rothman 1981</a>)</span>, making any binary classification of disease status somewhat arbitrary. Here, we assume that we have an operational definition of disease status that allows a reasonable binary classification.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
@@ -701,6 +1663,38 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 

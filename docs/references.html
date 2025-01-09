@@ -49,6 +49,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./calculus.html" rel="next">
 <link href="./survival.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -95,10 +96,13 @@ div.csl-indent {
         comp: "\\mathsf\{C\}",
         Cov: ["\\operatorname\{Cov\}"],
         E: ["\\operatorname\{\\mathbb\{E\}\}"],
+        given: ["\\, #1| \\, ", 1],
         indicator: "\\mathbb\{1\}",
         supp: ["\\operatorname\{supp\}"],
         tonset: "t^\\text\{ons\}",
         trec: "t^\\text\{rec\}",
+        twobytwo: "2 \\times 2",
+        vand: "\\text\{ and \}",
         Var: ["\\operatorname\{Var\}"]
       }
     }
@@ -154,7 +158,7 @@ div.csl-indent {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">A. One-Sample Inference for Risks and Rates</span></a>
+ <span class="menu-text">One-Sample Inference for Risks and Rates</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -200,15 +204,15 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">B. Two-Sample Inference and Study Design</span></span>
+ <span class="menu-text">Two-Sample Inference and Study Design</span></span>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">C. Principles of Causal Inference</span></span>
+ <span class="menu-text">Principles of Causal Inference</span></span>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">D. Epidemologic and Statistical Methods for Causal Inference</span></span>
+ <span class="menu-text">Epidemologic and Statistical Methods for Causal Inference</span></span>
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
@@ -216,6 +220,23 @@ div.csl-indent {
  <span class="menu-text">References</span></a>
   </div>
 </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./calculus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -246,67 +267,8 @@ div.csl-indent {
 </header>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-alho1992prevalence" class="csl-entry" role="listitem">
-Alho, Juha M. 1992. <span>“On Prevalence, Incidence, and Duration in
-General Stable Populations.”</span> <em>Biometrics</em> 48 (2): 587–92.
-</div>
-<div id="ref-bayes1763lii" class="csl-entry" role="listitem">
-Bayes, Thomas. 1763. <span>“<span>LII</span>. <span>A</span>n Essay
-Towards Solving a Problem in the Doctrine of Chances. By the Late
-<span>R</span>ev. <span>M</span>r. <span>B</span>ayes, <span>FRS</span>
-Communicated by <span>M</span>r. <span>P</span>rice, in a Letter to
-<span>J</span>ohn <span>C</span>anton, <span>AMFRS</span>.”</span>
-<em>Philosophical Transactions of the Royal Society of London</em> 53:
-370–418.
-</div>
-<div id="ref-berkson1942tests" class="csl-entry" role="listitem">
-Berkson, Joseph. 1942. <span>“Tests of Significance Considered as
-Evidence.”</span> <em>Journal of the American Statistical
-Association</em> 37 (219): 325–35.
-</div>
-<div id="ref-dunn1962use" class="csl-entry" role="listitem">
-Dunn Jr, John E. 1962. <span>“The Use of Incidence and Prevalence in the
-Study of Disease Development in a Population.”</span> <em>American
-Journal of Public Health</em> 52 (7): 1107–18.
-</div>
-<div id="ref-freeman1980prevalence" class="csl-entry" role="listitem">
-Freeman, Jonathan, and George B Hutchison. 1980. <span>“Prevalence,
-Incidence and Duration.”</span> <em>American Journal of
-Epidemiology</em> 112 (5): 707–23.
-</div>
-<div id="ref-keiding1991age" class="csl-entry" role="listitem">
-Keiding, Niels. 1991. <span>“Age-Specific Incidence and Prevalence: A
-Statistical Perspective.”</span> <em>Journal of the Royal Statistical
-Society: Series A (Statistics in Society)</em> 154 (3): 371–96.
-</div>
-<div id="ref-marquis1820theorie" class="csl-entry" role="listitem">
-Laplace, Pierre Simon. 1820. <em>Th<span>é</span>orie Analytique Des
-Probabilit<span>é</span>s</em>. Vol. 7. Courcier.
-</div>
-<div id="ref-macmahon1958application" class="csl-entry" role="listitem">
-MacMahon, Brian, and William D Terry. 1958. <span>“Application of Cohort
-Analysis to the Study of Time Trends in Neoplastic Disease.”</span>
-<em>Journal of Chronic Diseases</em> 7 (1): 24–35.
-</div>
-<div id="ref-morabia2004epidemiology" class="csl-entry" role="listitem">
-Morabia, Alfredo. 2004. <span>“Epidemiology: An Epistemological
-Perspective.”</span> In <em>A History of Epidemiologic Methods and
-Concepts</em>, edited by Alfredo Morabia, 3–125. Springer.
-</div>
-<div id="ref-preston1987relations" class="csl-entry" role="listitem">
-Preston, Samuel H. 1987. <span>“Relations Among Standard Epidemiologic
-Measures in a Population.”</span> <em>American Journal of
-Epidemiology</em> 126 (2): 336–45.
-</div>
-<div id="ref-snow1855mode" class="csl-entry" role="listitem">
-Snow, John. 1855. <em>On the Mode of Communication of Cholera</em>.
-Second edition. John Churchill. <a href="https://wellcomecollection.org/works/uqa27qrt">https://wellcomecollection.org/works/uqa27qrt</a>.
-</div>
-<div id="ref-tukey1962future" class="csl-entry" role="listitem">
-Tukey, John W. 1962. <span>“The Future of Data Analysis.”</span> <em>The
-Annals of Mathematical Statistics</em> 33 (1): 1–67.
-</div>
+<div id="refs" role="list">
+
 </div>
 
 
@@ -741,6 +703,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./calculus.html" class="pagination-link" aria-label="Survival Analysis">
+        <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
