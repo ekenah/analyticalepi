@@ -317,7 +317,8 @@ window.Quarto = {
   <li><a href="#contingency-tables" id="toc-contingency-tables" class="nav-link active" data-scroll-target="#contingency-tables"><span class="header-section-number">2.1</span> Contingency tables</a>
   <ul class="collapse">
   <li><a href="#x2-tables" id="toc-x2-tables" class="nav-link" data-scroll-target="#x2-tables"><span class="header-section-number">2.1.1</span> 2x2 tables</a></li>
-  <li><a href="#conditional-and-marginal-probabilities-on-a-2x2-table" id="toc-conditional-and-marginal-probabilities-on-a-2x2-table" class="nav-link" data-scroll-target="#conditional-and-marginal-probabilities-on-a-2x2-table"><span class="header-section-number">2.1.2</span> Conditional and marginal probabilities on a 2x2 table</a></li>
+  <li><a href="#joint-and-marginal-probabilities" id="toc-joint-and-marginal-probabilities" class="nav-link" data-scroll-target="#joint-and-marginal-probabilities"><span class="header-section-number">2.1.2</span> Joint and marginal probabilities</a></li>
+  <li><a href="#conditional-probabilities" id="toc-conditional-probabilities" class="nav-link" data-scroll-target="#conditional-probabilities"><span class="header-section-number">2.1.3</span> Conditional probabilities</a></li>
   </ul></li>
   <li><a href="#multiplication-of-conditional-probabilities" id="toc-multiplication-of-conditional-probabilities" class="nav-link" data-scroll-target="#multiplication-of-conditional-probabilities"><span class="header-section-number">2.2</span> Multiplication of conditional probabilities</a>
   <ul class="collapse">
@@ -380,7 +381,7 @@ window.Quarto = {
 <div id="tbl-2by2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-2by2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;2.1: 2x2 contingency table of exposure (<span class="math inline">\(X\)</span>) and disease (<span class="math inline">\(D\)</span>).
+Table&nbsp;2.1: 2x2 table of exposure (<span class="math inline">\(X\)</span>) and disease (<span class="math inline">\(D\)</span>).
 </figcaption>
 <div aria-describedby="tbl-2by2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -417,9 +418,31 @@ Table&nbsp;2.1: 2x2 contingency table of exposure (<span class="math inline">\(X
 </figure>
 </div>
 </section>
-<section id="conditional-and-marginal-probabilities-on-a-2x2-table" class="level3" data-number="2.1.2">
-<h3 data-number="2.1.2" class="anchored" data-anchor-id="conditional-and-marginal-probabilities-on-a-2x2-table"><span class="header-section-number">2.1.2</span> Conditional and marginal probabilities on a 2x2 table</h3>
-<p>For simplicity, we will assume that <a href="#tbl-2by2" class="quarto-xref">Table&nbsp;<span>2.1</span></a> represents the entire population <span class="math inline">\(\Omega\)</span>. The conditional probability of disease given exposure is <span class="math display">\[
+<section id="joint-and-marginal-probabilities" class="level3" data-number="2.1.2">
+<h3 data-number="2.1.2" class="anchored" data-anchor-id="joint-and-marginal-probabilities"><span class="header-section-number">2.1.2</span> Joint and marginal probabilities</h3>
+<p>Here, we assume that <a href="#tbl-2by2" class="quarto-xref">Table&nbsp;<span>2.1</span></a> represents our entire population <span class="math inline">\(\Omega\)</span> and our experiment is to randomly sample an individual <span class="math inline">\(\omega \in \Omega\)</span> and measure their exposure status <span class="math inline">\(X(\omega)\)</span> and their disease status <span class="math inline">\(D(\omega)\)</span>. Probabilities involving both <span class="math inline">\(X\)</span> and <span class="math inline">\(D\)</span> are called <strong>joint probabilities</strong>, and they can be calculated using the cell counts. In <a href="#tbl-2by2" class="quarto-xref">Table&nbsp;<span>2.1</span></a>, the four joint probabilities are <span class="math display">\[
+  \begin{aligned}
+    \Pr(X = 1 \text{ and } D = 1) &amp;= a / n, \\
+    \Pr(X = 1 \text{ and } D = 0) &amp;= b / n, \\
+    \Pr(X = 0 \text{ and } D = 1) &amp;= c / n, \\
+    \Pr(X = 0 \text{ and } D = 0) &amp;= d / n.
+  \end{aligned}
+\]</span> Together, these probabilities defined the joint distribution of the random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(D\)</span> via their joint probability mass function (PMF).</p>
+<p>Probabilities involving <span class="math inline">\(X\)</span> or <span class="math inline">\(D\)</span> alone are called <strong>marginal probabilities</strong> because they are calculated using the margins of the table. In <a href="#tbl-2by2" class="quarto-xref">Table&nbsp;<span>2.1</span></a>, the marginal probabilities for exposure <span class="math inline">\(X\)</span> are <span class="math display">\[
+  \begin{aligned}
+    \Pr(X = 1) &amp;= r_1 / n, \\
+    \Pr(X = 0) &amp;= r_0 / n.
+  \end{aligned}
+\]</span> Together, these define the marginal distribution of <span class="math inline">\(X\)</span>, which is Bernoulli(<span class="math inline">\(r_1 / n\)</span>). The marginal probabilities for disease <span class="math inline">\(D\)</span> are <span class="math display">\[
+  \begin{aligned}
+  \Pr(D = 1) &amp;= k_1 / n, \\
+  \Pr(D = 0) &amp;= k_0 / n.
+  \end{aligned}
+\]</span> Together, these define the marginal distribution of <span class="math inline">\(D\)</span>, which is Bernoulli(<span class="math inline">\(k_1 / n\)</span>).</p>
+</section>
+<section id="conditional-probabilities" class="level3" data-number="2.1.3">
+<h3 data-number="2.1.3" class="anchored" data-anchor-id="conditional-probabilities"><span class="header-section-number">2.1.3</span> Conditional probabilities</h3>
+<p>Joint and marginal probabilities can be used to calculate conditional probabilities, which have a joint probability in the numerator and a marginal probability in the denominator. As before, we assume that <a href="#tbl-2by2" class="quarto-xref">Table&nbsp;<span>2.1</span></a> represents our entire population <span class="math inline">\(\Omega\)</span> and our experiment is to randomly sample an individual <span class="math inline">\(\omega \in \Omega\)</span> and measure <span class="math inline">\(X(\omega)\)</span> and <span class="math inline">\(D(\omega)\)</span>. In <a href="#tbl-2by2" class="quarto-xref">Table&nbsp;<span>2.1</span></a>, the conditional probability of disease given exposure is <span class="math display">\[
     \Pr(D = 1 \given{} X = 1)
     = \frac{Pr(D = 1 \vand X = 1)}{\Pr(X = 1)}
     = \frac{a / n}{r_1 / n}
@@ -439,12 +462,7 @@ Table&nbsp;2.1: 2x2 contingency table of exposure (<span class="math inline">\(X
   = \frac{\Pr(X = 1 \vand D = 0)}{\Pr(D = 0)}
   = \frac{b / n}{k_0 / n}
   = \frac{b}{k_0}.
-\]</span> In all cases, the table total cancels out and we get a calculation in one row or one column.</p>
-<p>Probabilities in the original sample space <span class="math inline">\(\Omega\)</span> are called <strong>marginal probabilities</strong> because they are calculated using the margins of the contingency table. Marginal probabilities were used in the denominators of the conditional probabilities above. In <a href="#tbl-2by2" class="quarto-xref">Table&nbsp;<span>2.1</span></a>, the marginal probability of exposure is <span class="math display">\[
-  \Pr(X = 1) = \frac{a + b}{a + b + c + d} = \frac{r_1}{n},
-\]</span> and the marginal probability of disease is <span class="math display">\[
-  \Pr(D = 1) = \frac{a + c}{a + b + c + d} = \frac{k_1}{n}.
-\]</span> Here, the marginal probabilities are probability masses from the marginal distribution of <span class="math inline">\(X\)</span> (based on the row totals) or <span class="math inline">\(D\)</span> (based on the column totals).</p>
+\]</span> In all cases, the table total cancels out and we get a calculation in one row (for conditional probabilities given <span class="math inline">\(X\)</span>) or one column (for conditional probabilities given <span class="math inline">\(D\)</span>).</p>
 </section>
 </section>
 <section id="multiplication-of-conditional-probabilities" class="level2" data-number="2.2">
@@ -462,10 +480,10 @@ Table&nbsp;2.1: 2x2 contingency table of exposure (<span class="math inline">\(X
 <div id="fig-decisiontree" class="lightbox quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-decisiontree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="./images/decisiontree.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;2.1: A decision tree for events A and B. The probability of each leaf is found by multiplying the probabilities along the branches leading from the root to the leaf."><img src="./images/decisiontree.png" class="img-fluid figure-img" style="width:70.0%"></a>
+<a href="./images/decisiontree.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;2.1: A decision tree for events A and B. The probability of each leaf is found by multiplying the probabilities along the branches leading from the leaf back to the root."><img src="./images/decisiontree.png" class="img-fluid figure-img" style="width:70.0%"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-decisiontree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2.1: A decision tree for events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>. The probability of each leaf is found by multiplying the probabilities along the branches leading from the root to the leaf.
+Figure&nbsp;2.1: A decision tree for events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>. The probability of each leaf is found by multiplying the probabilities along the branches leading from the leaf back to the root.
 </figcaption>
 </figure>
 </div>
@@ -902,9 +920,9 @@ Figure&nbsp;2.3: The probability of a positive Somogyi-Nelson diabetes test one 
 </section>
 <section id="bayes-rule" class="level2" data-number="2.5">
 <h2 data-number="2.5" class="anchored" data-anchor-id="bayes-rule"><span class="header-section-number">2.5</span> Bayes’ rule</h2>
-<p>Bayes’ rule <span class="citation" data-cites="bayes1763lii">(<a href="references.html#ref-bayes1763lii" role="doc-biblioref">Bayes 1763</a>)</span> relates the two conditional probabilities <span class="math inline">\(\Pr(A \given{} B)\)</span> and <span class="math inline">\(\Pr(B \given{} A)\)</span>: <span id="eq-Bayes"><span class="math display">\[
+<p>Bayes’ rule <span class="citation" data-cites="bayes1763lii">(<a href="references.html#ref-bayes1763lii" role="doc-biblioref">Bayes 1763</a>)</span> relates the conditional probabilities <span class="math inline">\(\Pr(A \given{} B)\)</span> and <span class="math inline">\(\Pr(B \given{} A)\)</span>: <span id="eq-Bayes"><span class="math display">\[
   \Pr(A \given{} B) = \frac{\Pr(B \cap A)}{\Pr(B)} = \frac{\Pr(B \given{} A) \Pr(A)}{\Pr(B)}.
-\tag{2.6}\]</span></span> Often, the law of total probability is used to calculate <span class="math inline">\(\Pr(B)\)</span> in the denominator. For example: <span class="math display">\[
+\tag{2.6}\]</span></span> In the denominator, the law of total probability is often used to calculate <span class="math inline">\(\Pr(B)\)</span> via partitioning <span class="math inline">\(\Omega\)</span> into <span class="math inline">\(A\)</span> and <span class="math inline">\(A^\comp\)</span>. This gives us <span class="math display">\[
   \Pr(A \given{} B) = \frac{\Pr(B \given{} A) \Pr(A)}{\Pr(B \given{} A) \Pr(A) + \Pr(B \given{} A^\comp) \Pr(A^\comp)}.
 \]</span> Bayes’ rule is an incredibly useful application of conditional probabilities, and it forms the theoretical foundation for Bayesian statistical inference.</p>
 <section id="positive-and-negative-predictive-values" class="level3" data-number="2.5.1">
