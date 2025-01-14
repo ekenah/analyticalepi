@@ -133,9 +133,13 @@ div.csl-indent {
         Bernoulli: ["\\operatorname\{Bernoulli\}"],
         comp: "\\mathsf\{C\}",
         Cov: ["\\operatorname\{Cov\}"],
+        dif: ["#1 \\text\{d\}", "\\,"],
         E: ["\\operatorname\{\\mathbb\{E\}\}"],
         given: ["\\, #1| \\, ", 1],
         indicator: "\\mathbb\{1\}",
+        ptrue: "p_\{\\text\{true\}\}",
+        sens: "\\text\{sens\}",
+        spec: "\\text\{spec\}",
         supp: ["\\operatorname\{supp\}"],
         tonset: "t^\\text\{ons\}",
         trec: "t^\\text\{rec\}",
@@ -299,7 +303,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./calculus.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Calculus</span></span></a>
   </div>
 </li>
       </ul>
@@ -547,9 +551,9 @@ Table&nbsp;2.2: Disease status (<span class="math inline">\(D^+\)</span>/<span c
 </figure>
 </div>
 <p>The <strong>sensitivity</strong> of a test is the conditional probability that the test is positive given that the individual tested has the disease: <span class="math display">\[
-  \text{sensitivity} = \Pr(T^+ \given{} D^+).
+  \sens = \Pr(T^+ \given{} D^+).
 \]</span> The <strong>specificity</strong> of a test is the conditional probability that the test is negative given that the individual tested does not have the disease: <span class="math display">\[
-  \text{specificity} = \Pr(T^- \given{} D^-).
+  \spec = \Pr(T^- \given{} D^-).
 \]</span> In both cases, we are conditioning on the disease status of the individual being tested. These concepts were introduced by <span class="citation" data-cites="yerushalmy1947statistical">Yerushalmy (<a href="references.html#ref-yerushalmy1947statistical" role="doc-biblioref">1947</a>)</span> in a comparison of different types of chest X-rays for tuberculosis case detection.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">R</a></li></ul>
@@ -612,13 +616,13 @@ Table&nbsp;2.3: Sensitivity and specificity of the Somogyi-Nelson blood glucose 
 <td style="text-align: center;"><span class="math inline">\(D^+\)</span></td>
 <td style="text-align: right;">31</td>
 <td style="text-align: right;">39</td>
-<td style="text-align: right;"><span class="math inline">\(\text{sens} = 31 / 70 \approx 0.443\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(\sens = 31 / 70 \approx 0.443\)</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><span class="math inline">\(D^-\)</span></td>
 <td style="text-align: right;">5</td>
 <td style="text-align: right;">505</td>
-<td style="text-align: right;"><span class="math inline">\(\text{spec} = 505 / 510 \approx 0.990\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(\spec = 505 / 510 \approx 0.990\)</span></td>
 </tr>
 <tr class="even">
 <td colspan="4" style="text-align: left;"><em>One hour after meal</em></td>
@@ -627,13 +631,13 @@ Table&nbsp;2.3: Sensitivity and specificity of the Somogyi-Nelson blood glucose 
 <td style="text-align: center;"><span class="math inline">\(D^+\)</span></td>
 <td style="text-align: right;">55</td>
 <td style="text-align: right;">15</td>
-<td style="text-align: right;"><span class="math inline">\(\text{sens} = 55 / 70 \approx 0.786\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(\sens = 55 / 70 \approx 0.786\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><span class="math inline">\(D^-\)</span></td>
 <td style="text-align: right;">48</td>
 <td style="text-align: right;">462</td>
-<td style="text-align: right;"><span class="math inline">\(\text{spec} = 462 / 510 \approx 0.906\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(\spec = 462 / 510 \approx 0.906\)</span></td>
 </tr>
 <tr class="odd">
 <td colspan="4" style="text-align: left;"><em>Two hours after meal</em></td>
@@ -642,13 +646,13 @@ Table&nbsp;2.3: Sensitivity and specificity of the Somogyi-Nelson blood glucose 
 <td style="text-align: center;"><span class="math inline">\(D^+\)</span></td>
 <td style="text-align: right;">45</td>
 <td style="text-align: right;">25</td>
-<td style="text-align: right;"><span class="math inline">\(\text{sens} = 45 / 70 \approx 0.643\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(\sens = 45 / 70 \approx 0.643\)</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><span class="math inline">\(D^-\)</span></td>
 <td style="text-align: right;">16</td>
 <td style="text-align: right;">494</td>
-<td style="text-align: right;"><span class="math inline">\(\text{spec} = 494 / 510 \approx 0.969\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(\spec = 494 / 510 \approx 0.969\)</span></td>
 </tr>
 <tr class="even">
 <td colspan="4" style="text-align: left;"><em>Three hours after meal</em></td>
@@ -657,13 +661,13 @@ Table&nbsp;2.3: Sensitivity and specificity of the Somogyi-Nelson blood glucose 
 <td style="text-align: center;"><span class="math inline">\(D^+\)</span></td>
 <td style="text-align: right;">34</td>
 <td style="text-align: right;">36</td>
-<td style="text-align: right;"><span class="math inline">\(\text{sens} = 34 / 70 \approx 0.486\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(\sens = 34 / 70 \approx 0.486\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><span class="math inline">\(D^-\)</span></td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">509</td>
-<td style="text-align: right;"><span class="math inline">\(\text{spec} = 509 / 510 \approx 0.998\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(\spec = 509 / 510 \approx 0.998\)</span></td>
 </tr>
 </tbody>
 </table>
@@ -702,11 +706,11 @@ Table&nbsp;2.3: Sensitivity and specificity of the Somogyi-Nelson blood glucose 
 </section>
 <section id="receiver-operating-characteristic-roc-curves" class="level3" data-number="2.3.2">
 <h3 data-number="2.3.2" class="anchored" data-anchor-id="receiver-operating-characteristic-roc-curves"><span class="header-section-number">2.3.2</span> Receiver operating characteristic (ROC) curves*</h3>
-<p>The tradeoff between sensitivity and sensitivity in choosing a cutoff to distinguish positive and negative tests can be seen using a <strong>receiver operating characteristic</strong> (ROC) curve <span class="citation" data-cites="lusted1971decision lusted1971signal swets1988measuring zweig1993receiver">(<a href="references.html#ref-lusted1971decision" role="doc-biblioref">Lusted 1971a</a>, <a href="references.html#ref-lusted1971signal" role="doc-biblioref">1971b</a>; <a href="references.html#ref-swets1988measuring" role="doc-biblioref">Swets 1988</a>; <a href="references.html#ref-zweig1993receiver" role="doc-biblioref">Zweig and Campbell 1993</a>)</span>. These curves were originally used in World War II to analyze the performance of radar systems locating ships and airplanes. They were applied to diagnostic tests in the late 1950s in the first attempt to automate the classification of Pap smears to detect cervical cancer <span class="citation" data-cites="bostrom1959instrumentation lusted1984roc bengtsson2014screening">(<a href="references.html#ref-bostrom1959instrumentation" role="doc-biblioref">Bostrom, Sawyer, and Tolles 1959</a>; <a href="references.html#ref-lusted1984roc" role="doc-biblioref">Lusted 1984</a>; <a href="references.html#ref-bengtsson2014screening" role="doc-biblioref">Bengtsson and Malm 2014</a>)</span>.</p>
-<p>The horizontal axis of an ROC curve plots <span class="math display">\[
-  1 - \text{specificity} = \Pr(T^+ \given{} D^-),
-\]</span> and its vertical axis plots sensitivity, which is <span class="math inline">\(\Pr(T^+ \given{} D^+)\)</span>. In general, the best test is the one whose ROC curve stays closest to the top left corner, which represents a test with perfect sensitivity and specificity.</p>
-<p><a href="#fig-roc" class="quarto-xref">Figure&nbsp;<span>2.2</span></a> shows four ROC curves based on data from <span class="citation" data-cites="remein1961efficiency">Remein and Wilkerson (<a href="references.html#ref-remein1961efficiency" role="doc-biblioref">1961</a>)</span>: one for the Somogyi-Nelson blood test before the meal and one each for the tests one, two, and three hours after the meal. For all four tests, the curves are based on the combinations of sensitivity and specificity for glucose concentration cutoffs from 70 mg/dL to 200 mg/dL. In these tests, using a higher glucose concentration cutoff to define a positive test leads to lower sensitivity and higher specificity.</p>
+<p>The tradeoff between sensitivity and sensitivity in choosing a clinical measurement cutoff to distinguish positive and negative tests can be seen using a <strong>receiver operating characteristic</strong> (ROC) curve <span class="citation" data-cites="lusted1971decision lusted1971signal swets1988measuring zweig1993receiver">(<a href="references.html#ref-lusted1971decision" role="doc-biblioref">Lusted 1971a</a>, <a href="references.html#ref-lusted1971signal" role="doc-biblioref">1971b</a>; <a href="references.html#ref-swets1988measuring" role="doc-biblioref">Swets 1988</a>; <a href="references.html#ref-zweig1993receiver" role="doc-biblioref">Zweig and Campbell 1993</a>)</span>. These curves were originally used in World War II to analyze the performance of radar systems locating ships and airplanes. They were applied to diagnostic tests in the late 1950s in the first attempt to automate the classification of Pap smears to detect cervical cancer <span class="citation" data-cites="bostrom1959instrumentation lusted1984roc bengtsson2014screening">(<a href="references.html#ref-bostrom1959instrumentation" role="doc-biblioref">Bostrom, Sawyer, and Tolles 1959</a>; <a href="references.html#ref-lusted1984roc" role="doc-biblioref">Lusted 1984</a>; <a href="references.html#ref-bengtsson2014screening" role="doc-biblioref">Bengtsson and Malm 2014</a>)</span>.</p>
+<p>Each combination of a clinical measurement and a cutoff between positive and negative tests defines a diagnostic or screening test that has a sensitivity <span class="math inline">\(\sens \in [0, 1]\)</span> and a specificity <span class="math inline">\(\spec \in [0, 1]\)</span>. The horizontal axis of an ROC curve plots <span class="math display">\[
+  1 - \spec = \Pr(T^+ \given{} D^-),
+\]</span> and its vertical axis plots <span class="math inline">\(\sens = \Pr(T^+ \given{} D^+)\)</span>. The test corresponds to a point <span class="math inline">\((1 - \spec, \sens)\)</span> in the unit square <span class="math inline">\([0, 1] \times [0, 1]\)</span>. The best tests correspond to points close to the top left corner <span class="math inline">\((0, 1)\)</span>, which represents a test with perfect specificity (so <span class="math inline">\(1 - \spec = 0\)</span>) and perfect sensitivity.</p>
+<p>For a sequence of cutoffs, a given clinical measurement produces a curve connecting the points produced by the tests based on it. <a href="#fig-roc" class="quarto-xref">Figure&nbsp;<span>2.2</span></a> shows four ROC curves based on data from <span class="citation" data-cites="remein1961efficiency">Remein and Wilkerson (<a href="references.html#ref-remein1961efficiency" role="doc-biblioref">1961</a>)</span>: one for the Somogyi-Nelson blood glucose measurement before the meal and one each for the measurements one, two, and three hours after the meal. For all four measurements, the curves are based on the combinations of sensitivity and specificity for glucose concentration cutoffs from 70 mg/dL to 200 mg/dL. In these tests, using a higher glucose concentration cutoff to define a positive test leads to lower sensitivity and higher specificity.</p>
 <div class="cell">
 <div class="code-with-filename">
 <details class="code-fold">
@@ -772,16 +776,16 @@ Table&nbsp;2.3: Sensitivity and specificity of the Somogyi-Nelson blood glucose 
 <div id="fig-roc" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-roc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="condprob_files/figure-html/fig-roc-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2.2: ROC curves for Somogyi-Nelson blood tests conducted before the mean and at 1-3 hours after the meal. Cutoff values for the before-meal ROC curve are labeled, and the points corresponding to the 130 mg/dL cutoff along each curve are circled."><img src="condprob_files/figure-html/fig-roc-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="condprob_files/figure-html/fig-roc-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2.2: ROC curves for Somogyi-Nelson blood tests conducted before the meal and at 1-3 hours after the meal. Cutoff values for the before-meal curve are labeled, and the points corresponding to the 130 mg/dL cutoff along the curve for each blood glucose measurement are circled."><img src="condprob_files/figure-html/fig-roc-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-roc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2.2: ROC curves for Somogyi-Nelson blood tests conducted before the mean and at 1-3 hours after the meal. Cutoff values for the before-meal ROC curve are labeled, and the points corresponding to the 130 mg/dL cutoff along each curve are circled.
+Figure&nbsp;2.2: ROC curves for Somogyi-Nelson blood tests conducted before the meal and at 1-3 hours after the meal. Cutoff values for the before-meal curve are labeled, and the points corresponding to the 130 mg/dL cutoff along the curve for each blood glucose measurement are circled.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>ROC curves are sometimes compared using the area under the curve (AUC), with greater area under the curve corresponding roughly to a better test <span class="citation" data-cites="bamber1975area hanley1982meaning">(<a href="references.html#ref-bamber1975area" role="doc-biblioref">Bamber 1975</a>; <a href="references.html#ref-hanley1982meaning" role="doc-biblioref">Hanley and McNeil 1982</a>)</span>. For a test that is positive when a clinical measurement is above a given cutoff, the AUC is the probability that a person with disease has a higher value than a person without disease.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> In this example, it is the probability that a true diabetic has a higher blood glucose concentration than a true nondiabetic at the time blood glucose concentration is measured. The AUCs in <a href="#fig-roc" class="quarto-xref">Figure&nbsp;<span>2.2</span></a> show clearly that the tests one and two hours after the meal, which have curves above and to the left of the other two curves, are more accurate than the tests before and three hours after the meal. This is biologically plausible: Before the meal, there is no glucose load. Three hours after the meal, the glucose from the meal has largely been processed.</p>
+<p>ROC curves for different clinical measurements can be compared using the area under the curve (AUC), which is the area between the x-axis <span class="math inline">\([0, 1]\)</span> and the ROC curve. Greater AUC corresponds to a measurement that is better able to distinguish between disease and no disease <span class="citation" data-cites="bamber1975area hanley1982meaning">(<a href="references.html#ref-bamber1975area" role="doc-biblioref">Bamber 1975</a>; <a href="references.html#ref-hanley1982meaning" role="doc-biblioref">Hanley and McNeil 1982</a>)</span>. For a test that is positive when a clinical measurement is above a given cutoff, the AUC is the probability that a person with disease has a higher value than a person without disease.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> In this example, it is the probability that a true diabetic has a higher blood glucose concentration than a true nondiabetic at the time blood glucose concentration is measured. A measurement that was always higher (or always lower) for individuals with disease than individuals without disease would have <span class="math inline">\(\text{AUC} = 1\)</span>. The AUCs in <a href="#fig-roc" class="quarto-xref">Figure&nbsp;<span>2.2</span></a> show clearly that the tests one and two hours after the meal, which have curves above and to the left of the other two curves, better distinguish between diabetics and nondiabetics than the tests before and three hours after the meal. This is biologically plausible: Before the meal, there is no glucose load. Three hours after the meal, the glucose from the meal has largely been absorbed.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">R</a></li></ul>
 <div class="tab-content">
@@ -1050,7 +1054,7 @@ Table&nbsp;2.4: PPV and NPV of the Somogyi-Nelson blood glucose test for diabete
     + (1 - \text{sensitivity}) \times \text{prevalence}}.
   \label{eq:npv}
 \]</span> The numerator is the probability of a true negative test, and the denominator is the probability of a (true or false) negative test.</p>
-<p><a href="#fig-predval" class="quarto-xref">Figure&nbsp;<span>2.4</span></a> shows how the positive and negative predictive values of a test depend on the prevalence of disease for the Somogyi-Nelson test before the meal and one hour after the meal in <span class="citation" data-cites="remein1961efficiency">Remein and Wilkerson (<a href="references.html#ref-remein1961efficiency" role="doc-biblioref">1961</a>)</span>. With a cutoff of 130 mg/dL, the sensitivity and specificity are <span class="math inline">\(0.443\)</span> and <span class="math inline">\(0.990\)</span> before the meal and <span class="math inline">\(0.786\)</span> and <span class="math inline">\(0.906\)</span> one hour after the meal. As prevalence increases, PPV increases and NPV decreases. A perfect test would have PPV and NPV equal to one at all prevalences.</p>
+<p><a href="#fig-predval" class="quarto-xref">Figure&nbsp;<span>2.4</span></a> shows how the positive and negative predictive values of a test depend on the prevalence of disease for the Somogyi-Nelson test before the meal and one hour after the meal in <span class="citation" data-cites="remein1961efficiency">Remein and Wilkerson (<a href="references.html#ref-remein1961efficiency" role="doc-biblioref">1961</a>)</span>. With a cutoff of 130 mg/dL, the sensitivity and specificity are <span class="math inline">\(0.443\)</span> and <span class="math inline">\(0.990\)</span> before the meal and <span class="math inline">\(0.786\)</span> and <span class="math inline">\(0.906\)</span> one hour after the meal. If prevalence equals zero, the PPV is zero and the NPV equals one because no one has disease. As prevalence increases, PPV increases and NPV decreases. If the prevalence equals one, the PPV is one and the NPV is zero because everyone has disease. A perfect test would have PPV and NPV equal to one at all prevalences.</p>
 <div class="cell">
 <div class="code-with-filename">
 <details class="code-fold">

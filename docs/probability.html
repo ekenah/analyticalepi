@@ -130,15 +130,23 @@ div.csl-indent {
   window.MathJax = {
     tex: {
       macros: {
+        approxsim: "\\stackrel\{\\text\{approx\}\}\{\\sim\}",
         Bernoulli: ["\\operatorname\{Bernoulli\}"],
         comp: "\\mathsf\{C\}",
         Cov: ["\\operatorname\{Cov\}"],
+        dif: ["#1 \\text\{d\}", "\\,"],
         E: ["\\operatorname\{\\mathbb\{E\}\}"],
+        expit: ["\\operatorname\{expit\}"],
         given: ["\\, #1| \\, ", 1],
         indicator: "\\mathbb\{1\}",
+        logit: ["\\operatorname\{logit\}"],
+        ptrue: "p_\{\\text\{true\}\}",
+        sens: "\\text\{sens\}",
+        spec: "\\text\{spec\}",
         supp: ["\\operatorname\{supp\}"],
         tonset: "t^\\text\{ons\}",
         trec: "t^\\text\{rec\}",
+        true: "\\text\{true\}",
         twobytwo: "2 \\times 2",
         vand: "\\text\{ and \}",
         Var: ["\\operatorname\{Var\}"]
@@ -299,7 +307,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./calculus.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Calculus</span></span></a>
   </div>
 </li>
       </ul>
@@ -332,7 +340,7 @@ window.Quarto = {
   <li><a href="#probability-distributions" id="toc-probability-distributions" class="nav-link" data-scroll-target="#probability-distributions"><span class="header-section-number">1.3.2</span> Probability distributions</a></li>
   <li><a href="#mean" id="toc-mean" class="nav-link" data-scroll-target="#mean"><span class="header-section-number">1.3.3</span> Mean</a></li>
   <li><a href="#variance" id="toc-variance" class="nav-link" data-scroll-target="#variance"><span class="header-section-number">1.3.4</span> Variance</a></li>
-  <li><a href="#bernoulli-distribution" id="toc-bernoulli-distribution" class="nav-link" data-scroll-target="#bernoulli-distribution"><span class="header-section-number">1.3.5</span> Bernoulli distribution</a></li>
+  <li><a href="#sec-Bernoulli" id="toc-sec-Bernoulli" class="nav-link" data-scroll-target="#sec-Bernoulli"><span class="header-section-number">1.3.5</span> Bernoulli distribution</a></li>
   </ul></li>
   <li><a href="#joint-and-marginal-distributions" id="toc-joint-and-marginal-distributions" class="nav-link" data-scroll-target="#joint-and-marginal-distributions"><span class="header-section-number">1.4</span> Joint and marginal distributions</a>
   <ul class="collapse">
@@ -354,7 +362,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./probability.html">One-Sample Inference for Risks and Rates</a></li><li class="breadcrumb-item"><a href="./probability.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Probability, Random Variables, and Disease Occurrence</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Probability, Random Variables, and Disease Occurrence</span></h1>
+<h1 class="title"><span id="sec-chprob" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Probability, Random Variables, and Disease Occurrence</span></span></h1>
 </div>
 
 
@@ -698,20 +706,23 @@ Figure&nbsp;1.1: Venn diagram showing events <span class="math inline">\(A\)</sp
   \Var(X)
   = \E\big[(X - \mu)^2\big]
   = \sum_{x \in \supp(X)} (x - \mu)^2 f(x).
-\]</span> Because <span class="math inline">\((x - \mu)^2 \geq 0\)</span> with equality if and only if <span class="math inline">\(x = \mu\)</span>, we always have <span class="math inline">\(\Var(X) \geq 0\)</span>. We have <span class="math inline">\(\Var(X) = 0\)</span> if and only if <span class="math inline">\(X = \mu\)</span> with probability one. The variance is often written <span class="math inline">\(\sigma^2\)</span>, and it is often described as a measure of the dispersion of <span class="math inline">\(X\)</span> around the mean.</p>
+\]</span> {eq-Var} Because <span class="math inline">\((x - \mu)^2 \geq 0\)</span> with equality if and only if <span class="math inline">\(x = \mu\)</span>, we always have <span class="math inline">\(\Var(X) \geq 0\)</span>. We have <span class="math inline">\(\Var(X) = 0\)</span> if and only if <span class="math inline">\(X = \mu\)</span> with probability one. An equivalent expression for the variance that is often easier to use is: <span id="eq-var2"><span class="math display">\[
+  \Var(X) = \E(X^2) - \mu^2
+\tag{1.10}\]</span></span> where <span class="math inline">\(\E(X^2)\)</span> is the expected value of the random variable <span class="math inline">\(X^2\)</span>. The variance is often written <span class="math inline">\(\sigma^2\)</span>, and it is often described as a measure of the dispersion of <span class="math inline">\(X\)</span> around the mean.</p>
 <p>The square root of the variance is called the <strong>standard devation</strong>, which is often written <span class="math inline">\(\sigma\)</span>. If a random variable <span class="math inline">\(X\)</span> has units (e.g., length, weight, or time), the mean and the standard deviation have the same units as <span class="math inline">\(X\)</span>. For example, the mean and standard deviation of a length in meters both have units of <span class="math inline">\(\text{meters}\)</span> but the variance has units of <span class="math inline">\(\text{meters}^2\)</span>.</p>
 </section>
-<section id="bernoulli-distribution" class="level3" data-number="1.3.5">
-<h3 data-number="1.3.5" class="anchored" data-anchor-id="bernoulli-distribution"><span class="header-section-number">1.3.5</span> Bernoulli distribution</h3>
+<section id="sec-Bernoulli" class="level3" data-number="1.3.5">
+<h3 data-number="1.3.5" class="anchored" data-anchor-id="sec-Bernoulli"><span class="header-section-number">1.3.5</span> Bernoulli distribution</h3>
 <p>The distribution of an indicator variable is called the <strong>Bernoulli distribution</strong>.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> A random variable with the Bernoulli(<span class="math inline">\(p\)</span>) distribution has the PMF <span class="math display">\[
-  f(x) =
-  \begin{cases}
+  f(x)
+  = p^x (1 - p)^{1 - x}
+  = \begin{cases}
     1 - p &amp;\text{if } x = 0\\
     p     &amp;\text{if } x = 1.
   \end{cases}
 \]</span> Equivalently, it has the CDF <span class="math display">\[
-  F(x) =
-  \begin{cases}
+  F(x)
+  = \begin{cases}
     0     &amp;\text{if } x &lt; 0 \\
     1 - p &amp;\text{if } x \in [0, 1) \\
     1     &amp;\text{if } x \geq 1.
@@ -839,9 +850,9 @@ Table&nbsp;1.1: Joint and marginal PMFs for binary random variables <span class=
 <li><p>The indicator function for <span class="math inline">\(A \cup B\)</span> in <a href="#eq-indunion" class="quarto-xref">Equation&nbsp;<span>1.9</span></a> is linear combination of the indicator variables <span class="math inline">\(\indicator_A\)</span>, <span class="math inline">\(\indicator_B\)</span>, and <span class="math inline">\(\indicator_{A \cap B}\)</span>.</p></li>
 <li><p>The indicator function for <span class="math inline">\(A \cap B\)</span> in <a href="#eq-indint" class="quarto-xref">Equation&nbsp;<span>1.8</span></a> is not a linear combination of <span class="math inline">\(\indicator_A\)</span> and <span class="math inline">\(\indicator_B\)</span> because we have to multiply these two variables.</p></li>
 </ul>
-<p>If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are random variables defined on the same sample space and <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are constants, the mean of the linear combination <span class="math inline">\(a X + b Y\)</span> is <span class="math display">\[
+<p>If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are random variables defined on the same sample space and <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are constants, the mean of the linear combination <span class="math inline">\(a X + b Y\)</span> is <span id="eq-lincomE"><span class="math display">\[
   \E(a X + b Y) = a \E(X) + b \E(Y).
-\]</span> This is a direct consequence of the definition of expected value: <span class="math display">\[
+\tag{1.11}\]</span></span> This is a direct consequence of the definition of expected value: <span class="math display">\[
   \begin{aligned}
     \E(a X + b Y)
     &amp;= \sum_{x \in \supp(X)} \sum_{y \in \supp(Y)} (a x + b y) f(x, y) \\
@@ -853,11 +864,11 @@ Table&nbsp;1.1: Joint and marginal PMFs for binary random variables <span class=
 </section>
 <section id="variance-and-covariance" class="level3" data-number="1.4.2">
 <h3 data-number="1.4.2" class="anchored" data-anchor-id="variance-and-covariance"><span class="header-section-number">1.4.2</span> Variance and covariance*</h3>
-<p>The variance of <span class="math inline">\(a X + b Y\)</span> is <span class="math display">\[
+<p>The variance of <span class="math inline">\(a X + b Y\)</span> is <span id="eq-lincomV"><span class="math display">\[
   \Var(a X + b Y) = a^2 \Var(X) + b^2 \Var(Y) + 2 a b \Cov(X, Y)
-\]</span> where <span class="math display">\[
+\tag{1.12}\]</span></span> where <span class="math display">\[
   \Cov(X, Y) = \E\bigl[\big(X - \E(X)\big) \big(Y - \E(Y)\big)\bigr]
-\]</span> is called the <strong>covariance</strong> of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. Note that <span class="math inline">\(\Cov(X, Y) = \Cov(Y, X)\)</span>. Because <span class="math inline">\(\Var(X) = \Cov(X, X)\)</span>, variance is a special case of covariance.</p>
+\]</span> is called the <strong>covariance</strong> of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. Note that <span class="math inline">\(\Cov(X, Y) = \Cov(Y, X)\)</span>. Because <span class="math inline">\(\Var(X) = \Cov(X, X)\)</span>, variance is a special case of covariance. When <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are <em>independent</em> in the sense that the value of one tells us nothing about the value of the other, then <span class="math inline">\(\Cov(X, Y) = 0\)</span> and <span class="math inline">\(\Var(a X + b Y) = a^2 \Var(X) + b^2 Var(Y)\)</span>.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></p>
 <p>The joint distribution of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> has a <strong>covariance matrix</strong> which is <span class="math display">\[
   \begin{bmatrix}
     \Var(X)     &amp; \Cov(X, Y) \\
@@ -876,14 +887,14 @@ Table&nbsp;1.1: Joint and marginal PMFs for binary random variables <span class=
       a \\ b
     \end{pmatrix}
 \]</span> in matrix and vector notation from <a href="https://en.wikipedia.org/wiki/Linear_algebra">linear algebra</a>. This logic extends to linear combinations of any number of random variables.</p>
-<p>The covariance is the numerator of the <em>Pearson correlation coefficient</em>,<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a> which is <span class="math display">\[
+<p>The covariance is the numerator of the <em>Pearson correlation coefficient</em>,<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> which is <span class="math display">\[
   \rho_{XY} = \rho_{YX}
   = \frac{\Cov(X, Y)}{\sqrt{\Var(X) \Var(Y)}}.
 \]</span> Because of the <a href="https://en.wikipedia.org/wiki/Cauchy%E2%80%93Schwarz_inequality">Cauchy-Schwarz inequality</a>, it turns out that <span class="math inline">\(\rho_{XY} \in [-1, 1]\)</span>.</p>
 <ul>
 <li><p>We get <span class="math inline">\(\rho_{XY} = -1\)</span> if and only if <span class="math inline">\(Y = c X\)</span> for some negative constant <span class="math inline">\(c\)</span>.</p></li>
 <li><p>We get <span class="math inline">\(\rho_{XY} = 1\)</span> if and only if <span class="math inline">\(Y = c X\)</span> for some positive constant <span class="math inline">\(c\)</span>. For example, <span class="math inline">\(\rho_{XX} = 1\)</span> for any random variable <span class="math inline">\(X\)</span>.</p></li>
-<li><p>We get <span class="math inline">\(\rho_{XY} = 0\)</span> if <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are <em>independent</em> in the sense that the value of one tells us nothing about the value of the other.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> However, it is possible to have <span class="math inline">\(\rho_{XY} = 0\)</span> when <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are not independent.</p></li>
+<li><p>We get <span class="math inline">\(\rho_{XY} = 0\)</span> if (but not only if) <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent. However, it is possible to have <span class="math inline">\(\rho_{XY} = 0\)</span> when <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are not independent.</p></li>
 </ul>
 <p>If we divide each entry <span class="math inline">\(\Cov(X, Y)\)</span> in a covariance matrix by <span class="math inline">\(\sqrt{\Var(X) \Var(Y)}\)</span>, when we get a <em>correlation matrix</em>. Any correlation matrix is symmetric, and the entries along its diagonals are all ones.</p>
 </section>
@@ -1205,8 +1216,8 @@ Preston, Samuel H. 1987. <span>“Relations Among Standard Epidemiologic Measure
 <li id="fn7"><p> Technically, the support of <span class="math inline">\(X\)</span> is the smallest closed set <span class="math inline">\(S_X\)</span> such that <span class="math inline">\(\Pr(X \in S_X) = 1\)</span>. For a discrete random variable with support on a finite set, it is just the set of possible values. For a discrete random variable with support on a countably infinite set, it can include points whose probability mass is zero—a pathological case that we can safely ignore. For a continuous random variable, it can include values whose probability density is zero—a case that is not unusual or pathological.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn8"><p> Named after <a href="https://en.wikipedia.org/wiki/Jacob_Bernoulli">Jacob Bernoulli</a> (1655-1705), a Swiss mathematician who derived the first version of the law of large numbers and discovered the constant <span class="math inline">\(e \approx 2.718281828\)</span>, which is the base for natural logarithms. He and his younger brother Johann Bernoulli (1667-1748) were some of the first mathematicians to try to understand and apply calculus, but their relationship eventually curdled into a jealous rivalry. A lunar impact crater called Bernoulli is named jointly after them.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn9"><p> This becomes a fundamental insight when we discuss hypothesis tests for independence as well as confounding and selection bias.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn10"><p> Named after <a href="https://en.wikipedia.org/wiki/Karl_Pearson">Karl Pearson</a> (1857-1936), an English mathematician who founded the modern discipline of mathematical statistics. In 1911, he started the world’s first university department of statistics at University College London. He was an outspoken socialist and supporter of women’s rights, but he was also a vocal proponent of social Darwinism and eugenics who opposed Jewish immigration into Britain.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn11"><p> We will define independence of random variables more rigorously when we discuss conditional probabilities in <a href="condprob.html" class="quarto-xref"><span>Chapter 2</span></a>.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p> Discrete random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent if <span class="math inline">\(\Pr(X = x \vand Y = y) = \Pr(X = x) \Pr(Y = y)\)</span> for any possible values <span class="math inline">\(x \in \supp(X)\)</span> and <span class="math inline">\(y \in \supp(Y)\)</span>. We will discuss independence more rigorously when we discuss conditional probabilities in <a href="condprob.html" class="quarto-xref"><span>Chapter 2</span></a>.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p> Named after <a href="https://en.wikipedia.org/wiki/Karl_Pearson">Karl Pearson</a> (1857-1936), an English mathematician who founded the modern discipline of mathematical statistics. In 1911, he started the world’s first university department of statistics at University College London. He was an outspoken socialist and supporter of women’s rights, but he was also a vocal proponent of social Darwinism and eugenics who opposed Jewish immigration into Britain.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
