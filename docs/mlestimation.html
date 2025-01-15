@@ -495,9 +495,9 @@ window.Quarto = {
   = \frac{n}{p} + \frac{n}{1 - p}
   = \frac{n}{p (1 - p)}.
 \]</span> Because <span class="math inline">\(\ptrue\)</span> is unknown, the expected information is often evaluated at <span class="math inline">\(\hat{p}\)</span>. In some models, the expected information can be difficult to calculate.</p>
-<p>The negative second derivative of <span class="math inline">\(\ell(p)\)</span> inside the expectation in <a href="#eq-expinf" class="quarto-xref">Equation&nbsp;<span>3.5</span></a> evaluated is called the <strong>observed Fisher information</strong> or <strong>observed information</strong> <span id="eq-obsinf"><span class="math display">\[
+<p>The negative second derivative of <span class="math inline">\(\ell(p)\)</span> inside the expectation in <a href="#eq-expinf" class="quarto-xref">Equation&nbsp;<span>3.5</span></a> evaluated is the <strong>observed Fisher information</strong> or <strong>observed information</strong> <span id="eq-obsinf"><span class="math display">\[
 I(p) = -\frac{\text{d}^2}{\text{d} p^2} \ell(p)
-= \frac{x}{p^2} + \frac{n - x}{(1 - p)^2}
+= \frac{x}{p^2} + \frac{n - x}{(1 - p)^2}.
 \tag{3.6}\]</span></span> For the binomial distribution <span class="math inline">\(I(\hat{p}) = \mathcal{I}(\hat{p})\)</span> but this equality does not hold at other values of <span class="math inline">\(p\)</span>. The observed information is an unbiased estimator of the expected information, and it can always be calculated from the data. It often produces more accurate variance estimates than the expected information <span class="citation" data-cites="efron1978assessing kenward1998likelihood reid2003asymptotics">(<a href="references.html#ref-efron1978assessing" role="doc-biblioref">Efron and Hinkley 1978</a>; <a href="references.html#ref-kenward1998likelihood" role="doc-biblioref">Kenward and Molenberghs 1998</a>; <a href="references.html#ref-reid2003asymptotics" role="doc-biblioref">Reid 2003</a>)</span>. However, it is generally safe to use whichever is most convenient <span class="citation" data-cites="boos2013essential">(<a href="references.html#ref-boos2013essential" role="doc-biblioref">Boos and Stefanski 2013</a>)</span>.</p>
 </section>
 </section>
@@ -842,14 +842,13 @@ Table&nbsp;3.1: Truth of <span class="math inline">\(H_0\)</span> and hypothesis
   \Pr(H_0 \text{ true} \given H_0 \text{ not rejected})
   = \frac{(1 - \alpha) \Pr(H_0 \text{ true})}
   {(1 - \alpha) \Pr(H_0 \text{ true}) + \beta \Pr(H_0 \text{ false})}.
-  \label{eq:hynpv}
 \tag{3.12}\]</span></span> The conditional probability that <span class="math inline">\(H_0\)</span> is true given the result of the hypothesis test is called the <strong>posterior probability</strong> of <span class="math inline">\(H_0\)</span>.</p>
 </section>
 <section id="sec-wslr" class="level3" data-number="3.3.2">
 <h3 data-number="3.3.2" class="anchored" data-anchor-id="sec-wslr"><span class="header-section-number">3.3.2</span> Wald, score, and likelihood ratio tests</h3>
 <p>In a maximum likelihood framework, there are three classical tests for a null hypothesis of the form <span class="math display">\[
   H_0: \ptrue = p_0.
-\]</span> These tests are asymptotically equivalent, which means that they produce similar results in large samples. The best way to visualize the different tests is to look at a graph of the log likelihood function. <span class="quarto-unresolved-ref">?fig-mle</span> shows the log likelihood function for a binary outcome with <span class="math inline">\(x = 60\)</span> events out of <span class="math inline">\(n = 100\)</span> trials and a null hypothesis <span class="math inline">\(H_0: p_\true = 0.5\)</span>. All three tests generalize to null hypotheses involving multiple parameters <span class="citation" data-cites="boos2013essential">(<a href="references.html#ref-boos2013essential" role="doc-biblioref">Boos and Stefanski 2013</a>)</span>.</p>
+\]</span> These tests are asymptotically equivalent, which means that they produce similar results in large samples. The best way to visualize the different tests is to look at a graph of the log likelihood function. <a href="#fig-htests" class="quarto-xref">Figure&nbsp;<span>3.4</span></a> shows the log likelihood function for a binary outcome with <span class="math inline">\(x = 60\)</span> events out of <span class="math inline">\(n = 100\)</span> trials and a null hypothesis <span class="math inline">\(H_0: p_\true = 0.5\)</span>. All three tests generalize to null hypotheses involving multiple parameters <span class="citation" data-cites="boos2013essential">(<a href="references.html#ref-boos2013essential" role="doc-biblioref">Boos and Stefanski 2013</a>)</span>.</p>
 <p>The <strong>Wald test</strong> <span class="citation" data-cites="wald1943tests">(<a href="references.html#ref-wald1943tests" role="doc-biblioref">Wald 1943</a>)</span> of <span class="math inline">\(H_0\)</span> looks at the distance between the MLE <span class="math inline">\(\hat{p}\)</span> and the hypothesized value <span class="math inline">\(p_0\)</span><span class="citation" data-cites="wald1943tests">(<a href="references.html#ref-wald1943tests" role="doc-biblioref">Wald 1943</a>)</span>, rejecting <span class="math inline">\(H_0\)</span> when this distance is sufficiently large.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> An example is shown in <a href="#fig-htests" class="quarto-xref">Figure&nbsp;<span>3.4</span></a>. The Wald test statistic is <span id="eq-Waldtest"><span class="math display">\[
   W = \frac{(\hat{p} - p_0)^2}{I(\hat{p})}
   = \frac{n (\hat{p} - p_0)^2}{\hat{p} (1 - \hat{p})}
@@ -1012,7 +1011,7 @@ Figure&nbsp;3.5: The approximation used by the delta method using the logistic t
 \end{figure} -->
 <p>A widely used transformation for probabilities is the <strong>logit transformation</strong> <span class="math display">\[
   \logit(p) = \ln\Bigl(\frac{p}{1 - p}\Bigr).
-\]</span> The <strong>odds</strong> corresponding to the probability <span class="math inline">\(p\)</span> is <span class="math inline">\(\frac{p}{1 - p}\)</span>, so the logit is the natural logarithm of the odds. The logit transformation maps the interval <span class="math inline">\((0, 1)\)</span> onto all of $:</p>
+\]</span> The <strong>odds</strong> corresponding to the probability <span class="math inline">\(p\)</span> is <span class="math inline">\(\frac{p}{1 - p}\)</span>, so the logit is the natural logarithm of the odds. The logit transformation maps the interval <span class="math inline">\((0, 1)\)</span> onto all of <span class="math inline">\(\mathbb{R}\)</span>:</p>
 <ul>
 <li>As <span class="math inline">\(p \rightarrow 0\)</span>, the odds <span class="math inline">\(p / (1 - p) \rightarrow 0\)</span> and <span class="math inline">\(\logit(p) \rightarrow -\infty\)</span>.</li>
 <li>When <span class="math inline">\(p = 1 / 2\)</span>, the odds <span class="math inline">\(p / (1 - p) = 1\)</span> and <span class="math inline">\(\logit(p) = 0\)</span>.</li>
@@ -1037,13 +1036,12 @@ Figure&nbsp;3.5: The approximation used by the delta method using the logistic t
 <p>The <strong>score</strong> or <strong>Wilson</strong> confidence limits come from solving the equation <span id="eq-scoreCIeq"><span class="math display">\[
   \frac{(\hat{p} - p)^2}{p (1 - p) / n}
   = z_{1 - \frac{\alpha}{2}}^2.
-  \label{eq:eqscore}
 \tag{3.18}\]</span></span> for <span class="math inline">\(p\)</span> <span class="citation" data-cites="wilson1927probable">(<a href="references.html#ref-wilson1927probable" role="doc-biblioref">Wilson 1927</a>)</span>. This differs from <a href="#eq-WaldCIeq" class="quarto-xref">Equation&nbsp;<span>3.16</span></a> for the Wald confidence interval because it uses <span class="math inline">\(p\)</span> instead of <span class="math inline">\(\hat{p}\)</span> in the denominator. It is a quadratic equation in <span class="math inline">\(p\)</span>, so it has two solutions. The center of the resulting confidence interval is <span id="eq-ptilde"><span class="math display">\[
   \tilde{p}
   = \hat{p} \Bigg(\frac{n}{n + z_{1 - \frac{\alpha}{2}}^2}\Bigg)
     + \frac{1}{2} \Bigg(\frac{z_{1 - \frac{\alpha}{2}}^2}{n + z_{1 - \frac{\alpha}{2}}^2}\Bigg)
   = \frac{x + \frac{1}{2} z_{1 - \frac{\alpha}{2}}^2}{n + z_{1 - \frac{\alpha}{2}}^2},
-\tag{3.19}\]</span></span> where <span class="math inline">\(x\)</span> is the number of diseased individuals in our sample. This is a weighted average of <span class="math inline">\(\hat{p}\)</span> and <span class="math inline">\(\sfrac{1}{2}\)</span> with weights proportional to <span class="math inline">\(n\)</span> and <span class="math inline">\(z_{1 - \frac{\alpha}{2}}^2\)</span>, respectively. The resulting confidence interval is <span class="math display">\[
+\tag{3.19}\]</span></span> where <span class="math inline">\(x\)</span> is the number of diseased individuals in our sample. This is a weighted average of <span class="math inline">\(\hat{p}\)</span> and <span class="math inline">\(1 / 2\)</span> with weights proportional to <span class="math inline">\(n\)</span> and <span class="math inline">\(z_{1 - \frac{\alpha}{2}}^2\)</span>, respectively. The resulting confidence interval is <span class="math display">\[
   \tilde{p} \pm z_{1 - \frac{\alpha}{2}} \sqrt{\tilde{V}}
 \]</span> where <span class="math display">\[
   \tilde{V}
