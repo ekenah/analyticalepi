@@ -134,7 +134,8 @@ div.csl-indent {
         Bernoulli: ["\\operatorname\{Bernoulli\}"],
         comp: "\\mathsf\{C\}",
         Cov: ["\\operatorname\{Cov\}"],
-        dif: ["#1 \\text\{d\}", "\\,"],
+        data: "\\text\{data\}",
+        dif: "\\text\{d\}",
         E: ["\\operatorname\{\\mathbb\{E\}\}"],
         expit: ["\\operatorname\{expit\}"],
         given: ["\\, #1| \\, ", 1],
@@ -333,7 +334,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#sample-mean-average" id="toc-sample-mean-average" class="nav-link" data-scroll-target="#sample-mean-average"><span class="header-section-number">3.2.1</span> Sample mean (average)</a></li>
   <li><a href="#law-of-large-numbers-and-consistency" id="toc-law-of-large-numbers-and-consistency" class="nav-link" data-scroll-target="#law-of-large-numbers-and-consistency"><span class="header-section-number">3.2.2</span> Law of large numbers and consistency</a></li>
-  <li><a href="#central-limit-theorem-and-the-normal-distribution" id="toc-central-limit-theorem-and-the-normal-distribution" class="nav-link" data-scroll-target="#central-limit-theorem-and-the-normal-distribution"><span class="header-section-number">3.2.3</span> Central limit theorem and the normal distribution</a></li>
+  <li><a href="#sec-cltnorm" id="toc-sec-cltnorm" class="nav-link" data-scroll-target="#sec-cltnorm"><span class="header-section-number">3.2.3</span> Central limit theorem and the normal distribution</a></li>
   <li><a href="#efficiency-of-maximum-likelihood-estimators" id="toc-efficiency-of-maximum-likelihood-estimators" class="nav-link" data-scroll-target="#efficiency-of-maximum-likelihood-estimators"><span class="header-section-number">3.2.4</span> Efficiency of maximum likelihood estimators*</a></li>
   </ul></li>
   <li><a href="#hypothesis-testing" id="toc-hypothesis-testing" class="nav-link" data-scroll-target="#hypothesis-testing"><span class="header-section-number">3.3</span> Hypothesis testing</a>
@@ -598,8 +599,8 @@ An estimate that converges to its true value as $n \rightarrow \infty$ is called
   Any infinite sequence in a compact set has a convergent subsequence.
 ] -->
 </section>
-<section id="central-limit-theorem-and-the-normal-distribution" class="level3" data-number="3.2.3">
-<h3 data-number="3.2.3" class="anchored" data-anchor-id="central-limit-theorem-and-the-normal-distribution"><span class="header-section-number">3.2.3</span> Central limit theorem and the normal distribution</h3>
+<section id="sec-cltnorm" class="level3" data-number="3.2.3">
+<h3 data-number="3.2.3" class="anchored" data-anchor-id="sec-cltnorm"><span class="header-section-number">3.2.3</span> Central limit theorem and the normal distribution</h3>
 <p>When both the mean and variance of the <span class="math inline">\(Y_i\)</span> are finite, the <strong>central limit theorem</strong> (CLT) allows us to say something about how far away our sample mean <span class="math inline">\(\hat{\mu}_n\)</span> is from the true value <span class="math inline">\(\mu\)</span>. It is the most important result in all of probability and statistics.</p>
 <div id="thm-clt" class="theorem">
 <p><span class="theorem-title"><strong>Theorem 3.2 (Central Limit Theorem)</strong></span> If <span class="math inline">\(Y_1, Y_2, \ldots\)</span> is an infinite sequence of IID random variables with finite mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2 &lt; \infty\)</span>, then <span class="math display">\[
