@@ -1052,6 +1052,64 @@ Figure&nbsp;3.5: The approximation used by the delta method using the logistic t
   \tilde{p} \pm z_{1 - \frac{\alpha}{2}} \sqrt{\frac{\tilde{p} (1 - \tilde{p})}{n}}.
 \]</span> Because <span class="math inline">\(z_{0.975} \approx 1.96\)</span>, we have <span class="math inline">\(\tilde{p} \approx \frac{k + 2}{n + 4}\)</span> for a 95% confidence interval. In this case, the Agresti-Coull interval is often implemented as follows: ``Add two successes and two failures and then use the Wald formula’’ <span class="citation" data-cites="agresti1998approximate">(<a href="references.html#ref-agresti1998approximate" role="doc-biblioref">Agresti and Coull 1998</a>)</span>. This interval is only slightly wider than the score confidence interval, and the two intervals are nearly identical for <span class="math inline">\(n &gt; 40\)</span> <span class="citation" data-cites="brown2001interval">(<a href="references.html#ref-brown2001interval" role="doc-biblioref">Brown, Cai, and DasGupta 2001</a>)</span>.</p>
 <p>The likelihood ratio test can also be inverted to get confidence intervals, but these can only be calculated numerically. For the binomial model, the likelihood ratio and score confidence intervals are nearly identical <span class="citation" data-cites="agresti1998approximate brown2001interval">(<a href="references.html#ref-agresti1998approximate" role="doc-biblioref">Agresti and Coull 1998</a>; <a href="references.html#ref-brown2001interval" role="doc-biblioref">Brown, Cai, and DasGupta 2001</a>)</span>. The score intervals are more common in practice because they are easier to calculate.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>binconf.R</strong></pre>
+</div>
+<div class="sourceCode" id="cb8" data-filename="binconf.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Binomial confidence intervals</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># using BinomCI() function from the DescTools package</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DescTools)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">BinomCI</span>(<span class="dv">15</span>, <span class="dv">22</span>, <span class="at">method =</span> <span class="st">"wald"</span>)            <span class="co"># Wald confidence interval</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">BinomCI</span>(<span class="dv">15</span>, <span class="dv">22</span>, <span class="at">method =</span> <span class="st">"logit"</span>)           <span class="co"># logit-transformed Wald CI</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">BinomCI</span>(<span class="dv">15</span>, <span class="dv">22</span>, <span class="at">method =</span> <span class="st">"wilson"</span>)          <span class="co"># score CI (default)</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">BinomCI</span>(<span class="dv">15</span>, <span class="dv">22</span>, <span class="at">method =</span> <span class="st">"agresti-coull"</span>)   <span class="co"># Agresti-Coull CI</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">BinomCI</span>(<span class="dv">15</span>, <span class="dv">22</span>, <span class="at">method =</span> <span class="st">"lik"</span>)             <span class="co"># likelihood ratio CI</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co"># using binconf() function from the Hmisc package</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="fu">binconf</span>(<span class="dv">15</span>, <span class="dv">22</span>, <span class="at">method =</span> <span class="st">"asymptotic"</span>)  <span class="co"># Wald CI</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="fu">binconf</span>(<span class="dv">15</span>, <span class="dv">22</span>, <span class="at">method =</span> <span class="st">"wilson"</span>)      <span class="co"># score CI (default)</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co"># using prop.test in base R (stats package)</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Wilson confidence interval with continuity correction by default</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co"># The continuity correction is not generally recommended. Like the exact CI,</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co"># it can be too wide and have a coverage probability greater than 1 - \alpha.</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.test</span>(<span class="dv">15</span>, <span class="dv">22</span>)</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(<span class="fu">prop.test</span>(<span class="dv">15</span>, <span class="dv">22</span>))</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.test</span>(<span class="dv">15</span>, <span class="dv">22</span>, <span class="at">correct =</span> <span class="cn">FALSE</span>)      <span class="co"># score CI</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="co"># using binom.test (exact confidence interval)</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="fu">binom.test</span>(<span class="dv">15</span>, <span class="dv">22</span>)    <span class="co"># same as binconf with method = "exact"</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(<span class="fu">binom.test</span>(<span class="dv">15</span>, <span class="dv">22</span>))</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="co"># changing the confidence level (1 - alpha) to 80%</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="co"># All are score (Wilson) confidence intervals by default.</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="fu">BinomCI</span>(<span class="dv">15</span>, <span class="dv">22</span>, <span class="at">conf.level =</span> <span class="fl">0.8</span>)</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="fu">binconf</span>(<span class="dv">15</span>, <span class="dv">22</span>, <span class="at">alpha =</span> <span class="fl">0.2</span>)</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.test</span>(<span class="dv">15</span>, <span class="dv">22</span>, <span class="at">conf.level =</span> <span class="fl">0.8</span>, <span class="at">correct =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="co"># writing a function to get Wald confidence limits</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>bconf_wald <span class="ot">&lt;-</span> <span class="cf">function</span>(x, n, <span class="at">level=</span><span class="fl">0.95</span>) {</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>  <span class="co"># x is number of successes out of n trials</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>  p_hat <span class="ot">&lt;-</span> x <span class="sc">/</span> n</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>  alpha <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> level</span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>  pvar <span class="ot">&lt;-</span> p_hat <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p_hat) <span class="sc">/</span> n</span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>  p_int <span class="ot">&lt;-</span> p_hat <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> alpha <span class="sc">/</span> <span class="dv">2</span>) <span class="sc">*</span> <span class="fu">sqrt</span>(pvar)</span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>  <span class="co"># return named vector (names do not need quotes)</span></span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">c</span>(<span class="at">point =</span> p_hat, <span class="at">lower =</span> p_int[<span class="dv">1</span>], <span class="at">upper =</span> p_int[<span class="dv">2</span>]))</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a><span class="fu">bconf_wald</span>(<span class="dv">15</span>, <span class="dv">22</span>)</span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a><span class="fu">bconf_wald</span>(<span class="dv">15</span>, <span class="dv">22</span>, <span class="at">level =</span> <span class="fl">0.80</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
 </section>
 </section>
 <section id="small-sample-estimation" class="level2" data-number="3.5">
@@ -1091,6 +1149,47 @@ Figure&nbsp;3.5: The approximation used by the delta method using the logistic t
     + \frac{1}{2} \binom{n}{x} p_\text{upper}^x (1 - p_\text{upper})^{n - x}
   = \frac{\alpha}{2}.
 \]</span> The mid-p exact confidence limits are have good combinations of coverage probability and width as well as good perfomance in small samples <span class="citation" data-cites="brown2001interval">(<a href="references.html#ref-brown2001interval" role="doc-biblioref">Brown, Cai, and DasGupta 2001</a>)</span>.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>binconf-smallsamp.R</strong></pre>
+</div>
+<div class="sourceCode" id="cb9" data-filename="binconf-smallsamp.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Small-sample binomial point and interval estimates</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># median unbiased estimate</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>medp.binom <span class="ot">&lt;-</span> <span class="cf">function</span>(k, n) {</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># k = number of successes, n = number of trials</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># binomial lower tail probability</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  lower.tail <span class="ot">&lt;-</span> <span class="cf">function</span>(p) <span class="fu">pbinom</span>(k, n, p) <span class="sc">-</span> <span class="fu">dbinom</span>(k, n, p) <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># median unbiased estimate</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  med <span class="ot">&lt;-</span> <span class="fu">uniroot</span>(<span class="cf">function</span>(p) <span class="fu">lower.tail</span>(p) <span class="sc">-</span> <span class="dv">1</span> <span class="sc">/</span> <span class="dv">2</span>, <span class="at">interval =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(med<span class="sc">$</span>root)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="fu">medp.binom</span>(<span class="dv">15</span>, <span class="dv">22</span>)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="co"># exact (Clopper-Pearson) confidence intervals</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="fu">binom.test</span>(<span class="dv">15</span>, <span class="dv">22</span>)                              <span class="co"># base R (stats)</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(<span class="fu">binom.test</span>(<span class="dv">15</span>, <span class="dv">22</span>))</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="fu">binom.test</span>(<span class="dv">15</span>, <span class="dv">22</span>, <span class="at">conf.level =</span> <span class="fl">0.8</span>)</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="fu">binconf</span>(<span class="dv">15</span>, <span class="dv">22</span>, <span class="at">method =</span> <span class="st">"exact"</span>)</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="fu">binconf</span>(<span class="dv">15</span>, <span class="dv">22</span>, <span class="at">method =</span> <span class="st">"exact"</span>, <span class="at">alpha =</span> <span class="fl">0.2</span>)</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DescTools)</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="fu">BinomCI</span>(<span class="dv">15</span>, <span class="dv">22</span>, <span class="at">method =</span> <span class="st">"clopper-pearson"</span>)     <span class="co"># exact CI</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a><span class="fu">BinomCI</span>(<span class="dv">15</span>, <span class="dv">22</span>, <span class="at">method =</span> <span class="st">"midp"</span>)                <span class="co"># mid-p exact CI</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
