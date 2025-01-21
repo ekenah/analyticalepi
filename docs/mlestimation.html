@@ -145,7 +145,11 @@ div.csl-indent {
         sens: "\\text\{sens\}",
         spec: "\\text\{spec\}",
         supp: ["\\operatorname\{supp\}"],
-        tonset: "t^\\text\{ons\}",
+        tcens: "t^\\text\{cens\}",
+        tentry: "t^\\text\{entry\}",
+        tevent: "t^\\text\{event\}",
+        texit: "t^\\text\{exit\}",
+        tonset: "t^\\text\{onset\}",
         trec: "t^\\text\{rec\}",
         true: "\\text\{true\}",
         twobytwo: "2 \\times 2",
@@ -267,7 +271,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./longitudinal.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Longitudinal Data and Rates</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Longitudinal Data, Rates, and Counts</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -351,7 +355,7 @@ window.Quarto = {
   <li><a href="#small-sample-estimation" id="toc-small-sample-estimation" class="nav-link" data-scroll-target="#small-sample-estimation"><span class="header-section-number">3.5</span> Small-sample estimation*</a>
   <ul class="collapse">
   <li><a href="#median-unbiased-estimate" id="toc-median-unbiased-estimate" class="nav-link" data-scroll-target="#median-unbiased-estimate"><span class="header-section-number">3.5.1</span> Median unbiased estimate</a></li>
-  <li><a href="#exact-clopper-pearson-and-mid-p-confidence-intervals" id="toc-exact-clopper-pearson-and-mid-p-confidence-intervals" class="nav-link" data-scroll-target="#exact-clopper-pearson-and-mid-p-confidence-intervals"><span class="header-section-number">3.5.2</span> Exact (Clopper-Pearson) and mid-p confidence intervals</a></li>
+  <li><a href="#sec-binexact" id="toc-sec-binexact" class="nav-link" data-scroll-target="#sec-binexact"><span class="header-section-number">3.5.2</span> Exact (Clopper-Pearson) and mid-p confidence intervals</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -361,7 +365,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./probability.html">One-Sample Inference for Risks and Rates</a></li><li class="breadcrumb-item"><a href="./mlestimation.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Maximum Likelihood Estimation</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Maximum Likelihood Estimation</span></h1>
+<h1 class="title"><span id="sec-mle" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Maximum Likelihood Estimation</span></span></h1>
 </div>
 
 
@@ -1132,8 +1136,8 @@ Figure&nbsp;3.5: The approximation used by the delta method using the logistic t
   = \frac{1}{2}.
 \]</span> The median of the distribution of <span class="math inline">\(p_\text{med}\)</span> is always <span class="math inline">\(\ptrue\)</span> <span class="citation" data-cites="birnbaum1964median">(<a href="references.html#ref-birnbaum1964median" role="doc-biblioref">Birnbaum 1964</a>)</span>, which is a slightly different notion of unbiasedness than the unbiasedness of <span class="math inline">\(\hat{p}\)</span> where <span class="math inline">\(\E(\hat{p}) = \ptrue\)</span>.</p>
 </section>
-<section id="exact-clopper-pearson-and-mid-p-confidence-intervals" class="level3" data-number="3.5.2">
-<h3 data-number="3.5.2" class="anchored" data-anchor-id="exact-clopper-pearson-and-mid-p-confidence-intervals"><span class="header-section-number">3.5.2</span> Exact (Clopper-Pearson) and mid-p confidence intervals</h3>
+<section id="sec-binexact" class="level3" data-number="3.5.2">
+<h3 data-number="3.5.2" class="anchored" data-anchor-id="sec-binexact"><span class="header-section-number">3.5.2</span> Exact (Clopper-Pearson) and mid-p confidence intervals</h3>
 <p>The <strong>exact</strong> or <strong>Clopper-Pearson</strong> confidence limits for <span class="math inline">\(\ptrue\)</span> use the finite-sample distribution of the sample mean <span class="math inline">\(\hat{p}\)</span> <span class="citation" data-cites="clopper1934use">Clopper and Pearson (<a href="references.html#ref-clopper1934use" role="doc-biblioref">1934</a>)</span>. When <span class="math inline">\(x &gt; 0\)</span>, the lower <span class="math inline">\(1 - \alpha\)</span> confidence limit is the solution to <span id="eq-uppertail"><span class="math display">\[
   \sum_{k = x}^n \binom{n}{k} p_\text{lower}^k (1 - p_\text{lower})^{n - k}
   = \frac{\alpha}{2},

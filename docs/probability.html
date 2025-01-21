@@ -145,7 +145,11 @@ div.csl-indent {
         sens: "\\text\{sens\}",
         spec: "\\text\{spec\}",
         supp: ["\\operatorname\{supp\}"],
-        tonset: "t^\\text\{ons\}",
+        tcens: "t^\\text\{cens\}",
+        tentry: "t^\\text\{entry\}",
+        tevent: "t^\\text\{event\}",
+        texit: "t^\\text\{exit\}",
+        tonset: "t^\\text\{onset\}",
         trec: "t^\\text\{rec\}",
         true: "\\text\{true\}",
         twobytwo: "2 \\times 2",
@@ -267,7 +271,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./longitudinal.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Longitudinal Data and Rates</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Longitudinal Data, Rates, and Counts</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -351,7 +355,7 @@ window.Quarto = {
   <li><a href="#probability-and-disease-occurrence" id="toc-probability-and-disease-occurrence" class="nav-link" data-scroll-target="#probability-and-disease-occurrence"><span class="header-section-number">1.5</span> Probability and disease occurrence</a>
   <ul class="collapse">
   <li><a href="#prevalence" id="toc-prevalence" class="nav-link" data-scroll-target="#prevalence"><span class="header-section-number">1.5.1</span> Prevalence</a></li>
-  <li><a href="#risk-cumulative-incidence-and-the-survival-function" id="toc-risk-cumulative-incidence-and-the-survival-function" class="nav-link" data-scroll-target="#risk-cumulative-incidence-and-the-survival-function"><span class="header-section-number">1.5.2</span> Risk (cumulative incidence) and the survival function</a></li>
+  <li><a href="#sec-riskdef" id="toc-sec-riskdef" class="nav-link" data-scroll-target="#sec-riskdef"><span class="header-section-number">1.5.2</span> Risk (cumulative incidence) and the survival function</a></li>
   <li><a href="#prevalence-and-the-duration-of-disease" id="toc-prevalence-and-the-duration-of-disease" class="nav-link" data-scroll-target="#prevalence-and-the-duration-of-disease"><span class="header-section-number">1.5.3</span> Prevalence and the duration of disease</a></li>
   <li><a href="#descriptive-and-analytic-epidemiology" id="toc-descriptive-and-analytic-epidemiology" class="nav-link" data-scroll-target="#descriptive-and-analytic-epidemiology"><span class="header-section-number">1.5.4</span> Descriptive and analytic epidemiology</a></li>
   </ul></li>
@@ -1008,8 +1012,8 @@ Table&nbsp;1.1: Joint and marginal PMFs for binary random variables <span class=
 </div>
 </div>
 </section>
-<section id="risk-cumulative-incidence-and-the-survival-function" class="level3" data-number="1.5.2">
-<h3 data-number="1.5.2" class="anchored" data-anchor-id="risk-cumulative-incidence-and-the-survival-function"><span class="header-section-number">1.5.2</span> Risk (cumulative incidence) and the survival function</h3>
+<section id="sec-riskdef" class="level3" data-number="1.5.2">
+<h3 data-number="1.5.2" class="anchored" data-anchor-id="sec-riskdef"><span class="header-section-number">1.5.2</span> Risk (cumulative incidence) and the survival function</h3>
 <p>To define <strong>risk</strong> or <strong>cumulative incidence</strong>, we first choose an nonempty time interval <span class="math inline">\((t_a, t_b]\)</span>. The disease outcome is defined as <span class="math display">\[
   D(\omega) =
   \begin{cases}
