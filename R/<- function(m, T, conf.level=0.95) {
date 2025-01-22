@@ -1,0 +1,211 @@
+uniroot                 package:stats                  R Documentation
+
+_O_n_e _D_i_m_e_n_s_i_o_n_a_l _R_o_o_t (_Z_e_r_o) _F_i_n_d_i_n_g
+
+_D_e_s_c_r_i_p_t_i_o_n:
+
+     The function ‘uniroot’ searches the interval from ‘lower’ to
+     ‘upper’ for a root (i.e., zero) of the function ‘f’ with respect
+     to its first argument.
+
+     Setting ‘extendInt’ to a non-‘"no"’ string, means searching for
+     the correct ‘interval = c(lower,upper)’ if ‘sign(f(x))’ does not
+     satisfy the requirements at the interval end points; see the
+     ‘Details’ section.
+
+_U_s_a_g_e:
+
+     uniroot(f, interval, ...,
+             lower = min(interval), upper = max(interval),
+             f.lower = f(lower, ...), f.upper = f(upper, ...),
+             extendInt = c("no", "yes", "downX", "upX"), check.conv = FALSE,
+             tol = .Machine$double.eps^0.25, maxiter = 1000, trace = 0)
+     
+_A_r_g_u_m_e_n_t_s:
+
+       f: the function for which the root is sought.
+
+interval: a vector containing the end-points of the interval to be
+          searched for the root.
+
+     ...: additional named or unnamed arguments to be passed to ‘f’
+
+lower, upper: the lower and upper end points of the interval to be
+          searched.
+
+f.lower, f.upper: the same as ‘f(upper)’ and ‘f(lower)’, respectively.
+          Passing these values from the caller where they are often
+          known is more economical as soon as ‘f()’ contains
+          non-trivial computations.
+
+extendInt: character string specifying if the interval ‘c(lower,upper)’
+          should be extended or directly produce an error when ‘f()’
+          does not have differing signs at the endpoints.  The default,
+          ‘"no"’, keeps the search interval and hence produces an
+          error.  Can be abbreviated.
+
+check.conv: logical indicating whether a convergence warning of the
+          underlying ‘uniroot’ should be caught as an error and if
+          non-convergence in ‘maxiter’ iterations should be an error
+          instead of a warning.
+
+     tol: the desired accuracy (convergence tolerance).
+
+ maxiter: the maximum number of iterations.
+
+   trace: integer number; if positive, tracing information is produced.
+          Higher values giving more details.
+
+_D_e_t_a_i_l_s:
+
+     Note that arguments after ‘...’ must be matched exactly.
+
+     Either ‘interval’ or both ‘lower’ and ‘upper’ must be specified:
+     the upper endpoint must be strictly larger than the lower
+     endpoint.  The function values at the endpoints must be of
+     opposite signs (or zero), for ‘extendInt="no"’, the default.
+     Otherwise, if ‘extendInt="yes"’, the interval is extended on both
+     sides, in search of a sign change, i.e., until the search interval
+     [l,u] satisfies f(l) * f(u) <= 0.
+
+     If it is _known how_ f changes sign at the root x0, that is, if
+     the function is increasing or decreasing there, ‘extendInt’ can
+     (and typically should) be specified as ‘"upX"’ (for “upward
+     crossing”) or ‘"downX"’, respectively.  Equivalently, define S:=
+     +/- 1, to require S = sign(f(x0 + eps)) at the solution.  In that
+     case, the search interval [l,u] possibly is extended to be such
+     that S * f(l) <= 0 and S * f(u) >= 0.
+
+     ‘uniroot()’ uses Fortran subroutine ‘zeroin’ (from Netlib) based
+     on algorithms given in the reference below.  They assume a
+     continuous function (which then is known to have at least one root
+     in the interval).
+
+     Convergence is declared either if ‘f(x) == 0’ or the change in ‘x’
+     for one step of the algorithm is less than ‘tol’ (plus an
+     allowance for representation error in ‘x’).
+
+     If the algorithm does not converge in ‘maxiter’ steps, a warning
+     is printed and the current approximation is returned.
+
+     ‘f’ will be called as ‘f(<x>, ...)’ for a numeric value of <x>.
+
+     The argument passed to ‘f’ has special semantics and used to be
+     shared between calls.  The function should not copy it.
+
+_V_a_l_u_e:
+
+     A list with at least five components: ‘root’ and ‘f.root’ give the
+     location of the root and the value of the function evaluated at
+     that point. ‘iter’ and ‘estim.prec’ give the number of iterations
+     used and an approximate estimated precision for ‘root’.  (If the
+     root occurs at one of the endpoints, the estimated precision is
+     ‘NA’.)  ‘init.it’ contains the number of _init_ial ‘extendInt’
+     _it_erations if there were any and is ‘NA’ otherwise.  In the case
+     of such ‘extendInt’ iterations, ‘iter’ contains the ‘sum’ of these
+     and the ‘zeroin’ iterations.
+
+     Further components may be added in the future.
+
+_S_o_u_r_c_e:
+
+     Based on ‘zeroin.c’ in <https://netlib.org/c/brent.shar>.
+
+_R_e_f_e_r_e_n_c_e_s:
+
+     Brent, R. (1973) _Algorithms for Minimization without
+     Derivatives._ Englewood Cliffs, NJ: Prentice-Hall.
+
+_S_e_e _A_l_s_o:
+
+     ‘polyroot’ for all complex roots of a polynomial; ‘optimize’,
+     ‘nlm’.
+
+_E_x_a_m_p_l_e_s:
+
+     require(utils) # for str
+     
+     ## some platforms hit zero exactly on the first step:
+     ## if so the estimated precision is 2/3.
+     f <- function (x, a) x - a
+     str(xmin <- uniroot(f, c(0, 1), tol = 0.0001, a = 1/3))
+     
+     ## handheld calculator example: fixed point of cos(.):
+     uniroot(function(x) cos(x) - x, lower = -pi, upper = pi, tol = 1e-9)$root
+     
+     str(uniroot(function(x) x*(x^2-1) + .5, lower = -2, upper = 2,
+                 tol = 0.0001))
+     str(uniroot(function(x) x*(x^2-1) + .5, lower = -2, upper = 2,
+                 tol = 1e-10))
+     
+     ## Find the smallest value x for which exp(x) > 0 (numerically):
+     r <- uniroot(function(x) 1e80*exp(x) - 1e-300, c(-1000, 0), tol = 1e-15)
+     str(r, digits.d = 15) # around -745, depending on the platform.
+     
+     exp(r$root)     # = 0, but not for r$root * 0.999...
+     minexp <- r$root * (1 - 10*.Machine$double.eps)
+     exp(minexp)     # typically denormalized
+     
+     
+     ##--- uniroot() with new interval extension + checking features: --------------
+     
+     f1 <- function(x) (121 - x^2)/(x^2+1)
+     f2 <- function(x) exp(-x)*(x - 12)
+     
+     try(uniroot(f1, c(0,10)))
+     try(uniroot(f2, c(0, 2)))
+     ##--> error: f() .. end points not of opposite sign
+     
+     ## where as  'extendInt="yes"'  simply first enlarges the search interval:
+     u1 <- uniroot(f1, c(0,10),extendInt="yes", trace=1)
+     u2 <- uniroot(f2, c(0,2), extendInt="yes", trace=2)
+     stopifnot(all.equal(u1$root, 11, tolerance = 1e-5),
+               all.equal(u2$root, 12, tolerance = 6e-6))
+     
+     ## The *danger* of interval extension:
+     ## No way to find a zero of a positive function, but
+     ## numerically, f(-|M|) becomes zero :
+     u3 <- uniroot(exp, c(0,2), extendInt="yes", trace=TRUE)
+     
+     ## Nonsense example (must give an error):
+     tools::assertCondition( uniroot(function(x) 1, 0:1, extendInt="yes"),
+                            "error", verbose=TRUE)
+     
+     ## Convergence checking :
+     sinc <- function(x) ifelse(x == 0, 1, sin(x)/x)
+     curve(sinc, -6,18); abline(h=0,v=0, lty=3, col=adjustcolor("gray", 0.8))
+     
+     uniroot(sinc, c(0,5), extendInt="yes", maxiter=4) #-> "just" a warning
+     
+     
+     ## now with  check.conv=TRUE, must signal a convergence error :
+     
+     uniroot(sinc, c(0,5), extendInt="yes", maxiter=4, check.conv=TRUE)
+     
+     
+     ### Weibull cumulative hazard (example origin, Ravi Varadhan):
+     cumhaz <- function(t, a, b) b * (t/b)^a
+     froot <- function(x, u, a, b) cumhaz(x, a, b) - u
+     
+     n <- 1000
+     u <- -log(runif(n))
+     a <- 1/2
+     b <- 1
+     ## Find failure times
+     ru <- sapply(u, function(x)
+        uniroot(froot, u=x, a=a, b=b, interval= c(1.e-14, 1e04),
+                extendInt="yes")$root)
+     ru2 <- sapply(u, function(x)
+        uniroot(froot, u=x, a=a, b=b, interval= c(0.01,  10),
+                extendInt="yes")$root)
+     stopifnot(all.equal(ru, ru2, tolerance = 6e-6))
+     
+     r1 <- uniroot(froot, u= 0.99, a=a, b=b, interval= c(0.01, 10),
+                  extendInt="up")
+     stopifnot(all.equal(0.99, cumhaz(r1$root, a=a, b=b)))
+     
+     ## An error if 'extendInt' assumes "wrong zero-crossing direction":
+     
+     uniroot(froot, u= 0.99, a=a, b=b, interval= c(0.1, 10), extendInt="down")
+     
+

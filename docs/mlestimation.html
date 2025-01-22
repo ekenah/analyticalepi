@@ -1160,37 +1160,36 @@ Figure&nbsp;3.5: The approximation used by the delta method using the logistic t
 <div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
-<pre><strong>binconf-smallsamp.R</strong></pre>
+<pre><strong>binomial-small.R</strong></pre>
 </div>
-<div class="sourceCode" id="cb9" data-filename="binconf-smallsamp.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Small-sample binomial point and interval estimates</span></span>
+<div class="sourceCode" id="cb9" data-filename="binomial-small.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Small-sample binomial point and interval estimates</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># median unbiased estimate</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>medp.binom <span class="ot">&lt;-</span> <span class="cf">function</span>(k, n) {</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>medp_binom <span class="ot">&lt;-</span> <span class="cf">function</span>(k, n) {</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># k = number of successes, n = number of trials</span></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># binomial lower tail probability</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  lower.tail <span class="ot">&lt;-</span> <span class="cf">function</span>(p) <span class="fu">pbinom</span>(k, n, p) <span class="sc">-</span> <span class="fu">dbinom</span>(k, n, p) <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  lower_tail <span class="ot">&lt;-</span> <span class="cf">function</span>(p) <span class="fu">pbinom</span>(k, n, p) <span class="sc">-</span> <span class="fu">dbinom</span>(k, n, p) <span class="sc">/</span> <span class="dv">2</span></span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># median unbiased estimate</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  med <span class="ot">&lt;-</span> <span class="fu">uniroot</span>(<span class="cf">function</span>(p) <span class="fu">lower.tail</span>(p) <span class="sc">-</span> <span class="dv">1</span> <span class="sc">/</span> <span class="dv">2</span>, <span class="at">interval =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(med<span class="sc">$</span>root)</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="fu">medp.binom</span>(<span class="dv">15</span>, <span class="dv">22</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  med <span class="ot">&lt;-</span> <span class="fu">uniroot</span>(<span class="cf">function</span>(p) <span class="fu">lower_tail</span>(p) <span class="sc">-</span> <span class="dv">1</span> <span class="sc">/</span> <span class="dv">2</span>, <span class="at">interval =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  med<span class="sc">$</span>root</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="fu">medp_binom</span>(<span class="dv">15</span>, <span class="dv">22</span>)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="co"># exact (Clopper-Pearson) confidence intervals</span></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="fu">binom.test</span>(<span class="dv">15</span>, <span class="dv">22</span>)                              <span class="co"># base R (stats)</span></span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(<span class="fu">binom.test</span>(<span class="dv">15</span>, <span class="dv">22</span>))</span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="fu">binom.test</span>(<span class="dv">15</span>, <span class="dv">22</span>, <span class="at">conf.level =</span> <span class="fl">0.8</span>)</span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="fu">binconf</span>(<span class="dv">15</span>, <span class="dv">22</span>, <span class="at">method =</span> <span class="st">"exact"</span>)</span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="fu">binconf</span>(<span class="dv">15</span>, <span class="dv">22</span>, <span class="at">method =</span> <span class="st">"exact"</span>, <span class="at">alpha =</span> <span class="fl">0.2</span>)</span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DescTools)</span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="fu">BinomCI</span>(<span class="dv">15</span>, <span class="dv">22</span>, <span class="at">method =</span> <span class="st">"clopper-pearson"</span>)     <span class="co"># exact CI</span></span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a><span class="fu">BinomCI</span>(<span class="dv">15</span>, <span class="dv">22</span>, <span class="at">method =</span> <span class="st">"midp"</span>)                <span class="co"># mid-p exact CI</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co"># exact (Clopper-Pearson) confidence intervals</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="fu">binom.test</span>(<span class="dv">15</span>, <span class="dv">22</span>)                              <span class="co"># base R (stats)</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(<span class="fu">binom.test</span>(<span class="dv">15</span>, <span class="dv">22</span>))</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="fu">binom.test</span>(<span class="dv">15</span>, <span class="dv">22</span>, <span class="at">conf.level =</span> <span class="fl">0.8</span>)</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="fu">binconf</span>(<span class="dv">15</span>, <span class="dv">22</span>, <span class="at">method =</span> <span class="st">"exact"</span>)</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="fu">binconf</span>(<span class="dv">15</span>, <span class="dv">22</span>, <span class="at">method =</span> <span class="st">"exact"</span>, <span class="at">alpha =</span> <span class="fl">0.2</span>)</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DescTools)</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="fu">BinomCI</span>(<span class="dv">15</span>, <span class="dv">22</span>, <span class="at">method =</span> <span class="st">"clopper-pearson"</span>)     <span class="co"># exact CI</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="fu">BinomCI</span>(<span class="dv">15</span>, <span class="dv">22</span>, <span class="at">method =</span> <span class="st">"midp"</span>)                <span class="co"># mid-p exact CI</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>

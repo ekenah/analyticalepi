@@ -1,15 +1,25 @@
-## Bayesian estimation of incidence rates
+## Bayesian estimation of incidence rates with gamma conjugate distribution
 
-x <- seq(0, 1, by = 0.002)
-m <- 4
-T <- 25
+# incidence rate posterior mean, median, and equal-tailed credible limits
+incrate_bayes <- function(m, T, level=0.95, priora=0.5, priorb=0) {
+  # default arguments are for the Jeffreys confidence interval
+  alpha <- 1 - level
+  posta  <- priora + m
+  postb <- priorb + T
+  if (m == 0) {
+    lower <- 0
+  } else {
+    lower <- qgamma(alpha / 2, shape = posta, rate = postb)
+  }
+  upper <- qgamma(1 - alpha / 2, shape = posta, rate = postb)
+  postmean <- posta / postb
+  postmedian <- qgamma(0.5, shape = posta, rate = postb)
+  return(c(postmean = postmean, postmedian = postmedian,
+           lower = lower, upper = upper,
+           priora = priora, priorb = priorb, level = level))
+}
 
-# plot
-plot(x, dgamma(x, shape = 0.5 + m, rate = 0.1 + T), type = "n",
-     xlab = expression(paste("Incidence rate (", lambda, ")")),
-     ylab = "Probability density")
-grid()
-lines(x, dgamma(x, shape = 0.5, rate = 0.1), lty = "dashed")
-lines(x, dgamma(x, shape = 0.5 + m, rate = 0.1 + T))
-legend("topright", lty = c("dashed", "solid"),
-       legend = c("gamma(0.5, 0.1) prior", "gamma (4.5, 25.1) posterior"))
+# 7 events in 22 units of person-time
+incrate_bayes(7, 22)                          # Jeffreys 95% confidence interval
+incrate_bayes(7, 22, level = 0.8)             # Jeffreys 80% confidence interval
+incrate_bayes(7, 22, priora = 1, priorb = 1)  # uniform prior

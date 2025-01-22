@@ -1,18 +1,17 @@
 ## Small-sample binomial point and interval estimates
 
 # median unbiased estimate
-medp.binom <- function(k, n) {
+medp_binom <- function(k, n) {
   # k = number of successes, n = number of trials
 
   # binomial lower tail probability
-  lower.tail <- function(p) pbinom(k, n, p) - dbinom(k, n, p) / 2
+  lower_tail <- function(p) pbinom(k, n, p) - dbinom(k, n, p) / 2
 
   # median unbiased estimate
-  med <- uniroot(function(p) lower.tail(p) - 1 / 2, interval = c(0, 1))
-
-  return(med$root)
+  med <- uniroot(function(p) lower_tail(p) - 1 / 2, interval = c(0, 1))
+  med$root
 }
-medp.binom(15, 22)
+medp_binom(15, 22)
 
 
 # exact (Clopper-Pearson) confidence intervals
