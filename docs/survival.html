@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -103,6 +123,35 @@ ul.task-list li input[type="checkbox"] {
   };
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -236,8 +285,27 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="2">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#empirical-cumulative-distribution-function" id="toc-empirical-cumulative-distribution-function" class="nav-link active" data-scroll-target="#empirical-cumulative-distribution-function"><span class="header-section-number">6.1</span> Empirical cumulative distribution function</a></li>
+  <li><a href="#kaplan-meier-estimator" id="toc-kaplan-meier-estimator" class="nav-link" data-scroll-target="#kaplan-meier-estimator"><span class="header-section-number">6.2</span> Kaplan-Meier estimator</a>
+  <ul class="collapse">
+  <li><a href="#sec-risksets" id="toc-sec-risksets" class="nav-link" data-scroll-target="#sec-risksets"><span class="header-section-number">6.2.1</span> At-risk process and risk sets</a></li>
+  <li><a href="#survival-via-multiplication-of-conditional-probabilities" id="toc-survival-via-multiplication-of-conditional-probabilities" class="nav-link" data-scroll-target="#survival-via-multiplication-of-conditional-probabilities"><span class="header-section-number">6.2.2</span> Survival via multiplication of conditional probabilities</a></li>
+  <li><a href="#greenwood-formula-and-confidence-intervals" id="toc-greenwood-formula-and-confidence-intervals" class="nav-link" data-scroll-target="#greenwood-formula-and-confidence-intervals"><span class="header-section-number">6.2.3</span> Greenwood formula and confidence intervals</a></li>
+  <li><a href="#cumulative-incidence-and-cumulative-hazard" id="toc-cumulative-incidence-and-cumulative-hazard" class="nav-link" data-scroll-target="#cumulative-incidence-and-cumulative-hazard"><span class="header-section-number">6.2.4</span> Cumulative incidence and cumulative hazard</a></li>
+  </ul></li>
+  <li><a href="#nelson-aalen-estimator" id="toc-nelson-aalen-estimator" class="nav-link" data-scroll-target="#nelson-aalen-estimator"><span class="header-section-number">6.3</span> Nelson-Aalen estimator</a>
+  <ul class="collapse">
+  <li><a href="#cumulative-hazard-via-addition-of-expected-values" id="toc-cumulative-hazard-via-addition-of-expected-values" class="nav-link" data-scroll-target="#cumulative-hazard-via-addition-of-expected-values"><span class="header-section-number">6.3.1</span> Cumulative hazard via addition of expected values</a></li>
+  <li><a href="#variance-and-confidence-intervals" id="toc-variance-and-confidence-intervals" class="nav-link" data-scroll-target="#variance-and-confidence-intervals"><span class="header-section-number">6.3.2</span> Variance and confidence intervals</a></li>
+  <li><a href="#survival-and-cumulative-incidence-functions" id="toc-survival-and-cumulative-incidence-functions" class="nav-link" data-scroll-target="#survival-and-cumulative-incidence-functions"><span class="header-section-number">6.3.3</span> Survival and cumulative incidence functions</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -261,8 +329,239 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<blockquote class="blockquote">
+<p>In many estimation problems it is inconvenient or impossible to make complete measurements on all members of a random sample. For example, in medical follow-up studies to determine the distribution of survival times after an operation, contact with some individuals will be lost before their death, and others will die from causes it is desired to exclude from consideration. Similarly, observation of the life of a vacuum tube may be ended by breakage of the tube, or a need to use the test facilities for other purposes. In both examples, incomplete observations may also result from a need to get out a report within a reasonable time. <span class="citation" data-cites="kaplan1958nonparametric">(<a href="references.html#ref-kaplan1958nonparametric" role="doc-biblioref">Kaplan and Meier 1958</a>)</span></p>
+</blockquote>
+<p>In <strong>nonparametric</strong> survival analysis, we do not assume that the failure time distributions are defined by a small number of parameters, such as the rate parameter in an exponential model for times to events or a Poisson model for the number of events. Whenever possible, it is good to incorporate existing knowledge into the estimation of unknown parameters, and the use of parametric models and Bayesian methods accomplishes this. When such knowledge is not available, nonparametric methods allow us to avoid making assumptions we cannot defend.</p>
+<p>However, this flexibility comes at a price. For example, suppose we know that our time-to-event has an exponential distribution. If we use a nonparametric model anyway, then:</p>
+<ul>
+<li>The nonparametric estimates of the survival, cumulative hazard, or hazard functions will be less precise than the estimates from an exponential model.</li>
+<li>We might be unable to estimate mean or median survival times or other quantities that require extrapolation beyond the data used for estimation.</li>
+</ul>
+<p>Parametric and nonparametric methods are at opposite ends of the bias-variance tradeoff. The assumptions of parametric models can induce bias, but they produce estimates with low variance when the assumptions are approximately correct. The flexibility of nonparametric models avoids bias, but they produce estimates with higher variance than an equivalent parametric method based on sound assumptions. Survival analysis has nonparametric estimators of the survival and cumulative hazard functions that can be used with relatively little loss of efficiency. Because of this combination of flexibility and efficiency, they are widely used in epidemiologic research.</p>
+<section id="empirical-cumulative-distribution-function" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="empirical-cumulative-distribution-function"><span class="header-section-number">6.1</span> Empirical cumulative distribution function</h2>
+<p>The cumulative distribution function (CDF) of a random variable <span class="math inline">\(X\)</span> is the function <span class="math display">\[F(x) = \Pr(X \leq x).\]</span> For each value of <span class="math inline">\(x\)</span>, <span class="math inline">\(F(x)\)</span> is a probability that we can estimate using methods for a binomial proportion. However, we can get a more complete picture of the distribution of <span class="math inline">\(X\)</span> by linking the estimates for different <span class="math inline">\(x\)</span> together to estimate the whole function <span class="math inline">\(F(x)\)</span>.</p>
+<p>If <span class="math inline">\(x_1, \ldots, x_n\)</span> are observations of a random variable <span class="math inline">\(X\)</span>, the <strong>empirical CDF</strong> is the function <span id="eq-hatF"><span class="math display">\[
+  \hat{F}_n(x) = \frac{1}{n} \sum_{i = 1}^n \indicator_{x_i \leq x}
+\tag{6.1}\]</span></span> where <span class="math inline">\(\indicator_{x_i \leq x} = 1\)</span> if <span class="math inline">\(x_i \leq x\)</span> is true and zero otherwise. For a fixed value of <span class="math inline">\(x\)</span>, <span class="math inline">\(\hat{F}_n(x)\)</span> is just the proportion of the observations that are <span class="math inline">\(\leq x\)</span>. At each <span class="math inline">\(x\)</span>, the number of observations with <span class="math inline">\(X_i \leq x\)</span> is a binomial(<span class="math inline">\(n\)</span>, <span class="math inline">\(F(x)\)</span>) random variable with expected value <span class="math inline">\(n F(x)\)</span> and variance <span class="math inline">\(n F(x) \big(1 - F(x)\big)\)</span>. Thus, <span class="math display">\[
+  \E\bigl(\hat{F}_n(x)\bigr) = F(x)
+\]</span> and <span id="eq-hatFvar"><span class="math display">\[
+  \Var\bigl(\hat{F}_n(x)\bigr)
+  = \frac{1}{n} F(x) \big(1 - F(x)\big).
+\tag{6.2}\]</span></span> As <span class="math inline">\(n \rightarrow \infty\)</span>, we have <span class="math inline">\(\hat{F}_n(x) \rightarrow F(x)\)</span> by the law of large numbers (LLN) and By the central limit theorem (CLT), <span id="eq-hatFconv"><span class="math display">\[
+    \frac{\sqrt{n}\big(\hat{F}_n(x) - F(x)\big)}{\sqrt{F(x) \big(1 - F(x)\big)}} \approxsim N(0, 1)
+\tag{6.3}\]</span></span> by the central limit theorem (CLT).<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Unlike a single proportion estimate <span class="math inline">\(\hat{p}\)</span>, the empirical CDF links all of these estimated probabilities together—like beads on a necklace—through the variable <span class="math inline">\(x\)</span>.</p>
+<p>At any given <span class="math inline">\(x\)</span>, interval estimates for <span class="math inline">\(F(x)\)</span> can be obtained using any of the methods we have discussed for probabilities, including the Wald, score (Wilson), likelihood ratio, exact (Clopper-Pearson), mid-p, or Jeffreys confidence intervals as well as Bayesian credible intervals. For example, <span id="eq-hatFci"><span class="math display">\[
+    \hat{F}_n(x) \pm 1.96 \sqrt{\frac{1}{n} \hat{F}_n(x) \big(1 - \hat{F}_n(x)\big)}
+\tag{6.4}\]</span></span> is the 95% Wald confidence interval. To force this confidence interval to stay inside <span class="math inline">\((0, 1)\)</span>, we can use the delta method with a logit or log-log transformation. These are called <strong>pointwise</strong> confidence intervals because we have a separate confidence interval for <span class="math inline">\(F(x)\)</span> at each <span class="math inline">\(x\)</span>.</p>
+</section>
+<section id="kaplan-meier-estimator" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="kaplan-meier-estimator"><span class="header-section-number">6.2</span> Kaplan-Meier estimator</h2>
+<p>In data with right censoring and left truncation, we cannot calculate the empirical CDF directly. The <strong>Kaplan-Meier estimator</strong> <span class="citation" data-cites="kaplan1958nonparametric">(<a href="references.html#ref-kaplan1958nonparametric" role="doc-biblioref">Kaplan and Meier 1958</a>)</span> uses conditional probabilities to estimate the survival function <span class="math inline">\(S(t) = 1 - F(t)\)</span> for failure time data.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> The basic idea behind the Kaplan-Meier estimator is to solve the problems of right censoring and left truncation (delayed entry) by breaking analysis time into periods where no one enters or leaves the study. In each such interval <span class="math inline">\((t_a, t_b]\)</span>, we can estimate the conditional probability of surviving to time <span class="math inline">\(t_b\)</span> given that you were at risk of disease at time <span class="math inline">\(t_a\)</span>.</p>
+<p>If there are <span class="math inline">\(n\)</span> individuals at risk throughout the interval $(t_a, t_b], then the number of events at time <span class="math inline">\(t_b\)</span> can be treated like a binomial(<span class="math inline">\(n, p\)</span>) random variable where <span class="math inline">\(p\)</span> is the risk of the event in <span class="math inline">\((t_a, t_b]\)</span>. Our point estimate of this conditional probability is <span class="math display">\[
+  \hat{p} = \frac{d}{n}
+\]</span> where <span class="math inline">\(d\)</span> is the number of failures at time <span class="math inline">\(t_b\)</span>. Its variance is approximately <span class="math display">\[
+  \Var(\hat{p}) = \frac{1}{n} \hat{p} (1 - \hat{p}).
+\]</span> Given that you were at risk of disease at time <span class="math inline">\(t_a\)</span>, <span class="math display">\[
+  \hat{q} = 1 - \hat{p}
+\]</span> is the conditional probability of surviving past time <span class="math inline">\(t_b\)</span>.</p>
+<section id="sec-risksets" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="sec-risksets"><span class="header-section-number">6.2.1</span> At-risk process and risk sets</h3>
+<p>To estimate the risk in an interval <span class="math inline">\((t_a, t_b]\)</span>, it is critical to define who is at risk of failure at time <span class="math inline">\(t_a\)</span>. We assume that all times are defined relative to a time origin that can differ between individuals. The <strong>at-risk process</strong> for individual <span class="math inline">\(i\)</span> is <span class="math display">\[
+  Y_i(t) =
+  \begin{cases}
+    1 &amp;\text{ if $i$ is at risk and under observation at time $t$},\\
+    0 &amp;\text{ otherwise}.
+  \end{cases}
+\]</span> The at-risk process is assumed to be predictable (i.e., its value at <span class="math inline">\(t\)</span> is determined just before time <span class="math inline">\(t\)</span>), so <span class="math inline">\(Y_i(t) = 1\)</span> even if <span class="math inline">\(i\)</span> fails or is censored at time <span class="math inline">\(t\)</span>. Note that a person is only at risk if they are both at risk of failure and under observation. If person <span class="math inline">\(i\)</span> is not under observation until an entry time <span class="math inline">\(\tentry_i &gt; 0\)</span>, then <span class="math inline">\(Y_i(t) = 0\)</span> when <span class="math inline">\(t \leq \tentry_i\)</span>.</p>
+<p>The set of individuals under observation and at risk of failure at time <span class="math inline">\(t\)</span> is called the <strong>risk set</strong> at time <span class="math inline">\(t\)</span> and written <span class="math display">\[
+  \mathcal{R}(t) = \{i : Y_i(t) = 1\}
+\]</span> The risk set <span class="math inline">\(\mathcal{R}(t)\)</span> includes everyone under observation who fails at time <span class="math inline">\(t\)</span>, who is censored at time <span class="math inline">\(t\)</span>, or who survives past time <span class="math inline">\(t\)</span>.</p>
+</section>
+<section id="survival-via-multiplication-of-conditional-probabilities" class="level3" data-number="6.2.2">
+<h3 data-number="6.2.2" class="anchored" data-anchor-id="survival-via-multiplication-of-conditional-probabilities"><span class="header-section-number">6.2.2</span> Survival via multiplication of conditional probabilities</h3>
+<p>Let <span class="math inline">\(T\)</span> denote the random failure time in the analysis time scale (i.e., with the origin as time zero), and suppose we have times <span class="math inline">\(0 &lt; t_1 &lt; t_2\)</span>. To have <span class="math inline">\(T &gt; t_2\)</span>, we must also have <span class="math inline">\(T &gt; t_1\)</span>, so <span class="math display">\[
+  \begin{aligned}
+    \Pr\bigl(T &gt; t_2\bigr)
+    &amp;= \Pr\bigl(T &gt; t_2 \text{ and } T &gt; t_1\bigr) \\
+    &amp;= \Pr\bigl(T &gt; t_2 \,\big|\, T &gt; t_1\bigr) \Pr\bigl(T &gt; t_1\bigr).
+  \end{aligned}
+\]</span> In other words, the probability of survival in <span class="math inline">\((0, t_2]\)</span> is the product of the survival probabilities in the intervals <span class="math inline">\((0, t_1]\)</span> and <span class="math inline">\((t_1, t_2]\)</span>. If <span class="math inline">\(t_3 &gt; t_2\)</span>, then <span class="math display">\[
+  \begin{aligned}
+    \Pr\bigl(T &gt; t_3\bigr)
+    &amp;= \Pr\bigl(T &gt; t_3 \,\big|\, T &gt; t_2\bigr) \Pr\bigl(T &gt; t_2\bigr) \\
+    &amp;= \Pr\bigl(T &gt; t_3 \,\big|\, T &gt; t_2\bigr)
+      \Pr\bigl(T &gt; t_2 \,\big|\, T &gt; t_1\bigr) \Pr\bigl(T &gt; t_1\bigr)
+  \end{aligned}
+\]</span> which is the product of the survival probabilities in the intervals <span class="math inline">\((0, t_1]\)</span>, <span class="math inline">\((t_1, t_2]\)</span>, and <span class="math inline">\((t_2, t_3]\)</span>. This logic extends to any number of intervals. If we have distinct times <span class="math inline">\(0 = t_0 &lt; t_1 &lt; \cdots &lt; t_m\)</span>, then <span class="math display">\[
+  \Pr(T &gt; t_m)
+  = \prod_{i = 1}^{m} \Pr\big(T &gt; t_i \,\big|\, T &gt; t_{i - 1}\big).
+\]</span> This uses the multiplication rule for conditional probabilities, so it does not assume that failures in different intervals are independent. In single-failure data, an individual who fails in one interval cannot fail in a later interval, so failures in different intervals cannot be independent.</p>
+<p>Let <span class="math inline">\(0 = t_0 &lt; t_1 &lt; t_2 &lt; \ldots &lt; t_m\)</span> be the endpoints of intervals <span class="math inline">\((t_{i-1}, t_i]\)</span> within which there are no entries or exits from the study. Let <span class="math inline">\(n_j = \sum_{i = 1}^n Y_i(t_j)\)</span> be the number of people in the risk set <span class="math inline">\(\mathcal{R}(t_j)\)</span> and let <span class="math inline">\(d_j \geq 0\)</span> be the number of failures that occur at time <span class="math inline">\(t_j\)</span>. The estimated conditional probability <span class="math inline">\(q_j\)</span> of surviving through the interval <span class="math inline">\((t_{j - 1}, t_j]\)</span> given survival to <span class="math inline">\(t_{j - 1}\)</span> is <span class="math display">\[
+  \hat{q}_j = 1 - \frac{d_j}{n_j},
+\]</span> and the Kaplan-Meier estimator of <span class="math inline">\(S(t)\)</span> is <span id="eq-hatS"><span class="math display">\[
+  \hat{S}(t)
+  = \prod_{j: t_j \leq t} \hat{q}_j
+  = \prod_{j: t_j \leq t} \bigg(1 - \frac{d_j}{n_j}\bigg).
+\tag{6.5}\]</span></span> This is the product of the conditional survival probabilities in <span class="math inline">\((t_{j - 1}, t_j]\)</span> for all intervals such that <span class="math inline">\(t_j \leq t\)</span>. To survive to time <span class="math inline">\(t\)</span>, you need to survive through all intervals up to and including time <span class="math inline">\(t\)</span>. This makes it easier to calculate the survival function than to calculate cumulative incidence directly. The Kaplan-Meier estimator is a consistent and asymptotically normal estimator of the true survival function <span class="citation" data-cites="fleming2005counting aalen2008survival">(<a href="references.html#ref-fleming2005counting" role="doc-biblioref">Fleming and Harrington 2005</a>; <a href="references.html#ref-aalen2008survival" role="doc-biblioref">Aalen, Borgan, and Gjessing 2008</a>)</span>.</p>
+</section>
+<section id="greenwood-formula-and-confidence-intervals" class="level3" data-number="6.2.3">
+<h3 data-number="6.2.3" class="anchored" data-anchor-id="greenwood-formula-and-confidence-intervals"><span class="header-section-number">6.2.3</span> Greenwood formula and confidence intervals</h3>
+<p>Calculating the variance of a product is difficult and tedious, but calculating the variance of a sum is easy. Taking logarithms in <a href="#eq-hatS" class="quarto-xref">Equation&nbsp;<span>6.5</span></a>, we get <span class="math display">\[
+  \ln \hat{S}(t) = \sum_{j: t_j \leq t} \ln \hat{q}_j.
+\]</span> For each <span class="math inline">\(j\)</span>, the estimated variance of <span class="math inline">\(\hat{q}_j\)</span> is <span class="math display">\[
+  \Var(\hat{q}_j) = \frac{1}{n_j}\hat{q}_j \big(1 - \hat{q}_j\big).
+\]</span> Since <span class="math inline">\(\ln x\)</span> has the derivative <span class="math inline">\(\frac{1}{x}\)</span>, <span class="math display">\[
+    \Var(\ln \hat{q}_j)
+    \approx \frac{1}{\hat{q}_j^2} \Var\big(\hat{q}_j\big)
+    = \frac{d_j}{n_j(n_j - d_j)}.
+\]</span> by the delta method from <a href="mlestimation.html#sec-delta" class="quarto-xref"><span>Section 3.4.1</span></a>.</p>
+<p>The estimated survival probabilities in each time interval are conditionally independent, so <span class="math display">\[
+  \Var\bigl(\ln \hat{S}(t)\bigr)
+  = \sum_{t_j \leq t} \Var(\ln \hat{q}_j)
+  = \sum_{t_j \leq t} \frac{d_j}{n_j(n_j - d_j)}.
+\]</span> by <a href="probability.html#eq-lincomV" class="quarto-xref">Equation&nbsp;<span>1.12</span></a>. Since <span class="math inline">\(\hat{S}(t) = \exp\big(\ln \hat{S}(t)\big)\)</span>, we can use the delta method again to get an estimated variance for <span class="math inline">\(\hat{S}(t)\)</span>. The function <span class="math inline">\(\exp(x) = e^x\)</span> is its own derivative, so we get <span id="eq-Greenwood"><span class="math display">\[
+  \Var\bigl(\hat{S}(t)\bigr)
+  = \hat{S}(t)^2 \Var\bigl(\ln \hat{S}(t)\bigr)
+  = \hat{S}(t)^2 \sum_{t_j \leq t} \frac{d_j}{n_j(n_j - d_j)}.
+\tag{6.6}\]</span></span> This is called the <em>Greenwood formula</em> <span class="citation" data-cites="greenwood1926report">(<a href="references.html#ref-greenwood1926report" role="doc-biblioref">Greenwood 1926</a>)</span>.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> It was developed originally for life tables and applied later to the Kaplan-Meier estimator.</p>
+<p>For each <span class="math inline">\(t\)</span>, a pointwise Wald <span class="math inline">\(95\%\)</span> confidence interval for <span class="math inline">\(S(t)\)</span> is <span class="math display">\[
+  \hat{S}(t) \pm 1.96 \sqrt{\Var\bigl(\hat{S}(t)\bigr)}.
+\]</span> This confidence interval can have a lower bound less than zero or an upper bound greater than one, outside the possible values of <span class="math inline">\(S(t)\)</span>. Better confidence intervals can be obtained using a <em>complementary log-log</em> transformation, which is <span class="math display">\[
+  \ln\bigl(-\ln S(t)\bigr) = \ln H(t)
+\]</span> where <span class="math inline">\(H(t)\)</span> is the cumulative hazard. The logit (log odds) transformation can also be used.</p>
+</section>
+<section id="cumulative-incidence-and-cumulative-hazard" class="level3" data-number="6.2.4">
+<h3 data-number="6.2.4" class="anchored" data-anchor-id="cumulative-incidence-and-cumulative-hazard"><span class="header-section-number">6.2.4</span> Cumulative incidence and cumulative hazard</h3>
+<p>The Kaplan-Meier estimator of the survival function can also be used to estimate the cumulative hazard function <span class="math inline">\(H(t) = -\ln S(t)\)</span> and the cumulative incidence function <span class="math inline">\(F(t) = 1 - S(t)\)</span>, which is the CDF of the time-to-event distribution. The estimated cumulative hazard function is <span id="eq-hatHkm"><span class="math display">\[
+  \hat{H}_\text{KM}(t)
+  = -\ln \hat{S}(t),
+\tag{6.7}\]</span></span> which is defined whenever <span class="math inline">\(\hat{S}(t) &gt; 0\)</span>. The estimated cumulative incidence function is <span class="math display">\[
+  \hat{F}_\text{KM}(t)
+  = 1 - \hat{S}(t).
+\]</span> When there is no right censoring or left truncation (delayed entry), <span class="math inline">\(\hat{F}(t)\)</span> equals the empirical CDF of the times to events as in <a href="#eq-hatF" class="quarto-xref">Equation&nbsp;<span>6.1</span></a> and the Greenwood variance equals the corresponding variance in <a href="#eq-hatFvar" class="quarto-xref">Equation&nbsp;<span>6.2</span></a>. Confidence limits for <span class="math inline">\(F(t)\)</span> or <span class="math inline">\(H(t)\)</span> can be obtained from the confidence limits for <span class="math inline">\(S(t)\)</span>.</p>
+</section>
+</section>
+<section id="nelson-aalen-estimator" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="nelson-aalen-estimator"><span class="header-section-number">6.3</span> Nelson-Aalen estimator</h2>
+<p>The Kaplan-Meier estimator is based on estimating conditional survival probabilities in intervals within which there are no entries or exits. The <strong>Nelson-Aalen</strong> esimator uses the same time intervals, but it estimates an expected number of events in each interval <span class="citation" data-cites="nelson1969hazard nelson1972theory altshuler1970theory aalen1978nonparametric">(<a href="references.html#ref-nelson1969hazard" role="doc-biblioref">Nelson 1969</a>, <a href="references.html#ref-nelson1972theory" role="doc-biblioref">1972</a>; <a href="references.html#ref-altshuler1970theory" role="doc-biblioref">Altshuler 1970</a>; <a href="references.html#ref-aalen1978nonparametric" role="doc-biblioref">Aalen 1978</a>)</span>. It is based on the interpretation of the cumulative hazard <span class="math inline">\(H(t)\)</span> as an expected number of events in <span class="math inline">\((0, t]\)</span> if the event could be made repeatable, and it uses the fact that the expected number of events in different intervals can be added together by <a href="probability.html#eq-lincomE" class="quarto-xref">Equation&nbsp;<span>1.11</span></a>. The at-risk process and risk sets are defined exactly as in <a href="#sec-risksets" class="quarto-xref"><span>Section 6.2.1</span></a>.</p>
+<section id="cumulative-hazard-via-addition-of-expected-values" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="cumulative-hazard-via-addition-of-expected-values"><span class="header-section-number">6.3.1</span> Cumulative hazard via addition of expected values</h3>
+<p>As above, let <span class="math inline">\(0 = t_0 &lt; t_1 &lt; t_2 &lt; \ldots &lt; t_m\)</span> be the endpoints of intervals <span class="math inline">\((t_{i-1}, t_i]\)</span> within which there are no entries or exits from the study. Let <span class="math inline">\(n_j = \sum_{i = 1}^n Y_i(t_j)\)</span> be the number of people in the risk set <span class="math inline">\(\mathcal{R}(t_j)\)</span> and let <span class="math inline">\(d_j \geq 0\)</span> be the number of failures that occur at time <span class="math inline">\(t_j\)</span>. The estimated expected number of events per individual under observation in this time interval is <span class="math display">\[
+  \frac{1}{n_j} \sum_{i \in \mathcal{R}_j} \indicator_{\tevent_i \in (t_{j - 1}, t_j]}
+  = \frac{d_j}{n_j}.
+\]</span> Adding these up over all time intervals with endpoints at or before time <span class="math inline">\(t\)</span>, we get the Nelson-Aalen estimator <span id="eq-hatH"><span class="math display">\[
+  \hat{H}(t)
+  = \sum_{j: t_j \leq t} \frac{d_j}{n_j}.
+\tag{6.8}\]</span></span> The Nelson-Aalen estimator is an unbiased, consistent, and asymptotically normal estimator of the true cumulative hazard <span class="citation" data-cites="fleming2005counting aalen2008survival">(<a href="references.html#ref-fleming2005counting" role="doc-biblioref">Fleming and Harrington 2005</a>; <a href="references.html#ref-aalen2008survival" role="doc-biblioref">Aalen, Borgan, and Gjessing 2008</a>)</span>.</p>
+<p>The <strong>Fleming-Harrington estimator</strong> is a Nelson-Aalen estimator corrected for ties <span class="citation" data-cites="fleming1984nonparametric">(<a href="references.html#ref-fleming1984nonparametric" role="doc-biblioref">Fleming and Harrington 1984</a>)</span>. When there are <span class="math inline">\(d_j &gt; 1\)</span> events at time <span class="math inline">\(t_j\)</span>, the Fleming-Harrington estimator replaces each <span class="math inline">\(d_j / n_j\)</span> in <a href="#eq-hatH" class="quarto-xref">Equation&nbsp;<span>6.8</span></a> with <span id="eq-FHcorrection"><span class="math display">\[
+  \frac{1}{n_j} + \frac{1}{n_j - 1} + \cdots + \frac{1}{n_j - (d_j - 1)}
+  &gt; \frac{d_j}{n_j}.
+\tag{6.9}\]</span></span> This is sometimes called the <em>Fleming-Harrington correction for ties</em>. It accounts for the fact that the <span class="math inline">\(d_j\)</span> events did not really happen at the same time. They appear to be tied because the times were defined and measured with the limited precision possible in a real study.</p>
+</section>
+<section id="variance-and-confidence-intervals" class="level3" data-number="6.3.2">
+<h3 data-number="6.3.2" class="anchored" data-anchor-id="variance-and-confidence-intervals"><span class="header-section-number">6.3.2</span> Variance and confidence intervals</h3>
+<p>Let <span class="math inline">\(D_j\)</span> be the random number of events in the interval <span class="math inline">\((t_{j - 1}, t_j]\)</span> whose observed value is <span class="math inline">\(d_j\)</span>. If an event is repeatable, the number of events per individual in any interval <span class="math inline">\((t_{j - 1}, t_j]\)</span> has a Poisson distribution with mean <span class="math display">\[
+  \Delta H_j
+  = H(t_j) - H(t_{j - 1}).
+\]</span> When an event cannot be repeated, this is true in an interval sufficiently small that <span class="math inline">\(\Delta H_j\)</span> is much smaller than one (i.e., <span class="math inline">\(\Delta H_j \ll 1\)</span>). Because our time intervals are defined to be small enough that no one leaves the study by having an event, <span class="math inline">\(\Delta H_j \ll 1\)</span> in each interval where <span class="math inline">\(n_j\)</span> is large.</p>
+<p>Because we have <span class="math inline">\(n_j\)</span> individuals at risk in this interval, <span class="math display">\[
+  D_j \sim \text{Poisson}(n_j \Delta H_j).
+\]</span> because <span class="math inline">\(D_j\)</span> is the sum of <span class="math inline">\(n_j\)</span> Poisson(<span class="math inline">\(\Delta H_j\)</span>) random variables. Because <span class="math inline">\(\Var(D_j) = n_j \Delta H_j\)</span>, <span class="math display">\[
+  \Var\biggl(\frac{D_j}{n_j}\biggr)
+  = \frac{1}{n_j^2} \Var(D_j)
+  = \frac{\Delta H_j}{n_j}.
+\]</span> Replacing the unknown <span class="math inline">\(\Delta H_j\)</span> with <span class="math display">\[
+  \Delta \hat{H}_j
+  = \hat{H}(t_j) - \hat{H}(t_{j - 1})
+  = \frac{d_j}{n_j},
+\]</span> we get the estimated variance <span class="math display">\[
+  \Var\bigl(\Delta \hat{H}_j\bigr)
+  = \frac{d_j}{n_j^2}.
+\]</span> The variance of <span class="math inline">\(\hat{H}(t)\)</span> is the sum of these variances over all time intervals with endpoints on or before time <span class="math inline">\(t\)</span>, so <span class="math display">\[
+  \Var\bigl(\hat{H}(t)\bigr)
+  = \sum_{j: t_j \leq t} \Var\bigl(\Delta \hat{H}_j\bigr)
+  = \sum_{j: t_j \leq t} \frac{d_j}{n_j^2}.
+\]</span> With the Fleming-Harrington correction for ties from <a href="#eq-FHcorrection" class="quarto-xref">Equation&nbsp;<span>6.9</span></a>, each <span class="math inline">\(d_j / n_j^2\)</span> is replaced by <span class="math display">\[
+  \frac{1}{n_j^2} + \frac{1}{(n_j - 1)^2} + \cdots + \frac{1}{\big(n_j - (d_j - 1)\big)^2}
+  &gt; \frac{d_j}{n_j^2}.
+\]</span> This estimator of the variance (with or without the Fleming-Harrington correction) can be justified more rigorously using the theory of <em>counting processes</em> and <em>martingales</em> <span class="citation" data-cites="fleming2005counting aalen2008survival">(<a href="references.html#ref-fleming2005counting" role="doc-biblioref">Fleming and Harrington 2005</a>; <a href="references.html#ref-aalen2008survival" role="doc-biblioref">Aalen, Borgan, and Gjessing 2008</a>)</span>. For our purposes, it is enough to highlight its connection to the Poisson distribution.</p>
+<p>For each <span class="math inline">\(t\)</span>, a pointwise Wald 95% confidence interval for <span class="math inline">\(H(t)\)</span> is <span class="math display">\[
+  \hat{H}(t) \pm 1.96 \sqrt{\Var\bigl(\hat{H}(t)\bigr)}.
+\]</span> This can produce confidence intervals with negative lower bounds, outside the possible values of <span class="math inline">\(H(t)\)</span>. A better confidence interval is produced using a log transformation. By the delta method, <span class="math display">\[
+  \Var\bigl(\ln \hat{H}(t)\bigr) = \frac{1}{\hat{H}(t)^2} \Var\bigl(\hat{H}(t)\bigr).
+\]</span> The corresponding confidence interval for <span class="math inline">\(\hat{H}(t)\)</span> has the endpoints <span id="eq-logHci"><span class="math display">\[
+  \hat{H}(t) e^{\pm 1.96 \sqrt{\Var\bigl(\ln \hat{H}(t)\bigr)}}.
+\tag{6.10}\]</span></span> Both endpoints of this confidence interval are nonnegative, and they are strictly positive for all <span class="math inline">\(t\)</span> such that <span class="math inline">\(\hat{H}(t) &gt; 0\)</span>. Because <span class="math inline">\(H(t) = -\ln S(t)\)</span>, the log transformation for the cumulative hazard function <span class="math inline">\(H(t)\)</span> corresponds to the log-log transformation for the survival function <span class="math inline">\(S(t)\)</span>.</p>
+</section>
+<section id="survival-and-cumulative-incidence-functions" class="level3" data-number="6.3.3">
+<h3 data-number="6.3.3" class="anchored" data-anchor-id="survival-and-cumulative-incidence-functions"><span class="header-section-number">6.3.3</span> Survival and cumulative incidence functions</h3>
+<p>The Nelson-Aalen estimate <span class="math inline">\(\hat{H}(t)\)</span> can be used to estimate the survival function <span class="math display">\[
+S(t) = e^{-H(t)},
+\]</span> and the cumulative incidence function <span class="math display">\[
+  F(t) = 1 - S(t) = 1 - e^{-H(t)}.
+\]</span> The estimated survival function is <span class="math display">\[
+  \hat{S}_\text{NA}(t) = e^{-\hat{H}(t)},
+\]</span> and the estimated cumulative incidence function is <span class="math display">\[
+  \hat{F}_\text{NA}(t) = 1 - \hat{S}_\text{NA}(t) = 1 - e^{-\hat{H}(t)}.
+\]</span> In both of these estimators, <span class="math inline">\(\hat{H}(t)\)</span> can incorporate the Fleming-Harrington correction for ties from <a href="#eq-FHcorrection" class="quarto-xref">Equation&nbsp;<span>6.9</span></a>. Confidence limits for <span class="math inline">\(S(t)\)</span> and <span class="math inline">\(H(t)\)</span> can be obtained from the confidence limits for <span class="math inline">\(H(t)\)</span>.</p>
+<p>If there is any <span class="math inline">\(t_j\)</span> where all individuals at risk have an event, the Kaplan-Meier estimator <span class="math inline">\(\hat{S}(t) = 0\)</span> for all <span class="math inline">\(t &gt; t_j\)</span>. Once you multiply by zero, there is no going back. This never happens for the estimate of <span class="math inline">\(S(t)\)</span> based on the Nelson-Aalen estimator. Because <span class="math inline">\(\hat{H}(t) &lt; \infty\)</span>, we always have <span class="math display">\[
+  \hat{S}_\text{NA}(t) = \exp\bigl(-\hat{H}(t)\bigr) &gt; 0.
+\]</span> This is a practical advantage of the Nelson-Aalen estimator over the Kaplan-Meier estimator.</p>
+<p>More generally, <span class="math inline">\(\hat{S}(t) \leq \hat{S}_\text{NA}(t)\)</span> and <span class="math inline">\(\hat{H}_\text{KM}(t) \geq \hat{H}(t)\)</span>. These inequalities are logically equivalent, but the cumulative hazard inequality is simpler. Because <span class="math inline">\(-\ln(1 - x) \geq x\)</span> for all <span class="math inline">\(x\)</span> with equality only if <span class="math inline">\(x = 0\)</span>, <span class="math display">\[
+  -\ln\biggl(1 - \frac{d_j}{n_j}\biggr)
+  &gt; \frac{d_j}{n_j}
+\]</span> whenever <span class="math inline">\(d_j &gt; 0\)</span>. By <a href="#eq-hatS" class="quarto-xref">Equation&nbsp;<span>6.5</span></a> and <a href="#eq-hatHkm" class="quarto-xref">Equation&nbsp;<span>6.7</span></a>, <span class="math display">\[
+  \hat{H}_{KM}(t)
+  = -\sum_{j: t_j \leq t} \ln\biggl(1 - \frac{d_j}{n_j}\biggr)
+  &gt; \sum_{j: t_j \leq t} \frac{d_j}{n_j}
+  = \hat{H}(t).
+\]</span> whenever at least one <span class="math inline">\(d_j &gt; 0\)</span>. The corresponding Fleming-Harrington estimate of <span class="math inline">\(H(t)\)</span> is greater than <span class="math inline">\(\hat{H}(t)\)</span> and less than <span class="math inline">\(\hat{H}_\text{KM}(t)\)</span>. Although they are not equal, the Nelson-Aalen estimator and Kaplan-Meier estimator produce very similar results in large samples, which means that the risk sets and the total number of observed events are both large.</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-aalen1978nonparametric" class="csl-entry" role="listitem">
+Aalen, Odd. 1978. <span>“Nonparametric Inference for a Family of Counting Processes.”</span> <em>The Annals of Statistics</em> 6: 701–26.
+</div>
+<div id="ref-aalen2008survival" class="csl-entry" role="listitem">
+Aalen, Odd, Ørnulf Borgan, and Håkon Gjessing. 2008. <em>Survival and Event History Analysis: A Process Point of View</em>. Springer Science &amp; Business Media.
+</div>
+<div id="ref-altshuler1970theory" class="csl-entry" role="listitem">
+Altshuler, Bernard. 1970. <span>“Theory for the Measurement of Competing Risks in Animal Experiments.”</span> <em>Mathematical Biosciences</em> 6: 1–11.
+</div>
+<div id="ref-fleming1984nonparametric" class="csl-entry" role="listitem">
+Fleming, Thomas R, and David P Harrington. 1984. <span>“Nonparametric Estimation of the Survival Distribution in Censored Data.”</span> <em>Communications in Statistics-Theory and Methods</em> 13 (20): 2469–86.
+</div>
+<div id="ref-fleming2005counting" class="csl-entry" role="listitem">
+———. 2005. <em>Counting Processes and Survival Analysis</em>. Vol. 625. John Wiley &amp; Sons.
+</div>
+<div id="ref-greenwood1926report" class="csl-entry" role="listitem">
+Greenwood, Major. 1926. <span>“The Natural Duration of Cancer.”</span> <em>Reports on Public Health and Medical Subjects</em> 33: 1–26.
+</div>
+<div id="ref-kaplan1958nonparametric" class="csl-entry" role="listitem">
+Kaplan, Edward L, and Paul Meier. 1958. <span>“Nonparametric Estimation from Incomplete Observations.”</span> <em>Journal of the American Statistical Association</em> 53 (282): 457–81.
+</div>
+<div id="ref-nelson1969hazard" class="csl-entry" role="listitem">
+Nelson, Wayne. 1969. <span>“Hazard Plotting for Incomplete Failure Data.”</span> <em>Journal of Quality Technology</em> 1: 27–52.
+</div>
+<div id="ref-nelson1972theory" class="csl-entry" role="listitem">
+———. 1972. <span>“Theory and Applications of Hazard Plotting for Censored Failure Data.”</span> <em>Technometrics</em> 14 (4): 945–66.
+</div>
+<div id="ref-van2000asymptotic" class="csl-entry" role="listitem">
+Van der Vaart, Aad W. 2000. <em>Asymptotic Statistics</em>. Cambridge University Press.
+</div>
+</div>
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p> The <em>Glivenko-Cantelli theorem</em> guarantees that <span class="math inline">\(\sup_{x \in \mathbb{R}} |\hat{F}_n(x) - F(x)| \rightarrow 0\)</span> as <span class="math inline">\(n \rightarrow \infty\)</span>, so the convergence happens simultaneously for all <span class="math inline">\(x\)</span> <span class="citation" data-cites="van2000asymptotic">(<a href="references.html#ref-van2000asymptotic" role="doc-biblioref">Van der Vaart 2000</a>)</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p> Named after American statisticians <a href="https://en.wikipedia.org/wiki/Edward_L._Kaplan">Edward L. Kaplan</a> (1920–2006) and <a href="https://en.wikipedia.org/wiki/Paul_Meier_(statistician)">Paul Meier</a> (1924–2011). Kaplan worked at Bell Telephone Laboratories, the Lawrence Radiation Laboratory (now the Lawrence Berkeley National Laboratory), and Oregon State University. Meier worked at Johns Hopkins and the University of Chicago and was an early advocate for the use of randomization in clinical trials. Both were doctoral students of John Tukey at Princeton. Their 1958 paper is one of the most-cited papers in statistics, with 66,740 citations as of 22 January 2025.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p> <a href="https://en.wikipedia.org/wiki/Major_Greenwood">Major Greenwood</a> (1880–1949) was an English epidemiologist and statistician. He worked at the Lister Institute (now part of the University of London) and joined the newly-created Ministry of Health after serving in the Royal Army Medical Corps in World War I. He studied the health effects of factory work and developed early models of infectious disease transmission. In 1928, he became the first professor of epidemiology at the London School of Hygiene and Tropical Medicine. In an obituary, Austin Bradford Hill wrote that one of Greenwood’s greatest contributions “lay merely in his outlook, in his statistical approach to medicine, then a new approach and one long regarded with suspicion. And he fought this fight continuously and honestly.”<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
