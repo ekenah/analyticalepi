@@ -130,18 +130,32 @@ div.csl-indent {
   window.MathJax = {
     tex: {
       macros: {
+        A: "\\mathcal\{A\}",
         approxsim: "\\stackrel\{\\text\{approx\}\}\{\\sim\}",
+        B: "\\mathcal\{B\}",
         Bernoulli: ["\\operatorname\{Bernoulli\}"],
+        binomial: ["\\operatorname\{binomial\}"],
+        C: "\\mathcal\{C\}",
+        chisqH: "\\chi^2_\\text\{H\}",
+        chisqP: "\\chi^2_\\text\{P\}",
         comp: "\\mathsf\{C\}",
         Cov: ["\\operatorname\{Cov\}"],
+        D: "\\mathcal\{D\}",
         data: "\\text\{data\}",
         dif: "\\text\{d\}",
         E: ["\\operatorname\{\\mathbb\{E\}\}"],
         expit: ["\\operatorname\{expit\}"],
         given: ["\\, #1| \\, ", 1],
         indicator: "\\mathbb\{1\}",
+        K: "\\mathcal\{K\}",
         logit: ["\\operatorname\{logit\}"],
+        margins: "\\text\{margins\}",
+        odds: ["\\operatorname\{odds\}"],
+        OR: "\\text\{OR\}",
         ptrue: "p_\{\\text\{true\}\}",
+        R: "\\mathcal\{R\}",
+        RD: "\\text\{RD\}",
+        RR: "\\text\{RR\}",
         sens: "\\text\{sens\}",
         spec: "\\text\{spec\}",
         supp: ["\\operatorname\{supp\}"],
@@ -150,6 +164,7 @@ div.csl-indent {
         tevent: "t^\\text\{event\}",
         texit: "t^\\text\{exit\}",
         tonset: "t^\\text\{onset\}",
+        transpose: "\\mathsf{T}",
         trec: "t^\\text\{rec\}",
         true: "\\text\{true\}",
         twobytwo: "2 \\times 2",
@@ -283,8 +298,21 @@ window.Quarto = {
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">Two-Sample Inference and Study Design</span></span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Two-Sample Inference and Study Design</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./studydesign.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Cohort and Case-Control Studies</span></span></a>
+  </div>
+</li>
+      </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
@@ -350,7 +378,7 @@ window.Quarto = {
   <li><a href="#joint-and-marginal-distributions" id="toc-joint-and-marginal-distributions" class="nav-link" data-scroll-target="#joint-and-marginal-distributions"><span class="header-section-number">1.4</span> Joint and marginal distributions</a>
   <ul class="collapse">
   <li><a href="#linear-combinations" id="toc-linear-combinations" class="nav-link" data-scroll-target="#linear-combinations"><span class="header-section-number">1.4.1</span> Linear combinations*</a></li>
-  <li><a href="#variance-and-covariance" id="toc-variance-and-covariance" class="nav-link" data-scroll-target="#variance-and-covariance"><span class="header-section-number">1.4.2</span> Variance and covariance*</a></li>
+  <li><a href="#sec-varcov" id="toc-sec-varcov" class="nav-link" data-scroll-target="#sec-varcov"><span class="header-section-number">1.4.2</span> Variance and covariance*</a></li>
   </ul></li>
   <li><a href="#probability-and-disease-occurrence" id="toc-probability-and-disease-occurrence" class="nav-link" data-scroll-target="#probability-and-disease-occurrence"><span class="header-section-number">1.5</span> Probability and disease occurrence</a>
   <ul class="collapse">
@@ -867,8 +895,8 @@ Table&nbsp;1.1: Joint and marginal PMFs for binary random variables <span class=
   \end{aligned}
 \]</span> The algebra is not pretty, but the logic is straightforward. We split up the sum into parts depending only on <span class="math inline">\(x\)</span> and only on <span class="math inline">\(y\)</span> outside the joint PMF. In each part, we factor out a constant and find the marginal PMF. This same logic extends to a linear combination of any number of random variables.</p>
 </section>
-<section id="variance-and-covariance" class="level3" data-number="1.4.2">
-<h3 data-number="1.4.2" class="anchored" data-anchor-id="variance-and-covariance"><span class="header-section-number">1.4.2</span> Variance and covariance*</h3>
+<section id="sec-varcov" class="level3" data-number="1.4.2">
+<h3 data-number="1.4.2" class="anchored" data-anchor-id="sec-varcov"><span class="header-section-number">1.4.2</span> Variance and covariance*</h3>
 <p>The variance of <span class="math inline">\(a X + b Y\)</span> is <span id="eq-lincomV"><span class="math display">\[
   \Var(a X + b Y) = a^2 \Var(X) + b^2 \Var(Y) + 2 a b \Cov(X, Y)
 \tag{1.12}\]</span></span> where <span class="math display">\[

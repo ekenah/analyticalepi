@@ -130,18 +130,32 @@ div.csl-indent {
   window.MathJax = {
     tex: {
       macros: {
+        A: "\\mathcal\{A\}",
         approxsim: "\\stackrel\{\\text\{approx\}\}\{\\sim\}",
+        B: "\\mathcal\{B\}",
         Bernoulli: ["\\operatorname\{Bernoulli\}"],
+        binomial: ["\\operatorname\{binomial\}"],
+        C: "\\mathcal\{C\}",
+        chisqH: "\\chi^2_\\text\{H\}",
+        chisqP: "\\chi^2_\\text\{P\}",
         comp: "\\mathsf\{C\}",
         Cov: ["\\operatorname\{Cov\}"],
+        D: "\\mathcal\{D\}",
         data: "\\text\{data\}",
         dif: "\\text\{d\}",
         E: ["\\operatorname\{\\mathbb\{E\}\}"],
         expit: ["\\operatorname\{expit\}"],
         given: ["\\, #1| \\, ", 1],
         indicator: "\\mathbb\{1\}",
+        K: "\\mathcal\{K\}",
         logit: ["\\operatorname\{logit\}"],
+        margins: "\\text\{margins\}",
+        odds: ["\\operatorname\{odds\}"],
+        OR: "\\text\{OR\}",
         ptrue: "p_\{\\text\{true\}\}",
+        R: "\\mathcal\{R\}",
+        RD: "\\text\{RD\}",
+        RR: "\\text\{RR\}",
         sens: "\\text\{sens\}",
         spec: "\\text\{spec\}",
         supp: ["\\operatorname\{supp\}"],
@@ -150,6 +164,7 @@ div.csl-indent {
         tevent: "t^\\text\{event\}",
         texit: "t^\\text\{exit\}",
         tonset: "t^\\text\{onset\}",
+        transpose: "\\mathsf{T}",
         trec: "t^\\text\{rec\}",
         true: "\\text\{true\}",
         twobytwo: "2 \\times 2",
@@ -283,8 +298,21 @@ window.Quarto = {
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">Two-Sample Inference and Study Design</span></span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Two-Sample Inference and Study Design</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./studydesign.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Cohort and Case-Control Studies</span></span></a>
+  </div>
+</li>
+      </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
@@ -368,7 +396,7 @@ window.Quarto = {
 <blockquote class="blockquote">
 <p>In the null hypothesis schema we are trying only to nullify something: “The null hypothesis is never proved or established but is possibly disproved in the course of experimentation.” But ordinarily evidence does not take this form. With the <em>corpus delicti</em> in front of you, you do not say, “Here is evidence against the hypothesis that no one is dead.” You say, “Evidently someone has been murdered.” <span class="citation" data-cites="berkson1942tests">(<a href="references.html#ref-berkson1942tests" role="doc-biblioref">Berkson 1942</a>)</span><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 </blockquote>
-<p>In <strong>Bayesian</strong> inference, probability distributions are used to summarize our knowledge about the possible values of the unknown parameter <span class="math inline">\(\theta_\true\)</span>. The distribution of possible values of <span class="math inline">\(\theta\)</span> before we have seen our data is called the <strong>prior distribution</strong>, and the distribution of possible values of <span class="math inline">\(\theta\)</span> after we see the data is called the <strong>posterior distribution</strong>. Most parameters we are interested in estimating (such as probabilities) are continuous, so they have a probability density function (PDF) instead of a probability mass function (PMF). The posterior PDF is proportional to the prior PDF times the likelihood function, and the posterior distribution can be used to get point and interval estimates of an unknown parameter. The interval estimates are called <strong>credible intervals</strong>, and they have important advantages over confidence intervals. The Bayesian approach to statistics is more logically consistent and more intuitive than the frequentist approach. While large-sample theory can be useful in Bayesian inference, it does not rely on asymptotic normality to nearly the same degree that maximum likelihood estimation does.</p>
+<p>In <strong>Bayesian</strong> inference, probability distributions are used to summarize our knowledge about the possible values of an unknown parameter <span class="math inline">\(\theta_\true\)</span>. The distribution of possible values of <span class="math inline">\(\theta_\true\)</span> before we have seen our data is called the <strong>prior distribution</strong>, and the distribution of possible values of <span class="math inline">\(\theta_\true\)</span> after we see the data is called the <strong>posterior distribution</strong>. Most parameters we are interested in estimating (such as probabilities) are continuous, so they have a probability density function (PDF) instead of a probability mass function (PMF). The posterior PDF is proportional to the prior PDF times the likelihood function, and the posterior distribution can be used to get point and interval estimates of an unknown parameter. The interval estimates are called <strong>credible intervals</strong>, and they have important advantages over confidence intervals. The Bayesian approach to statistics is more logically consistent and more intuitive than the frequentist approach, but it can be more computationally complex. While large-sample theory can be useful in Bayesian inference, it does not rely on asymptotic normality to the same degree that maximum likelihood estimation does.</p>
 <section id="prior-and-posterior-distributions" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="prior-and-posterior-distributions"><span class="header-section-number">4.1</span> Prior and posterior distributions</h2>
 <p>The value of a PDF is not a probability (it can be greater than one), but PDFs can be handled like probabilities in terms of the addition rule and the multiplication of conditional probabilities <span class="citation" data-cites="gelman2013bayesian">Boos and Stefanski (<a href="references.html#ref-boos2013essential" role="doc-biblioref">2013</a>)</span>. Let <span class="math inline">\(\pi(\theta)\)</span> be the <strong>prior</strong> PDF of <span class="math inline">\(\theta\)</span>. Before we see our data, we believe that <span class="math inline">\(\theta_\true \in [a, b]\)</span> with probability <span class="math display">\[

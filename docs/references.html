@@ -50,7 +50,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./calculus.html" rel="next">
-<link href="./survival.html" rel="prev">
+<link href="./studydesign.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -92,18 +92,32 @@ div.csl-indent {
   window.MathJax = {
     tex: {
       macros: {
+        A: "\\mathcal\{A\}",
         approxsim: "\\stackrel\{\\text\{approx\}\}\{\\sim\}",
+        B: "\\mathcal\{B\}",
         Bernoulli: ["\\operatorname\{Bernoulli\}"],
+        binomial: ["\\operatorname\{binomial\}"],
+        C: "\\mathcal\{C\}",
+        chisqH: "\\chi^2_\\text\{H\}",
+        chisqP: "\\chi^2_\\text\{P\}",
         comp: "\\mathsf\{C\}",
         Cov: ["\\operatorname\{Cov\}"],
+        D: "\\mathcal\{D\}",
         data: "\\text\{data\}",
         dif: "\\text\{d\}",
         E: ["\\operatorname\{\\mathbb\{E\}\}"],
         expit: ["\\operatorname\{expit\}"],
         given: ["\\, #1| \\, ", 1],
         indicator: "\\mathbb\{1\}",
+        K: "\\mathcal\{K\}",
         logit: ["\\operatorname\{logit\}"],
+        margins: "\\text\{margins\}",
+        odds: ["\\operatorname\{odds\}"],
+        OR: "\\text\{OR\}",
         ptrue: "p_\{\\text\{true\}\}",
+        R: "\\mathcal\{R\}",
+        RD: "\\text\{RD\}",
+        RR: "\\text\{RR\}",
         sens: "\\text\{sens\}",
         spec: "\\text\{spec\}",
         supp: ["\\operatorname\{supp\}"],
@@ -112,6 +126,7 @@ div.csl-indent {
         tevent: "t^\\text\{event\}",
         texit: "t^\\text\{exit\}",
         tonset: "t^\\text\{onset\}",
+        transpose: "\\mathsf{T}",
         trec: "t^\\text\{rec\}",
         true: "\\text\{true\}",
         twobytwo: "2 \\times 2",
@@ -216,8 +231,21 @@ div.csl-indent {
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">Two-Sample Inference and Study Design</span></span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Two-Sample Inference and Study Design</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./studydesign.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Cohort and Case-Control Studies</span></span></a>
+  </div>
+</li>
+      </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
@@ -358,6 +386,11 @@ Association</em> 37 (219): 325–35.
 Birnbaum, Allan. 1964. <span>“Median-Unbiased Estimators.”</span>
 <em>Bulletin of Mathematical Statistics</em> 11: 25–34.
 </div>
+<div id="ref-blaker2000confidence" class="csl-entry" role="listitem">
+Blaker, Helge. 2000. <span>“Confidence Curves and Improved Exact
+Confidence Intervals for Discrete Distributions.”</span> <em>Canadian
+Journal of Statistics</em> 28 (4): 783–98.
+</div>
 <div id="ref-blumberg1957evaluating" class="csl-entry" role="listitem">
 Blumberg, Mark S. 1957. <span>“Evaluating Health Screening
 Procedures.”</span> <em>Operations Research</em> 5 (3): 351–60.
@@ -370,6 +403,11 @@ Inference</em>. Springer.
 Bostrom, RC, HS Sawyer, and WE Tolles. 1959. <span>“Instrumentation for
 Automatically Prescreening Cytological Smears.”</span> <em>Proceedings
 of the IRE</em> 47 (11): 1895–1900.
+</div>
+<div id="ref-brittain1981cost" class="csl-entry" role="listitem">
+Brittain, Erica, James J Schlesselman, and Bruce V Stadel. 1981.
+<span>“Cost of Case-Control Studies.”</span> <em>American Journal of
+Epidemiology</em> 114 (2): 234–43.
 </div>
 <div id="ref-brown2001interval" class="csl-entry" role="listitem">
 Brown, Lawrence D, T Tony Cai, and Anirban DasGupta. 2001.
@@ -450,6 +488,20 @@ Theorem.”</span> <em>New England Journal of Medicine</em> 293 (5): 257.
 Farr, William. 1838. <span>“On Prognosis.”</span> <em>British Medical
 Almanack</em> Supplement: 199–216.
 </div>
+<div id="ref-fay2010confidence" class="csl-entry" role="listitem">
+Fay, Michael P. 2010. <span>“Confidence Intervals That Match Fisher’s
+Exact or Blaker’s Exact Tests.”</span> <em>Biostatistics</em> 11 (2):
+373–74.
+</div>
+<div id="ref-fisher1922interpretation" class="csl-entry" role="listitem">
+Fisher, Ronald A. 1922. <span>“On the Interpretation of <span class="math inline"><em>χ</em></span> 2 from Contingency Tables, and the
+Calculation of p.”</span> <em>Journal of the Royal Statistical
+Society</em> 85 (1): 87–94.
+</div>
+<div id="ref-fisher1935logic" class="csl-entry" role="listitem">
+———. 1935. <span>“The Logic of Inductive Inference.”</span> <em>Journal
+of the Royal Statistical Society</em> 98 (1): 39–82.
+</div>
 <div id="ref-fisk1961graduation" class="csl-entry" role="listitem">
 Fisk, Peter R. 1961. <span>“The Graduation of Income
 Distributions.”</span> <em>Econometrica: Journal of the Econometric
@@ -473,6 +525,11 @@ Inconsistent?”</span> <em>The American Statistician</em> 61 (4): 291–95.
 Freeman, Jonathan, and George B Hutchison. 1980. <span>“Prevalence,
 Incidence and Duration.”</span> <em>American Journal of
 Epidemiology</em> 112 (5): 707–23.
+</div>
+<div id="ref-gail1976many" class="csl-entry" role="listitem">
+Gail, Mitchell, Roger Williams, David P Byar, Charles Brown, et al.
+1976. <span>“How Many Controls?”</span> <em>Journal of Chronic
+Diseases</em> 29 (11): 723–31.
 </div>
 <div id="ref-garwood1936fiducial" class="csl-entry" role="listitem">
 Garwood, F. 1936. <span>“Fiducial Limits for the <span>Poisson</span>
@@ -514,6 +571,16 @@ Greenwood, Major. 1926. <span>“The Natural Duration of Cancer.”</span>
 Hanley, James A, and Barbara J McNeil. 1982. <span>“The Meaning and Use
 of the Area Under a Receiver Operating Characteristic (<span>ROC</span>)
 Curve.”</span> <em>Radiology</em> 143 (1): 29–36.
+</div>
+<div id="ref-hill1965environment" class="csl-entry" role="listitem">
+Hill, Sir Austin Bradford. 1965. <span>“The Environment and Disease:
+Association or Causation?”</span> <em>Proceedings of the Royal Society
+of Medicine</em> 58: 295–300.
+</div>
+<div id="ref-irwin1935tests" class="csl-entry" role="listitem">
+Irwin, JO et al. 1935. <span>“Tests of Significance for Differences
+Between Percentages Based on Small Numbers.”</span> <em>Metron</em> 12
+(2): 84–94.
 </div>
 <div id="ref-jeffreys1946invariant" class="csl-entry" role="listitem">
 Jeffreys, Harold. 1946. <span>“An Invariant Form for the Prior
@@ -578,6 +645,17 @@ Makeham, William Matthew. 1860. <span>“On the Law of Mortality and the
 Construction of Annuity Tables.”</span> <em>The Assurance Magazine, and
 Journal of the Institute of Actuaries</em> 8 (6): 301–10.
 </div>
+<div id="ref-meydrech1978cost" class="csl-entry" role="listitem">
+Meydrech, Edward F, and Lawrence L Kupper. 1978. <span>“Cost
+Considerations and Sample Size Requirements in Cohort and Case-Control
+Studies.”</span> <em>American Journal of Epidemiology</em> 107 (3):
+201–5.
+</div>
+<div id="ref-miettinen1969individual" class="csl-entry" role="listitem">
+Miettinen, Olli S. 1969. <span>“Individual Matching with Multiple
+Controls in the Case of All-or-None Responses.”</span>
+<em>Biometrics</em> 25 (2): 339–55.
+</div>
 <div id="ref-morabia2004epidemiology" class="csl-entry" role="listitem">
 Morabia, Alfredo. 2004. <span>“Epidemiology: An Epistemological
 Perspective.”</span> In <em>A History of Epidemiologic Methods and
@@ -588,6 +666,15 @@ Morgenstern, Hal, David G Kleinbaum, and Lawrence L Kupper. 1980.
 <span>“Measures of Disease Incidence Used in Epidemiologic
 Research.”</span> <em>International Journal of Epidemiology</em> 9 (1):
 97–104.
+</div>
+<div id="ref-morgenstern1983method" class="csl-entry" role="listitem">
+Morgenstern, Hal, and Deborah M Winn. 1983. <span>“A Method for
+Determining the Sampling Ratio in Epidemiologic Studies.”</span>
+<em>Statistics in Medicine</em> 2 (3): 387–96.
+</div>
+<div id="ref-nam1973optimum" class="csl-entry" role="listitem">
+Nam, Jun-Mo. 1973. <span>“Optimum Sample Sizes for the Comparison of the
+Control and Treatment.”</span> <em>Biometrics</em> 29: 101–8.
 </div>
 <div id="ref-nelson1969hazard" class="csl-entry" role="listitem">
 Nelson, Wayne. 1969. <span>“Hazard Plotting for Incomplete Failure
@@ -603,6 +690,23 @@ the Most Efficient Tests of Statistical Hypotheses.”</span>
 <em>Philosophical Transactions of the Royal Society of London. Series A,
 Containing Papers of a Mathematical or Physical Character</em> 231
 (694-706): 289–337.
+</div>
+<div id="ref-pearson1900x" class="csl-entry" role="listitem">
+Pearson, Karl. 1900. <span>“On the Criterion That a Given System of
+Deviations from the Probable in the Case of a Correlated System of
+Variables Is Such That It Can Be Reasonably Supposed to Have Arisen from
+Random Sampling.”</span> <em>The London, Edinburgh, and Dublin
+Philosophical Magazine and Journal of Science</em> 50 (302): 157–75.
+</div>
+<div id="ref-pearson1922chi" class="csl-entry" role="listitem">
+———. 1922. <span>“On the <span class="math inline"><em>χ</em></span> 2
+Test of Goodness of Fit.”</span> <em>Biometrika</em> 14 (1/2): 186–91.
+</div>
+<div id="ref-pike1979re" class="csl-entry" role="listitem">
+Pike, MC, and JT Casagrande. 1979. <span>“Re:<span>‘cost Considerations
+and Sample Size Requirements in Cohort and Case-Control
+Studies’</span>.”</span> <em>American Journal of Epidemiology</em> 110
+(1): 100–102.
 </div>
 <div id="ref-pratt1965bayesian" class="csl-entry" role="listitem">
 Pratt, John W. 1965. <span>“Bayesian Interpretation of Standard
@@ -638,6 +742,12 @@ Diseases</em> 13 (1): 6–21.
 Robert, Christian P, and George Casella. 2004. <em>Monte Carlo
 Statistical Methods</em>. Second edition. Springer.
 </div>
+<div id="ref-roscoe1971investigation" class="csl-entry" role="listitem">
+Roscoe, John T, and Jackson A Byars. 1971. <span>“An Investigation of
+the Restraints with Respect to Sample Size Commonly Imposed on the Use
+of the Chi-Square Statistic.”</span> <em>Journal of the American
+Statistical Association</em> 66 (336): 755–59.
+</div>
 <div id="ref-rothman1978show" class="csl-entry" role="listitem">
 Rothman, Kenneth J. 1978. <span>“A Show of Confidence.”</span> <em>New
 England Journal of Medicine</em> 299 (24): 1362–63.
@@ -645,6 +755,10 @@ England Journal of Medicine</em> 299 (24): 1362–63.
 <div id="ref-rothman1981induction" class="csl-entry" role="listitem">
 ———. 1981. <span>“Induction and Latent Periods.”</span> <em>American
 Journal of Epidemiology</em> 114 (2): 253–59.
+</div>
+<div id="ref-routledge1992resolving" class="csl-entry" role="listitem">
+Routledge, RD. 1992. <span>“Resolving the Conflict over Fisher’s Exact
+Test.”</span> <em>Canadian Journal of Statistics</em> 20 (2): 201–9.
 </div>
 <div id="ref-snow1855mode" class="csl-entry" role="listitem">
 Snow, John. 1855. <em>On the Mode of Communication of Cholera</em>.
@@ -687,6 +801,12 @@ Wald, Abraham. 1943. <span>“Tests of Statistical Hypotheses Concerning
 Several Parameters When the Number of Observations Is Large.”</span>
 <em>Transactions of the American Mathematical Society</em> 54 (3):
 426–82.
+</div>
+<div id="ref-walter1977determination" class="csl-entry" role="listitem">
+Walter, Samuel D. 1977. <span>“Determination of Significant Relative
+Risks and Optimal Sampling Procedures in Prospective and Retrospective
+Comparative Studies of Various Sizes.”</span> <em>American Journal of
+Epidemiology</em> 105 (4): 387–97.
 </div>
 <div id="ref-weibull1951statistical" class="csl-entry" role="listitem">
 Weibull, Waloddi et al. 1951. <span>“A Statistical Distribution Function
@@ -1149,8 +1269,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./survival.html" class="pagination-link" aria-label="Survival Analysis">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span>
+      <a href="./studydesign.html" class="pagination-link" aria-label="Cohort and Case-Control Studies">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Cohort and Case-Control Studies</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

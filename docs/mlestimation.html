@@ -130,18 +130,32 @@ div.csl-indent {
   window.MathJax = {
     tex: {
       macros: {
+        A: "\\mathcal\{A\}",
         approxsim: "\\stackrel\{\\text\{approx\}\}\{\\sim\}",
+        B: "\\mathcal\{B\}",
         Bernoulli: ["\\operatorname\{Bernoulli\}"],
+        binomial: ["\\operatorname\{binomial\}"],
+        C: "\\mathcal\{C\}",
+        chisqH: "\\chi^2_\\text\{H\}",
+        chisqP: "\\chi^2_\\text\{P\}",
         comp: "\\mathsf\{C\}",
         Cov: ["\\operatorname\{Cov\}"],
+        D: "\\mathcal\{D\}",
         data: "\\text\{data\}",
         dif: "\\text\{d\}",
         E: ["\\operatorname\{\\mathbb\{E\}\}"],
         expit: ["\\operatorname\{expit\}"],
         given: ["\\, #1| \\, ", 1],
         indicator: "\\mathbb\{1\}",
+        K: "\\mathcal\{K\}",
         logit: ["\\operatorname\{logit\}"],
+        margins: "\\text\{margins\}",
+        odds: ["\\operatorname\{odds\}"],
+        OR: "\\text\{OR\}",
         ptrue: "p_\{\\text\{true\}\}",
+        R: "\\mathcal\{R\}",
+        RD: "\\text\{RD\}",
+        RR: "\\text\{RR\}",
         sens: "\\text\{sens\}",
         spec: "\\text\{spec\}",
         supp: ["\\operatorname\{supp\}"],
@@ -150,6 +164,7 @@ div.csl-indent {
         tevent: "t^\\text\{event\}",
         texit: "t^\\text\{exit\}",
         tonset: "t^\\text\{onset\}",
+        transpose: "\\mathsf{T}",
         trec: "t^\\text\{rec\}",
         true: "\\text\{true\}",
         twobytwo: "2 \\times 2",
@@ -283,8 +298,21 @@ window.Quarto = {
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">Two-Sample Inference and Study Design</span></span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Two-Sample Inference and Study Design</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./studydesign.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Cohort and Case-Control Studies</span></span></a>
+  </div>
+</li>
+      </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
@@ -386,7 +414,7 @@ window.Quarto = {
 <p>Far better an approximate answer to the <em>right</em> question, which is often vague, than an <em>exact</em> answer to the wrong question, which can always be made precise. <span class="citation" data-cites="tukey1962future">(<a href="references.html#ref-tukey1962future" role="doc-biblioref">Tukey 1962</a>)</span><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 </blockquote>
 <p>In probability, we are told the rules of the game and then we predict what it will look like. In statistics, we watch the game and try to figure out the rules. Roughly speaking, statistics (game to rules) is the reverse of probability (rules to game). When done well, statistics helps us learn from observations while accounting honestly for uncertainty. An outstanding early example statistics applied to public health is the work of <a href="https://en.wikipedia.org/wiki/Florence_Nightingale">Florence Nightingale</a> (1820-1910), who collected data and developed statistical graphics to demonstrate the need for public health reforms in the British Army in the 1850s <span class="citation" data-cites="cohen1984florence winkelstein2009florence">(<a href="references.html#ref-cohen1984florence" role="doc-biblioref">Cohen 1984</a>; <a href="references.html#ref-winkelstein2009florence" role="doc-biblioref">Winkelstein Jr 2009</a>)</span>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
-<p>Here, we will use estimation of a probability as an example of maximum likelihood estimation, which is used for parameter estimation throughout frequentist statistics. It gives us a way to find point estimates of parameters that are optimal in large samples in a sense that we will explain below. It is also the foundation for hypothesis tests and confidence intervals, which give us an accurate way to account for uncertainty in statistical inference.</p>
+<p>Here, we will use estimation of a probability as an example of <strong>maximum likelihood estimation</strong>, which is used for parameter estimation throughout <strong>frequentist</strong> statistical inference, where the probability of an event is interpreted as the limit as <span class="math inline">\(n \rightarrow \infty\)</span> of the proportion of <span class="math inline">\(n\)</span> repetitions of an experiment in which the event occurs. Maximum likelihood estimation gives us a way to find point estimates of parameters that are optimal in large samples. It is also the foundation for hypothesis tests and confidence intervals, which are used to quantify uncertainty in frequentist inference.</p>
 <section id="binomial-likelihood" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="binomial-likelihood"><span class="header-section-number">3.1</span> Binomial likelihood</h2>
 <p>In <a href="#sec-binomial" class="quarto-xref"><span>Section 3.1.1</span></a>, we used the prevalence <span class="math inline">\(p\)</span> in our population to figure out the distribution of the number <span class="math inline">\(X\)</span> of diseased individuals in a sample of size <span class="math inline">\(n\)</span>. This is probability. The corresponding statistical problem would be to estimate the prevalence <span class="math inline">\(p\)</span> after seeing <span class="math inline">\(X = x\)</span> infected individuals in a sample of size <span class="math inline">\(n\)</span>.</p>
