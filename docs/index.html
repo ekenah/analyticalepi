@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Eben Kenah">
-<meta name="dcterms.date" content="2025-01-28">
+<meta name="dcterms.date" content="2025-01-30">
 
 <title>Analytical Epidemiology</title>
 <style>
@@ -105,18 +105,24 @@ div.csl-indent {
         C: "\\mathcal\{C\}",
         chisqH: "\\chi^2_\\text\{H\}",
         chisqP: "\\chi^2_\\text\{P\}",
+        chisqPobs: "\\chi^2_\\text\{Pobs\}",
         comp: "\\mathsf\{C\}",
         Cov: ["\\operatorname\{Cov\}"],
         D: "\\mathcal\{D\}",
         data: "\\text\{data\}",
         dif: "\\text\{d\}",
+        Dminus: "\\text\{D\}^-",
+        Dplus: "\\text\{D\}^+",
         E: ["\\operatorname\{\\mathbb\{E\}\}"],
+        ESSR: "\\text\{ESSR\}",
         expit: ["\\operatorname\{expit\}"],
         given: ["\\, #1| \\, ", 1],
+        indep: "\\perp\\!\\!\\!\\perp",
         indicator: "\\mathbb\{1\}",
         K: "\\mathcal\{K\}",
         logit: ["\\operatorname\{logit\}"],
         margins: "\\text\{margins\}",
+        obs: "\\text\{obs\}",
         odds: ["\\operatorname\{odds\}"],
         OR: "\\text\{OR\}",
         ptrue: "p_\{\\text\{true\}\}",
@@ -130,13 +136,18 @@ div.csl-indent {
         tentry: "t^\\text\{entry\}",
         tevent: "t^\\text\{event\}",
         texit: "t^\\text\{exit\}",
+        Tminus: "\\text\{T\}^-",
         tonset: "t^\\text\{onset\}",
+        Tplus: "\\text\{T\}^+",
         transpose: "\\mathsf{T}",
         trec: "t^\\text\{rec\}",
         true: "\\text\{true\}",
         twobytwo: "2 \\times 2",
         vand: "\\text\{ and \}",
-        Var: ["\\operatorname\{Var\}"]
+        Var: ["\\operatorname\{Var\}"],
+        Xminus: "\\text\{X\}^-",
+        Xobs: "\\text\{X\}^\\text\{obs\}",
+        Xplus: "\\text\{X\}^+"
       }
     }
   };
@@ -191,7 +202,7 @@ div.csl-indent {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">One-Sample Inference for Risks and Rates</span></a>
+ <span class="menu-text">Defining and Measuring Disease Occurrence</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -238,7 +249,7 @@ div.csl-indent {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Two-Sample Inference and Study Design</span></a>
+ <span class="menu-text">Study Design and Measures of Association</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -248,6 +259,12 @@ div.csl-indent {
   <div class="sidebar-item-container"> 
   <a href="./studydesign.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Cohort and Case-Control Studies</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./validity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Internal and External Validity</span></span></a>
   </div>
 </li>
       </ul>
@@ -325,7 +342,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 28, 2025</p>
+      <p class="date">January 30, 2025</p>
     </div>
   </div>
   
@@ -340,7 +357,7 @@ div.csl-indent {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><a href="JohnSnow-1855-map2.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Areas of London supplied by the Southwark &amp; Vauxhall (blue, now green) and Lambeth (red) water companies during the 1849-1854 cholera epidemic in London [@snow1855mode]. Source: Wellcome Collection via Wikimedia Commons."><img src="JohnSnow-1855-map2.jpg" class="img-fluid figure-img" style="width:90.0%" alt="Areas of London supplied by the Southwark &amp; Vauxhall (blue, now green) and Lambeth (red) water companies during the 1849-1854 cholera epidemic in London (Snow 1855). Source: Wellcome Collection via Wikimedia Commons."></a></p>
-<figcaption>Areas of London supplied by the Southwark &amp; Vauxhall (blue, now green) and Lambeth (red) water companies during the 1849-1854 cholera epidemic in London <span class="citation" data-cites="snow1855mode">(<a href="references.html#ref-snow1855mode" role="doc-biblioref">Snow 1855</a>)</span>. Source: Wellcome Collection via <a href="https://commons.wikimedia.org/wiki/File:Map_showing_the_intimate_mixture_of_the_water_supply..._Wellcome_L0063432.jpg">Wikimedia Commons</a>.</figcaption>
+<figcaption>Areas of London supplied by the Southwark &amp; Vauxhall (blue, now green) and Lambeth (red) water companies during the 1849-1854 cholera epidemic in London <span class="citation" data-cites="snow1855mode">(<a href="#ref-snow1855mode" role="doc-biblioref">Snow 1855</a>)</span>. Source: Wellcome Collection via <a href="https://commons.wikimedia.org/wiki/File:Map_showing_the_intimate_mixture_of_the_water_supply..._Wellcome_L0063432.jpg">Wikimedia Commons</a>.</figcaption>
 </figure>
 </div>
 <section id="preface" class="level1 unnumbered">
@@ -350,7 +367,7 @@ div.csl-indent {
 <h2 class="anchored" data-anchor-id="who-this-book-is-for">Who this book is for</h2>
 <p>This book is intended primarily for two audiences:</p>
 <ul>
-<li><p>Epidemiologists are often protected from the mathematical foundations of their field. The long-term price of this is “dogmatism, that is, a tendency to rigidly protect a partially understood theoretical heritage” <span class="citation" data-cites="morabia2004epidemiology">(<a href="references.html#ref-morabia2004epidemiology" role="doc-biblioref">Morabia 2004</a>)</span>. The mathematics needed for a deeper understanding of epidemiologic methods is within reach of anyone who has come far enough to need it. Whether you master this material or just learn to approach it with more patience than fear, you will be doing a service to epidemiology and to public health.</p></li>
+<li><p>Epidemiologists are often protected from the mathematical foundations of their field. The long-term price of this is “dogmatism, that is, a tendency to rigidly protect a partially understood theoretical heritage” <span class="citation" data-cites="morabia2004epidemiology">(<a href="#ref-morabia2004epidemiology" role="doc-biblioref">Morabia 2004</a>)</span>. The mathematics needed for a deeper understanding of epidemiologic methods is within reach of anyone who has come far enough to need it. Whether you master this material or just learn to approach it with more patience than fear, you will be doing a service to epidemiology and to public health.</p></li>
 <li><p>Biostatisticians are familiar with probability and statistical inference, but applying statistics to solve scientific problems in public health requires skills different from those needed to prove that a method works under given assumptions. Epidemiology is a living example of the interplay between theory and applications in statistics, and epidemiologists have shown integrity, courage, and ingenuity in confronting causal questions with statistical tools.</p></li>
 </ul>
 <p>Beyond these audiences, I hope to explain the logic of epidemiology to any interested reader. It is possible that epidemiologic research has already helped save your life.</p>
@@ -369,7 +386,7 @@ div.csl-indent {
 <p>Any mistakes are my own, and God knows best (الله أعلم).</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-morabia2004epidemiology" class="csl-entry" role="listitem">
 Morabia, Alfredo. 2004. <span>“Epidemiology: An Epistemological Perspective.”</span> In <em>A History of Epidemiologic Methods and Concepts</em>, edited by Alfredo Morabia, 3–125. Springer.
 </div>

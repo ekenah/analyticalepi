@@ -138,18 +138,24 @@ div.csl-indent {
         C: "\\mathcal\{C\}",
         chisqH: "\\chi^2_\\text\{H\}",
         chisqP: "\\chi^2_\\text\{P\}",
+        chisqPobs: "\\chi^2_\\text\{Pobs\}",
         comp: "\\mathsf\{C\}",
         Cov: ["\\operatorname\{Cov\}"],
         D: "\\mathcal\{D\}",
         data: "\\text\{data\}",
         dif: "\\text\{d\}",
+        Dminus: "\\text\{D\}^-",
+        Dplus: "\\text\{D\}^+",
         E: ["\\operatorname\{\\mathbb\{E\}\}"],
+        ESSR: "\\text\{ESSR\}",
         expit: ["\\operatorname\{expit\}"],
         given: ["\\, #1| \\, ", 1],
+        indep: "\\perp\\!\\!\\!\\perp",
         indicator: "\\mathbb\{1\}",
         K: "\\mathcal\{K\}",
         logit: ["\\operatorname\{logit\}"],
         margins: "\\text\{margins\}",
+        obs: "\\text\{obs\}",
         odds: ["\\operatorname\{odds\}"],
         OR: "\\text\{OR\}",
         ptrue: "p_\{\\text\{true\}\}",
@@ -163,13 +169,18 @@ div.csl-indent {
         tentry: "t^\\text\{entry\}",
         tevent: "t^\\text\{event\}",
         texit: "t^\\text\{exit\}",
+        Tminus: "\\text\{T\}^-",
         tonset: "t^\\text\{onset\}",
+        Tplus: "\\text\{T\}^+",
         transpose: "\\mathsf{T}",
         trec: "t^\\text\{rec\}",
         true: "\\text\{true\}",
         twobytwo: "2 \\times 2",
         vand: "\\text\{ and \}",
-        Var: ["\\operatorname\{Var\}"]
+        Var: ["\\operatorname\{Var\}"],
+        Xminus: "\\text\{X\}^-",
+        Xobs: "\\text\{X\}^\\text\{obs\}",
+        Xplus: "\\text\{X\}^+"
       }
     }
   };
@@ -216,7 +227,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./probability.html">One-Sample Inference for Risks and Rates</a></li><li class="breadcrumb-item"><a href="./bayes.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Bayesian Estimation</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./probability.html">Defining and Measuring Disease Occurrence</a></li><li class="breadcrumb-item"><a href="./bayes.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Bayesian Estimation</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -253,7 +264,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">One-Sample Inference for Risks and Rates</span></a>
+ <span class="menu-text">Defining and Measuring Disease Occurrence</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -300,7 +311,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Two-Sample Inference and Study Design</span></a>
+ <span class="menu-text">Study Design and Measures of Association</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -310,6 +321,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./studydesign.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Cohort and Case-Control Studies</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./validity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Internal and External Validity</span></span></a>
   </div>
 </li>
       </ul>
@@ -374,7 +391,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./probability.html">One-Sample Inference for Risks and Rates</a></li><li class="breadcrumb-item"><a href="./bayes.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Bayesian Estimation</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./probability.html">Defining and Measuring Disease Occurrence</a></li><li class="breadcrumb-item"><a href="./bayes.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Bayesian Estimation</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span id="sec-bayes" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Bayesian Estimation</span></span></h1>
 </div>
@@ -394,12 +411,12 @@ window.Quarto = {
 
 
 <blockquote class="blockquote">
-<p>In the null hypothesis schema we are trying only to nullify something: “The null hypothesis is never proved or established but is possibly disproved in the course of experimentation.” But ordinarily evidence does not take this form. With the <em>corpus delicti</em> in front of you, you do not say, “Here is evidence against the hypothesis that no one is dead.” You say, “Evidently someone has been murdered.” <span class="citation" data-cites="berkson1942tests">(<a href="references.html#ref-berkson1942tests" role="doc-biblioref">Berkson 1942</a>)</span><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>In the null hypothesis schema we are trying only to nullify something: “The null hypothesis is never proved or established but is possibly disproved in the course of experimentation.” But ordinarily evidence does not take this form. With the <em>corpus delicti</em> in front of you, you do not say, “Here is evidence against the hypothesis that no one is dead.” You say, “Evidently someone has been murdered.” <span class="citation" data-cites="berkson1942tests">(<a href="#ref-berkson1942tests" role="doc-biblioref">Berkson 1942</a>)</span><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 </blockquote>
 <p>In <strong>Bayesian</strong> inference, probability distributions are used to summarize our knowledge about the possible values of an unknown parameter <span class="math inline">\(\theta_\true\)</span>. The distribution of possible values of <span class="math inline">\(\theta_\true\)</span> before we have seen our data is called the <strong>prior distribution</strong>, and the distribution of possible values of <span class="math inline">\(\theta_\true\)</span> after we see the data is called the <strong>posterior distribution</strong>. Most parameters we are interested in estimating (such as probabilities) are continuous, so they have a probability density function (PDF) instead of a probability mass function (PMF). The posterior PDF is proportional to the prior PDF times the likelihood function, and the posterior distribution can be used to get point and interval estimates of an unknown parameter. The interval estimates are called <strong>credible intervals</strong>, and they have important advantages over confidence intervals. The Bayesian approach to statistics is more logically consistent and more intuitive than the frequentist approach, but it can be more computationally complex. While large-sample theory can be useful in Bayesian inference, it does not rely on asymptotic normality to the same degree that maximum likelihood estimation does.</p>
 <section id="prior-and-posterior-distributions" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="prior-and-posterior-distributions"><span class="header-section-number">4.1</span> Prior and posterior distributions</h2>
-<p>The value of a PDF is not a probability (it can be greater than one), but PDFs can be handled like probabilities in terms of the addition rule and the multiplication of conditional probabilities <span class="citation" data-cites="gelman2013bayesian">Boos and Stefanski (<a href="references.html#ref-boos2013essential" role="doc-biblioref">2013</a>)</span>. Let <span class="math inline">\(\pi(\theta)\)</span> be the <strong>prior</strong> PDF of <span class="math inline">\(\theta\)</span>. Before we see our data, we believe that <span class="math inline">\(\theta_\true \in [a, b]\)</span> with probability <span class="math display">\[
+<p>The value of a PDF is not a probability (it can be greater than one), but PDFs can be handled like probabilities in terms of the addition rule and the multiplication of conditional probabilities <span class="citation" data-cites="gelman2013bayesian">Boos and Stefanski (<a href="#ref-boos2013essential" role="doc-biblioref">2013</a>)</span>. Let <span class="math inline">\(\pi(\theta)\)</span> be the <strong>prior</strong> PDF of <span class="math inline">\(\theta\)</span>. Before we see our data, we believe that <span class="math inline">\(\theta_\true \in [a, b]\)</span> with probability <span class="math display">\[
   \Pr(a \leq \theta \leq b) = \int_a^b \pi(\theta) \,\dif \theta.
 \]</span> This integral is the area under the graph of <span class="math inline">\(\pi(\theta)\)</span> between <span class="math inline">\(\theta = a\)</span> and <span class="math inline">\(\theta = b\)</span>. For a given value of <span class="math inline">\(\theta\)</span>, the likelihood of our data is <span class="math inline">\(L(\theta) = \pi(\data \given{} \theta)\)</span>. By Bayes’ rule, the <strong>posterior</strong> PDF is <span class="math display">\[
   \pi(\theta \given{} \data)
@@ -409,11 +426,11 @@ window.Quarto = {
   \Pr(a \leq \theta \leq b \given{} \data)
   = \int_a^b \pi(\theta \given{} \data) \,\dif \theta.
 \]</span> Bayesian point and interval estimates of <span class="math inline">\(\theta_\true\)</span> are based on the posterior PDF.</p>
-<p>Bayesian methods are often simpler, easier to interpret, and more robust to small sample sizes than frequentist methods like maximum likelihood estimation. In the limit of a large sample size, Bayesian and frequentist methods almost always give equivalent results. The Bayesian approach is also valuable because it emphasizes estimation and the accumulation of knowledge rather than binary decisions <span class="citation" data-cites="tukey1960conclusions">(<a href="references.html#ref-tukey1960conclusions" role="doc-biblioref">Tukey 1960</a>)</span>. However, the adoption of Bayesian methods has been impeded by a historical lack of the computational power needed to use them and by the widespread hesitation to specify prior distributions among epidemiologists, statisticians, and other scientists. The first problem is largely solved, but the latter problem remains with us today.</p>
-<p>A common approach to specifying a prior distribution is to use a <strong>noninformative prior</strong> that places few or no restrictions on the value of <span class="math inline">\(\theta\)</span>. This lets the data “speak for itself” at the price of ignoring existing knowledge about the underlying scientific question. The ability to incorporate an informative prior distribution in the Bayesian approach to statistical inference should be viewed as a feature, not a bug <span class="citation" data-cites="greenland2006bayesian greenland2013living">(<a href="references.html#ref-greenland2006bayesian" role="doc-biblioref">Greenland 2006</a>; <a href="references.html#ref-greenland2013living" role="doc-biblioref">Greenland and Poole 2013</a>)</span>.</p>
+<p>Bayesian methods are often simpler, easier to interpret, and more robust to small sample sizes than frequentist methods like maximum likelihood estimation. In the limit of a large sample size, Bayesian and frequentist methods almost always give equivalent results. The Bayesian approach is also valuable because it emphasizes estimation and the accumulation of knowledge rather than binary decisions <span class="citation" data-cites="tukey1960conclusions">(<a href="#ref-tukey1960conclusions" role="doc-biblioref">Tukey 1960</a>)</span>. However, the adoption of Bayesian methods has been impeded by a historical lack of the computational power needed to use them and by the widespread hesitation to specify prior distributions among epidemiologists, statisticians, and other scientists. The first problem is largely solved, but the latter problem remains with us today.</p>
+<p>A common approach to specifying a prior distribution is to use a <strong>noninformative prior</strong> that places few or no restrictions on the value of <span class="math inline">\(\theta\)</span>. This lets the data “speak for itself” at the price of ignoring existing knowledge about the underlying scientific question. The ability to incorporate an informative prior distribution in the Bayesian approach to statistical inference should be viewed as a feature, not a bug <span class="citation" data-cites="greenland2006bayesian greenland2013living">(<a href="#ref-greenland2006bayesian" role="doc-biblioref">Greenland 2006</a>; <a href="#ref-greenland2013living" role="doc-biblioref">Greenland and Poole 2013</a>)</span>.</p>
 <section id="posterior-point-and-interval-estimation" class="level3" data-number="4.1.1">
 <h3 data-number="4.1.1" class="anchored" data-anchor-id="posterior-point-and-interval-estimation"><span class="header-section-number">4.1.1</span> Posterior point and interval estimation</h3>
-<p>The mean, median, or mode of the posterior distribution of <span class="math inline">\(\theta\)</span> can be used as a point estimate of <span class="math inline">\(\theta_\true\)</span>. We will use <span class="math inline">\(\bar{\theta}\)</span> to denote the posterior mean and <span class="math inline">\(\tilde{\theta}\)</span> to denote the posterior median. In large samples, the posterior distribution converges to a normal distribution with mean <span class="math inline">\(\theta_\true\)</span> and variance <span class="math inline">\(I(\theta_\true)^{-1}\)</span> <span class="citation" data-cites="lecam1953some gelman2013bayesian">(<a href="references.html#ref-lecam1953some" role="doc-biblioref">Le Cam 1953</a>; <a href="references.html#ref-gelman2013bayesian" role="doc-biblioref">Gelman et al. 2013</a>)</span>,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> which is the same as the limiting normal distribution of the MLE <span class="math inline">\(\hat{\theta}\)</span>. In this limit, the posterior mean, median, and mode are all equal to <span class="math inline">\(\hat{\theta}\)</span>.</p>
+<p>The mean, median, or mode of the posterior distribution of <span class="math inline">\(\theta\)</span> can be used as a point estimate of <span class="math inline">\(\theta_\true\)</span>. We will use <span class="math inline">\(\bar{\theta}\)</span> to denote the posterior mean and <span class="math inline">\(\tilde{\theta}\)</span> to denote the posterior median. In large samples, the posterior distribution converges to a normal distribution with mean <span class="math inline">\(\theta_\true\)</span> and variance <span class="math inline">\(I(\theta_\true)^{-1}\)</span> <span class="citation" data-cites="lecam1953some gelman2013bayesian">(<a href="#ref-lecam1953some" role="doc-biblioref">Le Cam 1953</a>; <a href="#ref-gelman2013bayesian" role="doc-biblioref">Gelman et al. 2013</a>)</span>,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> which is the same as the limiting normal distribution of the MLE <span class="math inline">\(\hat{\theta}\)</span>. In this limit, the posterior mean, median, and mode are all equal to <span class="math inline">\(\hat{\theta}\)</span>.</p>
 <p>A <strong><span class="math inline">\(1 - \alpha\)</span> credible interval</strong> is an interval <span class="math inline">\([a, b]\)</span> such that <span class="math display">\[
   \Pr(a \leq \theta \leq b \given{} \data)
   = \int_a^b \pi(\theta \given{} \data) \,\dif \theta
@@ -425,29 +442,29 @@ window.Quarto = {
 </section>
 <section id="bayesian-interpretation-of-confidence-intervals" class="level3" data-number="4.1.2">
 <h3 data-number="4.1.2" class="anchored" data-anchor-id="bayesian-interpretation-of-confidence-intervals"><span class="header-section-number">4.1.2</span> Bayesian interpretation of confidence intervals</h3>
-<p>Bayesian credible intervals actually have the properties that people intuitively but naively expect of frequentist confidence intervals. In finite samples, a <span class="math inline">\(1 - \alpha\)</span> equal-tailed credible interval and a <span class="math inline">\(1 - \alpha\)</span> confidence interval will be similar when the posterior density <span class="math inline">\(\pi(\theta \given{} \data)\)</span> is proportional to the likelihood <span class="math inline">\(L(\theta) = \pi(\theta \given{} \data)\)</span>. This occurs when <span class="math inline">\(\pi(\theta)\)</span> is constant, as in some uninformative priors. In the limit of a large sample, the credible interval and the confidence interval are nearly identical. In general, a frequentist confidence interval can be interpreted as an approximation to a Bayesian credible interval when there is a large sample and a prior distribution that is flat across the range of the confidence interval <span class="citation" data-cites="pratt1965bayesian greenland2013living">(<a href="references.html#ref-pratt1965bayesian" role="doc-biblioref">Pratt 1965</a>; <a href="references.html#ref-greenland2013living" role="doc-biblioref">Greenland and Poole 2013</a>)</span>. However, credible intervals do not rely on large-sample approximations, and they are able to incorporate prior knowledge about the possible values of <span class="math inline">\(\theta_\true\)</span>.</p>
+<p>Bayesian credible intervals actually have the properties that people intuitively but naively expect of frequentist confidence intervals. In finite samples, a <span class="math inline">\(1 - \alpha\)</span> equal-tailed credible interval and a <span class="math inline">\(1 - \alpha\)</span> confidence interval will be similar when the posterior density <span class="math inline">\(\pi(\theta \given{} \data)\)</span> is proportional to the likelihood <span class="math inline">\(L(\theta) = \pi(\theta \given{} \data)\)</span>. This occurs when <span class="math inline">\(\pi(\theta)\)</span> is constant, as in some uninformative priors. In the limit of a large sample, the credible interval and the confidence interval are nearly identical. In general, a frequentist confidence interval can be interpreted as an approximation to a Bayesian credible interval when there is a large sample and a prior distribution that is flat across the range of the confidence interval <span class="citation" data-cites="pratt1965bayesian greenland2013living">(<a href="#ref-pratt1965bayesian" role="doc-biblioref">Pratt 1965</a>; <a href="#ref-greenland2013living" role="doc-biblioref">Greenland and Poole 2013</a>)</span>. However, credible intervals do not rely on large-sample approximations, and they are able to incorporate prior knowledge about the possible values of <span class="math inline">\(\theta_\true\)</span>.</p>
 </section>
 <section id="posterior-probability-of-h_0-and-p-values" class="level3" data-number="4.1.3">
 <h3 data-number="4.1.3" class="anchored" data-anchor-id="posterior-probability-of-h_0-and-p-values"><span class="header-section-number">4.1.3</span> Posterior probability of <span class="math inline">\(H_0\)</span> and p-values</h3>
-<p>The idea of prior and posterior probabilities from Bayesian inference gives us a useful perspective on the interpretation of p-values, which is a source of much confusion in epidemiology <span class="citation" data-cites="diamond1983clinical greenland2016statistical baduashvili2020understand">(<a href="references.html#ref-diamond1983clinical" role="doc-biblioref">Diamond and Forrester 1983</a>; <a href="references.html#ref-greenland2016statistical" role="doc-biblioref">Greenland et al. 2016</a>; <a href="references.html#ref-baduashvili2020understand" role="doc-biblioref">Baduashvili, Evans, and Cutler 2020</a>)</span>. The most common error is to interpret the p-value as the posterior probability that <span class="math inline">\(H_0\)</span> is true. By Bayes’ rule, <span class="math display">\[
+<p>The idea of prior and posterior probabilities from Bayesian inference gives us a useful perspective on the interpretation of p-values, which is a source of much confusion in epidemiology <span class="citation" data-cites="diamond1983clinical greenland2016statistical baduashvili2020understand">(<a href="#ref-diamond1983clinical" role="doc-biblioref">Diamond and Forrester 1983</a>; <a href="#ref-greenland2016statistical" role="doc-biblioref">Greenland et al. 2016</a>; <a href="#ref-baduashvili2020understand" role="doc-biblioref">Baduashvili, Evans, and Cutler 2020</a>)</span>. The most common error is to interpret the p-value as the posterior probability that <span class="math inline">\(H_0\)</span> is true. By Bayes’ rule, <span class="math display">\[
   \Pr(H_0 \ \true \given{} \data)
   = \frac{\Pr(\data \given{} H_0 \ \true) \Pr(H_0 \ \true)}{\Pr(\data)}.
 \]</span> The p-value is analogous to <span class="math inline">\(\Pr(\data \given{} H_0 \ \true)\)</span>, but the posterior probability <span class="math inline">\(\Pr(H_0 \text{ true} \given{} \ \data)\)</span> depends on its prior probability <span class="math inline">\(\Pr(H_0)\)</span>. It should take more data to convince us of a null hypothesis that seemed very unlikely than to convince us of a null hypothesis that seemed very likely.</p>
 <p>For a null hypothesis of the form <span class="math inline">\(H_0: \theta_\true = \theta_0\)</span> where <span class="math inline">\(\theta\)</span> ranges over an interval, it can be difficult to assign a prior probability to <span class="math inline">\(H_0\)</span>. For any continuous distribution of <span class="math inline">\(\theta\)</span>, the probability that it takes any particular value is zero. One way around this difficulty is to assign a prior probability mass to the null value <span class="math inline">\(\theta_0\)</span>. A more difficult problem is to assign a prior probability to the alternative hypothesis <span class="math inline">\(H_1\)</span>, which is often not clearly specified. This means that the posterior probability of the null hypothesis is often not clearly defined.</p>
-<p>However, it is not difficult to calculate a lower bound on the probability that <span class="math inline">\(H_0\)</span> is true given the data <span class="citation" data-cites="edwards1963bayesian berger1987testing">(<a href="references.html#ref-edwards1963bayesian" role="doc-biblioref">Edwards, Lindman, and Savage 1963</a>; <a href="references.html#ref-berger1987testing" role="doc-biblioref">Berger and Sellke 1987</a>)</span>. Let <span class="math inline">\(\pi_0\)</span> be the prior probability of <span class="math inline">\(H_0\)</span>, and suppose we have a single alternative hypothesis <span class="math inline">\(H_1: \theta_\true = \theta_1\)</span> with prior probability <span class="math inline">\(1 - \pi_0\)</span>. Then the posterior probability of <span class="math inline">\(H_0\)</span> is <span class="math display">\[
+<p>However, it is not difficult to calculate a lower bound on the probability that <span class="math inline">\(H_0\)</span> is true given the data <span class="citation" data-cites="edwards1963bayesian berger1987testing">(<a href="#ref-edwards1963bayesian" role="doc-biblioref">Edwards, Lindman, and Savage 1963</a>; <a href="#ref-berger1987testing" role="doc-biblioref">Berger and Sellke 1987</a>)</span>. Let <span class="math inline">\(\pi_0\)</span> be the prior probability of <span class="math inline">\(H_0\)</span>, and suppose we have a single alternative hypothesis <span class="math inline">\(H_1: \theta_\true = \theta_1\)</span> with prior probability <span class="math inline">\(1 - \pi_0\)</span>. Then the posterior probability of <span class="math inline">\(H_0\)</span> is <span class="math display">\[
   \Pr(H_0 \given{} \data)
   = \frac{L(\theta_0) \pi_0}{L(\theta_0) \pi_0 + L(\theta_1) (1 - \pi_0)}
   = \bigg(1 + \frac{1 - \pi_0}{\pi_0} \frac{L(\theta_1)}{L(\theta_0)}\bigg)^{-1}.
 \]</span> Given the data, the posterior probability of <span class="math inline">\(H_0\)</span> is minimized if we happen to get the MLE <span class="math inline">\(\hat{\theta} = \theta_1\)</span>, so <span class="math display">\[
   \Pr(H_0 \ \true \given{} \data)
   \geq \bigg(1 + \frac{1 - \pi_0}{\pi_0}\frac{L(\hat{\theta})}{L(\theta_0)}\bigg)^{-1}.
-\]</span> From Wilk’s theorem <span class="citation" data-cites="wilks1938large">(<a href="references.html#ref-wilks1938large" role="doc-biblioref">Wilks 1938</a>)</span> for the likelihood ratio test, twice the log likelihood ratio has an approximate <span class="math inline">\(\chi^2_1\)</span> distribution in large samples. To get a p-value of <span class="math inline">\(\alpha\)</span> from the likelihood ratio test, we need <span class="math display">\[
+\]</span> From Wilk’s theorem <span class="citation" data-cites="wilks1938large">(<a href="#ref-wilks1938large" role="doc-biblioref">Wilks 1938</a>)</span> for the likelihood ratio test, twice the log likelihood ratio has an approximate <span class="math inline">\(\chi^2_1\)</span> distribution in large samples. To get a p-value of <span class="math inline">\(\alpha\)</span> from the likelihood ratio test, we need <span class="math display">\[
   2\big(\ell(\hat{\theta}) - \ell(\theta_0)\big)
   = z_{1 - \frac{\alpha}{2}}^2
   \;\Rightarrow\;
   \frac{L(\hat{\theta})}{L(\theta_0)}
    = e^{\frac{1}{2} z_{1 - \frac{\alpha}{2}}^2}.
-\]</span> <a href="#fig-postH0" class="quarto-xref">Figure&nbsp;<span>4.1</span></a> shows the minimum posterior probability of <span class="math inline">\(H_0\)</span> if <span class="math inline">\(\pi_0 = 0.5\)</span> for different p-values. The p-value is almost always much lower than the lower bound of the posterior probability of the null. For <span class="math inline">\(\pi_0 = 0.5\)</span>, the lower bounds for <span class="math inline">\(\Pr(H_0 \ \true \given{} \data)\)</span> are approximately 0.205 for <span class="math inline">\(p = 0.10\)</span>, 0.128 for <span class="math inline">\(p = 0.05\)</span>, and 0.035 for <span class="math inline">\(p = 0.01\)</span>. In practice, the posterior probability of <span class="math inline">\(H_0\)</span> can be much larger than its lower bound <span class="citation" data-cites="berger1987testing">(<a href="references.html#ref-berger1987testing" role="doc-biblioref">Berger and Sellke 1987</a>)</span>.</p>
+\]</span> <a href="#fig-postH0" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-postH0</span></a> shows the minimum posterior probability of <span class="math inline">\(H_0\)</span> if <span class="math inline">\(\pi_0 = 0.5\)</span> for different p-values. The p-value is almost always much lower than the lower bound of the posterior probability of the null. For <span class="math inline">\(\pi_0 = 0.5\)</span>, the lower bounds for <span class="math inline">\(\Pr(H_0 \ \true \given{} \data)\)</span> are approximately 0.205 for <span class="math inline">\(p = 0.10\)</span>, 0.128 for <span class="math inline">\(p = 0.05\)</span>, and 0.035 for <span class="math inline">\(p = 0.01\)</span>. In practice, the posterior probability of <span class="math inline">\(H_0\)</span> can be much larger than its lower bound <span class="citation" data-cites="berger1987testing">(<a href="#ref-berger1987testing" role="doc-biblioref">Berger and Sellke 1987</a>)</span>.</p>
 <div class="cell">
 <div class="code-with-filename">
 <details class="code-fold">
@@ -515,7 +532,7 @@ Figure&nbsp;4.1: The minimum posterior probability of <span class="math inline">
 \]</span> The beta distribution has a number of important special cases:</p>
 <ul>
 <li><p>When <span class="math inline">\(\alpha = \beta = 1\)</span>, it is a uniform(<span class="math inline">\(0, 1\)</span>) distribution.</p></li>
-<li><p>The beta distribution with <span class="math inline">\(\alpha = \beta = 1 / 2\)</span> is the <strong>Jeffreys prior</strong> for the binomial likelihood.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> A Jeffreys prior is proportional to the square root of the expected information <span class="math inline">\(\mathcal{I}_1(\theta)\)</span> of a single observation<span class="citation" data-cites="jeffreys1946invariant">(<a href="references.html#ref-jeffreys1946invariant" role="doc-biblioref">Jeffreys 1946</a>)</span>. They are widely used as noninformative priors. For the binomial likelihood, <span class="math inline">\(\mathcal{I}_1(p) = \frac{1}{p (1 - p)}\)</span>.</p></li>
+<li><p>The beta distribution with <span class="math inline">\(\alpha = \beta = 1 / 2\)</span> is the <strong>Jeffreys prior</strong> for the binomial likelihood.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> A Jeffreys prior is proportional to the square root of the expected information <span class="math inline">\(\mathcal{I}_1(\theta)\)</span> of a single observation<span class="citation" data-cites="jeffreys1946invariant">(<a href="#ref-jeffreys1946invariant" role="doc-biblioref">Jeffreys 1946</a>)</span>. They are widely used as noninformative priors. For the binomial likelihood, <span class="math inline">\(\mathcal{I}_1(p) = \frac{1}{p (1 - p)}\)</span>.</p></li>
 </ul>
 </section>
 <section id="posterior-point-and-interval-estimates" class="level3" data-number="4.2.2">
@@ -532,7 +549,7 @@ Figure&nbsp;4.1: The minimum posterior probability of <span class="math inline">
 \]</span> and the posterior variance is <span class="math display">\[
   \frac{(k + \alpha) (n - k + \beta)}{(n + \alpha + \beta)^2 (n + \alpha + \beta + 1)}
   = \frac{\bar{p} (1 - \bar{p})}{n + \alpha + \beta + 1}.
-\]</span> The endpoints of the <span class="math inline">\(1 - \alpha\)</span> central credible interval are the <span class="math inline">\(\alpha / 2\)</span> and <span class="math inline">\(1 - \alpha / 2\)</span> quantiles of the beta(<span class="math inline">\(k + \alpha, n - k + \beta)\)</span> distribution. <a href="#fig-binom-Bayes" class="quarto-xref">Figure&nbsp;<span>4.2</span></a> shows prior and posterior distributions for 15 successes out of 22 trials. Although the prior distributions are quite different, the posterior distributions are quite similar. With large samples, the prior distribution disappears into the likelihood.</p>
+\]</span> The endpoints of the <span class="math inline">\(1 - \alpha\)</span> central credible interval are the <span class="math inline">\(\alpha / 2\)</span> and <span class="math inline">\(1 - \alpha / 2\)</span> quantiles of the beta(<span class="math inline">\(k + \alpha, n - k + \beta)\)</span> distribution. <a href="#fig-binom-Bayes" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-binom-Bayes</span></a> shows prior and posterior distributions for 15 successes out of 22 trials. Although the prior distributions are quite different, the posterior distributions are quite similar. With large samples, the prior distribution disappears into the likelihood.</p>
 <div class="cell">
 <div class="code-with-filename">
 <details class="code-fold">
@@ -589,16 +606,16 @@ Figure&nbsp;4.2: Prior and posterior distributions for <span class="math inline"
 </section>
 <section id="jeffreys-confidence-interval" class="level3" data-number="4.2.3">
 <h3 data-number="4.2.3" class="anchored" data-anchor-id="jeffreys-confidence-interval"><span class="header-section-number">4.2.3</span> Jeffreys confidence interval</h3>
-<p>The <span class="math inline">\(1 - \alpha\)</span> Jeffreys confidence interval is the central credible interval with a beta(<span class="math inline">\(1 / 2, 1 / 2)\)</span> prior, which is the Jeffreys prior for a binomial model. When <span class="math inline">\(k &gt; 0\)</span> and <span class="math inline">\(k &lt; n\)</span>, its endpoints are the <span class="math inline">\(\alpha / 2\)</span> and <span class="math inline">\(1 - \alpha / 2\)</span> quantiles of the beta(<span class="math inline">\(k + 1 / 2, n - k + 1 / 2\)</span>) posterior distribution that we get if we see <span class="math inline">\(k\)</span> successes in <span class="math inline">\(n\)</span> trials. When <span class="math inline">\(k = 0\)</span>, the lower endpoint is 0. When <span class="math inline">\(k = n\)</span>, the upper endpoint is 1. For a binomial proportion, the Jeffreys confidence interval has width and coverage probability similar to the score (Wilson) and mid-p exact confidence intervals <span class="citation" data-cites="brown2001interval">(<a href="references.html#ref-brown2001interval" role="doc-biblioref">Brown, Cai, and DasGupta 2001</a>)</span>.</p>
+<p>The <span class="math inline">\(1 - \alpha\)</span> Jeffreys confidence interval is the central credible interval with a beta(<span class="math inline">\(1 / 2, 1 / 2)\)</span> prior, which is the Jeffreys prior for a binomial model. When <span class="math inline">\(k &gt; 0\)</span> and <span class="math inline">\(k &lt; n\)</span>, its endpoints are the <span class="math inline">\(\alpha / 2\)</span> and <span class="math inline">\(1 - \alpha / 2\)</span> quantiles of the beta(<span class="math inline">\(k + 1 / 2, n - k + 1 / 2\)</span>) posterior distribution that we get if we see <span class="math inline">\(k\)</span> successes in <span class="math inline">\(n\)</span> trials. When <span class="math inline">\(k = 0\)</span>, the lower endpoint is 0. When <span class="math inline">\(k = n\)</span>, the upper endpoint is 1. For a binomial proportion, the Jeffreys confidence interval has width and coverage probability similar to the score (Wilson) and mid-p exact confidence intervals <span class="citation" data-cites="brown2001interval">(<a href="#ref-brown2001interval" role="doc-biblioref">Brown, Cai, and DasGupta 2001</a>)</span>.</p>
 </section>
 </section>
 <section id="comparison-of-binomial-confidence-intervals" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="comparison-of-binomial-confidence-intervals"><span class="header-section-number">4.3</span> Comparison of binomial confidence intervals</h2>
-<p><a href="#tbl-binconfs" class="quarto-xref">Table&nbsp;<span>4.1</span></a> shows eight types of confidence intervals for a probability that we have discussed. These are calculated for the sensitivity, sensitivity, positive predictive value (PPV), and negative predictive value (NPV) of the diabetes test one hour after the meal, where a positive test was defined as a blood glucose concentration above 130 mg/dL.</p>
+<p><a href="#tbl-binconfs" class="quarto-xref">Table&nbsp;<span class="quarto-unresolved-ref">tbl-binconfs</span></a> shows eight types of confidence intervals for a probability that we have discussed. These are calculated for the sensitivity, sensitivity, positive predictive value (PPV), and negative predictive value (NPV) of the diabetes test one hour after the meal, where a positive test was defined as a blood glucose concentration above 130 mg/dL.</p>
 <div id="tbl-binconfs" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-binconfs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;4.1: 95% confidence intervals for the sensitivity, specificity, PPV, and NPV of diabetes test in <span class="citation" data-cites="remein1961efficiency">Remein and Wilkerson (<a href="references.html#ref-remein1961efficiency" role="doc-biblioref">1961</a>)</span>.
+Table&nbsp;4.1: 95% confidence intervals for the sensitivity, specificity, PPV, and NPV of diabetes test in <span class="citation" data-cites="remein1961efficiency">Remein and Wilkerson (<a href="#ref-remein1961efficiency" role="doc-biblioref">1961</a>)</span>.
 </figcaption>
 <div aria-describedby="tbl-binconfs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -680,7 +697,7 @@ Table&nbsp;4.1: 95% confidence intervals for the sensitivity, specificity, PPV, 
 </div>
 </figure>
 </div>
-<p>Because of their good coverage probabilities and narrow widths, the score (Wilson), likelihood ratio, and Jeffreys intervals are recommended by <span class="citation" data-cites="agresti1998approximate">Agresti and Coull (<a href="references.html#ref-agresti1998approximate" role="doc-biblioref">1998</a>)</span> and <span class="citation" data-cites="brown2001interval">Brown, Cai, and DasGupta (<a href="references.html#ref-brown2001interval" role="doc-biblioref">2001</a>)</span>. The Agresti-Coull intervals are slightly wider than these intervals, but they have slightly higher coverage probabilities and are simpler to calculate. Mid-p exact confidence intervals are similar to the Jeffreys intervals, but they are more difficult to calculate. Exact intervals are too wide, and the Wald intervals have coverage probabilities that are often too low. The logit-transformed Wald interval has good coverage probabilities, but it can be even wider than the exact interval. In large samples (with larger samples required for probabilities near zero or one), all of the intervals are similar.</p>
+<p>Because of their good coverage probabilities and narrow widths, the score (Wilson), likelihood ratio, and Jeffreys intervals are recommended by <span class="citation" data-cites="agresti1998approximate">Agresti and Coull (<a href="#ref-agresti1998approximate" role="doc-biblioref">1998</a>)</span> and <span class="citation" data-cites="brown2001interval">Brown, Cai, and DasGupta (<a href="#ref-brown2001interval" role="doc-biblioref">2001</a>)</span>. The Agresti-Coull intervals are slightly wider than these intervals, but they have slightly higher coverage probabilities and are simpler to calculate. Mid-p exact confidence intervals are similar to the Jeffreys intervals, but they are more difficult to calculate. Exact intervals are too wide, and the Wald intervals have coverage probabilities that are often too low. The logit-transformed Wald interval has good coverage probabilities, but it can be even wider than the exact interval. In large samples (with larger samples required for probabilities near zero or one), all of the intervals are similar.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">R</a></li></ul>
 <div class="tab-content">
@@ -738,7 +755,7 @@ Table&nbsp;4.1: 95% confidence intervals for the sensitivity, specificity, PPV, 
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-agresti1998approximate" class="csl-entry" role="listitem">
 Agresti, Alan, and Brent A Coull. 1998. <span>“Approximate Is Better Than <span>‘Exact’</span> for Interval Estimation of Binomial Proportions.”</span> <em>The American Statistician</em> 52 (2): 119–26.
 </div>
@@ -782,7 +799,7 @@ Jeffreys, Harold. 1946. <span>“An Invariant Form for the Prior Probability in 
 Le Cam, Lucien. 1953. <span>“On Some Asymptotic Properties of Maximum Likelihood Estimates and Related Bayes’ Estimates.”</span> <em>University of California Publications in Statistics</em> 1 (11): 277–330.
 </div>
 <div id="ref-pratt1965bayesian" class="csl-entry" role="listitem">
-Pratt, John W. 1965. <span>“Bayesian Interpretation of Standard Inference Statements.”</span> <em>Journal of the Royal Statistical Society. Series B (Methodological)</em> 27 (2): 169–203.
+Pratt, John W. 1965. <span>“Bayesian Interpretation of Standard Inference Statements.”</span> <em>Journal of the Royal Statistical Society: Series B (Methodological)</em> 27 (2): 169–203.
 </div>
 <div id="ref-remein1961efficiency" class="csl-entry" role="listitem">
 Remein, Quentin R, and Hugh LC Wilkerson. 1961. <span>“The Efficiency of Screening Tests for Diabetes.”</span> <em>Journal of Chronic Diseases</em> 13 (1): 6–21.
@@ -799,7 +816,7 @@ Wilks, Samuel S. 1938. <span>“The Large-Sample Distribution of the Likelihood 
 <hr>
 <ol>
 <li id="fn1"><p> <a href="https://en.wikipedia.org/wiki/Joseph_Berkson">Joseph Berkson</a> (1899–1982) was an American physician and statistician at the Mayo Clinic in Rochester, Minnesota. He helped develop and popularize the use of logistic regression for binary outcomes, coining the term “logit” for the log odds in 1944. He also pioneered the study of selection bias, a special case of which is called “Berkson’s bias”. In the late 1950s and the 1960s, he argued that scientific evidence did not establish that smoking causes lung cancer.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p> This convergence follows from the <em>Laplace approximation</em> to the posterior distribution <span class="citation" data-cites="gelman2013bayesian">(<a href="references.html#ref-gelman2013bayesian" role="doc-biblioref">Gelman et al. 2013</a>)</span>. It occurs when the likelihood <span class="math inline">\(L(\theta)\)</span> has a continuous second derivative with respect to <span class="math inline">\(\theta\)</span> and <span class="math inline">\(\theta_\true\)</span> is not on the boundary of the support of the prior distribution. These are similar to the regularity conditions for maximum likelihood estimation.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p> This convergence follows from the <em>Laplace approximation</em> to the posterior distribution <span class="citation" data-cites="gelman2013bayesian">(<a href="#ref-gelman2013bayesian" role="doc-biblioref">Gelman et al. 2013</a>)</span>. It occurs when the likelihood <span class="math inline">\(L(\theta)\)</span> has a continuous second derivative with respect to <span class="math inline">\(\theta\)</span> and <span class="math inline">\(\theta_\true\)</span> is not on the boundary of the support of the prior distribution. These are similar to the regularity conditions for maximum likelihood estimation.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p> The <a href="https://en.wikipedia.org/wiki/Gamma_function">gamma function</a> is <span class="math inline">\(\Gamma(v) = \int_0^\infty y^{v - 1} e^{-y} \dif y\)</span>. It is used to define the gamma distribution, of which the chi-squared distributions (including <span class="math inline">\(\chi^2_1\)</span>) are special cases. If <span class="math inline">\(v\)</span> is a positive integer, then <span class="math inline">\(\Gamma(v) = (v - 1)!\)</span>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p> <a href="https://en.wikipedia.org/wiki/Harold_Jeffreys">Harold Jeffreys</a> (1891–1989) was an English mathematician, statistician, geophysicist, and astronomer. He helped revive the Bayesian notion of probability as an expression of our knowledge about an unknown quantity, wrote a classic textbook on mathematical physics with his wife Bertha (also a mathematician and physicist), and was a prominent opponent of the theory of plate tectonics.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
