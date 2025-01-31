@@ -810,7 +810,7 @@ Table&nbsp;8.4: 2x2 table for a study with misclassified exposure and disease
 </section>
 <section id="prospective-and-retrospective-studies" class="level3" data-number="8.2.3">
 <h3 data-number="8.2.3" class="anchored" data-anchor-id="prospective-and-retrospective-studies"><span class="header-section-number">8.2.3</span> Prospective and retrospective studies</h3>
-<p>A <strong>prospective study</strong> is one in which exposure information is recorded prior to disease onset. A <strong>retrospective study</strong> is one in which exposure information is collected after the onset of disease. Traditionally, cohort studies were called “prospective studies” and case-control studies were called “retrospective studies”. While this classification is often accurate, it is possible for either design to be prospective or retrospective <span class="citation" data-cites="rothman2008modern">(<a href="references.html#ref-rothman2008modern" role="doc-biblioref">Rothman, Greenland, and Lash 2008</a>)</span>.</p>
+<p>A <strong>prospective study</strong> is one in which exposure information is collected and recorded prior to disease onset. A <strong>retrospective study</strong> is one in which exposure information is collected after the onset of disease. Traditionally, cohort studies were called “prospective studies” and case-control studies were called “retrospective studies”. While this classification is often accurate, it is possible for either design to be prospective or retrospective <span class="citation" data-cites="rothman2008modern">(<a href="references.html#ref-rothman2008modern" role="doc-biblioref">Rothman, Greenland, and Lash 2008</a>)</span>.</p>
 <p>Because selection into a retrospective study occurs after disease onset and relevant exposures occur prior to disease onset, retrospective studies are more susceptible to selection bias than prospective studies. Because knowledge of disease occurrence can affect recall or measurement of exposure, retrospective studies are also more susceptible to differential misclassification.</p>
 </section>
 <section id="generalizability-and-transportability" class="level3" data-number="8.2.4">
@@ -827,15 +827,6 @@ Figure&nbsp;8.2: Schematic illustration of the relationship between the study sa
 </figcaption>
 </figure>
 </div>
-<!-- \begin{figure}
-  \centering
-  \includegraphics[width = .8\textwidth]{populations.pdf}
-  \caption{
-    Schematic illustration of the relationship between the study sample, the eligible population, and a target population.
-    A target population can contain all, part, or none of the eligible population.
-  }
-  \label{fig:pops}
-\end{figure} -->
 </section>
 <section id="example-berksons-bias" class="level3" data-number="8.2.5">
 <h3 data-number="8.2.5" class="anchored" data-anchor-id="example-berksons-bias"><span class="header-section-number">8.2.5</span> Example: Berkson’s bias</h3>
@@ -1001,6 +992,31 @@ Table&nbsp;8.7: Cholecystitis among cases and controls in <span class="citation"
 </figure>
 </div>
 <p>If we ignored selection bias, we would conclude that there is almost certainly an association between cholecystitis and diabetes in the eligible population. The example is constructed with no such association. Because the study sample included only clinic visitors and individuals with multiple conditions (including cholecystitis) were more likely to visit the clinic, selection and exposure (cholecystitis) are not conditionally independent given disease in this example.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Berkson.R</strong></pre>
+</div>
+<div class="sourceCode" id="cb2" data-filename="Berkson.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Berkson (1946) example of selection bias</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Pearson chi-squared test for the eligible population (X and D independent)</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>poptab <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">3000</span>, <span class="dv">97000</span>, <span class="dv">29700</span>, <span class="dv">960300</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(poptab, <span class="at">correct =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Fisher's exact test (with confidence limits for odds ratio)</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">fisher.test</span>(poptab)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Pearson chi-squared test for the study sample (X and D not independent)</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>sampletab <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">626</span>, <span class="dv">6693</span>, <span class="dv">9504</span>, <span class="dv">192060</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(sampletab, <span class="at">correct =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Fisher's exact test (with confidence limits for odds ratio)</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">fisher.test</span>(sampletab)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
