@@ -50,7 +50,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./calculus.html" rel="next">
-<link href="./validity.html" rel="prev">
+<link href="./bayes2.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -101,6 +101,7 @@ div.csl-indent {
         chisqH: "\\chi^2_\\text\{H\}",
         chisqP: "\\chi^2_\\text\{P\}",
         chisqPobs: "\\chi^2_\\text\{Pobs\}",
+        cloglog: ["\\operatorname\{cloglog\}"],
         comp: "\\mathsf\{C\}",
         Cov: ["\\operatorname\{Cov\}"],
         D: "\\mathcal\{D\}",
@@ -112,8 +113,10 @@ div.csl-indent {
         ESSR: "\\text\{ESSR\}",
         expit: ["\\operatorname\{expit\}"],
         given: ["\\, #1| \\, ", 1],
+        HR: "\\text\{HR\}",
         indep: "\\perp\\!\\!\\!\\perp",
         indicator: "\\mathbb\{1\}",
+        IRR: "\\text\{IRR\}",
         K: "\\mathcal\{K\}",
         logit: ["\\operatorname\{logit\}"],
         margins: "\\text\{margins\}",
@@ -262,6 +265,30 @@ div.csl-indent {
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Internal and External Validity</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cohort.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Measures of association in cohort studies</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./survival2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-sample survival analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./casecontrol.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Measures of association in case-control studies</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bayes2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Bayesian analysis of cohort and case-control studies</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -344,6 +371,12 @@ Agresti, Alan, and Brent A Coull. 1998. <span>“Approximate Is Better
 Than <span>‘Exact’</span> for Interval Estimation of Binomial
 Proportions.”</span> <em>The American Statistician</em> 52 (2): 119–26.
 </div>
+<div id="ref-agresti2005frequentist" class="csl-entry" role="listitem">
+Agresti, Alan, and Yongyi Min. 2005. <span>“Frequentist Performance of
+<span>B</span>ayesian Confidence Intervals for Comparing Proportions in
+2<span class="math inline">×</span> 2 Contingency Tables.”</span>
+<em>Biometrics</em> 61 (2): 515–23.
+</div>
 <div id="ref-aitchison1958maximum" class="csl-entry" role="listitem">
 Aitchison, John, and SD Silvey. 1958. <span>“Maximum-Likelihood
 Estimation of Parameters Subject to Restraints.”</span> <em>The Annals
@@ -405,6 +438,11 @@ Hypothesis: The Irreconcilability of p Values and Evidence.”</span>
 Berkson, Joseph. 1942. <span>“Tests of Significance Considered as
 Evidence.”</span> <em>Journal of the American Statistical
 Association</em> 37 (219): 325–35.
+</div>
+<div id="ref-berkson1944application" class="csl-entry" role="listitem">
+———. 1944. <span>“Application of the Logistic Function to
+Bio-Assay.”</span> <em>Journal of the American Statistical
+Association</em> 39 (227): 357–65.
 </div>
 <div id="ref-berkson1946limitations" class="csl-entry" role="listitem">
 ———. 1946. <span>“Limitations of the Application of Fourfold Table
@@ -500,11 +538,22 @@ Holbrook. 1977. <span>“Bias Due to Misclassification in the Estimation
 of Relative Risk.”</span> <em>American Journal of Epidemiology</em> 105
 (5): 488–95.
 </div>
+<div id="ref-cornfield1951method" class="csl-entry" role="listitem">
+Cornfield, Jerome. 1951. <span>“A Method of Estimating Comparative Rates
+from Clinical Data; Applications to Cancer of the Lung, Breast, and
+Cervix.”</span> <em>Journal of the National Cancer Institute</em> 11:
+1269–75.
+</div>
 <div id="ref-correa1995bias" class="csl-entry" role="listitem">
 Correa-Villaseñor, Adolfo, Walter F Stewart, Francisco Franco-Marina,
 and Hui Seacat. 1995. <span>“Bias from Nondifferential Misclassification
 in Case-Control Studies with Three Exposure Levels.”</span>
 <em>Epidemiology</em> 6 (3): 276–81.
+</div>
+<div id="ref-cox1958regression" class="csl-entry" role="listitem">
+Cox, David R. 1958. <span>“The Regression Analysis of Binary
+Sequences.”</span> <em>Journal of the Royal Statistical Society Series
+B: Statistical Methodology</em> 20 (2): 215–32.
 </div>
 <div id="ref-cox1968general" class="csl-entry" role="listitem">
 Cox, David R, and E Joyce Snell. 1968. <span>“A General Definition of
@@ -708,6 +757,11 @@ Keiding, Niels. 1991. <span>“Age-Specific Incidence and Prevalence: A
 Statistical Perspective.”</span> <em>Journal of the Royal Statistical
 Society: Series A (Statistics in Society)</em> 154 (3): 371–96.
 </div>
+<div id="ref-kenah2024rothman" class="csl-entry" role="listitem">
+Kenah, Eben. 2024. <span>“Rothman Diagrams: The Geometry of Confounding
+and Standardization.”</span> <em>International Journal of
+Epidemiology</em> 53 (6): dyae139.
+</div>
 <div id="ref-kenward1998likelihood" class="csl-entry" role="listitem">
 Kenward, Michael G, and Geert Molenberghs. 1998. <span>“Likelihood Based
 Frequentist Inference When Data Are Missing at Random.”</span>
@@ -716,6 +770,11 @@ Frequentist Inference When Data Are Missing at Random.”</span>
 <div id="ref-kessel1962diabetes" class="csl-entry" role="listitem">
 Kessel, Elton. 1962. <span>“Diabetes Detection: An Improved
 Approach.”</span> <em>Journal of Chronic Diseases</em> 15 (12): 1109–21.
+</div>
+<div id="ref-labbe1987meta" class="csl-entry" role="listitem">
+L’Abbé, Kristan A, Allan S Detsky, and Keith O’Rourke. 1987.
+<span>“Meta-Analysis in Clinical Research.”</span> <em>Annals of
+Internal Medicine</em> 107 (2): 224–33.
 </div>
 <div id="ref-lancaster1961significance" class="csl-entry" role="listitem">
 Lancaster, H Oliver. 1961. <span>“Significance Tests in Discrete
@@ -755,16 +814,35 @@ Makeham, William Matthew. 1860. <span>“On the Law of Mortality and the
 Construction of Annuity Tables.”</span> <em>The Assurance Magazine, and
 Journal of the Institute of Actuaries</em> 8 (6): 301–10.
 </div>
+<div id="ref-mantel1966evaluation" class="csl-entry" role="listitem">
+Mantel, Nathan. 1966. <span>“Evaluation of Survival Data and Two New
+Rank Order Statistics Arising in Its Consideration.”</span> <em>Cancer
+Chemotherapy Reports</em> 50 (3): 163–70.
+</div>
+<div id="ref-mccullagh1989generalized" class="csl-entry" role="listitem">
+McCullagh, Peter, and J A Nelder. 1989. <em>Generalized Linear
+Models</em>. 2nd ed. Chapman &amp; Hall.
+</div>
 <div id="ref-meydrech1978cost" class="csl-entry" role="listitem">
 Meydrech, Edward F, and Lawrence L Kupper. 1978. <span>“Cost
 Considerations and Sample Size Requirements in Cohort and Case-Control
 Studies.”</span> <em>American Journal of Epidemiology</em> 107 (3):
 201–5.
 </div>
+<div id="ref-miettinen1976estimability" class="csl-entry" role="listitem">
+Miettinen, Olli. 1976. <span>“Estimability and Estimation in
+Case-Referent Studies.”</span> <em>American Journal of Epidemiology</em>
+103 (2): 226–35.
+</div>
 <div id="ref-miettinen1969individual" class="csl-entry" role="listitem">
 Miettinen, Olli S. 1969. <span>“Individual Matching with Multiple
 Controls in the Case of All-or-None Responses.”</span>
 <em>Biometrics</em> 25 (2): 339–55.
+</div>
+<div id="ref-miettinen1981confounding" class="csl-entry" role="listitem">
+Miettinen, Olli S, and E Francis Cook. 1981. <span>“Confounding: Essence
+and Detection.”</span> <em>American Journal of Epidemiology</em> 114
+(4): 593–603.
 </div>
 <div id="ref-moher2001consort" class="csl-entry" role="listitem">
 Moher, David, Kenneth F Schulz, Douglas G Altman, Matthias Egger, Frank
@@ -790,9 +868,20 @@ Morgenstern, Hal, and Deborah M Winn. 1983. <span>“A Method for
 Determining the Sampling Ratio in Epidemiologic Studies.”</span>
 <em>Statistics in Medicine</em> 2 (3): 387–96.
 </div>
+<div id="ref-naimi2020estimating" class="csl-entry" role="listitem">
+Naimi, Ashley I, and Brian W Whitcomb. 2020. <span>“Estimating Risk
+Ratios and Risk Differences Using Regression.”</span> <em>American
+Journal of Epidemiology</em> 189 (6): 508–10.
+</div>
 <div id="ref-nam1973optimum" class="csl-entry" role="listitem">
 Nam, Jun-Mo. 1973. <span>“Optimum Sample Sizes for the Comparison of the
 Control and Treatment.”</span> <em>Biometrics</em> 29: 101–8.
+</div>
+<div id="ref-nelder1972generalized" class="csl-entry" role="listitem">
+Nelder, John Ashworth, and Robert W M Wedderburn. 1972.
+<span>“Generalized Linear Models.”</span> <em>Journal of the Royal
+Statistical Society Series A: Statistics in Society</em> 135 (3):
+370–84.
 </div>
 <div id="ref-nelson1969hazard" class="csl-entry" role="listitem">
 Nelson, Wayne. 1969. <span>“Hazard Plotting for Incomplete Failure
@@ -865,6 +954,12 @@ Remein, Quentin R, and Hugh LC Wilkerson. 1961. <span>“The Efficiency of
 Screening Tests for Diabetes.”</span> <em>Journal of Chronic
 Diseases</em> 13 (1): 6–21.
 </div>
+<div id="ref-richardson2017modeling" class="csl-entry" role="listitem">
+Richardson, Thomas S, James M Robins, and Linbo Wang. 2017. <span>“On
+Modeling and Estimation for the Relative Risk and Risk
+Difference.”</span> <em>Journal of the American Statistical
+Association</em> 112 (519): 1121–30.
+</div>
 <div id="ref-robert2004monte" class="csl-entry" role="listitem">
 Robert, Christian P, and George Casella. 2004. <em>Monte Carlo
 Statistical Methods</em>. Second edition. Springer.
@@ -880,9 +975,14 @@ the Restraints with Respect to Sample Size Commonly Imposed on the Use
 of the Chi-Square Statistic.”</span> <em>Journal of the American
 Statistical Association</em> 66 (336): 755–59.
 </div>
+<div id="ref-rothman1975pictorial" class="csl-entry" role="listitem">
+Rothman, Kenneth J. 1975. <span>“A Pictorial Representation of
+Confounding in Epidemiologic Studies.”</span> <em>Journal of Chronic
+Diseases</em> 28 (2): 101–8.
+</div>
 <div id="ref-rothman1978show" class="csl-entry" role="listitem">
-Rothman, Kenneth J. 1978. <span>“A Show of Confidence.”</span> <em>New
-England Journal of Medicine</em> 299 (24): 1362–63.
+———. 1978. <span>“A Show of Confidence.”</span> <em>New England Journal
+of Medicine</em> 299 (24): 1362–63.
 </div>
 <div id="ref-rothman1981induction" class="csl-entry" role="listitem">
 ———. 1981. <span>“Induction and Latent Periods.”</span> <em>American
@@ -900,6 +1000,11 @@ Test.”</span> <em>Canadian Journal of Statistics</em> 20 (2): 201–9.
 Rubin, Theodore, Joseph Rosenbaum, and Sidney Cobb. 1956. <span>“The Use
 of Interview Data for the Detection of Associations in Field
 Studies.”</span> <em>Journal of Chronic Diseases</em> 4 (3): 253–66.
+</div>
+<div id="ref-simpson1951interpretation" class="csl-entry" role="listitem">
+Simpson, Edward H. 1951. <span>“The Interpretation of Interaction in
+Contingency Tables.”</span> <em>Journal of the Royal Statistical
+Society: Series B (Methodological)</em> 13 (2): 238–41.
 </div>
 <div id="ref-snow1855mode" class="csl-entry" role="listitem">
 Snow, John. 1855. <em>On the Mode of Communication of Cholera</em>.
@@ -991,6 +1096,11 @@ Wilks, Samuel S. 1938. <span>“The Large-Sample Distribution of the
 Likelihood Ratio for Testing Composite Hypotheses.”</span> <em>The
 Annals of Mathematical Statistics</em> 9 (1): 60–62.
 </div>
+<div id="ref-williamson2013log" class="csl-entry" role="listitem">
+Williamson, Tyler, Misha Eliasziw, and Gordon Hilton Fick. 2013.
+<span>“Log-Binomial Models: Exploring Failed Convergence.”</span>
+<em>Emerging Themes in Epidemiology</em> 10 (1): 1–10.
+</div>
 <div id="ref-wilson1927probable" class="csl-entry" role="listitem">
 Wilson, Edwin B. 1927. <span>“Probable Inference, the Law of Succession,
 and Statistical Inference.”</span> <em>Journal of the American
@@ -1012,6 +1122,11 @@ Yland, Jennifer J, Amelia K Wesselink, Timothy L Lash, and Matthew P
 Fox. 2022. <span>“Misconceptions about the Direction of Bias from
 Nondifferential Misclassification.”</span> <em>American Journal of
 Epidemiology</em> 191 (8): 1485–95.
+</div>
+<div id="ref-zou2004modified" class="csl-entry" role="listitem">
+Zou, Guangyong. 2004. <span>“A Modified <span>P</span>oisson Regression
+Approach to Prospective Studies with Binary Data.”</span> <em>American
+Journal of Epidemiology</em> 159 (7): 702–6.
 </div>
 <div id="ref-zweig1993receiver" class="csl-entry" role="listitem">
 Zweig, Mark H, and Gregory Campbell. 1993. <span>“Receiver-Operating
@@ -1448,8 +1563,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./validity.html" class="pagination-link" aria-label="Internal and External Validity">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Internal and External Validity</span></span>
+      <a href="./bayes2.html" class="pagination-link" aria-label="Bayesian analysis of cohort and case-control studies">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Bayesian analysis of cohort and case-control studies</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

@@ -139,6 +139,7 @@ div.csl-indent {
         chisqH: "\\chi^2_\\text\{H\}",
         chisqP: "\\chi^2_\\text\{P\}",
         chisqPobs: "\\chi^2_\\text\{Pobs\}",
+        cloglog: ["\\operatorname\{cloglog\}"],
         comp: "\\mathsf\{C\}",
         Cov: ["\\operatorname\{Cov\}"],
         D: "\\mathcal\{D\}",
@@ -150,8 +151,10 @@ div.csl-indent {
         ESSR: "\\text\{ESSR\}",
         expit: ["\\operatorname\{expit\}"],
         given: ["\\, #1| \\, ", 1],
+        HR: "\\text\{HR\}",
         indep: "\\perp\\!\\!\\!\\perp",
         indicator: "\\mathbb\{1\}",
+        IRR: "\\text\{IRR\}",
         K: "\\mathcal\{K\}",
         logit: ["\\operatorname\{logit\}"],
         margins: "\\text\{margins\}",
@@ -329,6 +332,30 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Internal and External Validity</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cohort.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Measures of association in cohort studies</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./survival2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-sample survival analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./casecontrol.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Measures of association in case-control studies</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bayes2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Bayesian analysis of cohort and case-control studies</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -380,15 +407,15 @@ window.Quarto = {
   </ul></li>
   <li><a href="#failure-time-distributions" id="toc-failure-time-distributions" class="nav-link" data-scroll-target="#failure-time-distributions"><span class="header-section-number">5.2</span> Failure time distributions</a>
   <ul class="collapse">
-  <li><a href="#survival-function" id="toc-survival-function" class="nav-link" data-scroll-target="#survival-function"><span class="header-section-number">5.2.1</span> Survival function</a></li>
-  <li><a href="#hazard-function" id="toc-hazard-function" class="nav-link" data-scroll-target="#hazard-function"><span class="header-section-number">5.2.2</span> Hazard function</a></li>
+  <li><a href="#sec-surv" id="toc-sec-surv" class="nav-link" data-scroll-target="#sec-surv"><span class="header-section-number">5.2.1</span> Survival function</a></li>
+  <li><a href="#sec-haz" id="toc-sec-haz" class="nav-link" data-scroll-target="#sec-haz"><span class="header-section-number">5.2.2</span> Hazard function</a></li>
   <li><a href="#sec-cumhaz" id="toc-sec-cumhaz" class="nav-link" data-scroll-target="#sec-cumhaz"><span class="header-section-number">5.2.3</span> Cumulative hazard function</a></li>
   <li><a href="#sec-survlik" id="toc-sec-survlik" class="nav-link" data-scroll-target="#sec-survlik"><span class="header-section-number">5.2.4</span> Likelihoods for right-censored and left-truncated data</a></li>
   </ul></li>
   <li><a href="#exponential-distribution" id="toc-exponential-distribution" class="nav-link" data-scroll-target="#exponential-distribution"><span class="header-section-number">5.3</span> Exponential distribution</a>
   <ul class="collapse">
   <li><a href="#mean-and-variance" id="toc-mean-and-variance" class="nav-link" data-scroll-target="#mean-and-variance"><span class="header-section-number">5.3.1</span> Mean and variance</a></li>
-  <li><a href="#incidence-rates" id="toc-incidence-rates" class="nav-link" data-scroll-target="#incidence-rates"><span class="header-section-number">5.3.2</span> Incidence rates</a></li>
+  <li><a href="#sec-incrate" id="toc-sec-incrate" class="nav-link" data-scroll-target="#sec-incrate"><span class="header-section-number">5.3.2</span> Incidence rates</a></li>
   <li><a href="#memoryless-property" id="toc-memoryless-property" class="nav-link" data-scroll-target="#memoryless-property"><span class="header-section-number">5.3.3</span> Memoryless property</a></li>
   <li><a href="#prevalence-incidence-and-duration-of-disease" id="toc-prevalence-incidence-and-duration-of-disease" class="nav-link" data-scroll-target="#prevalence-incidence-and-duration-of-disease"><span class="header-section-number">5.3.4</span> Prevalence, incidence, and duration of disease*</a></li>
   </ul></li>
@@ -534,8 +561,8 @@ Table&nbsp;5.1: Time scales and time origins adapted from <span class="citation"
 <section id="failure-time-distributions" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="failure-time-distributions"><span class="header-section-number">5.2</span> Failure time distributions</h2>
 <p>Failure time distributions are descibed in terms of survival functions, cumulative hazard functions, and hazard functions. Any one of these is sufficient to specify the distribution of the time to an event, but each has a different and useful interpretation. We denote the failure time as a positive random variable <span class="math inline">\(T\)</span>. For simplicity, we will assume that <span class="math inline">\(T\)</span> is continuous.</p>
-<section id="survival-function" class="level3" data-number="5.2.1">
-<h3 data-number="5.2.1" class="anchored" data-anchor-id="survival-function"><span class="header-section-number">5.2.1</span> Survival function</h3>
+<section id="sec-surv" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="sec-surv"><span class="header-section-number">5.2.1</span> Survival function</h3>
 <p>The <strong>survival function</strong> for a failure time <span class="math inline">\(T\)</span> is <span class="math display">\[
   S(t) = \Pr(T &gt; t),
 \]</span> which is the probability that the event does not occur up to and including time <span class="math inline">\(t\)</span>. Several properties follow from this definition:</p>
@@ -554,8 +581,8 @@ Table&nbsp;5.1: Time scales and time origins adapted from <span class="citation"
   p = F(t_p) = 1 - S(t_p),
 \tag{5.3}\]</span></span> so higher quantiles correspond to longer times to events.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> When <span class="math inline">\(p = 0.5\)</span>, we get the median time-to-event. Much of survival analysis is dedicated to calculating and comparing survival functions.</p>
 </section>
-<section id="hazard-function" class="level3" data-number="5.2.2">
-<h3 data-number="5.2.2" class="anchored" data-anchor-id="hazard-function"><span class="header-section-number">5.2.2</span> Hazard function</h3>
+<section id="sec-haz" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="sec-haz"><span class="header-section-number">5.2.2</span> Hazard function</h3>
 <p>For any <span class="math inline">\(\Delta &gt; 0\)</span>, the probability that you have an event in the time interval <span class="math inline">\((t, t + \Delta]\)</span> is <span class="math display">\[
   \Pr\bigl(\text{event in } (t, t + \Delta]\bigr)
   = S(t) - S(t + \Delta)
@@ -682,8 +709,8 @@ Table&nbsp;5.2: Possible likelihood contributions for <span class="math inline">
     = \frac{1}{\lambda^2}.
 \]</span> by <a href="probability.html#eq-var2" class="quarto-xref">Equation&nbsp;<span>1.10</span></a>. Thus, the standard deviation <span class="math inline">\(\sqrt{\Var(T)} = 1 / \lambda\)</span> is equal to the mean.</p>
 </section>
-<section id="incidence-rates" class="level3" data-number="5.3.2">
-<h3 data-number="5.3.2" class="anchored" data-anchor-id="incidence-rates"><span class="header-section-number">5.3.2</span> Incidence rates</h3>
+<section id="sec-incrate" class="level3" data-number="5.3.2">
+<h3 data-number="5.3.2" class="anchored" data-anchor-id="sec-incrate"><span class="header-section-number">5.3.2</span> Incidence rates</h3>
 <p>Now imagine that we want to estimate an unknown rate parameter <span class="math inline">\(\lambda_\true\)</span> for an exponential distribution. Let <span class="math inline">\((\tentry_1, t_1, \delta_1), \ldots (\tentry_n, t_n, \delta_n)\)</span> denote a set of entry times, exit times, and event indicators in a sample of size <span class="math inline">\(n\)</span>. The likelihood is <span class="math display">\[
   L(\lambda) = \prod_{i = 1}^n \lambda^{\delta_i} e^{-\lambda (t_i - \tentry_i)},
 \]</span> and the log likelihood is <span id="eq-lexp"><span class="math display">\[

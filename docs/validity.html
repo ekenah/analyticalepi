@@ -84,7 +84,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="next">
+<link href="./cohort.html" rel="next">
 <link href="./studydesign.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -139,6 +139,7 @@ div.csl-indent {
         chisqH: "\\chi^2_\\text\{H\}",
         chisqP: "\\chi^2_\\text\{P\}",
         chisqPobs: "\\chi^2_\\text\{Pobs\}",
+        cloglog: ["\\operatorname\{cloglog\}"],
         comp: "\\mathsf\{C\}",
         Cov: ["\\operatorname\{Cov\}"],
         D: "\\mathcal\{D\}",
@@ -150,8 +151,10 @@ div.csl-indent {
         ESSR: "\\text\{ESSR\}",
         expit: ["\\operatorname\{expit\}"],
         given: ["\\, #1| \\, ", 1],
+        HR: "\\text\{HR\}",
         indep: "\\perp\\!\\!\\!\\perp",
         indicator: "\\mathbb\{1\}",
+        IRR: "\\text\{IRR\}",
         K: "\\mathcal\{K\}",
         logit: ["\\operatorname\{logit\}"],
         margins: "\\text\{margins\}",
@@ -327,6 +330,30 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./validity.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Internal and External Validity</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cohort.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Measures of association in cohort studies</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./survival2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-sample survival analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./casecontrol.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Measures of association in case-control studies</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bayes2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Bayesian analysis of cohort and case-control studies</span></span></a>
   </div>
 </li>
       </ul>
@@ -1114,7 +1141,7 @@ Yland, Jennifer J, Amelia K Wesselink, Timothy L Lash, and Matthew P Fox. 2022. 
 <hr>
 <ol>
 <li id="fn1"><p> These tests are in the top left half of a receiver operating characteristic (ROC) plot from <a href="condprob.html#sec-roc" class="quarto-xref"><span>Section 2.3.2</span></a>, where <span class="math inline">\(1 - \spec_D\)</span> is the horizontal axis and <span class="math inline">\(\sens_D\)</span> is the vertical axis. A test with <span class="math inline">\(\sens_D = 1 - \spec_D\)</span> is a useless test (on the diagonal of an ROC plot). A test with <span class="math inline">\(\sens_D &lt; 1 - \spec_D\)</span> (in the bottom right half of an ROC plot) needs to have the definitions of <span class="math inline">\(\Tplus\)</span> and <span class="math inline">\(\Tminus\)</span> reversed.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p> The <em>continuous mapping theorem</em> says that if a statistic <span class="math inline">\(\hat{\theta}_n \rightarrow \theta\)</span> in probability and <span class="math inline">\(f\)</span> is a continuous function in a neighborhood of <span class="math inline">\(\theta\)</span>, then <span class="math inline">\(f(\hat{\theta}_n) \rightarrow f(\theta)\)</span> in probability. Convergence in probability can be replaced with convergence in distribution or convergence almost surely. See <span class="citation" data-cites="chung2000course">Chung (<a href="references.html#ref-chung2000course" role="doc-biblioref">2000</a>)</span>. Here, the statistic is <span class="math inline">\(\hat{p}_1 - \hat{p}_0\)</span>, which converges to <span class="math inline">\(p_1 - p_0\)</span>, and the function is <span class="math inline">\(f(v) = v^2\)</span>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p> The <em>continuous mapping theorem</em> says that if a statistic <span class="math inline">\(\hat{\theta}_n \rightarrow \theta\)</span> in probability and <span class="math inline">\(f\)</span> is a continuous function in a neighborhood of <span class="math inline">\(\theta\)</span>, then <span class="math inline">\(f(\hat{\theta}_n) \rightarrow f(\theta)\)</span> in probability. Convergence in probability can be replaced with convergence in distribution or convergence almost surely <span class="citation" data-cites="chung2000course">(<a href="references.html#ref-chung2000course" role="doc-biblioref">Chung 2000</a>)</span>. Here, the statistic is <span class="math inline">\(\hat{p}_1 - \hat{p}_0\)</span>, which converges to <span class="math inline">\(p_1 - p_0\)</span>, and the function is <span class="math inline">\(f(v) = v^2\)</span>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p> As with a test for disease, a test for exposure with <span class="math inline">\(\sens_X + \spec_X = 1\)</span> would be a useless test (on the diagonal of an ROC curve) and a test with <span class="math inline">\(\sens_X + \spec_X &lt; 1\)</span> would need to have the definitions of <span class="math inline">\(\Tplus_X\)</span> and <span class="math inline">\(\Tminus_X\)</span> reversed.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p> Case control studies typically use the odds ratio <span class="math inline">\(\odds(\pi_1) / \odds(\pi_0)\)</span>, not the difference <span class="math inline">\(\pi_1 - \pi_0\)</span>, to compare the exposure prevalences in cases and controls. The difference between the prevalences is being used here only to establish that a hypothesis test of the independence of <span class="math inline">\(X\)</span> and <span class="math inline">\(D\)</span> based on misclassified data has the correct significance level.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p> In causal inference, selection bias can threaten both the internal and external validity of a study. It can cause an apparent association between <span class="math inline">\(X\)</span> and <span class="math inline">\(D\)</span> within the study sample that does not represent a causal effect <span class="citation" data-cites="hernan2004structural">(<a href="references.html#ref-hernan2004structural" role="doc-biblioref">Hernán, Hernández-Dı́az, and Robins 2004</a>)</span>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -1552,8 +1579,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link" aria-label="References">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./cohort.html" class="pagination-link" aria-label="Measures of association in cohort studies">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Measures of association in cohort studies</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

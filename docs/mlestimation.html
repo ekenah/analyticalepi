@@ -139,6 +139,7 @@ div.csl-indent {
         chisqH: "\\chi^2_\\text\{H\}",
         chisqP: "\\chi^2_\\text\{P\}",
         chisqPobs: "\\chi^2_\\text\{Pobs\}",
+        cloglog: ["\\operatorname\{cloglog\}"],
         comp: "\\mathsf\{C\}",
         Cov: ["\\operatorname\{Cov\}"],
         D: "\\mathcal\{D\}",
@@ -150,8 +151,10 @@ div.csl-indent {
         ESSR: "\\text\{ESSR\}",
         expit: ["\\operatorname\{expit\}"],
         given: ["\\, #1| \\, ", 1],
+        HR: "\\text\{HR\}",
         indep: "\\perp\\!\\!\\!\\perp",
         indicator: "\\mathbb\{1\}",
+        IRR: "\\text\{IRR\}",
         K: "\\mathcal\{K\}",
         logit: ["\\operatorname\{logit\}"],
         margins: "\\text\{margins\}",
@@ -329,6 +332,30 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Internal and External Validity</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cohort.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Measures of association in cohort studies</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./survival2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-sample survival analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./casecontrol.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Measures of association in case-control studies</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bayes2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Bayesian analysis of cohort and case-control studies</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -376,7 +403,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#sec-binomial" id="toc-sec-binomial" class="nav-link" data-scroll-target="#sec-binomial"><span class="header-section-number">3.1.1</span> Binomial distribution</a></li>
   <li><a href="#likelihood-and-log-likelihood" id="toc-likelihood-and-log-likelihood" class="nav-link" data-scroll-target="#likelihood-and-log-likelihood"><span class="header-section-number">3.1.2</span> Likelihood and log likelihood</a></li>
-  <li><a href="#score-function" id="toc-score-function" class="nav-link" data-scroll-target="#score-function"><span class="header-section-number">3.1.3</span> Score function</a></li>
+  <li><a href="#sec-score" id="toc-sec-score" class="nav-link" data-scroll-target="#sec-score"><span class="header-section-number">3.1.3</span> Score function</a></li>
   <li><a href="#sec-information" id="toc-sec-information" class="nav-link" data-scroll-target="#sec-information"><span class="header-section-number">3.1.4</span> Expected and observed information*</a></li>
   </ul></li>
   <li><a href="#large-sample-theory" id="toc-large-sample-theory" class="nav-link" data-scroll-target="#large-sample-theory"><span class="header-section-number">3.2</span> Large-sample theory</a>
@@ -505,8 +532,8 @@ window.Quarto = {
   \E[\ell(\ptrue)] &gt; \E[\ell(p)]
 \]</span> for all <span class="math inline">\(p \neq \ptrue\)</span>. This inequality is about the expected value of the log likelihood over all possible samples of size <span class="math inline">\(n\)</span>. For any given sample, it is possible that <span class="math inline">\(\ell(\ptrue)\)</span> is not the maximum of the log likelihood. However, this inequality is an important part of the justification for estimating <span class="math inline">\(p\)</span> by maximizing the log likelihood <span class="citation" data-cites="boos2013essential">(<a href="references.html#ref-boos2013essential" role="doc-biblioref">Boos and Stefanski 2013</a>)</span>. Because function <span class="math inline">\(v \mapsto \ln(v)\)</span> is strictly increasing in <span class="math inline">\(v\)</span>, the likelihood <span class="math inline">\(L(p)\)</span> and the log likelihood <span class="math inline">\(\ell(p)\)</span> are maximized at exactly the same value of <span class="math inline">\(p\)</span>.</p>
 </section>
-<section id="score-function" class="level3" data-number="3.1.3">
-<h3 data-number="3.1.3" class="anchored" data-anchor-id="score-function"><span class="header-section-number">3.1.3</span> Score function</h3>
+<section id="sec-score" class="level3" data-number="3.1.3">
+<h3 data-number="3.1.3" class="anchored" data-anchor-id="sec-score"><span class="header-section-number">3.1.3</span> Score function</h3>
 <p>To find the maximum of the log likelihood, we find the value of <span class="math inline">\(p\)</span> where its slope is zero. This is the mathematical version of the insight that the ground at the top of a hill is level. The <strong>score function</strong> is the first derivative of the log likelihood <span class="math display">\[
   U(p)
   = \frac{\text{d}}{\text{d} p} \ell(p)
@@ -1051,17 +1078,9 @@ Figure&nbsp;3.5: The approximation used by the delta method using the logistic t
 </div>
 </div>
 </div>
-<!-- \begin{figure}
-    \centering
-    \includegraphics[width = \textwidth]{Delta.pdf}
-    \caption{
-      The approximation used by the delta method using the logistic transformation for a binomial confidence interval near $p_\true = 0.6$.
-      The black curve is $\logit(p)$, and the dashed line shows the tangent line at $p = 0.6$.}
-    \label{fig:delta}
-\end{figure} -->
-<p>A widely used transformation for probabilities is the <strong>logit transformation</strong> <span class="math display">\[
+<p>A widely used transformation for probabilities is the <strong>logit transformation</strong> <span id="eq-logit"><span class="math display">\[
   \logit(p) = \ln\Bigl(\frac{p}{1 - p}\Bigr).
-\]</span> The <strong>odds</strong> corresponding to the probability <span class="math inline">\(p\)</span> is <span class="math inline">\(\frac{p}{1 - p}\)</span>, so the logit is the natural logarithm of the odds. The logit transformation maps the interval <span class="math inline">\((0, 1)\)</span> onto all of <span class="math inline">\(\mathbb{R}\)</span>:</p>
+\tag{3.18}\]</span></span> The <strong>odds</strong> corresponding to the probability <span class="math inline">\(p\)</span> is <span class="math inline">\(\frac{p}{1 - p}\)</span>, so the logit is the natural logarithm of the odds. The logit transformation maps the interval <span class="math inline">\((0, 1)\)</span> onto all of <span class="math inline">\(\mathbb{R}\)</span>:</p>
 <ul>
 <li>As <span class="math inline">\(p \rightarrow 0\)</span>, the odds <span class="math inline">\(p / (1 - p) \rightarrow 0\)</span> and <span class="math inline">\(\logit(p) \rightarrow -\infty\)</span>.</li>
 <li>When <span class="math inline">\(p = 1 / 2\)</span>, the odds <span class="math inline">\(p / (1 - p) = 1\)</span> and <span class="math inline">\(\logit(p) = 0\)</span>.</li>
@@ -1077,21 +1096,21 @@ Figure&nbsp;3.5: The approximation used by the delta method using the logistic t
   = \frac{1}{n \ptrue (1 - \ptrue)}.
 \]</span> When we replace the unknown <span class="math inline">\(\ptrue\)</span> with our MLE <span class="math inline">\(\hat{p}\)</span>, we get the following confidence limits for <span class="math inline">\(\logit(\ptrue)\)</span>: <span class="math display">\[
   \logit(\hat{p}) \pm z_{1 - \frac{\alpha}{2}} \sqrt{\frac{1}{n \hat{p} (1 - \hat{p})}}.
-\]</span> To get confidence limits for <span class="math inline">\(\ptrue\)</span>, we use the inverse function for the logit, which is <span class="math display">\[
+\]</span> To get confidence limits for <span class="math inline">\(\ptrue\)</span>, we use the inverse function for the logit, which is <span id="eq-expit"><span class="math display">\[
   \expit(v) = \frac{e^v}{1 + e^v} = \frac{1}{1 + e^{-v}}.
-\]</span> This is called the <em>logistic function</em>. If the confidence limits for <span class="math inline">\(\logit(\ptrue)\)</span> are <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>, then the confidence limits for <span class="math inline">\(\ptrue\)</span> are <span class="math inline">\(\expit(a)\)</span> and <span class="math inline">\(\expit(b)\)</span>. These are guaranteed to be in <span class="math inline">\((0, 1)\)</span> because <span class="math inline">\(\expit(v) \in (0, 1)\)</span> for any <span class="math inline">\(v \in \mathbb{R}\)</span>. The logit-transformed confidence interval can have narrower width and a coverage probability closer to <span class="math inline">\(1 - \alpha\)</span> than the untransformed Wald confidence interval <span class="citation" data-cites="agresti2012categorical">(<a href="references.html#ref-agresti2012categorical" role="doc-biblioref">Agresti 2013</a>)</span>.</p>
+\tag{3.19}\]</span></span> This is also called the <em>logistic function</em>. If the confidence limits for <span class="math inline">\(\logit(\ptrue)\)</span> are <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>, then the confidence limits for <span class="math inline">\(\ptrue\)</span> are <span class="math inline">\(\expit(a)\)</span> and <span class="math inline">\(\expit(b)\)</span>. These are guaranteed to be in <span class="math inline">\((0, 1)\)</span> because <span class="math inline">\(\expit(v) \in (0, 1)\)</span> for any <span class="math inline">\(v \in \mathbb{R}\)</span>. The logit-transformed confidence interval can have narrower width and a coverage probability closer to <span class="math inline">\(1 - \alpha\)</span> than the untransformed Wald confidence interval <span class="citation" data-cites="agresti2012categorical">(<a href="references.html#ref-agresti2012categorical" role="doc-biblioref">Agresti 2013</a>)</span>.</p>
 </section>
 <section id="score-wilson-confidence-intervals" class="level3" data-number="3.4.2">
 <h3 data-number="3.4.2" class="anchored" data-anchor-id="score-wilson-confidence-intervals"><span class="header-section-number">3.4.2</span> Score (Wilson) confidence intervals</h3>
 <p>The <strong>score</strong> or <strong>Wilson</strong> confidence limits come from solving the equation <span id="eq-scoreCIeq"><span class="math display">\[
   \frac{(\hat{p} - p)^2}{p (1 - p) / n}
   = z_{1 - \frac{\alpha}{2}}^2.
-\tag{3.18}\]</span></span> for <span class="math inline">\(p\)</span> <span class="citation" data-cites="wilson1927probable">(<a href="references.html#ref-wilson1927probable" role="doc-biblioref">Wilson 1927</a>)</span>. This differs from <a href="#eq-WaldCIeq" class="quarto-xref">Equation&nbsp;<span>3.16</span></a> for the Wald confidence interval because it uses <span class="math inline">\(p\)</span> instead of <span class="math inline">\(\hat{p}\)</span> in the denominator. It is a quadratic equation in <span class="math inline">\(p\)</span>, so it has two solutions. The center of the resulting confidence interval is <span id="eq-ptilde"><span class="math display">\[
+\tag{3.20}\]</span></span> for <span class="math inline">\(p\)</span> <span class="citation" data-cites="wilson1927probable">(<a href="references.html#ref-wilson1927probable" role="doc-biblioref">Wilson 1927</a>)</span>. This differs from <a href="#eq-WaldCIeq" class="quarto-xref">Equation&nbsp;<span>3.16</span></a> for the Wald confidence interval because it uses <span class="math inline">\(p\)</span> instead of <span class="math inline">\(\hat{p}\)</span> in the denominator. It is a quadratic equation in <span class="math inline">\(p\)</span>, so it has two solutions. The center of the resulting confidence interval is <span id="eq-ptilde"><span class="math display">\[
   \tilde{p}
   = \hat{p} \Bigg(\frac{n}{n + z_{1 - \frac{\alpha}{2}}^2}\Bigg)
     + \frac{1}{2} \Bigg(\frac{z_{1 - \frac{\alpha}{2}}^2}{n + z_{1 - \frac{\alpha}{2}}^2}\Bigg)
   = \frac{x + \frac{1}{2} z_{1 - \frac{\alpha}{2}}^2}{n + z_{1 - \frac{\alpha}{2}}^2},
-\tag{3.19}\]</span></span> where <span class="math inline">\(x\)</span> is the number of diseased individuals in our sample. This is a weighted average of <span class="math inline">\(\hat{p}\)</span> and <span class="math inline">\(1 / 2\)</span> with weights proportional to <span class="math inline">\(n\)</span> and <span class="math inline">\(z_{1 - \frac{\alpha}{2}}^2\)</span>, respectively. The resulting confidence interval is <span class="math display">\[
+\tag{3.21}\]</span></span> where <span class="math inline">\(x\)</span> is the number of diseased individuals in our sample. This is a weighted average of <span class="math inline">\(\hat{p}\)</span> and <span class="math inline">\(1 / 2\)</span> with weights proportional to <span class="math inline">\(n\)</span> and <span class="math inline">\(z_{1 - \frac{\alpha}{2}}^2\)</span>, respectively. The resulting confidence interval is <span class="math display">\[
   \tilde{p} \pm z_{1 - \frac{\alpha}{2}} \sqrt{\tilde{V}}
 \]</span> where <span class="math display">\[
   \tilde{V}
@@ -1186,11 +1205,11 @@ Figure&nbsp;3.5: The approximation used by the delta method using the logistic t
 <p>The <strong>exact</strong> or <strong>Clopper-Pearson</strong> confidence limits for <span class="math inline">\(\ptrue\)</span> use the finite-sample distribution of the sample mean <span class="math inline">\(\hat{p}\)</span> <span class="citation" data-cites="clopper1934use">Clopper and Pearson (<a href="references.html#ref-clopper1934use" role="doc-biblioref">1934</a>)</span>. When <span class="math inline">\(x &gt; 0\)</span>, the lower <span class="math inline">\(1 - \alpha\)</span> confidence limit is the solution to <span id="eq-uppertail"><span class="math display">\[
   \sum_{k = x}^n \binom{n}{k} p_\text{lower}^k (1 - p_\text{lower})^{n - k}
   = \frac{\alpha}{2},
-\tag{3.20}\]</span></span> so the <em>upper tail</em> of the binomial(<span class="math inline">\(n\)</span>, <span class="math inline">\(p_\text{lower}\)</span>) distribution has probability <span class="math inline">\(\alpha / 2\)</span>. When <span class="math inline">\(x = 0\)</span>, we set <span class="math inline">\(p_\text{lower} = 0\)</span>. When <span class="math inline">\(x &lt; n\)</span>, the upper confidence limit is the solution to <span id="eq-lowertail"><span class="math display">\[
+\tag{3.22}\]</span></span> so the <em>upper tail</em> of the binomial(<span class="math inline">\(n\)</span>, <span class="math inline">\(p_\text{lower}\)</span>) distribution has probability <span class="math inline">\(\alpha / 2\)</span>. When <span class="math inline">\(x = 0\)</span>, we set <span class="math inline">\(p_\text{lower} = 0\)</span>. When <span class="math inline">\(x &lt; n\)</span>, the upper confidence limit is the solution to <span id="eq-lowertail"><span class="math display">\[
   \sum_{k = 0}^x \binom{n}{k} p_\text{upper}^k (1 - p_\text{upper})^{n - k}
   = \frac{\alpha}{2},
-\tag{3.21}\]</span></span> so the <em>lower tail</em> of the binomial(<span class="math inline">\(n\)</span>, <span class="math inline">\(p_\text{upper}\)</span>) distribution has probability <span class="math inline">\(\alpha / 2\)</span>. When <span class="math inline">\(x = n\)</span>, we set <span class="math inline">\(p_\text{upper} = 1\)</span>. This interval is guaranteed to have a coverage probability of at least <span class="math inline">\(1 - \alpha\)</span>, but the price for this is that it is always wider than the Wald and Wilson confidence intervals <span class="citation" data-cites="agresti1998approximate brown2001interval">(<a href="references.html#ref-agresti1998approximate" role="doc-biblioref">Agresti and Coull 1998</a>; <a href="references.html#ref-brown2001interval" role="doc-biblioref">Brown, Cai, and DasGupta 2001</a>)</span>. In general, the score or likelihood ratio confidence intervals have better combinations of coverage probability and width.</p>
-<p>To make exact confidence limits less conservative, we can include only <span class="math inline">\(\frac{1}{2} \Pr(X = x)\)</span> instead of <span class="math inline">\(\Pr(X = x)\)</span> in the calculation of the tail probabilities in <a href="#eq-lowertail" class="quarto-xref">Equation&nbsp;<span>3.21</span></a> and <a href="#eq-uppertail" class="quarto-xref">Equation&nbsp;<span>3.20</span></a>. The resulting confidence intervals are called <strong>mid-p exact confidence intervals</strong> <span class="citation" data-cites="lancaster1961significance">(<a href="references.html#ref-lancaster1961significance" role="doc-biblioref">Lancaster 1961, berry1995mid</a>)</span>. The lower <span class="math inline">\(1 - \alpha\)</span> mid-p exact confidence limit is the solution to <span class="math display">\[
+\tag{3.23}\]</span></span> so the <em>lower tail</em> of the binomial(<span class="math inline">\(n\)</span>, <span class="math inline">\(p_\text{upper}\)</span>) distribution has probability <span class="math inline">\(\alpha / 2\)</span>. When <span class="math inline">\(x = n\)</span>, we set <span class="math inline">\(p_\text{upper} = 1\)</span>. This interval is guaranteed to have a coverage probability of at least <span class="math inline">\(1 - \alpha\)</span>, but the price for this is that it is always wider than the Wald and Wilson confidence intervals <span class="citation" data-cites="agresti1998approximate brown2001interval">(<a href="references.html#ref-agresti1998approximate" role="doc-biblioref">Agresti and Coull 1998</a>; <a href="references.html#ref-brown2001interval" role="doc-biblioref">Brown, Cai, and DasGupta 2001</a>)</span>. In general, the score or likelihood ratio confidence intervals have better combinations of coverage probability and width.</p>
+<p>To make exact confidence limits less conservative, we can include only <span class="math inline">\(\frac{1}{2} \Pr(X = x)\)</span> instead of <span class="math inline">\(\Pr(X = x)\)</span> in the calculation of the tail probabilities in <a href="#eq-lowertail" class="quarto-xref">Equation&nbsp;<span>3.23</span></a> and <a href="#eq-uppertail" class="quarto-xref">Equation&nbsp;<span>3.22</span></a>. The resulting confidence intervals are called <strong>mid-p exact confidence intervals</strong> <span class="citation" data-cites="lancaster1961significance">(<a href="references.html#ref-lancaster1961significance" role="doc-biblioref">Lancaster 1961, berry1995mid</a>)</span>. The lower <span class="math inline">\(1 - \alpha\)</span> mid-p exact confidence limit is the solution to <span class="math display">\[
   \frac{1}{2} \binom{n}{x} p_\text{lower}^x (1 - p_\text{lower})^{n - x}
     + \sum_{k = x + 1}^n \binom{n}{k} p_\text{lower}^k (1 - p_\text{lower})^{n - k}
   = \frac{\alpha}{2}.

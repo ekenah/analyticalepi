@@ -1,0 +1,1729 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>9&nbsp; Measures of association in cohort studies – Analytical Epidemiology</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./survival2.html" rel="next">
+<link href="./validity.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-747bc48f972f7c4036e4d8e8c6d9e55a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script>
+  window.MathJax = {
+    tex: {
+      macros: {
+        A: "\\mathcal\{A\}",
+        approxsim: "\\stackrel\{\\text\{approx\}\}\{\\sim\}",
+        B: "\\mathcal\{B\}",
+        Bernoulli: ["\\operatorname\{Bernoulli\}"],
+        binomial: ["\\operatorname\{binomial\}"],
+        C: "\\mathcal\{C\}",
+        chisqH: "\\chi^2_\\text\{H\}",
+        chisqP: "\\chi^2_\\text\{P\}",
+        chisqPobs: "\\chi^2_\\text\{Pobs\}",
+        cloglog: ["\\operatorname\{cloglog\}"],
+        comp: "\\mathsf\{C\}",
+        Cov: ["\\operatorname\{Cov\}"],
+        D: "\\mathcal\{D\}",
+        data: "\\text\{data\}",
+        dif: "\\text\{d\}",
+        Dminus: "\\text\{D\}^-",
+        Dplus: "\\text\{D\}^+",
+        E: ["\\operatorname\{\\mathbb\{E\}\}"],
+        ESSR: "\\text\{ESSR\}",
+        expit: ["\\operatorname\{expit\}"],
+        given: ["\\, #1| \\, ", 1],
+        HR: "\\text\{HR\}",
+        indep: "\\perp\\!\\!\\!\\perp",
+        indicator: "\\mathbb\{1\}",
+        IRR: "\\text\{IRR\}",
+        K: "\\mathcal\{K\}",
+        logit: ["\\operatorname\{logit\}"],
+        margins: "\\text\{margins\}",
+        obs: "\\text\{obs\}",
+        odds: ["\\operatorname\{odds\}"],
+        OR: "\\text\{OR\}",
+        ptrue: "p_\{\\text\{true\}\}",
+        R: "\\mathcal\{R\}",
+        RD: "\\text\{RD\}",
+        RR: "\\text\{RR\}",
+        sens: "\\text\{sens\}",
+        spec: "\\text\{spec\}",
+        supp: ["\\operatorname\{supp\}"],
+        tcens: "t^\\text\{cens\}",
+        tentry: "t^\\text\{entry\}",
+        tevent: "t^\\text\{event\}",
+        texit: "t^\\text\{exit\}",
+        Tminus: "\\text\{T\}^-",
+        tonset: "t^\\text\{onset\}",
+        Tplus: "\\text\{T\}^+",
+        transpose: "\\mathsf{T}",
+        trec: "t^\\text\{rec\}",
+        true: "\\text\{true\}",
+        twobytwo: "2 \\times 2",
+        vand: "\\text\{ and \}",
+        Var: ["\\operatorname\{Var\}"],
+        Xminus: "\\text\{X\}^-",
+        Xobs: "\\text\{X\}^\\text\{obs\}",
+        Xplus: "\\text\{X\}^+"
+      }
+    }
+  };
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./studydesign.html">Study Design and Measures of Association</a></li><li class="breadcrumb-item"><a href="./cohort.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Measures of association in cohort studies</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Analytical Epidemiology</a> 
+        <div class="sidebar-tools-main">
+    <a href="./Analytical-Epidemiology.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Defining and Measuring Disease Occurrence</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./probability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Probability, Random Variables, and Disease Occurrence</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./condprob.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Conditional Probability and Diagnostic Tests</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mlestimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Maximum Likelihood Estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bayes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Bayesian Estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./longitudinal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Longitudinal Data, Rates, and Counts</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./survival.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Study Design and Measures of Association</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./studydesign.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Cohort and Case-Control Studies</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./validity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Internal and External Validity</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cohort.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Measures of association in cohort studies</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./survival2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-sample survival analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./casecontrol.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Measures of association in case-control studies</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bayes2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Bayesian analysis of cohort and case-control studies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Principles of Causal Inference</span></span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Epidemologic and Statistical Methods for Causal Inference</span></span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./calculus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Calculus</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="2">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-massociation" id="toc-sec-massociation" class="nav-link active" data-scroll-target="#sec-massociation"><span class="header-section-number">9.1</span> Measures of association</a>
+  <ul class="collapse">
+  <li><a href="#sec-RD" id="toc-sec-RD" class="nav-link" data-scroll-target="#sec-RD"><span class="header-section-number">9.1.1</span> Risk difference</a></li>
+  <li><a href="#sec-RR" id="toc-sec-RR" class="nav-link" data-scroll-target="#sec-RR"><span class="header-section-number">9.1.2</span> Risk ratio</a></li>
+  <li><a href="#sec-OR" id="toc-sec-OR" class="nav-link" data-scroll-target="#sec-OR"><span class="header-section-number">9.1.3</span> Odds ratio</a></li>
+  <li><a href="#incidence-rate-ratio" id="toc-incidence-rate-ratio" class="nav-link" data-scroll-target="#incidence-rate-ratio"><span class="header-section-number">9.1.4</span> Incidence rate ratio</a></li>
+  </ul></li>
+  <li><a href="#generalized-linear-models" id="toc-generalized-linear-models" class="nav-link" data-scroll-target="#generalized-linear-models"><span class="header-section-number">9.2</span> Generalized linear models</a>
+  <ul class="collapse">
+  <li><a href="#sec-RDglm" id="toc-sec-RDglm" class="nav-link" data-scroll-target="#sec-RDglm"><span class="header-section-number">9.2.1</span> Risk differences and the identity link</a></li>
+  <li><a href="#sec-RRglm" id="toc-sec-RRglm" class="nav-link" data-scroll-target="#sec-RRglm"><span class="header-section-number">9.2.2</span> Risk ratios and the log link</a></li>
+  <li><a href="#sec-ORglm" id="toc-sec-ORglm" class="nav-link" data-scroll-target="#sec-ORglm"><span class="header-section-number">9.2.3</span> Odds ratios and the logit link</a></li>
+  <li><a href="#sec-HRglm" id="toc-sec-HRglm" class="nav-link" data-scroll-target="#sec-HRglm"><span class="header-section-number">9.2.4</span> Hazard ratio and the complementary log-log link*</a></li>
+  <li><a href="#poisson-glms-for-risks" id="toc-poisson-glms-for-risks" class="nav-link" data-scroll-target="#poisson-glms-for-risks"><span class="header-section-number">9.2.5</span> Poisson GLMs for risks</a></li>
+  <li><a href="#poisson-glms-for-rates" id="toc-poisson-glms-for-rates" class="nav-link" data-scroll-target="#poisson-glms-for-rates"><span class="header-section-number">9.2.6</span> Poisson GLMs for rates</a></li>
+  </ul></li>
+  <li><a href="#rothman-diagrams" id="toc-rothman-diagrams" class="nav-link" data-scroll-target="#rothman-diagrams"><span class="header-section-number">9.3</span> Rothman diagrams</a>
+  <ul class="collapse">
+  <li><a href="#contour-lines" id="toc-contour-lines" class="nav-link" data-scroll-target="#contour-lines"><span class="header-section-number">9.3.1</span> Contour lines</a></li>
+  <li><a href="#relationships-between-changes-in-the-rd-rr-and-or" id="toc-relationships-between-changes-in-the-rd-rr-and-or" class="nav-link" data-scroll-target="#relationships-between-changes-in-the-rd-rr-and-or"><span class="header-section-number">9.3.2</span> Relationships between changes in the RD, RR, and OR</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./studydesign.html">Study Design and Measures of Association</a></li><li class="breadcrumb-item"><a href="./cohort.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Measures of association in cohort studies</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Measures of association in cohort studies</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p>The P value, which is the final common pathway for almost all statistical tests, conveys no information about the extent to which two groups differ or two variables are associated. Highly “significant” P values can accompany negligible differences (if the study is large) and unimpressive P values can accompany strong associations (if the study is small). P values, therefore, are not good measures of the strength of the relation between study variables. <span class="citation" data-cites="rothman1978show">(<a href="references.html#ref-rothman1978show" role="doc-biblioref">Rothman 1978</a>)</span></p>
+</blockquote>
+<section id="sec-massociation" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="sec-massociation"><span class="header-section-number">9.1</span> Measures of association</h2>
+<p>A <strong>measure of association</strong> indicates both the direction and magnitude of the difference between two groups, so a point and interval estimate of a measure of association conveys much more information than a hypothesis test <span class="citation" data-cites="rothman1978show">(<a href="references.html#ref-rothman1978show" role="doc-biblioref">Rothman 1978</a>)</span>. We will first consider measures of association in cohort studies, where participants are selected based on exposure and then followed up (prospectively or retrospectively) to measure disease occurrence. As before, let <span class="math inline">\(X\)</span> be a binary treatment or exposure, and let <span class="math inline">\(D\)</span> be a binary disease outcome. We assume that exposure the <span class="math inline">\(X_i\)</span> of person <span class="math inline">\(i\)</span> is fixed by his or her time origin, that our study sample consists of individuals who were at risk of the outcome, and that there was no delayed entry (left truncation) or right censoring. Our results can be summarized in a 2x2 table as in <a href="condprob.html#tbl-2x2" class="quarto-xref">Table&nbsp;<span>2.1</span></a>.</p>
+<p>Ideally, the groups in a cohort study are identical except for exposure so that any difference in the outcomes can be attributed to a causal effect of the difference in exposure. In a clinical trial, this similarity can be achieved by randomizing participants to different levels of exposure. If the number of study participants is large enough, the different groups will be nearly identical in both measured and unmeasured covariates. In an observational study, exposure groups can have differences other than exposure that completely or partially explain the observed differences in outcomes, which is called <strong>confounding</strong> <span class="citation" data-cites="simpson1951interpretation miettinen1981confounding">(<a href="references.html#ref-simpson1951interpretation" role="doc-biblioref">Simpson 1951</a>; <a href="references.html#ref-miettinen1981confounding" role="doc-biblioref">O. S. Miettinen and Cook 1981</a>)</span>. For now, we will not worry about whether the differences between groups are causal effects of treatment or exposure, which is why we call these measures of <em>association</em>.</p>
+<!-- With complete follow-up, measures of association can be calculated using a class of regression models called \emph{generalized linear models} (GLMs).
+When there is right censoring or left truncation, methods from survival analysis can be used to calculate measures of association. -->
+<section id="sec-RD" class="level3" data-number="9.1.1">
+<h3 data-number="9.1.1" class="anchored" data-anchor-id="sec-RD"><span class="header-section-number">9.1.1</span> Risk difference</h3>
+<p>If the risk of disease onset in <span class="math inline">\((0, t]\)</span> is <span class="math inline">\(p_1\)</span> in the exposed and <span class="math inline">\(p_0\)</span> in the unexposed, then the <strong>risk difference</strong> is <span class="math display">\[
+  \RD = p_1 - p_0,
+\]</span> which can take any value in <span class="math inline">\([-1, 1]\)</span>. When exposure and disease are independent, <span class="math inline">\(\RD = 0\)</span> because <span class="math inline">\(p_1 = p_0\)</span> (see <a href="studydesign.html#sec-indep-condprob" class="quarto-xref"><span>Section 7.2.1</span></a>).</p>
+<p>When there is no left truncation or right censoring, the risk (cumulative incidence) in any given time interval <span class="math inline">\((0, t]\)</span> can be estimated using methods for a binomial proportion. Based on the results from <a href="mlestimation.html#sec-score" class="quarto-xref"><span>Section 3.1.3</span></a>, the maximum likelihood estimate (MLE) of the risk difference is <span id="eq-RDmle"><span class="math display">\[
+  \hat{\RD}
+  = \hat{p}_1 - \hat{p}_0
+  = \frac{a}{r_1} - \frac{c}{r_0},
+\tag{9.1}\]</span></span> which is defined as long as <span class="math inline">\(r_1 &gt; 0\)</span> and <span class="math inline">\(r_0 &gt; 0\)</span>. It is an unbiased estimate of the true <span class="math inline">\(\RD\)</span>.</p>
+<p>Because the outcomes in the two exposure groups are independent, the estimated variance of <span class="math inline">\(\hat{\RD}\)</span> is <span id="eq-RDvar"><span class="math display">\[
+  \hat{\Var}(\hat{\RD})
+  = \frac{\hat{p_1}(1 - \hat{p_1})}{r_1} + \frac{\hat{p_0} (1 - \hat{p_0})}{r_0}
+  = \frac{a b}{r_1} + \frac{c d}{r_0}.
+\tag{9.2}\]</span></span> The <span class="math inline">\(r_1\)</span> and <span class="math inline">\(r_0\)</span> in the denominators are sometimes replaced with <span class="math inline">\(r_1 - 1\)</span> and <span class="math inline">\(r_0 - 1\)</span>, which reflects the <span class="math inline">\(n - 1\)</span> in the denominator of the sample variance <span class="citation" data-cites="rothman2008modern">(<a href="references.html#ref-rothman2008modern" role="doc-biblioref">Rothman, Greenland, and Lash 2008</a>)</span>. The large-sample <span class="math inline">\(1 - \alpha\)</span> Wald confidence limits are <span id="eq-RDci"><span class="math display">\[
+  \hat{\RD} \pm z_{1 - \frac{\alpha}{2}} \sqrt{\hat{\Var}(\hat{\RD})}.
+\tag{9.3}\]</span></span> As in <a href="mlestimation.html#sec-wslr" class="quarto-xref"><span>Section 3.3.2</span></a>, this confidence interval includes all values of <span class="math inline">\(\RD_0\)</span> such that a Wald test would fail to reject the null hypothesis that <span class="math inline">\(\RD = \RD_0\)</span>. For a 95% confidence interval, <span class="math inline">\(z_{1 - \frac{\alpha}{2}} \approx 1.96\)</span>. When the expected numbers of events are small, this confidence interval can have limits outside <span class="math inline">\([-1, 1]\)</span>. Confidence intervals with better performance can be obtained by inverting score or likelihood ratio tests or by using Bayesian methods <span class="citation" data-cites="agresti2005frequentist">(<a href="references.html#ref-agresti2005frequentist" role="doc-biblioref">Agresti and Min 2005</a>)</span>.</p>
+</section>
+<section id="sec-RR" class="level3" data-number="9.1.2">
+<h3 data-number="9.1.2" class="anchored" data-anchor-id="sec-RR"><span class="header-section-number">9.1.2</span> Risk ratio</h3>
+<p>The <strong>risk ratio</strong> comparing the exposed to the unexposed is <span class="math display">\[
+  \RR = \frac{p_1}{p_0}
+\]</span> where <span class="math inline">\(p_1\)</span> is the risk in the exposed and <span class="math inline">\(p_0\)</span> is the risk in the unexposed. It is defined whenever <span class="math inline">\(p_1 \geq 0\)</span> and <span class="math inline">\(p_0 &gt; 0\)</span>, and it can take any value in <span class="math inline">\([0, \infty)\)</span>. When exposure and disease are independent, <span class="math inline">\(\RR = 1\)</span> because <span class="math inline">\(p_1 = p_0\)</span> (see <a href="studydesign.html#sec-indep-condprob" class="quarto-xref"><span>Section 7.2.1</span></a>).</p>
+<p>The MLE of the risk ratio is <span id="eq-RRmle"><span class="math display">\[
+  \hat{\RR}
+  = \frac{\hat{p}_1}{\hat{p}_0}
+  = \frac{a / r_1}{c / r_0},
+\tag{9.4}\]</span></span> which is defined as long as <span class="math inline">\(c &gt; 0\)</span> (which implies <span class="math inline">\(r_0 &gt; 0\)</span>) and <span class="math inline">\(r_1 &gt; 0\)</span>. It is difficult to estimate the variance of a ratio, so we use a log transformation to get a sum: <span class="math display">\[
+    \ln \hat{\RR} = \ln \hat{p}_1 - \ln \hat{p_0}.
+\]</span> If <span class="math inline">\(\RR \in (0, \infty)\)</span>, then <span class="math inline">\(\ln \RR \in (-\infty, \infty)\)</span> so this transformation ensures that our confidence intervals have appropriate bounds. Because outcomes in the two groups are independent, we have <span class="math display">\[
+    \Var(\ln \hat{\RR}) = \Var(\ln \hat{p}_0) + \Var(\ln \hat{p}_1)
+\]</span> by <a href="probability.html#eq-lincomV" class="quarto-xref">Equation&nbsp;<span>1.12</span></a>. Using the delta method from <a href="mlestimation.html#sec-delta" class="quarto-xref"><span>Section 3.4.1</span></a> and the fact that <span class="math inline">\(\frac{\dif}{\dif x} \ln x = \frac{1}{x}\)</span>, we get the estimated variance <span class="math display">\[
+  \hat{\Var}(\ln \hat{p}_i)
+  = \frac{1}{\hat{p}_i^2} \Var(\hat{p}_i)
+  = \frac{1}{\hat{p}_i^2} \times \frac{\hat{p}_i (1 - \hat{p}_i)}{n_i}
+  = \frac{1}{m_i} - \frac{1}{r_i}
+\]</span> where <span class="math inline">\(m_1 = a\)</span> and <span class="math inline">\(m_0 = c\)</span>. The large-sample <span class="math inline">\(1 - \alpha\)</span> confidence limits for the true <span class="math inline">\(\ln \RR\)</span> is <span id="eq-lnRRci"><span class="math display">\[
+    \ln \frac{\hat{p}_1}{\hat{p}_0} \pm
+    z_{1 - \frac{\alpha}{2}}
+    \sqrt{\frac{1}{a} - \frac{1}{r_1} + \frac{1}{c} - \frac{1}{r_0}}.
+\tag{9.5}\]</span></span> Because <span class="math inline">\(a \leq r_1\)</span>, we have <span class="math inline">\(a^{-1} \geq r_1^{-1}\)</span> with equality only if <span class="math inline">\(a = r_1\)</span>. Similarly, <span class="math inline">\(c^{-1} \geq r_0^{-1}\)</span> with equality only if <span class="math inline">\(c = r_0\)</span>. The corresponding <span class="math inline">\(1 - \alpha\)</span> confidence limits for <span class="math inline">\(\RR\)</span> are <span id="eq-RRci"><span class="math display">\[
+    \frac{\hat{p}_1}{\hat{p}_0}
+    \exp\Bigg(\pm z_{1 - \frac{\alpha}{2}}
+      \sqrt{\frac{1}{a} - \frac{1}{r_1}
+            + \frac{1}{c} - \frac{1}{r_0}}\Bigg)
+\tag{9.6}\]</span></span> This confidence interval includes all possible values <span class="math inline">\(\RR_0\)</span> such that a Wald test would fail to reject the null hypothesis that <span class="math inline">\(\ln \RR = \ln \RR_0\)</span>. Confidence intervals with better performance can be obtained by inverting score or likelihood ratio tests or by using Bayesian methods <span class="citation" data-cites="agresti2005frequentist">(<a href="references.html#ref-agresti2005frequentist" role="doc-biblioref">Agresti and Min 2005</a>)</span>.</p>
+</section>
+<section id="sec-OR" class="level3" data-number="9.1.3">
+<h3 data-number="9.1.3" class="anchored" data-anchor-id="sec-OR"><span class="header-section-number">9.1.3</span> Odds ratio</h3>
+<p>The <strong>odds</strong> corresponding to a probability <span class="math inline">\(p\)</span> is <span class="math display">\[
+  \odds(p) = \frac{p}{1 - p}.
+\]</span> For <span class="math inline">\(p \in [0, 1)\)</span>, the odds can take any value in <span class="math inline">\([0, \infty)\)</span>. The odds function is one-to-one because <span class="math display">\[
+  \frac{\odds(p)}{1 + \odds(p)} = p
+\]</span> for any <span class="math inline">\(p \in [0, 1)\)</span>. Thus, any probability can be converted to an odds and vice versa.</p>
+<p>The <strong>odds ratio</strong> comparing the exposed to the unexposed is <span class="math display">\[
+  \OR = \frac{\odds(p_1)}{\odds(p_0)}
+  = \frac{p_1 / (1 - p_1)}{p_0 / (1 - p_0)},
+\]</span> which is defined when <span class="math inline">\(p_1 \geq 0\)</span> and <span class="math inline">\(p_0 &gt; 0\)</span>. It can take any value in <span class="math inline">\([0, \infty)\)</span>. The odds ratio is always farther from the null than the risk ratio because <span class="math display">\[
+  \OR = \RR \frac{1 - p_0}{1 - p_1}
+  \implies
+  \begin{cases}
+    \OR &gt; \RR &amp;\text{if } p_1 &gt; p_0, \\
+    \OR = \RR &amp;\text{if } p_1 = p_0, \\
+    \OR &lt; \RR &amp;\text{if } p_1 &lt; p_0.
+  \end{cases}
+\]</span> Because <span class="math inline">\(\Var(\ln \OR) &gt; \Var(\ln \RR)\)</span>, this does not imply that a hypothesis test based on the odds ratio is necessarily more powerful than a test based on the risk ratio. When exposure and disease are independent, <span class="math inline">\(\OR = 1\)</span> because <span class="math inline">\(\odds(p_1) = \odds(p_0)\)</span>.</p>
+<p>The MLE of the odds ratio is <span id="eq-ORmle"><span class="math display">\[
+  \hat{\OR}
+  = \frac{\odds(\hat{p}_1)}{\odds(\hat{p}_0)}
+  = \frac{a / (r_1 - a)}{c / (r_0 - c)}
+  = \frac{a d}{b c},
+\tag{9.7}\]</span></span> which is defined as long as <span class="math inline">\(b &gt; 0\)</span> (which implies <span class="math inline">\(r_1 &gt; 0\)</span>) and <span class="math inline">\(c &gt; 0\)</span> (which implies <span class="math inline">\(r_0 &gt; 0\)</span>). As with the risk ratio, we use a log transformation to turn the product into a sum: <span class="math display">\[
+  \ln \hat{\OR}
+  = \ln \frac{\hat{p}_1}{1 - \hat{p}_1} - \ln \frac{\hat{p}_0}{1 - \hat{p}_0}
+  = \logit(\hat{p}_1) - \logit(\hat{p}_0)
+\]</span> where <span class="math display">\[
+  \logit(p) = \ln \frac{p}{1 - p}
+\]</span> is the <strong>logit transformation</strong> that we first saw in <a href="mlestimation.html#sec-delta" class="quarto-xref"><span>Section 3.4.1</span></a>. The logit transformation ensures that our confidence intervals have appropriate bounds because <span class="math inline">\(\ln\OR \in (-\infty, \infty)\)</span> if and only if <span class="math inline">\(\OR \in (0, \infty)\)</span>. Because outcomes in the two groups are independent, we have <span id="eq-var-lnOR"><span class="math display">\[
+  \Var\big(\ln \hat{\OR}\big) =
+  \Var\bigg(\ln \frac{\hat{p}_0}{1 - \hat{p}_0}\bigg)
+  + \Var\bigg(\ln \frac{\hat{p}_1}{1 - \hat{p}_1}\bigg).
+\tag{9.8}\]</span></span> by <a href="probability.html#eq-lincomV" class="quarto-xref">Equation&nbsp;<span>1.12</span></a>. Because <span class="math display">\[
+    \logit'(p) = \frac{1}{p} + \frac{1}{1 - p} = \frac{1}{p (1 - p)},
+\]</span> the delta method gives us the estimated variance <span class="math display">\[
+  \hat{\Var}\bigl(\logit(\hat{p}_i)\bigr)
+  = \frac{1}{\hat{p}^2_i (1 - \hat{p}_i)^2} \Var(\hat{p}_i)
+  = \frac{1}{m_i} + \frac{1}{r_i - m_i}
+\]</span> where <span class="math inline">\(m_1 = a\)</span> and <span class="math inline">\(m_0 = c\)</span>. A large-sample <span class="math inline">\(1 - \alpha\)</span> confidence interval for the true <span class="math inline">\(\ln \OR\)</span> is <span id="eq-lnORci"><span class="math display">\[
+  \ln \frac{\odds(\hat{p}_1)}{\odds(\hat{p}_0)}
+  \pm z_{1 - \frac{\alpha}{2}}
+    \sqrt{\frac{1}{a} + \frac{1}{b} + \frac{1}{c} + \frac{1}{d}}.
+\tag{9.9}\]</span></span> The corresponding <span class="math inline">\(1 - \alpha\)</span> confidence limits for the <span class="math inline">\(\OR\)</span> are <span id="eq-ORci"><span class="math display">\[
+  \frac{\odds(\hat{p}_1)}{\odds(\hat{p}_0)}
+  \exp\Bigg(\pm z_{1 - \frac{\alpha}{2}}
+            \sqrt{\frac{1}{a} + \frac{1}{b}
+                  + \frac{1}{c} + \frac{1}{d}}\Bigg)
+\tag{9.10}\]</span></span> This confidence interval includes all possible values <span class="math inline">\(\OR_0\)</span> such that a Wald test would fail to reject the null hypothesis that <span class="math inline">\(\ln \OR = \ln \OR_0\)</span>. Confidence intervals with better performance can be obtained by inverting score or likelihood ratio tests or by using Bayesian methods <span class="citation" data-cites="agresti2005frequentist">(<a href="references.html#ref-agresti2005frequentist" role="doc-biblioref">Agresti and Min 2005</a>)</span>.</p>
+</section>
+<section id="incidence-rate-ratio" class="level3" data-number="9.1.4">
+<h3 data-number="9.1.4" class="anchored" data-anchor-id="incidence-rate-ratio"><span class="header-section-number">9.1.4</span> Incidence rate ratio</h3>
+<p>If there is right censoring and left truncation, we cannot calculate a risk ratio or odds ratio directly but we can still calculate the incidence rate in each group. Recall that the incidence rate is a maximum likelihood for an exponential rate parameter <span class="math inline">\(\lambda\)</span>. If times to disease onset in the each exposure groups have an exponential distribution, then the <strong>incidence rate ratio</strong> is <span class="math display">\[
+  \IRR = \frac{\lambda_1}{\lambda_0}
+\]</span> where <span class="math inline">\(\lambda_1\)</span> is the rate in the exposed and <span class="math inline">\(\lambda_0\)</span> is the rate in the unexposed. It is defined whenever <span class="math inline">\(\lambda_1 \geq 0\)</span> and <span class="math inline">\(\lambda_0 &gt; 0\)</span>, and it can take any value in <span class="math inline">\([0, \infty)\)</span>. When exposure and disease are independent, <span class="math inline">\(\IRR = 1\)</span> because <span class="math inline">\(\lambda_1 = \lambda_0\)</span>. The incidence rate ratio is sometimes called the <em>incidence density ratio</em> <span class="citation" data-cites="miettinen1976estimability">(<a href="references.html#ref-miettinen1976estimability" role="doc-biblioref">O. Miettinen 1976</a>)</span>, and it equals the hazard ratio when the times to events in both exposure groups have exponential distributions.</p>
+<p>Let <span class="math inline">\(T_1\)</span> be the total person-time in the exposed group and <span class="math inline">\(T_0\)</span> be the total person-time in the unexposed group. Based on the results from <a href="longitudinal.html#sec-incrate" class="quarto-xref"><span>Section 5.3.2</span></a>, the MLE of the incidence rate ratio is <span id="eq-irr"><span class="math display">\[
+  \hat{\IRR}
+  = \frac{\hat{\lambda}_1}{\hat{\lambda}_0}
+  = \frac{a / T_1}{c / T_0}.
+\tag{9.11}\]</span></span> To calculate a confidence interval for the true <span class="math inline">\(\IRR\)</span>, we use a log transformation to get a sum instead of a ratio: <span class="math display">\[
+  \ln \hat{\IRR} = \ln \frac{a}{T_1} - \ln \frac{c}{T_0}.
+\]</span> Because outcomes in the two groups are independent, <span class="math display">\[
+  \Var\big(\ln \hat{\IRR}\big) =
+  \Var\bigg(\ln \frac{a}{T_1}\bigg) + \Var\bigg(\ln \frac{c}{T_0}\bigg).
+\]</span> By the delta method, the estimated variance of <span class="math inline">\(\ln \hat{IRR}\)</span> is <span id="eq-var-lnIRR"><span class="math display">\[
+  \hat{\Var}\bigg(\ln \frac{m_i}{T_i}\bigg) =
+  \bigg(\frac{T_i}{m_i}\bigg)^2 \Var\bigg(\frac{m_i}{T_i}\bigg)
+  = \frac{T_i^2}{m_i^2} \times \frac{m_i}{T_i^2}
+  = \frac{1}{m_i}
+\tag{9.12}\]</span></span> where <span class="math inline">\(m_1 = a\)</span> and <span class="math inline">\(m_0 = c\)</span>. A large-sample <span class="math inline">\(1 - \alpha\)</span> confidence interval for the true <span class="math inline">\(\ln \IRR\)</span> is <span class="math display">\[
+  \ln \frac{\hat{\lambda}_1}{\hat{\lambda}_0} \pm
+  z_{1 - \frac{\alpha}{2}} \sqrt{\frac{1}{a} + \frac{1}{c}}.
+\]</span> The corresponding <span class="math inline">\(1 - \alpha\)</span> confidence limits for <span class="math inline">\(\IRR\)</span> are <span id="eq-IRRci"><span class="math display">\[
+  \frac{\hat{\lambda}_1}{\hat{\lambda}_0}
+  \exp\Bigg(\pm z_{1 - \frac{\alpha}{2}}
+            \sqrt{\frac{1}{a} + \frac{1}{c}}\Bigg).
+\tag{9.13}\]</span></span> This confidence interval includes all possible values <span class="math inline">\(\IRR_0\)</span> such that a Wald test would fail to reject the null hypothesis that <span class="math inline">\(\ln \IRR = \ln \IRR_0\)</span>. Confidence intervals with better performance can be obtained by inverting score or likelihood ratio tests or by using Bayesian methods <span class="citation" data-cites="agresti2012categorical">(<a href="references.html#ref-agresti2012categorical" role="doc-biblioref">Agresti 2013</a>)</span>.</p>
+</section>
+</section>
+<section id="generalized-linear-models" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="generalized-linear-models"><span class="header-section-number">9.2</span> Generalized linear models</h2>
+<p>The foundation for all regression models is <strong>linear regression</strong>. Let <span class="math inline">\(Y\)</span> denote an <em>outcome</em> and let <span class="math inline">\(X_1, \ldots, X_k\)</span> be a set of <em>predictors</em> or <em>covariates</em> that we wish to use to predict <span class="math inline">\(Y\)</span>. Then a linear regression model has the form <span class="math display">\[
+  \E[Y \given{} X] = \beta_0 + \beta_1 X_1 + \ldots + \beta_k X_k,
+\]</span> or equivalently <span class="math display">\[
+  Y = \beta_0 + \beta_1 X_1 + \ldots + \beta_k X_k + \varepsilon,
+\]</span> where <span class="math inline">\(\varepsilon\)</span> is an error term with mean zero. The point estimates of the <strong>coefficients</strong> <span class="math inline">\(\beta_0, \beta_1, \ldots, \beta_k\)</span> are obtained by ordinary least squares, which is equivalent to assuming a normal distribution for <span class="math inline">\(\varepsilon\)</span> and using maximum likelihood estimation. The coefficient <span class="math inline">\(\beta_0\)</span> is usually called the <strong>intercept</strong>, and it represents the mean outcome when all predictors equal zero. Each <span class="math inline">\(\beta_j\)</span> can be interpreted as the change in the expected value of <span class="math inline">\(\E(Y \given{} X)\)</span> associated with a one-unit increase in <span class="math inline">\(X_j\)</span> when all other predictors are held constant.</p>
+<p>Because probabilities are means of indicator variables (see <a href="probability.html#sec-indicator" class="quarto-xref"><span>Section 1.3.1</span></a>), a linear regression model with binary disease outcome <span class="math inline">\(D\)</span> with a binary exposure or treatment <span class="math inline">\(X\)</span> can be used to estimate risks: <span class="math display">\[
+\Pr(D = 1 \given{} X = x)
+= \beta_0 + \beta_1 x.
+\]</span> The intercept <span class="math inline">\(\beta_0\)</span> is the risk of disease among the unexposed (<span class="math inline">\(X = 0\)</span>), and the coefficient <span class="math inline">\(\beta_1\)</span> is the risk difference <span class="math inline">\(\RD\)</span>: <span class="math display">\[
+  \RD
+  = (\beta_0 + \beta_1) - \beta_0
+  = \beta_1.
+\]</span> However, the likelihood of this model is not quite correct for binary outcomes. The conditional distribution of <span class="math inline">\(D\)</span> given <span class="math inline">\(X\)</span> is a Bernoulli (see <a href="probability.html#sec-Bernoulli" class="quarto-xref"><span>Section 1.3.5</span></a>) distribution, not a normal distribution. Although the point estimates of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> are unbiased, hypothesis tests and confidence intervals based on this model are distorted.</p>
+<p>In a <strong>generalized linear model</strong> (GLM), we have <span id="eq-glm"><span class="math display">\[
+  g\big(\E[Y \given{} X]\big)
+  = \beta_0 + \beta_1 X_1 + \ldots + \beta_k X_k
+\tag{9.14}\]</span></span> where <span class="math inline">\(g\)</span> is called the <strong>link function</strong> and the likelihood is determined by the <strong>family</strong> of the model, which specifies the conditional distribution of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X\)</span> <span class="citation" data-cites="nelder1972generalized mccullagh1989generalized">(<a href="references.html#ref-nelder1972generalized" role="doc-biblioref">Nelder and Wedderburn 1972</a>; <a href="references.html#ref-mccullagh1989generalized" role="doc-biblioref">McCullagh and Nelder 1989</a>)</span>. The left-hand side of <a href="#eq-glm" class="quarto-xref">Equation&nbsp;<span>9.14</span></a> is called the <strong>linear predictor</strong>. Linear regression is a GLM from the <em>Gaussian family</em> with the <em>identity link</em> <span class="math inline">\(g(y) = y\)</span>.</p>
+<p>GLMs from the <em>binomial family</em> can be used to estimate risk differences, risk ratios, odds ratios, and incidence rate ratios. For some of these measures of association, there are alternative GLMs that can be used if a binomial GLM does not converge. For simplicity, we will focus on two-sample inference, so our models will contain a single binary predictor <span class="math inline">\(X\)</span>. The measure of association estimated by the model is determined by the link function. In models with a single binary covariate, the Wald confidence intervals for the measure of association match the traditional confidence intervals from <a href="#sec-massociation" class="quarto-xref"><span>Section 9.1</span></a> calculated using the delta method and the binomial variance. However, binomial GLMs allow the calculation of score and likelihood ratio confidence intervals, and they can be used in Bayesian inference. The resulting interval estimates often perform better than Wald confidence intervals in terms of coverage probability and width <span class="citation" data-cites="agresti2005frequentist agresti2012categorical">(<a href="references.html#ref-agresti2005frequentist" role="doc-biblioref">Agresti and Min 2005</a>; <a href="references.html#ref-agresti2012categorical" role="doc-biblioref">Agresti 2013</a>)</span>.</p>
+<section id="sec-RDglm" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="sec-RDglm"><span class="header-section-number">9.2.1</span> Risk differences and the identity link</h3>
+<p>To estimate risk differences, a GLM from the <strong>binomial family</strong> with an <strong>identity link</strong> <span class="math inline">\(g(p) = p\)</span> can be used. In this model <span class="math display">\[
+  \Pr(D = 1 \given{} X = x)
+  = \beta_0 + \beta_1 x,
+\]</span> and a binomial likelihood is used to estimate the coefficients. The risk of disease in the unexposed is <span class="math display">\[
+  p_0 = \Pr(D = 1 \given{} X = 0)
+  = \beta_0,
+\]</span> and the risk of disease in the exposed is <span class="math display">\[
+  p_1 = \Pr(D = 1 \given{} X = 1)
+  = \beta_0 + \beta_1.
+\]</span> The risk difference is <span class="math display">\[
+  \RD = p_1 - p_0
+  = (\beta_1 + \beta_0) - \beta_0
+  = \beta_1.
+\]</span> Thus, <span class="math inline">\(\hat{\beta}_0\)</span> is the estimated risk of disease in the unexposed and <span class="math inline">\(\hat{\beta}_1\)</span> is the estimated risk difference. Their <span class="math inline">\(1 - \alpha\)</span> confidence intervals can be interpreted as confidence intervals for the risk in the exposed and the risk difference, respectively. When the confidence interval for <span class="math inline">\(\beta_1\)</span> is a Wald confidence interval, it will match <a href="#eq-RDci" class="quarto-xref">Equation&nbsp;<span>9.3</span></a>. However, the Gaussian GLM can be used to calculate score or likelihood ratio confidence limits or calculate a Bayesian posterior distribution.</p>
+<p>The estimated risk of disease in the exposed is <span class="math inline">\(\hat{\beta}_0 + \hat{\beta}_1\)</span>, and its estimated variance is <span id="eq-betasum-var"><span class="math display">\[
+  \hat{\Var}\bigl(\hat{\beta}_0 + \hat{\beta}_1\bigr)
+  = \hat{\Var}\bigl(\hat{\beta}_0\bigr) + \hat{\Var}\bigl(\hat{\beta}_1\bigr)
+    + 2 \Cov\bigl(\hat{\beta}_0, \hat{\beta}_1\bigr)
+\tag{9.15}\]</span></span> by equation <a href="probability.html#eq-lincomV" class="quarto-xref">Equation&nbsp;<span>1.12</span></a>. Each of the variances and covariances on the right can be obtained from the covariance matrix for the regression coefficients. The corresponding <span class="math inline">\(1 - \alpha\)</span> Wald confidence interval is <span id="eq-betasum-ci"><span class="math display">\[
+  \big(\hat{\beta}_0 + \hat{\beta}_1\big)
+  \pm z_{1 - \frac{\alpha}{2}} \sqrt{\hat{\Var}\bigl({\hat{\beta}_0 + \hat{\beta}_1}}\bigr),
+\tag{9.16}\]</span></span> which is accurate in large samples.</p>
+<p>Because probabilities must live in the interval <span class="math inline">\([0, 1]\)</span>, the set of possible combinations of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> is constrained. We need both <span class="math inline">\(\beta_0 \in [0, 1]\)</span> and <span class="math inline">\(\beta_0 + \beta_1 X \in [0, 1]\)</span> for all values of <span class="math inline">\(X\)</span> in our data. <a href="#fig-glm-RD-bounds" class="quarto-xref">Figure&nbsp;<span>9.1</span></a> shows the possible combinations of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> in a binomial GLM with the identity link and a binary <span class="math inline">\(X\)</span> that is an indicator variable for exposure or treatment as in <a href="condprob.html#tbl-2x2" class="quarto-xref">Table&nbsp;<span>2.1</span></a>. In this case, the model will fail to converge if <span class="math inline">\(a = 0\)</span> (which implies <span class="math inline">\(\beta_0 + \beta_1 = 0\)</span>), <span class="math inline">\(b = 0\)</span> (which implies <span class="math inline">\(\beta_0 + \beta_1 = 1)\)</span>, <span class="math inline">\(c = 0\)</span> (which implies <span class="math inline">\(\beta_0 = 0\)</span>), or <span class="math inline">\(d = 0\)</span> (which implies <span class="math inline">\(\beta_1 = 1\)</span>).</p>
+<div class="cell">
+<div class="code-with-filename">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-with-filename-file">
+<pre><strong>glm-RD-bounds.R</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Bounds on beta0 and beta1 in a binomial GLM for the risk difference</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This uses the identity link. We assume a single binary covariate coded 0/1.</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="at">type =</span> <span class="st">"n"</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.75</span>, <span class="fl">1.75</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">1.25</span>, <span class="fl">1.25</span>),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"Intercept "</span>, (beta[<span class="dv">0</span>]))),</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"Slope "</span>, (beta[<span class="dv">1</span>]))))</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">polygon</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="at">border =</span> <span class="st">"darkgray"</span>, <span class="at">col =</span> <span class="st">"gray"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>)  <span class="co"># x-axis (y = 0)</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">0</span>)  <span class="co"># y-axis (x = 0)</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># labels</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="sc">-</span><span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fu">expression</span>(beta[<span class="dv">0</span>] <span class="sc">==</span> <span class="dv">0</span>), <span class="at">srt =</span> <span class="dv">90</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">1.1</span>, <span class="sc">-</span><span class="fl">0.5</span>, <span class="fu">expression</span>(beta[<span class="dv">0</span>] <span class="sc">==</span> <span class="dv">1</span>), <span class="at">srt =</span> <span class="dv">90</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">0.4</span>, <span class="sc">-</span><span class="fl">0.5</span>, <span class="fu">expression</span>(beta[<span class="dv">0</span>] <span class="sc">+</span> beta[<span class="dv">1</span>] <span class="sc">==</span> <span class="dv">0</span>), <span class="at">srt =</span> <span class="sc">-</span><span class="dv">45</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">0.6</span>, <span class="fl">0.5</span>, <span class="fu">expression</span>(beta[<span class="dv">0</span>] <span class="sc">+</span> beta[<span class="dv">1</span>] <span class="sc">==</span> <span class="dv">1</span>), <span class="at">srt =</span> <span class="sc">-</span><span class="dv">45</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output-display">
+<div id="fig-glm-RD-bounds" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-glm-RD-bounds-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="cohort_files/figure-html/fig-glm-RD-bounds-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;9.1: The gray triangle shows possible combinations of the intercept \beta_0 and the slope \beta_1 in a binomial GLM with the identity link and a single binary predictor coded 0/1."><img src="cohort_files/figure-html/fig-glm-RD-bounds-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-glm-RD-bounds-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.1: The gray triangle shows possible combinations of the intercept <span class="math inline">\(\beta_0\)</span> and the slope <span class="math inline">\(\beta_1\)</span> in a binomial GLM with the identity link and a single binary predictor coded 0/1.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<section id="gaussian-glm-for-risk-differences" class="level4" data-number="9.2.1.1">
+<h4 data-number="9.2.1.1" class="anchored" data-anchor-id="gaussian-glm-for-risk-differences"><span class="header-section-number">9.2.1.1</span> Gaussian GLM for risk differences</h4>
+<p>When a linear binomial GLM fails to converge, a common workaround is to use a Gaussian GLM with an identity link and a robust (sandwich) variance estimator. A normal(<span class="math inline">\(p\)</span>, <span class="math inline">\(\sigma^2\)</span>) distribution has mean <span class="math inline">\(p\)</span>, so the regression produces unbiased point estimates of the coefficients. However, it estimates a single variance <span class="math inline">\(\sigma^2\)</span>. The Bernoulli variance changes with <span class="math inline">\(p\)</span>, so groups with different risks should have different variances. The <span class="math inline">\(\sigma^2\)</span> from the linear regression typically produces Wald confidence intervals that are slightly too narrow. The robust variance estimator corrects for this, producing valid Wald confidence intervals. Score and likelihood ratio confidence intervals are not available because the likelihood is not quite correct.</p>
+</section>
+</section>
+<section id="sec-RRglm" class="level3" data-number="9.2.2">
+<h3 data-number="9.2.2" class="anchored" data-anchor-id="sec-RRglm"><span class="header-section-number">9.2.2</span> Risk ratios and the log link</h3>
+<p>A binomial GLM with a <strong>log link</strong> <span class="math inline">\(g(p) = \ln p\)</span> is called a <strong>log-binomial regression</strong> model. In this model <span class="math display">\[
+  \ln\bigl(\Pr(D = 1 \given{} X = x)\bigr) = \beta_0 + \beta_1 x.
+\]</span> The risk of disease in the unexposed is <span class="math display">\[
+  p_0 = \exp(\beta_0),
+\]</span> and the risk of diseased in the exposed is <span class="math display">\[
+  p_1 = \exp(\beta_0 + \beta_1).
+\]</span> The risk ratio comparing the exposed to the unexposed is <span class="math display">\[
+  \RR
+  = \frac{e^{\beta_0 + \beta_1}}{e^{\beta_0}}
+  = e^{\beta_1}.
+\]</span> Thus, <span class="math inline">\(\exp(\hat{\beta}_0)\)</span> is the estimated risk of disease in the unexposed and <span class="math inline">\(\exp(\hat{\beta}_1)\)</span> is the estimated risk ratio comparing the exposed to the unexposed. If the <span class="math inline">\(1 - \alpha\)</span> confidence interval for <span class="math inline">\(\beta_i\)</span> is <span class="math inline">\((\ell_i, u_i)\)</span>, then <span class="math inline">\((e^{\ell_i}, e^{u_i})\)</span> is the corresponding confidence interval for the risk of disease in the unexposed (<span class="math inline">\(i = 0\)</span>) or the risk ratio (<span class="math inline">\(i = 1\)</span>). When the confidence interval for <span class="math inline">\(\beta_1\)</span> is a Wald confidence interval, it will match the confidence interval for <span class="math inline">\(\ln \RR\)</span> in <a href="#eq-lnRRci" class="quarto-xref">Equation&nbsp;<span>9.5</span></a> and the corresponding confidence interval for the <span class="math inline">\(\RR\)</span> in <a href="#eq-RRci" class="quarto-xref">Equation&nbsp;<span>9.6</span></a>. However, the log-binomial GLM can be used to calculate score or likelihood ratio confidence limits or a Bayesian posterior distribution.</p>
+<p>The estimated risk of disease in the exposed is <span class="math inline">\(\exp\bigl(\hat{\beta}_0 + \hat{\beta}\bigr)\)</span>. The estimated variance of <span class="math inline">\(\hat{\beta}_0 + \hat{\beta}_1\)</span> is given in <a href="#eq-betasum-var" class="quarto-xref">Equation&nbsp;<span>9.15</span></a>, and <span class="math inline">\(1 - \alpha\)</span> confidence limits for the sum are given in <a href="#eq-betasum-ci" class="quarto-xref">Equation&nbsp;<span>9.16</span></a>. The corresponding confidence limits for the risk in the exposed are <span id="eq-logbinom-p1ci"><span class="math display">\[
+  e^{\big(\hat{\beta}_0 + \hat{\beta}_1\big)
+    \pm z_{1 - \frac{\alpha}{2}}
+      \sqrt{\hat{\Var}\bigl({\hat{\beta}_0 + \hat{\beta}_1}}\bigr)}
+\tag{9.17}\]</span></span> which is accurate in large samples. It is not possible to get score or likelihood ratio confidence intervals for the risk in the exposed without reparameterizing the model, but Bayesian methods can be used to calculate credible intervals.</p>
+<p>As in the binomial GLM for risk differences, not all combinations of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> produce probabilities in <span class="math inline">\([0, 1]\)</span>. the parameter space for log-binomial regression is bounded in the sense that not all combinations of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> are possible. We get a probability greater than one whenever <span class="math inline">\(\beta_0 + \beta_1 X &gt; 0\)</span>. When the maximum likelihood estimate <span class="math inline">\((\hat{\beta}_0, \hat{\beta}_1)\)</span> is close to this boundary for some values of <span class="math inline">\(X\)</span> in the data, the model can fail to converge. In some cases, this problem can be solved by reparameterizing the model to put the maximum farther away from the boundary of the new parameter space or by using more sophisticated numerical methods to maximize the likelihood <span class="citation" data-cites="williamson2013log">(<a href="references.html#ref-williamson2013log" role="doc-biblioref">Williamson, Eliasziw, and Fick 2013</a>)</span>. <a href="#fig-glm-RR-bounds" class="quarto-xref">Figure&nbsp;<span>9.2</span></a> shows the possible combinations of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> in a binomial GLM with the identity link and a binary predictor <span class="math inline">\(X\)</span> that is an indicator variable for exposure or treatment as in <a href="condprob.html#tbl-2x2" class="quarto-xref">Table&nbsp;<span>2.1</span></a>. In this case, the model will not converge if <span class="math inline">\(a = 0\)</span> (which implies <span class="math inline">\(\beta_0 + \beta_1 = -\infty\)</span>), <span class="math inline">\(b = 0\)</span> (which implies <span class="math inline">\(\beta_0 + \beta_1 = 0\)</span>), <span class="math inline">\(c = 0\)</span> (which implies <span class="math inline">\(\beta_0 = -\infty\)</span>) or <span class="math inline">\(d = 0\)</span> (which implies <span class="math inline">\(\beta_0 = 0\)</span>).</p>
+<div class="cell">
+<div class="code-with-filename">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-with-filename-file">
+<pre><strong>glm-RR-bounds.R</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Bounds on beta0 and beta1 in a binomial GLM for the risk ratio</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This uses the log link, and we assume a single binary covariate coded 0/1.</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">2</span>), <span class="fu">c</span>(<span class="dv">0</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>), <span class="at">type =</span> <span class="st">"n"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">1.5</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">1.5</span>, <span class="dv">1</span>),</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"Intercept "</span>, (beta[<span class="dv">0</span>]))),</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"Slope "</span>, (beta[<span class="dv">1</span>]))))</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">polygon</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">2</span>), <span class="fu">c</span>(<span class="dv">0</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>),</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">border =</span> <span class="st">"darkgray"</span>, <span class="at">col =</span> <span class="st">"gray"</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>)  <span class="co"># x-axis (y = 0)</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">0</span>)  <span class="co"># y-axis (x = 0)</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># labels</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">0.1</span>, <span class="sc">-</span><span class="fl">0.75</span>, <span class="fu">expression</span>(beta[<span class="dv">0</span>] <span class="sc">==</span> <span class="dv">0</span>), <span class="at">srt =</span> <span class="dv">90</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="fl">0.6</span>, <span class="fu">expression</span>(beta[<span class="dv">0</span>] <span class="sc">+</span> beta[<span class="dv">1</span>] <span class="sc">==</span> <span class="dv">0</span>), <span class="at">srt =</span> <span class="sc">-</span><span class="dv">45</span>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(<span class="sc">-</span><span class="fl">1.2</span>, <span class="fl">0.2</span>, <span class="sc">-</span><span class="fl">1.5</span>, <span class="fl">0.2</span>, <span class="at">code =</span> <span class="dv">2</span>, <span class="at">length =</span> <span class="fl">0.1</span>)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="sc">-</span><span class="fl">0.95</span>, <span class="fl">0.2</span>, <span class="fu">expression</span>(beta[<span class="dv">0</span>] <span class="sc">%-&gt;%</span> <span class="sc">-</span>infinity))</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(<span class="sc">-</span><span class="fl">1.3</span>, <span class="sc">-</span><span class="fl">1.3</span>, <span class="sc">-</span><span class="fl">1.5</span>, <span class="sc">-</span><span class="fl">1.5</span>, <span class="at">code =</span> <span class="dv">2</span>, <span class="at">length =</span> <span class="fl">0.1</span>)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="sc">-</span><span class="fl">1.1</span>, <span class="sc">-</span><span class="fl">1.2</span>, <span class="fu">expression</span>(beta[<span class="dv">0</span>] <span class="sc">+</span> beta[<span class="dv">1</span>] <span class="sc">%-&gt;%</span> <span class="sc">-</span>infinity))</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(<span class="sc">-</span><span class="fl">0.2</span>, <span class="sc">-</span><span class="fl">1.2</span>, <span class="sc">-</span><span class="fl">0.2</span>, <span class="sc">-</span><span class="fl">1.5</span>, <span class="at">code =</span> <span class="dv">2</span>, <span class="at">length =</span> <span class="fl">0.1</span>)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="sc">-</span><span class="fl">0.2</span>, <span class="sc">-</span><span class="fl">1.1</span>, <span class="fu">expression</span>(beta[<span class="dv">1</span>] <span class="sc">%-&gt;%</span> <span class="sc">-</span>infinity))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output-display">
+<div id="fig-glm-RR-bounds" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-glm-RR-bounds-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="cohort_files/figure-html/fig-glm-RR-bounds-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;9.2: The gray area shows the possible combinations of the intercept \beta_0 and the slope \beta_1 in a binomial GLM with the log link and a single binary predictor coded 0/1."><img src="cohort_files/figure-html/fig-glm-RR-bounds-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-glm-RR-bounds-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.2: The gray area shows the possible combinations of the intercept <span class="math inline">\(\beta_0\)</span> and the slope <span class="math inline">\(\beta_1\)</span> in a binomial GLM with the log link and a single binary predictor coded 0/1.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-ORglm" class="level3" data-number="9.2.3">
+<h3 data-number="9.2.3" class="anchored" data-anchor-id="sec-ORglm"><span class="header-section-number">9.2.3</span> Odds ratios and the logit link</h3>
+<p>A binomial GLM with a <strong>logit link</strong> <span class="math inline">\(g(p) = \logit(p)\)</span> is called a <strong>logistic regression</strong> model,which was originally developed by <span class="citation" data-cites="berkson1944application">Berkson (<a href="references.html#ref-berkson1944application" role="doc-biblioref">1944</a>)</span> and later refined by <span class="citation" data-cites="cox1958regression">Cox (<a href="references.html#ref-cox1958regression" role="doc-biblioref">1958</a>)</span>. In this model, <span id="eq-glm-logistic"><span class="math display">\[
+  \logit\bigl(\Pr(D = 1 \given{} X = x)\bigr) = \beta_0 + \beta_1 x.
+\tag{9.18}\]</span></span> The odds of disease in the unexposed is <span class="math display">\[
+  \odds(p_0) = e^{\beta_0},
+\]</span> and the odds of diseased in the exposed is <span class="math display">\[
+  \odds(p_1) = e^{\beta_0 + \beta_1}.
+\]</span> The odds ratio comparing the exposed to the unexposed is <span class="math display">\[
+  \OR = \frac{e^{\beta_0 + \beta_1}}{e^{\beta_0}} = e^{\beta_1}.
+\]</span> Thus, <span class="math inline">\(\exp(\hat{\beta}_0)\)</span> is the estimated odds of disease in the unexposed and <span class="math inline">\(\exp(\hat{\beta}_1)\)</span> is the estimated odds ratio comparing the exposed to the unexposed. If the <span class="math inline">\(1 - \alpha\)</span> confidence interval for <span class="math inline">\(\beta_i\)</span> is <span class="math inline">\((\ell_i, u_i)\)</span>, then <span class="math inline">\((e^{\ell_i}, e^{u_i})\)</span> is the corresponding confidence interval for the odds of disease in the unexposed (<span class="math inline">\(i = 0\)</span>) or the odds ratio (<span class="math inline">\(i = 1\)</span>). When the confidence interval for <span class="math inline">\(\beta_1\)</span> is a Wald confidence interval, it will match the confidence interval for <span class="math inline">\(\ln \OR\)</span> in <a href="#eq-lnORci" class="quarto-xref">Equation&nbsp;<span>9.9</span></a> and the corresponding confidence interval for the <span class="math inline">\(\OR\)</span> in <a href="#eq-ORci" class="quarto-xref">Equation&nbsp;<span>9.10</span></a>. However, the logistic GLM can be used to calculate score or likelihood ratio confidence limits or a Bayesian posterior distribution.</p>
+<p>The estimated odds of disease in the exposed is <span class="math inline">\(\exp\bigl(\hat{\beta}_0 + \hat{\beta}\bigr)\)</span>. The estimated variance of <span class="math inline">\(\hat{\beta}_0 + \hat{\beta}_1\)</span> is given in <a href="#eq-betasum-var" class="quarto-xref">Equation&nbsp;<span>9.15</span></a>, and <span class="math inline">\(1 - \alpha\)</span> confidence limits for the sum are given in <a href="#eq-betasum-ci" class="quarto-xref">Equation&nbsp;<span>9.16</span></a>. The corresponding confidence limits for the odds ratio in the exposed are given in <a href="#eq-logbinom-p1ci" class="quarto-xref">Equation&nbsp;<span>9.17</span></a>, which is accurate in large samples. It is not possible to get score or likelihood ratio confidence intervals for the odds in the exposed without reparameterizing the model, but Bayesian methods can be used to calculate credible intervals.</p>
+<p>Unlike the GLMs for the risk difference and risk ratio, there are no restrictions on <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> in a logistic regression model. Thus, it is the most numerically stable of the three regression models. However, with a single predictor <span class="math inline">\(X\)</span> that is an indicator of treatment or exposure as in <a href="condprob.html#tbl-2x2" class="quarto-xref">Table&nbsp;<span>2.1</span></a>, it will fail to converge if <span class="math inline">\(a = 0\)</span> (which implies <span class="math inline">\(\beta_0 + \beta_1 = -\infty\)</span>), <span class="math inline">\(b = 0\)</span> (which implies <span class="math inline">\(\beta_0 + \beta_1 = \infty\)</span>), <span class="math inline">\(c = 0\)</span> (which implies <span class="math inline">\(\beta_0 = \infty\)</span>), or <span class="math inline">\(d = 0\)</span> (which implies <span class="math inline">\(\beta_0 = -\infty\)</span>).</p>
+<p>Any estimate of the odds of disease can be used to obtain an estimate of the risk of disease using the inverse function for the logit transformation, which is the <em>expit</em> or <em>logistic</em> function from <a href="mlestimation.html#eq-expit" class="quarto-xref">Equation&nbsp;<span>3.19</span></a>. The name <em>logistic regression</em> comes from the fact that the logistic function is used to get a probability from the corresponding odds<span class="citation" data-cites="berkson1944application">(<a href="references.html#ref-berkson1944application" role="doc-biblioref">Berkson 1944</a>)</span>. In the model from <a href="#eq-glm-logistic" class="quarto-xref">Equation&nbsp;<span>9.18</span></a>, the risk of disease in the unexposed is <span class="math display">\[
+  \expit\bigl(e^{\beta_0}\bigr)
+  = \frac{1}{1 + e^{-(e^\beta_0)}},
+\]</span> and the risk of disease in the exposed is <span class="math display">\[
+  \expit\bigl(e^{\beta_0 + \beta_1}\bigr)
+  = \frac{1}{1 + e^{-(e^{\beta_0 + \beta_1})}}.
+\]</span> Point estimates of these risks can be obtained by replacing the unknown <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> with their maximum likelihood estimates <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>, and these estimated risks can be used to obtain point estimates of the risk ratio and risk difference. Confidence limits for the risks in the exposed and unexposed can be obtained by applying the logistic function to the confidence limits for the corresponding odds. Because the same odds ratio can occur with many different values of the risk difference or risk ratio, confidence limits for the <span class="math inline">\(\RD\)</span> or <span class="math inline">\(\RR\)</span> cannot be obtained directly from the confidence limits for the <span class="math inline">\(\OR\)</span>. However, Wald confidence limits for the risk difference or risk ratio could be obtained using the covariance matrix from the fitted logistic regression model and the delta method from <a href="mlestimation.html#sec-delta" class="quarto-xref"><span>Section 3.4.1</span></a>. Similarly, the binomial GLM for the risk difference in <a href="#sec-RDglm" class="quarto-xref"><span>Section 9.2.1</span></a> could be used to obtain point and interval estimates of the risk ratio or odds ratio, and the log-binomial for the risk ratio in <a href="#sec-RRglm" class="quarto-xref"><span>Section 9.2.2</span></a> could be used to obtain point and interval estimates of the risk difference or odds ratio. Although it is more convenient to use a regression model that expresses your preferred measure of association in terms of a single coefficient, the measure of association should not necessarily dictate the choice of regression model.</p>
+</section>
+<section id="sec-HRglm" class="level3" data-number="9.2.4">
+<h3 data-number="9.2.4" class="anchored" data-anchor-id="sec-HRglm"><span class="header-section-number">9.2.4</span> Hazard ratio and the complementary log-log link*</h3>
+<p>Let <span class="math inline">\(h_1(t)\)</span> be the hazard function in the exposed and <span class="math inline">\(h_0(t)\)</span> be the hazard function in the unexposed (see <a href="longitudinal.html#sec-haz" class="quarto-xref"><span>Section 5.2.2</span></a>). Suppose there is a constant hazard ratio <span id="eq-HR"><span class="math display">\[
+  \HR = \frac{h_1(t)}{h_0(t)}
+\tag{9.19}\]</span></span> comparing the exposed to the unexposed. If <span class="math inline">\(H_1(t)\)</span> and <span class="math inline">\(H_0(t)\)</span> are the corresponding cumulative hazards (see <a href="longitudinal.html#sec-cumhaz" class="quarto-xref"><span>Section 5.2.3</span></a>), then <span class="math display">\[
+  H_1(t) = \HR \times H_0(t).
+\]</span> If <span class="math inline">\(S_1(t)\)</span> and <span class="math inline">\(S_0(t)\)</span> are the corresponding survival functions (see <a href="longitudinal.html#sec-surv" class="quarto-xref"><span>Section 5.2.1</span></a>), then <span class="math display">\[
+  S_1(t) = e^{-H_1(t)} = e^{-\HR \times H_0(t)} = S_0(t)^\HR.
+\]</span> If <span class="math inline">\(p_1\)</span> and <span class="math inline">\(p_0\)</span> are risks in the exposed and unexposed defined over the same interval, then <span id="eq-p1p0-HR"><span class="math display">\[
+  1 - p_1 = (1 - p_0)^\HR.
+\tag{9.20}\]</span></span> The <strong>complementary log-log</strong> link function is <span class="math display">\[
+  \cloglog(p) = \ln(-\ln (1 - p))
+\]</span> and it has the inverse function <span class="math display">\[
+  \cloglog^{-1}(v) = 1 - e^{-(e^v)}.
+\]</span> If we take the complementary log-log link on both sides of <a href="#eq-p1p0-HR" class="quarto-xref">Equation&nbsp;<span>9.20</span></a>, then <span class="math display">\[
+  \cloglog(p_1)
+  = \ln (\HR \times -\ln p_0)
+  = \ln \HR  + \cloglog(p_0).
+\]</span> In a binomial GLM with the complementary log-log link, <span id="eq-glm-HR"><span class="math display">\[
+  \cloglog\bigl(\Pr(D = 1 \given{} X = x)\bigr) = \beta_0 + \beta_1 x.
+\tag{9.21}\]</span></span> The risk of disease in the unexposed is <span class="math display">\[
+  \cloglog^{-1}(\beta_0) = 1 - e^{-(e^{\beta_0})},
+\]</span> and the hazard ratio comparing the exposed to the unexposed is <span class="math display">\[
+  \cloglog^{-1}(\beta_1) = 1 - e^{-(e^{\beta_1})},
+\]</span> and the risk of disease in the exposed is <span class="math display">\[
+  \cloglog^{-1}(\beta_0 + \beta_1) = e^{-(e^{\beta_0 + \beta_1})}.
+\]</span> Point estimates of these quantities can be obtained by replacing the unknown <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> with their maximum likelihood estimates <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>. Confidence intervals for the risk of disease in the exposed and the hazard ratio can be obtained by applying the <span class="math inline">\(\cloglog^{-1}\)</span> function to the confidence limits for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, respectively.</p>
+<p>The GLM for the hazard ratio in <a href="#eq-glm-HR" class="quarto-xref">Equation&nbsp;<span>9.21</span></a> assumes complete follow-up of all participants in the interval <span class="math inline">\((0, t]\)</span> over which the risks <span class="math inline">\(p_1\)</span> and <span class="math inline">\(p_0\)</span> are defined, so it cannot be used if there is left truncation (delayed entry) or right censoring. However, it does not actually require proportional hazards as in <a href="#eq-HR" class="quarto-xref">Equation&nbsp;<span>9.19</span></a>. The hazard ratio that it estimates is actually a ratio of cumulative hazards <span class="math display">\[
+  \frac{H_1(t)}{H_0(t)}
+  = \frac{\frac{1}{t} \int_0^t h_1(u) \,\dif u}{\frac{1}{t} \int_0^t h_0(u) \,\dif u}.
+\]</span> The numerator of the right-hand side is the average hazard in the exposed over the interval <span class="math inline">\((0, t]\)</span>, and the denominator is the average hazard in the unexposed over the same time interval. In the special case of proportional hazards, the ratio of these average hazards equals the hazard ratio. When there is left truncation or right censoring, methods from survival analysis are needed to estimate the hazard ratio.</p>
+</section>
+<section id="poisson-glms-for-risks" class="level3" data-number="9.2.5">
+<h3 data-number="9.2.5" class="anchored" data-anchor-id="poisson-glms-for-risks"><span class="header-section-number">9.2.5</span> Poisson GLMs for risks</h3>
+<p>When a log-binomial GLM fails to converge, a common workaround is to use a Poisson GLM with a log link and a robust variance <span class="citation" data-cites="zou2004modified naimi2020estimating">(<a href="references.html#ref-zou2004modified" role="doc-biblioref">Zou 2004</a>; <a href="references.html#ref-naimi2020estimating" role="doc-biblioref">Naimi and Whitcomb 2020</a>)</span>. The Poisson GLM with a log link has no constraints on <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> because a Poisson mean can be any positive number. Because the mean of both the Poisson(<span class="math inline">\(p\)</span>) and Bernoulli(<span class="math inline">\(p\)</span>) distributions equal <span class="math inline">\(p\)</span>, the Poisson GLM produces unbiased point estimates of the coefficients. However, the variance of a Poisson(<span class="math inline">\(p\)</span>) distribution is <span class="math inline">\(p\)</span>, which is larger than the Bernoulli(<span class="math inline">\(p\)</span>) variance of <span class="math inline">\(p (1 - p)\)</span>. <span class="citation" data-cites="zou2004modified">Zou (<a href="references.html#ref-zou2004modified" role="doc-biblioref">2004</a>)</span> showed that, in a Poisson GLM with a log link and a single binary covariate, the robust variance equals the delta method variance of <span class="math inline">\(\ln \RR\)</span>. Point estimates and Wald confidence limits for the coefficients, the risk in the unexposed and the exposed, and the risk ratio can be obtained in the same way as for the log-binomial model in . With a single binary predictor, the robust Wald confidence intervals from this model produce the same confidence intervals for <span class="math inline">\(\RR\)</span> that we got from the log transformation and delta method in <a href="#eq-lnRRci" class="quarto-xref">Equation&nbsp;<span>9.5</span></a>. This approach extends to regression models with more complex predictors and multiple predictors.</p>
+<p>For rare events (i.e., events with probabilities close to zero), the Poisson likelihood is almost the same as the binomial likelihood. If <span class="math inline">\(X \sim \text{Poisson}(p)\)</span> and <span class="math inline">\(p\)</span> is close to zero, then <span class="math display">\[
+  \begin{aligned}
+    \Pr(X = 0)  &amp;= e^{-p} \approx 1 - p, \\
+    \Pr(X = 1)  &amp;= p e^{-p} \approx p (1 - p) \approx p.
+  \end{aligned}
+\]</span> Because <span class="math inline">\((1 + p) (1 - p) = 1 - p^2\)</span>, we have <span class="math display">\[
+  \Pr(X &gt; 1)
+  = 1 - (1 + p) e^{-p}
+  \approx 1 - (1 + p) (1 - p)
+  = p^2,
+\]</span> which is much smaller than both <span class="math inline">\(p\)</span> and <span class="math inline">\(1 - p\)</span>. Because <span class="math inline">\(1 - p \approx 1\)</span>, the Poisson variance <span class="math inline">\(p\)</span> and the Bernoulli variance <span class="math inline">\(p (1 - p)\)</span> are nearly identical for rare events.</p>
+<p>A Poisson GLM with a log link can also be used to estimate risk ratios using counts of rare events in populations with known sizes. The expected count in each exposure group <span class="math inline">\(X = x\)</span> is <span class="math display">\[
+  \ln\big(\E[\text{count} \,\big|\, X = x, N_x]\big) = \ln p(x) + \ln N_x
+\]</span> where <span class="math inline">\(p(x)\)</span> is the risk of the event and <span class="math inline">\(N_X\)</span> is the total population with exposure <span class="math inline">\(X\)</span>. Let <span class="math inline">\(\mu(x) = p(x) N_x\)</span> be the expected count in the group with <span class="math inline">\(X = x\)</span>. The Poisson GLM for the risk is <span class="math display">\[
+  \ln \mu(x)
+  = \ln p(x) + \ln N_x
+  = \beta_0 + \beta_1 x + \ln N_x.
+\]</span> The term <span class="math inline">\(\ln N_x\)</span> is an <strong>offset</strong> because it has a fixed coefficient, which equals one in this case. Thus, <span class="math display">\[
+  \ln p(x) = \beta_0 + \beta_1 x.
+\]</span> The risk in the unexposed is <span class="math display">\[
+  p_0 = e^{\beta_0},
+\]</span> the risk in the exposed is <span class="math display">\[
+  p_1 = e^{\beta_0 + \beta_1},
+\]</span> and the risk ratio is <span class="math display">\[
+  \RR = \frac{e^{\beta_0 + \beta_1}}{e^{\beta_0}} = e^{\beta_1}.
+\]</span> The point estimates and <span class="math inline">\(1 - \alpha\)</span> confidence limits for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, for the risk in the unexposed and the risk ratio, and for the risk in the exposed can be obtained in the same way as in a log-binomial GLM. When the event is not rare, a robust variance should be used.</p>
+<p>The primary drawback of using Poisson GLMs to estimate risks and risk ratios is that the likelihood is not quite correct—especially for events that are not rare. This limits their use in Bayesian methods and forces the use of Wald instead of score or likelihood ratio confidence intervals.</p>
+</section>
+<section id="poisson-glms-for-rates" class="level3" data-number="9.2.6">
+<h3 data-number="9.2.6" class="anchored" data-anchor-id="poisson-glms-for-rates"><span class="header-section-number">9.2.6</span> Poisson GLMs for rates</h3>
+<p>In a Poisson model for incidence data, we have <span class="math display">\[
+  \ln\big(\E[\text{count} \given{} X, T_X]\big) = \ln \lambda(X) + \ln T_X
+\]</span> where <span class="math inline">\(T_X\)</span> is the total person time in the group with exposure <span class="math inline">\(X\)</span>. Let <span class="math inline">\(\mu(x) = \lambda(x) T_x\)</span> be expected count in the group with <span class="math inline">\(X = x\)</span>. The Poisson GLM is <span class="math display">\[
+  \ln \mu(x)
+  = \ln \lambda(x) + \ln T_x
+  = \beta_0 + \beta_1 x + \ln T_x.
+\]</span> The term <span class="math inline">\(\ln T_x\)</span> on the right-hand side is an offset because it has a fixed coefficient equal to one. Thus, <span class="math display">\[
+  \ln \lambda(x) = \beta_0 + \beta_1 x.
+\]</span> The incidence rate in the unexposed is <span class="math display">\[
+  \lambda_0 = e^{\beta_0},
+\]</span> the incidence rate in the exposed is <span class="math display">\[
+  \lambda_1 = e^{\beta_0 + \beta_1},
+\]</span> and the incidence rate ratio is <span class="math display">\[
+  \IRR = \frac{e^{\beta_0 + \beta_1}}{e^{\beta_0}} = e^{\beta_1}.
+\]</span> The point estimates and <span class="math inline">\(1 - \alpha\)</span> confidence limits for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, for the incidence rate in the unexposed and the IRR, and for the risk in the exposed can be obtained in the same way as in a log-binomial GLM. Because the sum of Poisson random variables is also a Poisson random variable, this models can be fit with either individual or grouped person-time data. This model does not directly assume rare events, and a robust variance is not necessary. However, if an event can occur only once per participant, the rare event assumption ensures that the count of events has a low probability of being limited by the numbers of exposed and unexposed participants in the study.</p>
+<!-- ### Robust variance* -->
+</section>
+</section>
+<section id="rothman-diagrams" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="rothman-diagrams"><span class="header-section-number">9.3</span> Rothman diagrams</h2>
+<p>The unit square is the set of all ordered pairs <span class="math inline">\((x, y) \in \mathbb{R}^2\)</span> where both <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are in the interval <span class="math inline">\([0, 1]\)</span>. To represent a point <span class="math inline">\((x, y)\)</span> in the unit square, we can plot <span class="math inline">\(x\)</span> on a horizontal axis (the x-axis) and <span class="math inline">\(y\)</span> on a vertical axis (the y-axis). <span class="citation" data-cites="rothman1975pictorial">Rothman (<a href="references.html#ref-rothman1975pictorial" role="doc-biblioref">1975</a>)</span> introduced a very useful geometric perspective where we let <span class="math inline">\(x\)</span> represent the risk of disease in the unexposed or untreated and <span class="math inline">\(y\)</span> represent the risk of disease in the exposed or treated. We call these <strong>Rothman diagrams</strong> <span class="citation" data-cites="richardson2017modeling kenah2024rothman">(<a href="references.html#ref-richardson2017modeling" role="doc-biblioref">Richardson, Robins, and Wang 2017</a>; <a href="references.html#ref-kenah2024rothman" role="doc-biblioref">Kenah 2024</a>)</span>, and they are similar to the <em>L’Abbé plots</em> used in meta-analysis <span class="citation" data-cites="labbe1987meta">(<a href="references.html#ref-labbe1987meta" role="doc-biblioref">L’Abbé, Detsky, and O’Rourke 1987</a>)</span>.</p>
+<section id="contour-lines" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="contour-lines"><span class="header-section-number">9.3.1</span> Contour lines</h3>
+<p>On a Rothman diagram, every point in the unit square represents a risk in the exposed and a risk in the unexposed. We can use these risks to calculate measures of association such as the risk difference, risk ratio, odds ratio, or (cumulative) hazard ratio. For a function <span class="math inline">\(f(x, y)\)</span>, the set of points with <span class="math inline">\(f(x, y) = m\)</span> for any given <span class="math inline">\(m\)</span> is called a <strong>contour line</strong> or <em>contour</em> of <span class="math inline">\(f\)</span>. If we think of the risk difference as a function <span class="math display">\[
+  \RD(p_0, p_1) = p_1 - p_0,
+\]</span> then the contour lines of <span class="math inline">\(\RD\)</span> link the points <span class="math inline">\((p_0, p_1)\)</span> in the unit square that have the same risk difference. Similarly, we can consider the contour lines of the risk ratio <span class="math display">\[
+  \RR(p_0, p_1) = \frac{p_1}{p_0},
+\]</span> the odds ratio <span class="math display">\[
+  \OR(p_0, p_1) = \frac{\odds(p_1)}{\odds(p_0)},
+\]</span> and the (cumulative) hazard ratio <span class="math display">\[
+  \HR(p_0, p_1) = \frac{-\ln(1 - p_1)}{-\ln(1 - p_0)}.
+\]</span> <a href="#fig-contours" class="quarto-xref">Figure&nbsp;<span>9.3</span></a> shows the contour lines for the risk difference, risk ratio, odds ratio, and hazard ratio. The null line <span class="math inline">\(p_1 = p_0\)</span> is a contour line for all four measures of association. All other contours of the risk difference and risk ratio are straight, and all other contours of the odds ratio and hazard ratio are curved.</p>
+<div class="cell">
+<div class="code-with-filename">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-with-filename-file">
+<pre><strong>contours.R</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Contour lines for measures of association</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(plotrix, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># odds, logistic, and cumulative hazard functions</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>odds <span class="ot">&lt;-</span> <span class="cf">function</span>(p) p <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>invodds <span class="ot">&lt;-</span> <span class="cf">function</span>(odds) odds <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> odds)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>cumhaz <span class="ot">&lt;-</span> <span class="cf">function</span>(p) <span class="sc">-</span><span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># risk difference contours</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>riskdiff_contours <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(x, x, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">main =</span> <span class="st">"Risk difference contours"</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">"Risk in the exposed"</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grid</span>()</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">boxed.labels</span>(.<span class="dv">5</span>, .<span class="dv">5</span>, <span class="st">"0"</span>, <span class="at">xpad =</span> <span class="fl">1.5</span>, <span class="at">ypad =</span> <span class="fl">1.5</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (riskdiff <span class="cf">in</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="sc">-</span><span class="fl">0.2</span>, <span class="dv">0</span>, <span class="fl">0.2</span>, <span class="fl">0.5</span>)) {</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    y <span class="ot">&lt;-</span> x <span class="sc">+</span> riskdiff</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    yrange <span class="ot">&lt;-</span> y <span class="sc">&gt;=</span> <span class="dv">0</span> <span class="sc">&amp;</span> y <span class="sc">&lt;=</span> <span class="dv">1</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines</span>(x[yrange], y[yrange], <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">boxed.labels</span>(<span class="fl">0.5</span> <span class="sc">-</span> riskdiff <span class="sc">/</span> <span class="dv">2</span>, <span class="fl">0.5</span> <span class="sc">+</span> riskdiff <span class="sc">/</span> <span class="dv">2</span>,</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">as.character</span>(riskdiff),</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>                 <span class="at">xpad =</span> <span class="fl">1.5</span>, <span class="at">ypad =</span> <span class="fl">1.5</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co"># risk ratio contours</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>riskratio_contours <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(x, x, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">main =</span> <span class="st">"Risk ratio contours"</span>,</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>)</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grid</span>()</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">boxed.labels</span>(.<span class="dv">5</span>, .<span class="dv">5</span>, <span class="st">"1"</span>, <span class="at">xpad =</span> <span class="fl">1.5</span>, <span class="at">ypad =</span> <span class="fl">1.5</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (riskratio <span class="cf">in</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="dv">2</span>, <span class="dv">5</span>)) {</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    y <span class="ot">&lt;-</span> riskratio <span class="sc">*</span> x</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>    yrange <span class="ot">&lt;-</span> y <span class="sc">&lt;=</span> <span class="dv">1</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines</span>(x[yrange], y[yrange], <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">boxed.labels</span>(<span class="dv">1</span> <span class="sc">/</span> (riskratio <span class="sc">+</span> <span class="dv">1</span>), riskratio <span class="sc">/</span> (riskratio <span class="sc">+</span> <span class="dv">1</span>),</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">as.character</span>(riskratio),</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>                 <span class="at">xpad =</span> <span class="fl">1.5</span>, <span class="at">ypad =</span> <span class="fl">1.5</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="co"># odds ratio contours</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>oddsratio_contours <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(x, x, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">main =</span> <span class="st">"Odds ratio contours"</span>,</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab =</span> <span class="st">"Risk in the unexposed"</span>,</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab =</span> <span class="st">"Risk in the exposed"</span>)</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grid</span>()</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">boxed.labels</span>(.<span class="dv">5</span>, .<span class="dv">5</span>, <span class="st">"1"</span>, <span class="at">xpad =</span> <span class="fl">1.5</span>, <span class="at">ypad =</span> <span class="fl">1.5</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (oddsratio <span class="cf">in</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="dv">2</span>, <span class="dv">5</span>)) {</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines</span>(x, <span class="fu">invodds</span>(oddsratio <span class="sc">*</span> <span class="fu">odds</span>(x)), <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>    <span class="fu">boxed.labels</span>((<span class="fu">sqrt</span>(oddsratio) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">/</span> (oddsratio <span class="sc">-</span> <span class="dv">1</span>),</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>                 (oddsratio <span class="sc">-</span> <span class="fu">sqrt</span>(oddsratio)) <span class="sc">/</span> (oddsratio <span class="sc">-</span> <span class="dv">1</span>),</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">as.character</span>(oddsratio),</span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>                 <span class="at">xpad =</span> <span class="fl">1.5</span>, <span class="at">ypad =</span> <span class="fl">1.5</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a><span class="co"># hazard ratios</span></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>hazratio_contours <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(x, x, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">main =</span> <span class="st">"Hazard ratio contours"</span>,</span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab =</span> <span class="st">"Risk in the unexposed"</span>, <span class="at">ylab =</span> <span class="st">""</span>)</span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grid</span>()</span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">boxed.labels</span>(.<span class="dv">5</span>, .<span class="dv">5</span>, <span class="st">"1"</span>, <span class="at">xpad =</span> <span class="fl">1.5</span>, <span class="at">ypad =</span> <span class="fl">1.5</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (hazratio <span class="cf">in</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="dv">2</span>, <span class="dv">5</span>)) {</span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines</span>(<span class="fu">c</span>(x, <span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> x)<span class="sc">^</span>hazratio, <span class="dv">1</span>), <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>    labelx <span class="ot">&lt;-</span> <span class="fu">uniroot</span>(<span class="cf">function</span>(x) x <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> x)<span class="sc">^</span>hazratio, <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))<span class="sc">$</span>root</span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>    labely <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> labelx</span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>    <span class="fu">boxed.labels</span>(labelx, labely, <span class="fu">as.character</span>(hazratio),</span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>                 <span class="at">xpad =</span> <span class="fl">1.5</span>, <span class="at">ypad =</span> <span class="fl">1.5</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a><span class="co"># save old graphical parameters and set new ones</span></span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>oldmar <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="st">"mar"</span>)</span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>oldmgp <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="st">"mgp"</span>)</span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fl">0.6</span> <span class="sc">*</span> (<span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">1</span>) <span class="sc">+</span> <span class="fl">0.1</span>), <span class="at">mgp =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a><span class="co"># grid of plots</span></span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.001</span>, <span class="fl">0.999</span>, <span class="at">by =</span> <span class="fl">0.001</span>)</span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a><span class="fu">riskdiff_contours</span>()</span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a><span class="fu">riskratio_contours</span>()</span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a><span class="fu">oddsratio_contours</span>()</span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a><span class="fu">hazratio_contours</span>()</span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a><span class="co"># dev.copy2pdf(file = "contours.pdf")</span></span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a><span class="co"># reset graphical parameters</span></span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="at">mar =</span> oldmar, <span class="at">mgp =</span> oldmgp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output-display">
+<div id="fig-contours" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-contours-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="cohort_files/figure-html/fig-contours-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;9.3: Contour lines for the odds ratio, risk ratio, risk difference, and hazard ratio. The null line is solid. All other contours lines are dashed. Each contour line is labeled with the corresponding value of the measure of association."><img src="cohort_files/figure-html/fig-contours-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-contours-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.3: Contour lines for the odds ratio, risk ratio, risk difference, and hazard ratio. The null line is solid. All other contours lines are dashed. Each contour line is labeled with the corresponding value of the measure of association.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<!-- ### Relationships between the RR, OR, and HR
+In general  -->
+</section>
+<section id="relationships-between-changes-in-the-rd-rr-and-or" class="level3" data-number="9.3.2">
+<h3 data-number="9.3.2" class="anchored" data-anchor-id="relationships-between-changes-in-the-rd-rr-and-or"><span class="header-section-number">9.3.2</span> Relationships between changes in the RD, RR, and OR</h3>
+<p>It is surprising but true that the odds ratio, risk ratio, and risk difference can change in different directions relative to the null when the risks of disease in the exposed or the unexposed change. Even if we accept this possiblity, it can seem pathological.</p>
+<p>There are no surprises if we start on the null line where <span class="math inline">\(p_1 = p_0\)</span>, so <span class="math inline">\(\RD = 0\)</span>, <span class="math inline">\(\RR = 1\)</span>, and <span class="math inline">\(\OR = 1\)</span>. If we move along the null line, all measures stay the same. If we move to a point where <span class="math inline">\(p_1 &gt; p_0\)</span>, then all three measures increase so <span class="math inline">\(\RD &gt; 0\)</span>, <span class="math inline">\(\RR &gt; 1\)</span>, and <span class="math inline">\(\OR &gt; 1\)</span>. If we move to a point where <span class="math inline">\(p_1 &lt; p_0\)</span>, then all three measures decrease so <span class="math inline">\(\RD &lt; 0\)</span>, <span class="math inline">\(\RR &lt; 1\)</span>, and <span class="math inline">\(\OR &lt; 1\)</span>. Thus, all three measures agree about which direction we are moving relative to the null.</p>
+<p>If we start at any point off the null line, these measures of association can change in different directions—some toward the null and others away from the null. If we allow the risk difference, risk ratio, and odds ratio to move independently toward or away from their null values, there are <span class="math inline">\(2^3 = 8\)</span> possible combinations. It turns out that six of these combinations are possible around any point off the null line. This is hard to see algebraically, but it is easy to see on a Rothman diagram. <a href="#fig-changes" class="quarto-xref">Figure&nbsp;<span>9.4</span></a> shows the contours of the risk difference, risk ratio, and odds ratio passing through two points: (0.2, 0.6) above the null line and (0.8, 0.4) below the null line. <a href="#fig-changesA" class="quarto-xref">Figure&nbsp;<span>9.5</span></a> shows the gray square around (0.2, 0.6), where the contour line for the <span class="math inline">\(\OR\)</span> is between the contours for the <span class="math inline">\(\RD\)</span> and <span class="math inline">\(\RR\)</span>. If the <span class="math inline">\(\RD\)</span> and <span class="math inline">\(\RR\)</span> both move in the same direction, the <span class="math inline">\(\OR\)</span> must follow them—precluding two of the eight possible combinations of changes toward and away from the null. <a href="#fig-changesB" class="quarto-xref">Figure&nbsp;<span>9.6</span></a> shows the gray square around (0.8, 0.4), where the contour line for the <span class="math inline">\(\RD\)</span> is between the contours for the <span class="math inline">\(\RR\)</span> and <span class="math inline">\(\OR\)</span>. If the <span class="math inline">\(\RR\)</span> and <span class="math inline">\(\OR\)</span> both move in the same direction, the <span class="math inline">\(\RD\)</span> must follow them—which prevents two of the eight possible combinations of changes toward and away from the null. At both points, six of the eight possible combations of movements toward or away from the null are possible, one in each of the six angles defined by the contour lines through the point. However, the regions where all three measures of associaton agree about whether we are moving toward or away from the null occupy much larger angles than the regions where they disagree.</p>
+<div class="cell">
+<div class="code-with-filename">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-with-filename-file">
+<pre><strong>changes.R</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Contours for the RD, RR, and OR at (0.2, 0.6) and (0.8, 0.4)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># required packages</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ggplot2, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(geomtextpath, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># odds and logistic functions</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>odds <span class="ot">&lt;-</span> <span class="cf">function</span>(p) p <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>invodds <span class="ot">&lt;-</span> <span class="cf">function</span>(odds) odds <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> odds)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Point A at (0.2, 0.6) with OR = 6, RR = 3, and RD = 0.4</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># and point B at (0.6, 0.2) with OR = 1/6, RR = 1/3, and RD = -0.4</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.001</span>, <span class="fl">0.999</span>, <span class="at">by =</span> <span class="fl">0.001</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x, <span class="at">yORa =</span> <span class="fu">invodds</span>(<span class="dv">6</span> <span class="sc">*</span> <span class="fu">odds</span>(x)),</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>                  <span class="at">yRRa =</span> <span class="dv">3</span> <span class="sc">*</span> x, <span class="at">yRDa =</span> x <span class="sc">+</span> <span class="fl">0.4</span>,</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>                  <span class="at">yORb =</span> <span class="fu">invodds</span>(<span class="fu">odds</span>(x) <span class="sc">/</span> <span class="dv">6</span>), <span class="at">yRRb =</span> x <span class="sc">/</span> <span class="dv">2</span>,</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>                  <span class="at">yRDb =</span> x <span class="sc">-</span> <span class="fl">0.4</span>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co"># with points 1A and 1B</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>(<span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(x, yORa))</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">theme_bw</span>()</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fl">0.02</span>),</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>                       <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.2</span>))</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fl">0.02</span>),</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>                       <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.2</span>))</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Risk in the unexposed"</span>)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Risk in the exposed"</span>)</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>  <span class="co"># point A</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"point"</span>, <span class="at">x =</span> <span class="fl">0.2</span>, <span class="at">y =</span> <span class="fl">0.6</span>, <span class="at">size =</span> <span class="dv">3</span>)</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fl">0.2</span>, <span class="at">y =</span> <span class="fl">0.58</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">vjust =</span> <span class="dv">1</span>,</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"(0.2, 0.6)"</span>)</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="at">label =</span> <span class="st">"OR = 6"</span>, <span class="at">hjust =</span> <span class="fl">0.8</span>)</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="fu">aes</span>(x, yRRa), <span class="at">label =</span> <span class="st">"RR = 3"</span>, <span class="at">hjust =</span> <span class="fl">0.9</span>,</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>                  <span class="at">linetype =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="fu">aes</span>(x, yRDa), <span class="at">label =</span> <span class="st">"RD = 0.4"</span>, <span class="at">hjust =</span> <span class="fl">0.9</span>,</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>                  <span class="at">linetype =</span> <span class="st">"dotted"</span>)</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="fu">aes</span>(x, x), <span class="at">col =</span> <span class="st">"darkgray"</span>, <span class="at">label =</span> <span class="st">"Null line"</span>)</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"rect"</span>, <span class="at">xmin =</span> <span class="fl">0.09</span>, <span class="at">xmax =</span> <span class="fl">0.31</span>, <span class="at">ymin =</span> <span class="fl">0.49</span>, <span class="at">ymax =</span> <span class="fl">0.71</span>,</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha =</span> <span class="fl">0.2</span>)</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fl">0.11</span>, <span class="at">y =</span> <span class="fl">0.69</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">vjust =</span> <span class="dv">1</span>,</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"Fig. 9.5"</span>)</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>  <span class="co"># point B</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"point"</span>, <span class="at">x =</span> <span class="fl">0.8</span>, <span class="at">y =</span> <span class="fl">0.4</span>, <span class="at">size =</span> <span class="dv">3</span>)</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fl">0.8</span>, <span class="at">y =</span> <span class="fl">0.38</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">vjust =</span> <span class="dv">1</span>,</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"(0.8, 0.4)"</span>)</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="fu">aes</span>(x, yORb), <span class="at">hjust =</span> <span class="fl">0.8</span>, <span class="at">label =</span> <span class="st">"OR = 1/6"</span>)</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="fu">aes</span>(x, yRRb), <span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>,</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>                  <span class="at">label =</span> <span class="st">"RR = 1/2"</span>)</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="fu">aes</span>(x, yRDb), <span class="at">hjust =</span> <span class="fl">0.05</span>, <span class="at">linetype =</span> <span class="st">"dotted"</span>,</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>                  <span class="at">label =</span> <span class="st">"RD = -0.4"</span>)</span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"rect"</span>, <span class="at">xmin =</span> <span class="fl">0.69</span>, <span class="at">xmax =</span> <span class="fl">0.91</span>, <span class="at">ymin =</span> <span class="fl">0.29</span>, <span class="at">ymax =</span> <span class="fl">0.51</span>,</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha =</span> <span class="fl">0.2</span>)</span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fl">0.71</span>, <span class="at">y =</span> <span class="fl">0.49</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">vjust =</span> <span class="dv">1</span>,</span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"Fig. 9.6"</span>)</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output-display">
+<div id="fig-changes" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-changes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="cohort_files/figure-html/fig-changes-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;9.4: Rothman diagram showing the contour lines for the odds ratio (solid), risk ratio (dashed), and risk difference (dotted) that pass through the point (0.2, 0.6) above the null line and the point (0.8, 0.4) below the null line. The gray squares are the areas shown in Figure&nbsp;fig-changesA and Figure&nbsp;fig-changesB."><img src="cohort_files/figure-html/fig-changes-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-changes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.4: Rothman diagram showing the contour lines for the odds ratio (solid), risk ratio (dashed), and risk difference (dotted) that pass through the point <span class="math inline">\((0.2, 0.6)\)</span> above the null line and the point <span class="math inline">\((0.8, 0.4)\)</span> below the null line. The gray squares are the areas shown in <a href="#fig-changesA" class="quarto-xref">Figure&nbsp;<span>9.5</span></a> and <a href="#fig-changesB" class="quarto-xref">Figure&nbsp;<span>9.6</span></a>.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-with-filename">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-with-filename-file">
+<pre><strong>changesA.R</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Local changes in the RD, RR, and OR near (0.2, 0.6)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># required packages</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ggplot2, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(geomtextpath, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># odds and logistic functions, conversion from degrees to radians</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>odds <span class="ot">&lt;-</span> <span class="cf">function</span>(p) p <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>invodds <span class="ot">&lt;-</span> <span class="cf">function</span>(odds) odds <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> odds)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>degtorad <span class="ot">&lt;-</span> <span class="cf">function</span>(degrees) pi <span class="sc">*</span> (degrees <span class="sc">/</span> <span class="dv">180</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Point A at (0.2, 0.6) with OR = 6, RR = 3, and RD = 0.4</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># and point B at (0.6, 0.2) with OR = 1/6, RR = 1/3, and RD = -0.4</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.001</span>, <span class="fl">0.999</span>, <span class="at">by =</span> <span class="fl">0.001</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>datA <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x, <span class="at">yORa =</span> <span class="fu">invodds</span>(<span class="dv">6</span> <span class="sc">*</span> <span class="fu">odds</span>(x)),</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>                   <span class="at">yRRa =</span> <span class="dv">3</span> <span class="sc">*</span> x, <span class="at">yRDa =</span> x <span class="sc">+</span> <span class="fl">0.4</span>)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co"># plot of contours near point A</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>(<span class="fu">ggplot</span>(datA, <span class="fu">aes</span>(x, yORa))</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.3</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.7</span>))</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Risk in the unexposed"</span>)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Risk in the exposed"</span>)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"point"</span>, <span class="at">x =</span> <span class="fl">0.2</span>, <span class="at">y =</span> <span class="fl">0.6</span>, <span class="at">size =</span> <span class="dv">3</span>)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="fl">0.202</span>, <span class="fl">0.598</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">vjust =</span> <span class="dv">1</span>, <span class="at">label =</span> <span class="st">"(0.2, 0.6)"</span>)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="at">label =</span> <span class="st">"OR = 6"</span>, <span class="at">hjust =</span> <span class="fl">0.385</span>)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="fu">aes</span>(x, yRDa), <span class="at">label =</span> <span class="st">"RD = 0.40"</span>, <span class="at">hjust =</span> <span class="fl">0.22</span>,</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>                  <span class="at">linetype =</span> <span class="st">"dotted"</span>)</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="fu">aes</span>(x, yRRa), <span class="at">label =</span> <span class="st">"RR = 3"</span>, <span class="at">hjust =</span> <span class="fl">0.208</span>,</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>                  <span class="at">linetype =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="fl">0.25</span>, <span class="fl">0.55</span>,</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"All toward the null</span><span class="sc">\n</span><span class="st"> OR &lt; 6, RR &lt; 3, RD &lt; 0.4"</span>)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="fl">0.15</span>, <span class="fl">0.65</span>,</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"All away from the null</span><span class="sc">\n</span><span class="st"> OR &gt; 6, RR &gt; 3, RD &gt; 0.4"</span>)</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">angle =</span> <span class="dv">49</span>,</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>             <span class="at">x =</span> <span class="fl">0.2</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="fu">degtorad</span>(<span class="dv">49</span>)),</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fl">0.6</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">sin</span>(<span class="fu">degtorad</span>(<span class="dv">49</span>)),</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"OR &lt; 6, RR &lt; 3, RD &gt; 0.4"</span>)</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">angle =</span> <span class="dv">63</span>,</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>             <span class="at">x =</span> <span class="fl">0.2</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="fu">degtorad</span>(<span class="dv">63</span>)),</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fl">0.6</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">sin</span>(<span class="fu">degtorad</span>(<span class="dv">63</span>)),</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"OR &gt; 6, RR &lt; 3, RD &gt; 0.4"</span>)</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">angle =</span> <span class="dv">52</span>,</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>             <span class="at">x =</span> <span class="fl">0.2</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="fu">degtorad</span>(<span class="dv">180</span> <span class="sc">+</span> <span class="dv">52</span>)),</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fl">0.6</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">sin</span>(<span class="fu">degtorad</span>(<span class="dv">180</span> <span class="sc">+</span> <span class="dv">52</span>)),</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"OR &gt; 6, RR &gt; 3, RD &lt; 0.4"</span>)</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">angle =</span> <span class="dv">66</span>,</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>             <span class="at">x =</span> <span class="fl">0.2</span> <span class="sc">+</span> <span class="fl">0.087</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="fu">degtorad</span>(<span class="dv">180</span> <span class="sc">+</span> <span class="dv">66</span>)),</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fl">0.6</span> <span class="sc">+</span> <span class="fl">0.087</span> <span class="sc">*</span> <span class="fu">sin</span>(<span class="fu">degtorad</span>(<span class="dv">180</span> <span class="sc">+</span> <span class="dv">66</span>)),</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"OR &lt; 6, RR &gt; 3, RD &lt; 0.4"</span>)</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output-display">
+<div id="fig-changesA" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-changesA-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="cohort_files/figure-html/fig-changesA-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;9.5: The odds ratio, risk ratio, and risk difference near the point (0.2, 0.6). The contour line for the odds ratio (solid) is between the contours for the risk difference (dotted) and risk ratio (dashed). Six combinations of changes toward and away from the null are possible when starting from this point, but the odds ratio must follow the risk difference and risk ratio if they move in the same direction."><img src="cohort_files/figure-html/fig-changesA-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-changesA-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.5: The odds ratio, risk ratio, and risk difference near the point <span class="math inline">\((0.2, 0.6)\)</span>. The contour line for the odds ratio (solid) is between the contours for the risk difference (dotted) and risk ratio (dashed). Six combinations of changes toward and away from the null are possible when starting from this point, but the odds ratio must follow the risk difference and risk ratio if they move in the same direction.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-with-filename">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-with-filename-file">
+<pre><strong>changesB.R</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Local changes in the RD, RR, and OR near (0.8, 0.4)</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># required packages</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ggplot2, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(geomtextpath, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># odds and logistic functions, conversion from degrees to radians</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>odds <span class="ot">&lt;-</span> <span class="cf">function</span>(p) p <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>invodds <span class="ot">&lt;-</span> <span class="cf">function</span>(odds) odds <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> odds)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>degtorad <span class="ot">&lt;-</span> <span class="cf">function</span>(degrees) pi <span class="sc">*</span> (degrees <span class="sc">/</span> <span class="dv">180</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Point A at (0.2, 0.6) with OR = 6, RR = 3, and RD = 0.4</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># and point B at (0.6, 0.2) with OR = 1/6, RR = 1/3, and RD = -0.4</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.001</span>, <span class="fl">0.999</span>, <span class="at">by =</span> <span class="fl">0.001</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>datB <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x, <span class="at">yORb =</span> <span class="fu">invodds</span>(<span class="fu">odds</span>(x) <span class="sc">/</span> <span class="dv">6</span>), <span class="at">yRRb =</span> x <span class="sc">/</span> <span class="dv">2</span>,</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>                   <span class="at">yRDb =</span> x <span class="sc">-</span> <span class="fl">0.4</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>(<span class="fu">ggplot</span>(datB, <span class="fu">aes</span>(x, yORb))</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">0.7</span>, <span class="fl">0.9</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">0.3</span>, <span class="fl">0.5</span>))</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Risk in the unexposed"</span>)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Risk in the exposed"</span>)</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"point"</span>, <span class="at">x =</span> <span class="fl">0.8</span>, <span class="at">y =</span> <span class="fl">0.4</span>, <span class="at">size =</span> <span class="dv">3</span>)</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="fl">0.802</span>, <span class="fl">0.398</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">vjust =</span> <span class="dv">1</span>, <span class="at">label =</span> <span class="st">"(0.8, 0.4)"</span>)</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="at">label =</span> <span class="st">"OR = 1/6"</span>, <span class="at">hjust =</span> <span class="fl">0.615</span>)</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="fu">aes</span>(x, yRDb), <span class="at">label =</span> <span class="st">"RD = -0.4"</span>, <span class="at">hjust =</span> <span class="fl">0.78</span>,</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>                  <span class="at">linetype =</span> <span class="st">"dotted"</span>)</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="fu">aes</span>(x, yRRb), <span class="at">label =</span> <span class="st">"RR = 1/2"</span>, <span class="at">hjust =</span> <span class="fl">0.84</span>,</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>                  <span class="at">linetype =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="fl">0.75</span>, <span class="fl">0.45</span>,</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"All toward the null</span><span class="sc">\n</span><span class="st"> OR &gt; 1/6, RR &gt; 1/2, RD &gt; -0.4"</span>)</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="fl">0.85</span>, <span class="fl">0.35</span>,</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"All away from the null</span><span class="sc">\n</span><span class="st"> OR &lt; 1/6, RR &lt; 1/2, RD &lt; -0.4"</span>)</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">angle =</span> <span class="dv">36</span>,</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>             <span class="at">x =</span> <span class="fl">0.8</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="fu">degtorad</span>(<span class="dv">36</span>)),</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fl">0.4</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">sin</span>(<span class="fu">degtorad</span>(<span class="dv">36</span>)),</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"OR &lt; 1/6, RR &gt; 1/2, RD &lt; -0.4"</span>)</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">angle =</span> <span class="dv">52</span>,</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>             <span class="at">x =</span> <span class="fl">0.8</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="fu">degtorad</span>(<span class="dv">52</span>)),</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fl">0.4</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">sin</span>(<span class="fu">degtorad</span>(<span class="dv">52</span>)),</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"OR &lt; 1/6, RR &gt; 1/2, RD &gt; -0.4"</span>)</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">angle =</span> <span class="dv">36</span>,</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>             <span class="at">x =</span> <span class="fl">0.8</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="fu">degtorad</span>(<span class="dv">180</span> <span class="sc">+</span> <span class="dv">36</span>)),</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fl">0.4</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">sin</span>(<span class="fu">degtorad</span>(<span class="dv">180</span> <span class="sc">+</span> <span class="dv">36</span>)),</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"OR &gt; 1/6, RR &lt; 1/2, RD &gt; -0.4"</span>)</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">angle =</span> <span class="dv">47</span>,</span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>             <span class="at">x =</span> <span class="fl">0.8</span> <span class="sc">+</span> <span class="fl">0.095</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="fu">degtorad</span>(<span class="dv">180</span> <span class="sc">+</span> <span class="dv">49</span>)),</span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fl">0.4</span> <span class="sc">+</span> <span class="fl">0.095</span> <span class="sc">*</span> <span class="fu">sin</span>(<span class="fu">degtorad</span>(<span class="dv">180</span> <span class="sc">+</span> <span class="dv">49</span>)),</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"OR &gt; 1/6, RR &lt; 1/2, RD &lt; -0.4"</span>)</span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output-display">
+<div id="fig-changesB" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-changesB-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="cohort_files/figure-html/fig-changesB-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;9.6: The odds ratio, risk ratio, and risk difference near the point (0.8, 0.4). The contour line for the risk difference (dotted) is between the contours for the risk ratio (dashed) and the odds ratio (solid). Six combinations of changes toward and away from the null are possible in any neighborhood of the point, but the risk difference must follow the risk ratio and odds ratio if they move in the same direction."><img src="cohort_files/figure-html/fig-changesB-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-changesB-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.6: The odds ratio, risk ratio, and risk difference near the point <span class="math inline">\((0.8, 0.4)\)</span>. The contour line for the risk difference (dotted) is between the contours for the risk ratio (dashed) and the odds ratio (solid). Six combinations of changes toward and away from the null are possible in any neighborhood of the point, but the risk difference must follow the risk ratio and odds ratio if they move in the same direction.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-agresti2012categorical" class="csl-entry" role="listitem">
+Agresti, Alan. 2013. <em>Categorical Data Analysis</em>. Third. Vol. 792. John Wiley &amp; Sons.
+</div>
+<div id="ref-agresti2005frequentist" class="csl-entry" role="listitem">
+Agresti, Alan, and Yongyi Min. 2005. <span>“Frequentist Performance of <span>B</span>ayesian Confidence Intervals for Comparing Proportions in 2<span class="math inline">\(\times\)</span> 2 Contingency Tables.”</span> <em>Biometrics</em> 61 (2): 515–23.
+</div>
+<div id="ref-berkson1944application" class="csl-entry" role="listitem">
+Berkson, Joseph. 1944. <span>“Application of the Logistic Function to Bio-Assay.”</span> <em>Journal of the American Statistical Association</em> 39 (227): 357–65.
+</div>
+<div id="ref-cox1958regression" class="csl-entry" role="listitem">
+Cox, David R. 1958. <span>“The Regression Analysis of Binary Sequences.”</span> <em>Journal of the Royal Statistical Society Series B: Statistical Methodology</em> 20 (2): 215–32.
+</div>
+<div id="ref-kenah2024rothman" class="csl-entry" role="listitem">
+Kenah, Eben. 2024. <span>“Rothman Diagrams: The Geometry of Confounding and Standardization.”</span> <em>International Journal of Epidemiology</em> 53 (6): dyae139.
+</div>
+<div id="ref-labbe1987meta" class="csl-entry" role="listitem">
+L’Abbé, Kristan A, Allan S Detsky, and Keith O’Rourke. 1987. <span>“Meta-Analysis in Clinical Research.”</span> <em>Annals of Internal Medicine</em> 107 (2): 224–33.
+</div>
+<div id="ref-mccullagh1989generalized" class="csl-entry" role="listitem">
+McCullagh, Peter, and J A Nelder. 1989. <em>Generalized Linear Models</em>. 2nd ed. Chapman &amp; Hall.
+</div>
+<div id="ref-miettinen1976estimability" class="csl-entry" role="listitem">
+Miettinen, Olli. 1976. <span>“Estimability and Estimation in Case-Referent Studies.”</span> <em>American Journal of Epidemiology</em> 103 (2): 226–35.
+</div>
+<div id="ref-miettinen1981confounding" class="csl-entry" role="listitem">
+Miettinen, Olli S, and E Francis Cook. 1981. <span>“Confounding: Essence and Detection.”</span> <em>American Journal of Epidemiology</em> 114 (4): 593–603.
+</div>
+<div id="ref-naimi2020estimating" class="csl-entry" role="listitem">
+Naimi, Ashley I, and Brian W Whitcomb. 2020. <span>“Estimating Risk Ratios and Risk Differences Using Regression.”</span> <em>American Journal of Epidemiology</em> 189 (6): 508–10.
+</div>
+<div id="ref-nelder1972generalized" class="csl-entry" role="listitem">
+Nelder, John Ashworth, and Robert W M Wedderburn. 1972. <span>“Generalized Linear Models.”</span> <em>Journal of the Royal Statistical Society Series A: Statistics in Society</em> 135 (3): 370–84.
+</div>
+<div id="ref-richardson2017modeling" class="csl-entry" role="listitem">
+Richardson, Thomas S, James M Robins, and Linbo Wang. 2017. <span>“On Modeling and Estimation for the Relative Risk and Risk Difference.”</span> <em>Journal of the American Statistical Association</em> 112 (519): 1121–30.
+</div>
+<div id="ref-rothman1975pictorial" class="csl-entry" role="listitem">
+Rothman, Kenneth J. 1975. <span>“A Pictorial Representation of Confounding in Epidemiologic Studies.”</span> <em>Journal of Chronic Diseases</em> 28 (2): 101–8.
+</div>
+<div id="ref-rothman1978show" class="csl-entry" role="listitem">
+———. 1978. <span>“A Show of Confidence.”</span> <em>New England Journal of Medicine</em> 299 (24): 1362–63.
+</div>
+<div id="ref-rothman2008modern" class="csl-entry" role="listitem">
+Rothman, Kenneth J, Sander Greenland, and Timothy L Lash. 2008. <em>Modern Epidemiology</em>. Lippincott Williams &amp; Wilkins.
+</div>
+<div id="ref-simpson1951interpretation" class="csl-entry" role="listitem">
+Simpson, Edward H. 1951. <span>“The Interpretation of Interaction in Contingency Tables.”</span> <em>Journal of the Royal Statistical Society: Series B (Methodological)</em> 13 (2): 238–41.
+</div>
+<div id="ref-williamson2013log" class="csl-entry" role="listitem">
+Williamson, Tyler, Misha Eliasziw, and Gordon Hilton Fick. 2013. <span>“Log-Binomial Models: Exploring Failed Convergence.”</span> <em>Emerging Themes in Epidemiology</em> 10 (1): 1–10.
+</div>
+<div id="ref-zou2004modified" class="csl-entry" role="listitem">
+Zou, Guangyong. 2004. <span>“A Modified <span>P</span>oisson Regression Approach to Prospective Studies with Binary Data.”</span> <em>American Journal of Epidemiology</em> 159 (7): 702–6.
+</div>
+</div>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./validity.html" class="pagination-link" aria-label="Internal and External Validity">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Internal and External Validity</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./survival2.html" class="pagination-link" aria-label="Two-sample survival analysis">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-sample survival analysis</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

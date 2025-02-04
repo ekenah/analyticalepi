@@ -139,6 +139,7 @@ div.csl-indent {
         chisqH: "\\chi^2_\\text\{H\}",
         chisqP: "\\chi^2_\\text\{P\}",
         chisqPobs: "\\chi^2_\\text\{Pobs\}",
+        cloglog: ["\\operatorname\{cloglog\}"],
         comp: "\\mathsf\{C\}",
         Cov: ["\\operatorname\{Cov\}"],
         D: "\\mathcal\{D\}",
@@ -150,8 +151,10 @@ div.csl-indent {
         ESSR: "\\text\{ESSR\}",
         expit: ["\\operatorname\{expit\}"],
         given: ["\\, #1| \\, ", 1],
+        HR: "\\text\{HR\}",
         indep: "\\perp\\!\\!\\!\\perp",
         indicator: "\\mathbb\{1\}",
+        IRR: "\\text\{IRR\}",
         K: "\\mathcal\{K\}",
         logit: ["\\operatorname\{logit\}"],
         margins: "\\text\{margins\}",
@@ -329,6 +332,30 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Internal and External Validity</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cohort.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Measures of association in cohort studies</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./survival2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-sample survival analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./casecontrol.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Measures of association in case-control studies</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bayes2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Bayesian analysis of cohort and case-control studies</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -398,7 +425,7 @@ window.Quarto = {
   </ul></li>
   <li><a href="#choice-of-study-design" id="toc-choice-of-study-design" class="nav-link" data-scroll-target="#choice-of-study-design"><span class="header-section-number">7.5</span> Choice of study design</a>
   <ul class="collapse">
-  <li><a href="#odds-ratio" id="toc-odds-ratio" class="nav-link" data-scroll-target="#odds-ratio"><span class="header-section-number">7.5.1</span> Odds ratio</a></li>
+  <li><a href="#sec-ORdesign" id="toc-sec-ORdesign" class="nav-link" data-scroll-target="#sec-ORdesign"><span class="header-section-number">7.5.1</span> Odds ratio</a></li>
   <li><a href="#imbalance-and-efficiency-on-a-fixed-budget" id="toc-imbalance-and-efficiency-on-a-fixed-budget" class="nav-link" data-scroll-target="#imbalance-and-efficiency-on-a-fixed-budget"><span class="header-section-number">7.5.2</span> Imbalance and efficiency on a fixed budget</a></li>
   </ul></li>
   </ul>
@@ -1059,8 +1086,8 @@ Figure&nbsp;7.2: The power of the Pearson chi-squared test from a cohort study a
 <section id="choice-of-study-design" class="level2" data-number="7.5">
 <h2 data-number="7.5" class="anchored" data-anchor-id="choice-of-study-design"><span class="header-section-number">7.5</span> Choice of study design</h2>
 <p>We have shown that the power of the Pearson and hypergeometric chi-squared tests can be increased by sampling participants according to exposure (in a cohort study) or disease (in a case-control study) instead of taking a random sample from the population. It remains to see how to choose between a cohort study and a case-control study.</p>
-<section id="odds-ratio" class="level3" data-number="7.5.1">
-<h3 data-number="7.5.1" class="anchored" data-anchor-id="odds-ratio"><span class="header-section-number">7.5.1</span> Odds ratio</h3>
+<section id="sec-ORdesign" class="level3" data-number="7.5.1">
+<h3 data-number="7.5.1" class="anchored" data-anchor-id="sec-ORdesign"><span class="header-section-number">7.5.1</span> Odds ratio</h3>
 <p>To choose between the cohort and case-control study designs, it is extremely helpful that the estimated odds ratio is the same for all three study designs. In <a href="#tbl-2x2observed" class="quarto-xref">Table&nbsp;<span>7.2</span></a>, the estimated odds ratio comparing the risks of disease in the exposed (numerator) and the unexposed (denominator) is <span class="math display">\[
   \frac{\odds(\hat{p}_1)}{\odds(\hat{p}_0)}
   = \frac{a / b}{c / d}
