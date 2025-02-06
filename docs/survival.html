@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>6&nbsp; Survival Analysis – Analytical Epidemiology</title>
+<title>6&nbsp; One-Sample Survival Analysis – Analytical Epidemiology</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -230,7 +230,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./probability.html">Defining and Measuring Disease Occurrence</a></li><li class="breadcrumb-item"><a href="./survival.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Survival Analysis</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./probability.html">Defining and Measuring Disease Occurrence</a></li><li class="breadcrumb-item"><a href="./survival.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">One-Sample Survival Analysis</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -306,7 +306,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./survival.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">One-Sample Survival Analysis</span></span></a>
   </div>
 </li>
       </ul>
@@ -335,13 +335,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cohort.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Measures of association in cohort studies</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Measures of Association in Cohort Studies</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./survival2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-sample survival analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-Sample Survival Analysis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -400,16 +400,16 @@ window.Quarto = {
    
   <ul>
   <li><a href="#empirical-cumulative-distribution-function" id="toc-empirical-cumulative-distribution-function" class="nav-link active" data-scroll-target="#empirical-cumulative-distribution-function"><span class="header-section-number">6.1</span> Empirical cumulative distribution function</a></li>
-  <li><a href="#kaplan-meier-estimator" id="toc-kaplan-meier-estimator" class="nav-link" data-scroll-target="#kaplan-meier-estimator"><span class="header-section-number">6.2</span> Kaplan-Meier estimator</a>
+  <li><a href="#sec-KM" id="toc-sec-KM" class="nav-link" data-scroll-target="#sec-KM"><span class="header-section-number">6.2</span> Kaplan-Meier estimator</a>
   <ul class="collapse">
   <li><a href="#sec-risksets" id="toc-sec-risksets" class="nav-link" data-scroll-target="#sec-risksets"><span class="header-section-number">6.2.1</span> At-risk process and risk sets</a></li>
   <li><a href="#survival-via-multiplication-of-conditional-probabilities" id="toc-survival-via-multiplication-of-conditional-probabilities" class="nav-link" data-scroll-target="#survival-via-multiplication-of-conditional-probabilities"><span class="header-section-number">6.2.2</span> Survival via multiplication of conditional probabilities</a></li>
   <li><a href="#greenwood-formula-and-confidence-intervals" id="toc-greenwood-formula-and-confidence-intervals" class="nav-link" data-scroll-target="#greenwood-formula-and-confidence-intervals"><span class="header-section-number">6.2.3</span> Greenwood formula and confidence intervals</a></li>
   <li><a href="#cumulative-incidence-and-cumulative-hazard" id="toc-cumulative-incidence-and-cumulative-hazard" class="nav-link" data-scroll-target="#cumulative-incidence-and-cumulative-hazard"><span class="header-section-number">6.2.4</span> Cumulative incidence and cumulative hazard</a></li>
   </ul></li>
-  <li><a href="#nelson-aalen-estimator" id="toc-nelson-aalen-estimator" class="nav-link" data-scroll-target="#nelson-aalen-estimator"><span class="header-section-number">6.3</span> Nelson-Aalen estimator</a>
+  <li><a href="#sec-NA" id="toc-sec-NA" class="nav-link" data-scroll-target="#sec-NA"><span class="header-section-number">6.3</span> Nelson-Aalen estimator</a>
   <ul class="collapse">
-  <li><a href="#cumulative-hazard-via-addition-of-expected-values" id="toc-cumulative-hazard-via-addition-of-expected-values" class="nav-link" data-scroll-target="#cumulative-hazard-via-addition-of-expected-values"><span class="header-section-number">6.3.1</span> Cumulative hazard via addition of expected values</a></li>
+  <li><a href="#sec-FH" id="toc-sec-FH" class="nav-link" data-scroll-target="#sec-FH"><span class="header-section-number">6.3.1</span> Cumulative hazard via addition of expected values</a></li>
   <li><a href="#variance-and-confidence-intervals" id="toc-variance-and-confidence-intervals" class="nav-link" data-scroll-target="#variance-and-confidence-intervals"><span class="header-section-number">6.3.2</span> Variance and confidence intervals</a></li>
   <li><a href="#survival-and-cumulative-incidence-functions" id="toc-survival-and-cumulative-incidence-functions" class="nav-link" data-scroll-target="#survival-and-cumulative-incidence-functions"><span class="header-section-number">6.3.3</span> Survival and cumulative incidence functions</a></li>
   </ul></li>
@@ -425,9 +425,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./probability.html">Defining and Measuring Disease Occurrence</a></li><li class="breadcrumb-item"><a href="./survival.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Survival Analysis</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./probability.html">Defining and Measuring Disease Occurrence</a></li><li class="breadcrumb-item"><a href="./survival.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">One-Sample Survival Analysis</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Survival Analysis</span></h1>
+<h1 class="title"><span id="sec-survival1" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">One-Sample Survival Analysis</span></span></h1>
 </div>
 
 
@@ -471,8 +471,8 @@ window.Quarto = {
     \hat{F}_n(x) \pm 1.96 \sqrt{\frac{1}{n} \hat{F}_n(x) \big(1 - \hat{F}_n(x)\big)}
 \tag{6.4}\]</span></span> is the 95% Wald confidence interval. To force this confidence interval to stay inside <span class="math inline">\((0, 1)\)</span>, we can use the delta method with a logit or log-log transformation. These are called <strong>pointwise</strong> confidence intervals because we have a separate confidence interval for <span class="math inline">\(F(x)\)</span> at each <span class="math inline">\(x\)</span>.</p>
 </section>
-<section id="kaplan-meier-estimator" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="kaplan-meier-estimator"><span class="header-section-number">6.2</span> Kaplan-Meier estimator</h2>
+<section id="sec-KM" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="sec-KM"><span class="header-section-number">6.2</span> Kaplan-Meier estimator</h2>
 <p>In data with right censoring and left truncation, we cannot calculate the empirical CDF directly. The <strong>Kaplan-Meier estimator</strong> <span class="citation" data-cites="kaplan1958nonparametric">(<a href="references.html#ref-kaplan1958nonparametric" role="doc-biblioref">Kaplan and Meier 1958</a>)</span> uses conditional probabilities to estimate the survival function <span class="math inline">\(S(t) = 1 - F(t)\)</span> for failure time data.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> The basic idea behind the Kaplan-Meier estimator is to solve the problems of right censoring and left truncation (delayed entry) by breaking analysis time into periods where no one enters or leaves the study. In each such interval <span class="math inline">\((t_a, t_b]\)</span>, we can estimate the conditional probability of surviving to time <span class="math inline">\(t_b\)</span> given that you were at risk of disease at time <span class="math inline">\(t_a\)</span>.</p>
 <p>If there are <span class="math inline">\(n\)</span> individuals at risk throughout the interval $(t_a, t_b], then the number of events at time <span class="math inline">\(t_b\)</span> can be treated like a binomial(<span class="math inline">\(n, p\)</span>) random variable where <span class="math inline">\(p\)</span> is the risk of the event in <span class="math inline">\((t_a, t_b]\)</span>. Our point estimate of this conditional probability is <span class="math display">\[
   \hat{p} = \frac{d}{n}
@@ -661,11 +661,11 @@ Figure&nbsp;6.1: True log-logistic survival function and Kaplan-Meier estimate w
 \]</span> When there is no right censoring or left truncation (delayed entry), <span class="math inline">\(\hat{F}(t)\)</span> equals the empirical CDF of the times to events as in <a href="#eq-hatF" class="quarto-xref">Equation&nbsp;<span>6.1</span></a> and the Greenwood variance equals the corresponding variance in <a href="#eq-hatFvar" class="quarto-xref">Equation&nbsp;<span>6.2</span></a>. Confidence limits for <span class="math inline">\(F(t)\)</span> or <span class="math inline">\(H(t)\)</span> can be obtained from the corresponding confidence limits for <span class="math inline">\(S(t)\)</span>.</p>
 </section>
 </section>
-<section id="nelson-aalen-estimator" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="nelson-aalen-estimator"><span class="header-section-number">6.3</span> Nelson-Aalen estimator</h2>
+<section id="sec-NA" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="sec-NA"><span class="header-section-number">6.3</span> Nelson-Aalen estimator</h2>
 <p>The Kaplan-Meier estimator is based on estimating conditional survival probabilities in intervals within which there are no entries or exits. The <strong>Nelson-Aalen</strong> esimator uses the same time intervals, but it estimates an expected number of events in each interval <span class="citation" data-cites="nelson1969hazard nelson1972theory altshuler1970theory aalen1978nonparametric">(<a href="references.html#ref-nelson1969hazard" role="doc-biblioref">Nelson 1969</a>, <a href="references.html#ref-nelson1972theory" role="doc-biblioref">1972</a>; <a href="references.html#ref-altshuler1970theory" role="doc-biblioref">Altshuler 1970</a>; <a href="references.html#ref-aalen1978nonparametric" role="doc-biblioref">Aalen 1978</a>)</span>. It is based on the interpretation of the cumulative hazard <span class="math inline">\(H(t)\)</span> as an expected number of events in <span class="math inline">\((0, t]\)</span> if the event could be made repeatable, and it uses the fact that the expected number of events in different intervals can be added together by <a href="probability.html#eq-lincomE" class="quarto-xref">Equation&nbsp;<span>1.11</span></a>. The at-risk process and risk sets are defined exactly as in <a href="#sec-risksets" class="quarto-xref"><span>Section 6.2.1</span></a>.</p>
-<section id="cumulative-hazard-via-addition-of-expected-values" class="level3" data-number="6.3.1">
-<h3 data-number="6.3.1" class="anchored" data-anchor-id="cumulative-hazard-via-addition-of-expected-values"><span class="header-section-number">6.3.1</span> Cumulative hazard via addition of expected values</h3>
+<section id="sec-FH" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="sec-FH"><span class="header-section-number">6.3.1</span> Cumulative hazard via addition of expected values</h3>
 <p>As above, let <span class="math inline">\(0 = t_0 &lt; t_1 &lt; t_2 &lt; \ldots &lt; t_m\)</span> be the endpoints of intervals <span class="math inline">\((t_{i-1}, t_i]\)</span> within which there are no entries or exits from the study. Let <span class="math inline">\(n_j = \sum_{i = 1}^n Y_i(t_j)\)</span> be the number of people in the risk set <span class="math inline">\(\mathcal{R}(t_j)\)</span> and let <span class="math inline">\(d_j \geq 0\)</span> be the number of failures that occur at time <span class="math inline">\(t_j\)</span>. The estimated expected number of events per individual under observation in this time interval is <span class="math display">\[
   \frac{1}{n_j} \sum_{i \in \mathcal{R}_j} \indicator_{\tevent_i \in (t_{j - 1}, t_j]}
   = \frac{d_j}{n_j}.
@@ -880,7 +880,7 @@ Figure&nbsp;6.3: Increments in the estimated cumulative hazard in the interval <
 </section>
 <section id="parametric-failure-time-distributions" class="level2" data-number="6.4">
 <h2 data-number="6.4" class="anchored" data-anchor-id="parametric-failure-time-distributions"><span class="header-section-number">6.4</span> Parametric failure time distributions</h2>
-<p>Many times to events that are important in epidemiology cannot be accurately described using an exponential distribution. In particular, it is important to allow the hazard function <span class="math inline">\(h(t)\)</span> to change over time. Here, we introduce two simple failure time distributions where <span class="math inline">\(h(t)\)</span> is not constant. They each have a rate parameter <span class="math inline">\(\lambda\)</span> and a shape parameter <span class="math inline">\(\alpha\)</span>. As with the exponential distribution, the scale parameter is <span class="math inline">\(\sigma = 1 / \lambda\)</span>. The gamma distribution from equation <a href="longitudinal.html#eq-gammaPDF" class="quarto-xref">Equation&nbsp;<span>5.19</span></a> is also used as a failure time distribution, but its survival and hazard functions do not have a simple closed form.</p>
+<p>Many times to events that are important in epidemiology cannot be accurately described using an exponential distribution. In particular, it is important to allow the hazard function <span class="math inline">\(h(t)\)</span> to change over time. Here, we introduce two simple failure time distributions where <span class="math inline">\(h(t)\)</span> is not constant. They each have a shape parameter <span class="math inline">\(\alpha\)</span> and a rate parameter <span class="math inline">\(\lambda\)</span>. As with the exponential distribution, the scale parameter is <span class="math inline">\(\sigma = 1 / \lambda\)</span>. The gamma distribution from equation <a href="longitudinal.html#eq-gammaPDF" class="quarto-xref">Equation&nbsp;<span>5.19</span></a> is also used as a failure time distribution, but its survival and hazard functions do not have a simple closed form.</p>
 <p>For all parametric failure time models, likelihoods are constructed as in <a href="longitudinal.html#sec-survlik" class="quarto-xref"><span>Section 5.2.4</span></a>. The rate parameter <span class="math inline">\(\lambda\)</span> and shape parameter <span class="math inline">\(\alpha\)</span> can be estimated using frequentist methods such as maximum likelihood or Bayesian methods. When using parametric methods, it is important to evaluate goodness-of-fit to check whether the underlying assumptions are reasonable.</p>
 <section id="weibull-distribution" class="level3" data-number="6.4.1">
 <h3 data-number="6.4.1" class="anchored" data-anchor-id="weibull-distribution"><span class="header-section-number">6.4.1</span> Weibull distribution</h3>

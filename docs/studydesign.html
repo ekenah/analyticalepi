@@ -306,7 +306,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./survival.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">One-Sample Survival Analysis</span></span></a>
   </div>
 </li>
       </ul>
@@ -335,13 +335,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cohort.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Measures of association in cohort studies</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Measures of Association in Cohort Studies</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./survival2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-sample survival analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-Sample Survival Analysis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -870,14 +870,25 @@ Figure&nbsp;7.1: The optimal proportion exposed <span class="math inline">\(\var
 </div>
 </div>
 <p>The “optimal” proportion exposed <span class="math inline">\(\varphi^*\)</span> from <a href="#eq-optimphi" class="quarto-xref">Equation&nbsp;<span>7.15</span></a> is based on maximizing the value of <span class="math inline">\(\chisqP\)</span> in large samples. For a given sample size, the power of the test is actually determined by the distribution of possible values of <span class="math inline">\(\chisqP\)</span>, so the maximum power can occur at a value of <span class="math inline">\(\varphi\)</span> slightly different from <span class="math inline">\(\varphi^*\)</span>. <a href="#fig-chisq-power" class="quarto-xref">Figure&nbsp;<span>7.2</span></a> shows the power achieved by Pearson’s chi-squared test at several combinations of <span class="math inline">\(p_1\)</span>, <span class="math inline">\(p_0\)</span>, and <span class="math inline">\(n\)</span>. In all cases, the power at <span class="math inline">\(\varphi = 0.5\)</span> is close to that at <span class="math inline">\(\varphi^*\)</span>. In several cases, the power at <span class="math inline">\(\varphi = 0.5\)</span> exceeds that at <span class="math inline">\(\varphi^*\)</span>. If we have strong enough prior information about <span class="math inline">\(p_1\)</span> and <span class="math inline">\(p_0\)</span> to justify an imbalanced study design, the value of testing the null hypothesis that <span class="math inline">\(p_1 = p_0\)</span> is questionable. Without such prior information, a balanced study is a safe bet to be optimal or near-optimal in terms of the power to detect an association between exposure and disease <span class="citation" data-cites="walter1977determination">(<a href="references.html#ref-walter1977determination" role="doc-biblioref">Walter 1977</a>)</span>.</p>
-<div class="cell">
+<div id="fig-chisq-power" class="lightbox quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-chisq-power-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="./images/chisq-power.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;7.2: The power of the Pearson chi-squared test from a cohort study as a function of the proportion of the sample exposed (\varphi) at several combinations of p_1 and p_0 for n = 400 (solid), n = 200 (dashed), and n = 100 (dotted). There is a dark gray solid line at \varphi = 0.5, representing a balanced study, and a dark gray dashed line at \varphi^* from Equation&nbsp;eq-optimphi. The same power is achieved by a case control study where \pi_1 replaces p_1, \pi_0 replaces p_0, and \varphi is the proportion of the sample who are cases."><img src="./images/chisq-power.png" class="img-fluid figure-img" style="width:90.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chisq-power-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.2: The power of the Pearson chi-squared test from a cohort study as a function of the proportion of the sample exposed (<span class="math inline">\(\varphi\)</span>) at several combinations of <span class="math inline">\(p_1\)</span> and <span class="math inline">\(p_0\)</span> for <span class="math inline">\(n = 400\)</span> (solid), <span class="math inline">\(n = 200\)</span> (dashed), and <span class="math inline">\(n = 100\)</span> (dotted). There is a dark gray solid line at <span class="math inline">\(\varphi = 0.5\)</span>, representing a balanced study, and a dark gray dashed line at <span class="math inline">\(\varphi^*\)</span> from <a href="#eq-optimphi" class="quarto-xref">Equation&nbsp;<span>7.15</span></a>. The same power is achieved by a case control study where <span class="math inline">\(\pi_1\)</span> replaces <span class="math inline">\(p_1\)</span>, <span class="math inline">\(\pi_0\)</span> replaces <span class="math inline">\(p_0\)</span>, and <span class="math inline">\(\varphi\)</span> is the proportion of the sample who are cases.
+</figcaption>
+</figure>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="code-with-filename">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="code-with-filename-file">
 <pre><strong>chisq-power.R</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Actual power of a Pearson chi-squared test</span></span>
+<div class="sourceCode" id="cb2" data-filename="chisq-power.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Actual power of a Pearson chi-squared test</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate Pearson chi-squared test power</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># This can take a few minutes to run with large n.</span></span>
@@ -912,93 +923,221 @@ Figure&nbsp;7.1: The optimal proportion exposed <span class="math inline">\(\var
 <span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="co"># optimal value proportion exposed (or proportion cases)</span></span>
 <span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>optimphi <span class="ot">&lt;-</span> <span class="cf">function</span>(p1, p0) <span class="dv">1</span> <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">sqrt</span>(p1 <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p1) <span class="sc">/</span> (p0 <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p0))))</span>
 <span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="co"># save values of graphical parameter "mar" before changing them</span></span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>orig_mar <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="st">"mar"</span>)</span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>orig_mfrow <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="st">"mfrow"</span>)</span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">2</span>))</span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Pearson chi-squared test power for p1 = 0.1 and p0 = 0.02</span></span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>power_10_02_400 <span class="ot">&lt;-</span> <span class="fu">powers</span>(<span class="fl">0.10</span>, <span class="fl">0.02</span>, <span class="dv">400</span>)</span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>power_10_02_200 <span class="ot">&lt;-</span> <span class="fu">powers</span>(<span class="fl">0.10</span>, <span class="fl">0.02</span>, <span class="dv">200</span>)</span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>power_10_02_100 <span class="ot">&lt;-</span> <span class="fu">powers</span>(<span class="fl">0.10</span>, <span class="fl">0.02</span>, <span class="dv">100</span>)</span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(power_10_02_400<span class="sc">$</span>r1 <span class="sc">/</span> <span class="dv">400</span>, power_10_02_400<span class="sc">$</span>power,</span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(p[<span class="dv">1</span>], <span class="st">" = 0.10"</span>, <span class="st">" and "</span>, p[<span class="dv">0</span>], <span class="st">" = 0.02"</span>)),</span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">""</span>,</span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Power (Pearson chi-squared test)"</span>)</span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(power_10_02_200<span class="sc">$</span>r1 <span class="sc">/</span> <span class="dv">200</span>, power_10_02_200<span class="sc">$</span>power, <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(power_10_02_100<span class="sc">$</span>r1 <span class="sc">/</span> <span class="dv">100</span>, power_10_02_100<span class="sc">$</span>power, <span class="at">lty =</span> <span class="st">"dotted"</span>)</span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fl">0.5</span>, <span class="at">col =</span> <span class="st">"darkgray"</span>)</span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">optimphi</span>(<span class="fl">0.10</span>, <span class="fl">0.02</span>), <span class="at">lty =</span> <span class="st">"dashed"</span>, <span class="at">col =</span> <span class="st">"darkgray"</span>)</span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="co"># Pearson chi-squared test power for p1 = 0.10 and p0 = 0.05</span></span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>power_10_05_400 <span class="ot">&lt;-</span> <span class="fu">powers</span>(<span class="fl">0.10</span>, <span class="fl">0.05</span>, <span class="dv">400</span>)</span>
-<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>power_10_05_200 <span class="ot">&lt;-</span> <span class="fu">powers</span>(<span class="fl">0.10</span>, <span class="fl">0.05</span>, <span class="dv">200</span>)</span>
-<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>power_10_05_100 <span class="ot">&lt;-</span> <span class="fu">powers</span>(<span class="fl">0.10</span>, <span class="fl">0.05</span>, <span class="dv">100</span>)</span>
-<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(power_10_05_400<span class="sc">$</span>r1 <span class="sc">/</span> <span class="dv">400</span>, power_10_05_400<span class="sc">$</span>power,</span>
-<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
-<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(p[<span class="dv">1</span>], <span class="st">" = 0.10"</span>, <span class="st">" and "</span>, p[<span class="dv">0</span>], <span class="st">" = 0.05"</span>)),</span>
-<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>)</span>
-<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(power_10_05_200<span class="sc">$</span>r1 <span class="sc">/</span> <span class="dv">200</span>, power_10_05_200<span class="sc">$</span>power, <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
-<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(power_10_05_100<span class="sc">$</span>r1 <span class="sc">/</span> <span class="dv">100</span>, power_10_05_100<span class="sc">$</span>power, <span class="at">lty =</span> <span class="st">"dotted"</span>)</span>
-<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fl">0.5</span>, <span class="at">col =</span> <span class="st">"darkgray"</span>)</span>
-<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">optimphi</span>(<span class="fl">0.10</span>, <span class="fl">0.05</span>), <span class="at">lty =</span> <span class="st">"dashed"</span>, <span class="at">col =</span> <span class="st">"darkgray"</span>)</span>
-<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
-<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">bg =</span> <span class="st">"white"</span>, <span class="at">lty =</span> <span class="fu">c</span>(<span class="st">"solid"</span>, <span class="st">"dashed"</span>, <span class="st">"dotted"</span>),</span>
-<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"n = 400"</span>, <span class="st">"n = 200"</span>, <span class="st">"n = 100"</span>))</span>
-<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a><span class="co"># Pearson chi-squared test power for p1 = 0.2 and p0 = 0.02</span></span>
-<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>power_20_02_400 <span class="ot">&lt;-</span> <span class="fu">powers</span>(<span class="fl">0.20</span>, <span class="fl">0.02</span>, <span class="dv">400</span>)</span>
-<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>power_20_02_200 <span class="ot">&lt;-</span> <span class="fu">powers</span>(<span class="fl">0.20</span>, <span class="fl">0.02</span>, <span class="dv">200</span>)</span>
-<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>power_20_02_100 <span class="ot">&lt;-</span> <span class="fu">powers</span>(<span class="fl">0.20</span>, <span class="fl">0.02</span>, <span class="dv">100</span>)</span>
-<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(power_20_02_400<span class="sc">$</span>r1 <span class="sc">/</span> <span class="dv">400</span>, power_20_02_400<span class="sc">$</span>power,</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Pearson chi-squared test power for p1 = 0.1 and p0 = 0.02</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>power_10_02_400 <span class="ot">&lt;-</span> <span class="fu">powers</span>(<span class="fl">0.10</span>, <span class="fl">0.02</span>, <span class="dv">400</span>)</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>power_10_02_200 <span class="ot">&lt;-</span> <span class="fu">powers</span>(<span class="fl">0.10</span>, <span class="fl">0.02</span>, <span class="dv">200</span>)</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>power_10_02_100 <span class="ot">&lt;-</span> <span class="fu">powers</span>(<span class="fl">0.10</span>, <span class="fl">0.02</span>, <span class="dv">100</span>)</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Pearson chi-squared test power for p1 = 0.10 and p0 = 0.05</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>power_10_05_400 <span class="ot">&lt;-</span> <span class="fu">powers</span>(<span class="fl">0.10</span>, <span class="fl">0.05</span>, <span class="dv">400</span>)</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>power_10_05_200 <span class="ot">&lt;-</span> <span class="fu">powers</span>(<span class="fl">0.10</span>, <span class="fl">0.05</span>, <span class="dv">200</span>)</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>power_10_05_100 <span class="ot">&lt;-</span> <span class="fu">powers</span>(<span class="fl">0.10</span>, <span class="fl">0.05</span>, <span class="dv">100</span>)</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Pearson chi-squared test power for p1 = 0.2 and p0 = 0.02</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>power_20_02_400 <span class="ot">&lt;-</span> <span class="fu">powers</span>(<span class="fl">0.20</span>, <span class="fl">0.02</span>, <span class="dv">400</span>)</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>power_20_02_200 <span class="ot">&lt;-</span> <span class="fu">powers</span>(<span class="fl">0.20</span>, <span class="fl">0.02</span>, <span class="dv">200</span>)</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>power_20_02_100 <span class="ot">&lt;-</span> <span class="fu">powers</span>(<span class="fl">0.20</span>, <span class="fl">0.02</span>, <span class="dv">100</span>)</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Pearson chi-squared test power for p1 = 0.2 and p0 = 0.05</span></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>power_20_05_400 <span class="ot">&lt;-</span> <span class="fu">powers</span>(<span class="fl">0.20</span>, <span class="fl">0.05</span>, <span class="dv">400</span>)</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>power_20_05_200 <span class="ot">&lt;-</span> <span class="fu">powers</span>(<span class="fl">0.20</span>, <span class="fl">0.05</span>, <span class="dv">200</span>)</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>power_20_05_100 <span class="ot">&lt;-</span> <span class="fu">powers</span>(<span class="fl">0.20</span>, <span class="fl">0.05</span>, <span class="dv">100</span>)</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a><span class="co"># save values of graphical parameter "mar" before changing them</span></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>orig_mar <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="st">"mar"</span>)</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>orig_mfrow <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="st">"mfrow"</span>)</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="co"># png(filename = "chisq-power.png")</span></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">2</span>))</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a><span class="co"># Pearson chi-squared test power for p1 = 0.1 and p0 = 0.02</span></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(power_10_02_400<span class="sc">$</span>r1 <span class="sc">/</span> <span class="dv">400</span>, power_10_02_400<span class="sc">$</span>power,</span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(p[<span class="dv">1</span>], <span class="st">" = 0.10"</span>, <span class="st">" and "</span>, p[<span class="dv">0</span>], <span class="st">" = 0.02"</span>)),</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">""</span>,</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Power (Pearson chi-squared test)"</span>)</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(power_10_02_200<span class="sc">$</span>r1 <span class="sc">/</span> <span class="dv">200</span>, power_10_02_200<span class="sc">$</span>power, <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(power_10_02_100<span class="sc">$</span>r1 <span class="sc">/</span> <span class="dv">100</span>, power_10_02_100<span class="sc">$</span>power, <span class="at">lty =</span> <span class="st">"dotted"</span>)</span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fl">0.5</span>, <span class="at">col =</span> <span class="st">"darkgray"</span>)</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">optimphi</span>(<span class="fl">0.10</span>, <span class="fl">0.02</span>), <span class="at">lty =</span> <span class="st">"dashed"</span>, <span class="at">col =</span> <span class="st">"darkgray"</span>)</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a><span class="co"># Pearson chi-squared test power for p1 = 0.10 and p0 = 0.05</span></span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(power_10_05_400<span class="sc">$</span>r1 <span class="sc">/</span> <span class="dv">400</span>, power_10_05_400<span class="sc">$</span>power,</span>
 <span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
-<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(p[<span class="dv">1</span>], <span class="st">" = 0.20"</span>, <span class="st">" and "</span>, p[<span class="dv">0</span>], <span class="st">" = 0.02"</span>)),</span>
-<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"Proportion exposed ("</span>, phi, <span class="st">")"</span>)),</span>
-<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Power (Pearson chi-squared test)"</span>)</span>
-<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(power_20_02_200<span class="sc">$</span>r1 <span class="sc">/</span> <span class="dv">200</span>, power_20_02_200<span class="sc">$</span>power, <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
-<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(power_20_02_100<span class="sc">$</span>r1 <span class="sc">/</span> <span class="dv">100</span>, power_20_02_100<span class="sc">$</span>power, <span class="at">lty =</span> <span class="st">"dotted"</span>)</span>
-<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fl">0.5</span>, <span class="at">col =</span> <span class="st">"darkgray"</span>)</span>
-<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">optimphi</span>(<span class="fl">0.20</span>, <span class="fl">0.02</span>), <span class="at">lty =</span> <span class="st">"dashed"</span>, <span class="at">col =</span> <span class="st">"darkgray"</span>)</span>
-<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
-<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a><span class="co"># Pearson chi-squared test power for p1 = 0.2 and p0 = 0.05</span></span>
-<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>power_20_05_400 <span class="ot">&lt;-</span> <span class="fu">powers</span>(<span class="fl">0.20</span>, <span class="fl">0.05</span>, <span class="dv">400</span>)</span>
-<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>power_20_05_200 <span class="ot">&lt;-</span> <span class="fu">powers</span>(<span class="fl">0.20</span>, <span class="fl">0.05</span>, <span class="dv">200</span>)</span>
-<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>power_20_05_100 <span class="ot">&lt;-</span> <span class="fu">powers</span>(<span class="fl">0.20</span>, <span class="fl">0.05</span>, <span class="dv">100</span>)</span>
-<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(power_20_05_400<span class="sc">$</span>r1 <span class="sc">/</span> <span class="dv">400</span>, power_20_05_400<span class="sc">$</span>power,</span>
-<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
-<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(p[<span class="dv">1</span>], <span class="st">" = 0.20"</span>, <span class="st">" and "</span>, p[<span class="dv">0</span>], <span class="st">" = 0.05"</span>)),</span>
-<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"Proportion exposed ("</span>, phi, <span class="st">")"</span>)),</span>
-<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">""</span></span>
-<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a>    <span class="co">#  ylab = "Power (Pearson chi-squared test)"</span></span>
-<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>     )</span>
-<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(power_20_05_200<span class="sc">$</span>r1 <span class="sc">/</span> <span class="dv">200</span>, power_20_05_200<span class="sc">$</span>power, <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
-<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(power_20_05_100<span class="sc">$</span>r1 <span class="sc">/</span> <span class="dv">100</span>, power_20_05_100<span class="sc">$</span>power, <span class="at">lty =</span> <span class="st">"dotted"</span>)</span>
-<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fl">0.5</span>, <span class="at">col =</span> <span class="st">"darkgray"</span>)</span>
-<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">optimphi</span>(<span class="fl">0.20</span>, <span class="fl">0.05</span>), <span class="at">lty =</span> <span class="st">"dashed"</span>, <span class="at">col =</span> <span class="st">"darkgray"</span>)</span>
-<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
-<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a><span class="co"># reset graphical parameters "mar" and "mfrow"</span></span>
-<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> orig_mar)</span>
-<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> orig_mfrow)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<div class="cell-output-display">
-<div id="fig-chisq-power" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-chisq-power-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="studydesign_files/figure-html/fig-chisq-power-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;7.2: The power of the Pearson chi-squared test from a cohort study as a function of the proportion of the sample exposed (\varphi) at several combinations of p_1 and p_0 for n = 400 (solid), n = 200 (dashed), and n = 100 (dotted). There is a dark gray solid line at \varphi = 0.5, representing a balanced study, and a dark gray dashed line at \varphi^* from Equation&nbsp;eq-optimphi. The same power is achieved by a case control study where \pi_1 replaces p_1, \pi_0 replaces p_0, and \varphi is the proportion of the sample who are cases."><img src="studydesign_files/figure-html/fig-chisq-power-1.png" class="img-fluid figure-img" width="672"></a>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chisq-power-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7.2: The power of the Pearson chi-squared test from a cohort study as a function of the proportion of the sample exposed (<span class="math inline">\(\varphi\)</span>) at several combinations of <span class="math inline">\(p_1\)</span> and <span class="math inline">\(p_0\)</span> for <span class="math inline">\(n = 400\)</span> (solid), <span class="math inline">\(n = 200\)</span> (dashed), and <span class="math inline">\(n = 100\)</span> (dotted). There is a dark gray solid line at <span class="math inline">\(\varphi = 0.5\)</span>, representing a balanced study, and a dark gray dashed line at <span class="math inline">\(\varphi^*\)</span> from <a href="#eq-optimphi" class="quarto-xref">Equation&nbsp;<span>7.15</span></a>. The same power is achieved by a case control study where <span class="math inline">\(\pi_1\)</span> replaces <span class="math inline">\(p_1\)</span>, <span class="math inline">\(\pi_0\)</span> replaces <span class="math inline">\(p_0\)</span>, and <span class="math inline">\(\varphi\)</span> is the proportion of the sample who are cases.
-</figcaption>
-</figure>
-</div>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(p[<span class="dv">1</span>], <span class="st">" = 0.10"</span>, <span class="st">" and "</span>, p[<span class="dv">0</span>], <span class="st">" = 0.05"</span>)),</span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>)</span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(power_10_05_200<span class="sc">$</span>r1 <span class="sc">/</span> <span class="dv">200</span>, power_10_05_200<span class="sc">$</span>power, <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(power_10_05_100<span class="sc">$</span>r1 <span class="sc">/</span> <span class="dv">100</span>, power_10_05_100<span class="sc">$</span>power, <span class="at">lty =</span> <span class="st">"dotted"</span>)</span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fl">0.5</span>, <span class="at">col =</span> <span class="st">"darkgray"</span>)</span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">optimphi</span>(<span class="fl">0.10</span>, <span class="fl">0.05</span>), <span class="at">lty =</span> <span class="st">"dashed"</span>, <span class="at">col =</span> <span class="st">"darkgray"</span>)</span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">bg =</span> <span class="st">"white"</span>, <span class="at">lty =</span> <span class="fu">c</span>(<span class="st">"solid"</span>, <span class="st">"dashed"</span>, <span class="st">"dotted"</span>),</span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"n = 400"</span>, <span class="st">"n = 200"</span>, <span class="st">"n = 100"</span>))</span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a><span class="co"># Pearson chi-squared test power for p1 = 0.2 and p0 = 0.02</span></span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(power_20_02_400<span class="sc">$</span>r1 <span class="sc">/</span> <span class="dv">400</span>, power_20_02_400<span class="sc">$</span>power,</span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(p[<span class="dv">1</span>], <span class="st">" = 0.20"</span>, <span class="st">" and "</span>, p[<span class="dv">0</span>], <span class="st">" = 0.02"</span>)),</span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"Proportion exposed ("</span>, phi, <span class="st">")"</span>)),</span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Power (Pearson chi-squared test)"</span>)</span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(power_20_02_200<span class="sc">$</span>r1 <span class="sc">/</span> <span class="dv">200</span>, power_20_02_200<span class="sc">$</span>power, <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(power_20_02_100<span class="sc">$</span>r1 <span class="sc">/</span> <span class="dv">100</span>, power_20_02_100<span class="sc">$</span>power, <span class="at">lty =</span> <span class="st">"dotted"</span>)</span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fl">0.5</span>, <span class="at">col =</span> <span class="st">"darkgray"</span>)</span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">optimphi</span>(<span class="fl">0.20</span>, <span class="fl">0.02</span>), <span class="at">lty =</span> <span class="st">"dashed"</span>, <span class="at">col =</span> <span class="st">"darkgray"</span>)</span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a><span class="co"># Pearson chi-squared test power for p1 = 0.2 and p0 = 0.05</span></span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(power_20_05_400<span class="sc">$</span>r1 <span class="sc">/</span> <span class="dv">400</span>, power_20_05_400<span class="sc">$</span>power,</span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(p[<span class="dv">1</span>], <span class="st">" = 0.20"</span>, <span class="st">" and "</span>, p[<span class="dv">0</span>], <span class="st">" = 0.05"</span>)),</span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"Proportion exposed ("</span>, phi, <span class="st">")"</span>)),</span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">""</span></span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a>    <span class="co">#  ylab = "Power (Pearson chi-squared test)"</span></span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a>     )</span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(power_20_05_200<span class="sc">$</span>r1 <span class="sc">/</span> <span class="dv">200</span>, power_20_05_200<span class="sc">$</span>power, <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(power_20_05_100<span class="sc">$</span>r1 <span class="sc">/</span> <span class="dv">100</span>, power_20_05_100<span class="sc">$</span>power, <span class="at">lty =</span> <span class="st">"dotted"</span>)</span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fl">0.5</span>, <span class="at">col =</span> <span class="st">"darkgray"</span>)</span>
+<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">optimphi</span>(<span class="fl">0.20</span>, <span class="fl">0.05</span>), <span class="at">lty =</span> <span class="st">"dashed"</span>, <span class="at">col =</span> <span class="st">"darkgray"</span>)</span>
+<span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a><span class="co"># dev.off()</span></span>
+<span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a><span class="co"># reset graphical parameters "mar" and "mfrow"</span></span>
+<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> orig_mar)</span>
+<span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> orig_mfrow)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
+</div>
+</div>
+<!-- ```{r filename="chisq-power.R"}
+#| label: fig-chisq-power
+#| fig-cap: "The power of the Pearson chi-squared test from a cohort study as a function of the proportion of the sample exposed ($\\varphi$) at several combinations of $p_1$ and $p_0$ for $n = 400/tab$ (solid), $n = 200$ (dashed), and $n = 100$ (dotted). There is a dark gray solid line at $\\varphi = 0.5$, representing a balanced study, and a dark gray dashed line at $\\varphi^*$ from @eq-optimphi. The same power is achieved by a case control study where $\\pi_1$ replaces $p_1$, $\\pi_0$ replaces $p_0$, and $\\varphi$ is the proportion of the sample who are cases."
+#| fig-height: 7
+#| fig-width: 7
+
+
+## Actual power of a Pearson chi-squared test
+
+# calculate Pearson chi-squared test power
+# This can take a few minutes to run with large n.
+powers <- function(p1, p0, n, level = 0.95) {
+  chisq_alpha <- qchisq(level, df = 1)
+  htest <- function(r1) {
+    r0 <- n - r1
+    joint_dbinom <- outer(0:r1, 0:r0,
+                          function(a, c) dbinom(a, r1, p1) * dbinom(c, r0, p0))
+    joint_include <- outer(0:r1, 0:r0,
+                           function(a, c) max(a, c) > 0 & a + c < n)
+    acpower <- Vectorize(function(a, c) {
+      if (max(a, c) > 0 & a + c < n) {
+        b <- r1 - a
+        d <- r0 - c
+        k1 <- a + c
+        k0 <- b + d
+        chisqP <- n * (a * d - b * c)^2 / (r1 * r0 * k1 * k0)
+        return(chisqP > chisq_alpha)
+      } else {
+        return(0)
+      }
+    })
+    joint_power <- outer(0:r1, 0:r0, acpower)
+    return(sum(joint_dbinom * joint_power) / sum(joint_dbinom * joint_include))
+  }
+  r1s <- 1:(n - 1)
+  powers <- sapply(r1s, htest)
+  return(data.frame(r1 = r1s, power = powers, n = n))
+}
+
+# optimal value proportion exposed (or proportion cases)
+optimphi <- function(p1, p0) 1 / (1 + sqrt(p1 * (1 - p1) / (p0 * (1 - p0))))
+
+# Pearson chi-squared test power for p1 = 0.1 and p0 = 0.02
+power_10_02_400 <- powers(0.10, 0.02, 400)
+power_10_02_200 <- powers(0.10, 0.02, 200)
+power_10_02_100 <- powers(0.10, 0.02, 100)
+
+# Pearson chi-squared test power for p1 = 0.10 and p0 = 0.05
+power_10_05_400 <- powers(0.10, 0.05, 400)
+power_10_05_200 <- powers(0.10, 0.05, 200)
+power_10_05_100 <- powers(0.10, 0.05, 100)
+
+# Pearson chi-squared test power for p1 = 0.2 and p0 = 0.02
+power_20_02_400 <- powers(0.20, 0.02, 400)
+power_20_02_200 <- powers(0.20, 0.02, 200)
+power_20_02_100 <- powers(0.20, 0.02, 100)
+
+# Pearson chi-squared test power for p1 = 0.2 and p0 = 0.05
+power_20_05_400 <- powers(0.20, 0.05, 400)
+power_20_05_200 <- powers(0.20, 0.05, 200)
+power_20_05_100 <- powers(0.20, 0.05, 100)
+
+# save values of graphical parameter "mar" before changing them
+orig_mar <- par("mar")
+orig_mfrow <- par("mfrow")
+
+# png(filename = "chisq-power.png")
+par(mar = c(4, 4, 3, 2))
+par(mfrow = c(2, 2))
+
+# Pearson chi-squared test power for p1 = 0.1 and p0 = 0.02
+plot(power_10_02_400$r1 / 400, power_10_02_400$power,
+     type = "l", ylim = c(0, 1),
+     main = expression(paste(p[1], " = 0.10", " and ", p[0], " = 0.02")),
+     xlab = "",
+     ylab = "Power (Pearson chi-squared test)")
+lines(power_10_02_200$r1 / 200, power_10_02_200$power, lty = "dashed")
+lines(power_10_02_100$r1 / 100, power_10_02_100$power, lty = "dotted")
+abline(v = 0.5, col = "darkgray")
+abline(v = optimphi(0.10, 0.02), lty = "dashed", col = "darkgray")
+grid()
+
+# Pearson chi-squared test power for p1 = 0.10 and p0 = 0.05
+plot(power_10_05_400$r1 / 400, power_10_05_400$power,
+     type = "l", ylim = c(0, 1),
+     main = expression(paste(p[1], " = 0.10", " and ", p[0], " = 0.05")),
+     xlab = "", ylab = "")
+lines(power_10_05_200$r1 / 200, power_10_05_200$power, lty = "dashed")
+lines(power_10_05_100$r1 / 100, power_10_05_100$power, lty = "dotted")
+abline(v = 0.5, col = "darkgray")
+abline(v = optimphi(0.10, 0.05), lty = "dashed", col = "darkgray")
+grid()
+legend("topright", bg = "white", lty = c("solid", "dashed", "dotted"),
+       legend = c("n = 400", "n = 200", "n = 100"))
+
+# Pearson chi-squared test power for p1 = 0.2 and p0 = 0.02
+plot(power_20_02_400$r1 / 400, power_20_02_400$power,
+     type = "l", ylim = c(0, 1),
+     main = expression(paste(p[1], " = 0.20", " and ", p[0], " = 0.02")),
+     xlab = expression(paste("Proportion exposed (", phi, ")")),
+     ylab = "Power (Pearson chi-squared test)")
+lines(power_20_02_200$r1 / 200, power_20_02_200$power, lty = "dashed")
+lines(power_20_02_100$r1 / 100, power_20_02_100$power, lty = "dotted")
+abline(v = 0.5, col = "darkgray")
+abline(v = optimphi(0.20, 0.02), lty = "dashed", col = "darkgray")
+grid()
+
+# Pearson chi-squared test power for p1 = 0.2 and p0 = 0.05
+plot(power_20_05_400$r1 / 400, power_20_05_400$power,
+     type = "l", ylim = c(0, 1),
+     main = expression(paste(p[1], " = 0.20", " and ", p[0], " = 0.05")),
+     xlab = expression(paste("Proportion exposed (", phi, ")")),
+     ylab = ""
+    #  ylab = "Power (Pearson chi-squared test)"
+     )
+lines(power_20_05_200$r1 / 200, power_20_05_200$power, lty = "dashed")
+lines(power_20_05_100$r1 / 100, power_20_05_100$power, lty = "dotted")
+abline(v = 0.5, col = "darkgray")
+abline(v = optimphi(0.20, 0.05), lty = "dashed", col = "darkgray")
+grid()
+# dev.off()
+
+# reset graphical parameters "mar" and "mfrow"
+par(mar = orig_mar)
+par(mfrow = orig_mfrow)
+
+
+``` -->
 </section>
 </section>
 <section id="case-control-studies" class="level2" data-number="7.4">
@@ -1699,8 +1838,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./survival.html" class="pagination-link" aria-label="Survival Analysis">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span>
+      <a href="./survival.html" class="pagination-link" aria-label="One-Sample Survival Analysis">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">One-Sample Survival Analysis</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

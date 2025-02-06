@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>10&nbsp; Two-sample survival analysis – Analytical Epidemiology</title>
+<title>10&nbsp; Two-Sample Survival Analysis – Analytical Epidemiology</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -152,6 +152,35 @@ div.csl-indent {
   };
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -164,7 +193,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./studydesign.html">Study Design and Measures of Association</a></li><li class="breadcrumb-item"><a href="./survival2.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-sample survival analysis</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./studydesign.html">Study Design and Measures of Association</a></li><li class="breadcrumb-item"><a href="./survival2.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-Sample Survival Analysis</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -240,7 +269,7 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./survival.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">One-Sample Survival Analysis</span></span></a>
   </div>
 </li>
       </ul>
@@ -269,13 +298,13 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cohort.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Measures of association in cohort studies</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Measures of Association in Cohort Studies</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./survival2.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-sample survival analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-Sample Survival Analysis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -328,15 +357,44 @@ div.csl-indent {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="2">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-surv-meas" id="toc-sec-surv-meas" class="nav-link active" data-scroll-target="#sec-surv-meas"><span class="header-section-number">10.1</span> Measures of association in survival analysis</a>
+  <ul class="collapse">
+  <li><a href="#rate-ratios-and-hazard-ratios" id="toc-rate-ratios-and-hazard-ratios" class="nav-link" data-scroll-target="#rate-ratios-and-hazard-ratios"><span class="header-section-number">10.1.1</span> Rate ratios and hazard ratios</a></li>
+  <li><a href="#risk-differences-risk-ratios-and-odds-ratios" id="toc-risk-differences-risk-ratios-and-odds-ratios" class="nav-link" data-scroll-target="#risk-differences-risk-ratios-and-odds-ratios"><span class="header-section-number">10.1.2</span> Risk differences, risk ratios, and odds ratios</a></li>
+  </ul></li>
+  <li><a href="#accelerated-failure-time-models" id="toc-accelerated-failure-time-models" class="nav-link" data-scroll-target="#accelerated-failure-time-models"><span class="header-section-number">10.2</span> Accelerated failure time models</a>
+  <ul class="collapse">
+  <li><a href="#exponential-aft-model" id="toc-exponential-aft-model" class="nav-link" data-scroll-target="#exponential-aft-model"><span class="header-section-number">10.2.1</span> Exponential AFT model</a></li>
+  <li><a href="#weibull-aft-model" id="toc-weibull-aft-model" class="nav-link" data-scroll-target="#weibull-aft-model"><span class="header-section-number">10.2.2</span> Weibull AFT model</a></li>
+  <li><a href="#log-logistic-aft-model" id="toc-log-logistic-aft-model" class="nav-link" data-scroll-target="#log-logistic-aft-model"><span class="header-section-number">10.2.3</span> Log-logistic AFT model</a></li>
+  </ul></li>
+  <li><a href="#sec-logrank" id="toc-sec-logrank" class="nav-link" data-scroll-target="#sec-logrank"><span class="header-section-number">10.3</span> Log-rank test</a>
+  <ul class="collapse">
+  <li><a href="#observed-and-expected-failures-among-the-exposed" id="toc-observed-and-expected-failures-among-the-exposed" class="nav-link" data-scroll-target="#observed-and-expected-failures-among-the-exposed"><span class="header-section-number">10.3.1</span> Observed and expected failures among the exposed</a></li>
+  <li><a href="#chi-squared-statistic" id="toc-chi-squared-statistic" class="nav-link" data-scroll-target="#chi-squared-statistic"><span class="header-section-number">10.3.2</span> Chi-squared statistic</a></li>
+  <li><a href="#weighted-log-rank-tests" id="toc-weighted-log-rank-tests" class="nav-link" data-scroll-target="#weighted-log-rank-tests"><span class="header-section-number">10.3.3</span> Weighted log-rank tests</a></li>
+  </ul></li>
+  <li><a href="#cox-regression" id="toc-cox-regression" class="nav-link" data-scroll-target="#cox-regression"><span class="header-section-number">10.4</span> Cox regression</a>
+  <ul class="collapse">
+  <li><a href="#proportional-hazards-assumption" id="toc-proportional-hazards-assumption" class="nav-link" data-scroll-target="#proportional-hazards-assumption"><span class="header-section-number">10.4.1</span> Proportional hazards assumption</a></li>
+  <li><a href="#partial-likelihood" id="toc-partial-likelihood" class="nav-link" data-scroll-target="#partial-likelihood"><span class="header-section-number">10.4.2</span> Partial likelihood</a></li>
+  <li><a href="#correction-for-ties" id="toc-correction-for-ties" class="nav-link" data-scroll-target="#correction-for-ties"><span class="header-section-number">10.4.3</span> Correction for ties*</a></li>
+  <li><a href="#estimation-of-baseline-survival-and-cumulative-hazard" id="toc-estimation-of-baseline-survival-and-cumulative-hazard" class="nav-link" data-scroll-target="#estimation-of-baseline-survival-and-cumulative-hazard"><span class="header-section-number">10.4.4</span> Estimation of baseline survival and cumulative hazard*</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./studydesign.html">Study Design and Measures of Association</a></li><li class="breadcrumb-item"><a href="./survival2.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-sample survival analysis</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./studydesign.html">Study Design and Measures of Association</a></li><li class="breadcrumb-item"><a href="./survival2.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-Sample Survival Analysis</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-sample survival analysis</span></h1>
+<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-Sample Survival Analysis</span></h1>
 </div>
 
 
@@ -356,13 +414,409 @@ div.csl-indent {
 <blockquote class="blockquote">
 <p>Survival-time patterns should be compared properly in their entirety rather than at isolated points only. <span class="citation" data-cites="mantel1966evaluation">(<a href="references.html#ref-mantel1966evaluation" role="doc-biblioref">Mantel 1966</a>)</span></p>
 </blockquote>
+<p>Simple measures of association such as the risk ratio or odds ratio require the calculation of risks of disease over a specified time interval. Often, it is more meaningful to compare times to events throughout an interval rather than at isolated points. Under the assumption of exponential times to events, the incidence rate allows us to calculate a rate that applies througout the observed time period. However, it assumes exponential times to events in each exposure group.</p>
+<p>For one-sample inference, survival analysis allowed us to make more relaxed parametric assumptions (e.g., Weibull or log-logistic times to events) or to avoid any parametric assumption at all (e.g., Kaplan-Meier and Nelson-Aalen estimators). Survival analysis plays a similar role in two-sample inference, allowing us to relax assumptions and compare survival time distributions in their entirety. The resulting hypothesis tests and measures of association can be much more powerful and accurate than comparisons based on risks or incidence rates.</p>
+<section id="sec-surv-meas" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="sec-surv-meas"><span class="header-section-number">10.1</span> Measures of association in survival analysis</h2>
+<p>All of the measures of association that we have discussed can be used in survival analysis if we use a parametric model. Let <span class="math inline">\(\lambda_1\)</span> be the rate parameter for the exposed and <span class="math inline">\(\lambda_0\)</span> be the rate parameter for the unexposed, and assume (where needed) that both groups have the same shape parameter <span class="math inline">\(\alpha\)</span>. The <strong>rate ratio</strong> is just <span class="math inline">\(\lambda_1 / \lambda_0\)</span>. The <strong>hazard ratio</strong> at time <span class="math inline">\(t\)</span> is <span class="math display">\[
+  \HR(t) = \frac{h(t, \alpha, \lambda_1)}{h(t, \alpha, \lambda_0)}.
+\]</span> The risk of disease onset in any interval <span class="math inline">\((0, t]\)</span> can be calculated using the survival, cumulative hazard, or hazard functions. This allows us to calculate risk differences, risk ratios, or odds ratios similar to those in <a href="cohort.html" class="quarto-xref"><span>Chapter 9</span></a>. In many cases, these measures of association depend on <span class="math inline">\(t\)</span>.</p>
+<section id="rate-ratios-and-hazard-ratios" class="level3" data-number="10.1.1">
+<h3 data-number="10.1.1" class="anchored" data-anchor-id="rate-ratios-and-hazard-ratios"><span class="header-section-number">10.1.1</span> Rate ratios and hazard ratios</h3>
+<p>Suppose times to events have a Weibull(<span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\lambda_1\)</span>) distribution in the exposed and a Weibull(<span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\lambda_0\)</span>) in the unexposed. The rate ratio is <span class="math inline">\(\lambda_1 / \lambda_0\)</span> at all times. However, the hazard ratio at time <span class="math inline">\(t\)</span> is <span class="math display">\[
+  \HR_\text{W}
+  = \frac{\alpha \lambda_1^\alpha t^{\alpha - 1}}{\alpha \lambda_0^\alpha t^{\alpha - 1}}
+  = \bigg(\frac{\lambda_1}{\lambda_0}\bigg)^\alpha.
+\]</span> Therefore, the hazard ratio is constant and equal to <span class="math inline">\((\text{rate ratio})^\alpha\)</span>. Because the exponential distribution is a special case of the Weibull distribution with <span class="math inline">\(\gamma = 1\)</span>, the hazard ratio equals the rate ratio when both groups have exponential times to events.</p>
+<p>If times to events have a log-logistic(<span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\lambda_1\)</span>) distribution in the exposed and a log-logistic(<span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\lambda_0\)</span>) in the unexposed, the rate ratio is still <span class="math inline">\(\lambda_1 / \lambda_0\)</span> at all times. However, the hazard ratio is <span id="eq-hazratio-llog"><span class="math display">\[
+  \HR_\text{LL}
+  = \frac{\alpha \lambda_1^\alpha t^{\alpha - 1}}
+         {\alpha \lambda_0^\alpha t^{\alpha - 1}}
+    \times \frac{1 + (\lambda_0 t)^\alpha}{1 + (\lambda_1 t)^\alpha}
+  = \bigg(\frac{\lambda_1}{\lambda_0}\bigg)^\alpha
+    \frac{1 + (\lambda_0 t)^\alpha}{1 + (\lambda_1 t)^\alpha},
+\tag{10.1}\]</span></span> which is not constant in time for any shape parameter <span class="math inline">\(\alpha &gt; 0\)</span>. The hazard ratio is approximately <span class="math inline">\((\lambda_1 / \lambda_0)^\alpha\)</span> just after <span class="math inline">\(t = 0\)</span>, and it approaches one as <span class="math inline">\(t \rightarrow \infty\)</span>.</p>
+</section>
+<section id="risk-differences-risk-ratios-and-odds-ratios" class="level3" data-number="10.1.2">
+<h3 data-number="10.1.2" class="anchored" data-anchor-id="risk-differences-risk-ratios-and-odds-ratios"><span class="header-section-number">10.1.2</span> Risk differences, risk ratios, and odds ratios</h3>
+<p>If the times to events have Weibull distributions in both groups, the risk of disease onset in <span class="math inline">\((0, t]\)</span> given <span class="math inline">\(X = x\)</span> is <span class="math display">\[
+  1 - S(t, \alpha, \lambda_x)
+  = 1 - e^{-(\lambda_x t)^\alpha}
+\]</span> where <span class="math inline">\(x = 1\)</span> (for the exposed) or <span class="math inline">\(x = 0\)</span> (for the unexposed). Thus, we can calculate the risk difference, risk ratio, and odds ratio comparing the exposed to the unexposed over any time interval <span class="math inline">\((0, t]\)</span>. For example, the odds of disease onset in <span class="math inline">\((0, t]\)</span> given <span class="math inline">\(X = x\)</span> is <span class="math display">\[
+  \frac{1 - e^{-(\lambda_x t)^\alpha}}{e^{-(\lambda_x t)^\alpha}}
+  = e^{(\lambda_x t)^\alpha} - 1,
+\]</span> so the odds ratio comparing the exposed to the unexposed at time <span class="math inline">\(t\)</span> is <span class="math display">\[
+  \OR(t) = \frac{e^{(\lambda_1 t)^\alpha} - 1}{e^{(\lambda_0 t)^\alpha} - 1}.
+\]</span> When <span class="math inline">\(\lambda_1 = \lambda_0\)</span>, this equals one at all <span class="math inline">\(t\)</span>. Similarly, the risk difference equals zero and the risk ratio equals one. When <span class="math inline">\(\lambda_1 \neq \lambda_0\)</span>, the risk difference, risk ratio, and odds ratio all vary with <span class="math inline">\(t\)</span>.</p>
+<p>If the failure time distributions are log-logistic with the same shape parameter <span class="math inline">\(\alpha\)</span>, the risk of disease onset in <span class="math inline">\((0, t]\)</span> given <span class="math inline">\(X = x\)</span> is <span class="math display">\[
+  1 - S(t, \alpha, \lambda_x)
+  = 1 - \frac{1}{1 + (\lambda_1 t)^\alpha}
+  = \frac{(\lambda_1 t)^\alpha}{1 + (\lambda_1 t)^\alpha},
+\]</span> and the corresponding odds of disease is <span class="math display">\[
+  \frac{(\lambda_x t)^\alpha}{x + (\lambda_x t)^\alpha} \times \frac{x + (\lambda t)^\alpha}{1}
+  = (\lambda_x t)^\alpha.
+\]</span> When <span class="math inline">\(\lambda_1 \neq \lambda_0\)</span>, the risk difference and risk ratio are not constant in time. However, the odds ratio is <span class="math display">\[
+  \frac{(\lambda_1 t)^\alpha}{(\lambda_0 t)^\alpha}
+  = \bigg(\frac{\lambda_1}{\lambda_0}\bigg)^\alpha,
+\]</span> which is constant in time and equal to <span class="math inline">\((\text{rate ratio})^\alpha\)</span>. Thus, the odds ratio for log-logistic times to events has the same form as the hazard ratio for Weibull times to events.</p>
+</section>
+</section>
+<section id="accelerated-failure-time-models" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="accelerated-failure-time-models"><span class="header-section-number">10.2</span> Accelerated failure time models</h2>
+<p>In an <strong>accelerated failure time</strong> (AFT) regression model, the predictors act multiplicatively on the random time to event <span class="math inline">\(T\)</span>: <span class="math display">\[
+  T = e^{\beta_0 + \beta_1 x_1 + \ldots + \beta_k x_k} \times \tau,
+\]</span> where <span class="math inline">\(\tau\)</span> is a random sample from a baseline survival time distribution with a rate parameter (and scale parameter) equal to one. The multiplier of <span class="math inline">\(\tau\)</span> is the <strong>scale parameter</strong> <span class="math display">\[
+  \sigma(\beta, x) = e^{\beta_0 + \beta_1 x_1 + \ldots + \beta_k x_k},
+\]</span> which is the reciprocal of the <strong>rate parameter</strong> <span id="eq-AFTrate"><span class="math display">\[
+  \lambda(\beta, x) =
+  e^{-\big(\beta_0 + \beta_1 x_1 + \ldots + \beta_k x_k\big)}.
+\tag{10.2}\]</span></span> A one-unit increase in <span class="math inline">\(x_j\)</span> with all other covariates held constant is associated with a survival time that is multiplied by <span class="math inline">\(\exp(\beta_j)\)</span>, which is called the <em>acceleration factor</em>. Equivalently, it is associated with a <strong>rate ratio</strong> of <span class="math inline">\(\exp(-\beta_j)\)</span>, which is the reciprocal of the acceleration factor. The null hypothesis of no association with <span class="math inline">\(X_j\)</span> corresponds to <span class="math inline">\(\beta_j = 0\)</span>.</p>
+<p>We will discuss AFT models that use exponential, Weibull, and log-logistic distributions. The gamma and log-normal distributions are also widely used, but they do not have simple closed forms for the hazard, cumulative hazard, or survival functions. All of these models can be fit using data with left truncation and right censoring, and the construction of the likelihood is the same. AFT models are a useful alternative to analyses based on incidence rates when the times to events are not exponential.</p>
+<p>For simplicity, we will focus on AFT models with a single binary predictor <span class="math inline">\(X\)</span>. In these models, the rate parameter is <span class="math display">\[
+  \lambda(x, \beta)
+  = e^{-(\beta_0 + \beta_1 x)} =
+  \begin{cases}
+    e^{-\beta_0}              &amp; \text{in the unexposed,}\\
+    e^{-(\beta_0 + \beta_1)}  &amp; \text{in the exposed.}
+  \end{cases}
+\]</span> {<a href="#eq-AFTrate" class="quarto-xref">Equation&nbsp;<span>10.2</span></a>} The rate ratio is <span class="math display">\[
+  \frac{\lambda_1}{\lambda_0}
+  = \frac{e^{-(\beta_0 + \beta_1)}}{e^{-\beta_0}}
+  = e^{-\beta_1}.
+\]</span> The relationship between this rate ratio and other measures of association depends on the underlying failure time distribution.</p>
+<section id="exponential-aft-model" class="level3" data-number="10.2.1">
+<h3 data-number="10.2.1" class="anchored" data-anchor-id="exponential-aft-model"><span class="header-section-number">10.2.1</span> Exponential AFT model</h3>
+<p>An exponential distribution has a rate parameter but no shape parameter, so an exponential AFT model only has to estimate the coefficient vector <span class="math inline">\(\beta\)</span> from <a href="#eq-AFTrate" class="quarto-xref">Equation&nbsp;<span>10.2</span></a>. In an exponential AFT model, the hazard function is <span class="math display">\[
+  h(t, x, \beta) = \lambda(x, \beta),
+\]</span> which is the exponential hazard function with <span class="math inline">\(\lambda = \lambda(x, \beta)\)</span> from <a href="#eq-AFTrate" class="quarto-xref">Equation&nbsp;<span>10.2</span></a>. The corresponding cumulative hazard is <span class="math display">\[
+  H(t, x, \beta) = \lambda(X, \beta) t.
+\]</span> With left-truncated and right-censored data <span id="eq-survdata"><span class="math display">\[
+  (\tentry_i, \texit_i, \delta_i, x_i) \text{ for } i = 1, \ldots, n,
+\tag{10.3}\]</span></span> the log likelihood for <span class="math inline">\(\beta\)</span> is <span class="math display">\[
+  \ell(\beta)
+  = \sum_{i = 1}^n
+    \Big(\delta_i \ln h(\texit_i, x_i, \beta)
+      - H(\texit_i, x_i, \beta) + H(\tentry_i, x_i, \beta)\Big).
+\]</span> Point and interval estimates of <span class="math inline">\(\beta\)</span> can be obtained using maximum likelihood estimation (as in <a href="mlestimation.html" class="quarto-xref"><span>Chapter 3</span></a>) or Bayesian methods (see <a href="bayes.html" class="quarto-xref"><span>Chapter 4</span></a>).</p>
+</section>
+<section id="weibull-aft-model" class="level3" data-number="10.2.2">
+<h3 data-number="10.2.2" class="anchored" data-anchor-id="weibull-aft-model"><span class="header-section-number">10.2.2</span> Weibull AFT model</h3>
+<p>The Weibull AFT model generalizes the exponential model in the same way that the Weibull distribution generalizes the exponential distribution. As in the exponential AFT model, the rate parameter is determined by <span class="math inline">\(x\)</span> and <span class="math inline">\(\beta\)</span> as in <a href="#eq-AFTrate" class="quarto-xref">Equation&nbsp;<span>10.2</span></a>. The hazard function in a Weibull AFT model is <span class="math display">\[
+  h(t, \alpha, \beta, x) =
+  \alpha \lambda(\beta, x)^\alpha t^{\alpha - 1},
+\]</span> which is the hazard function of the Weibull(<span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\lambda\)</span>) distribution where <span class="math inline">\(\lambda = \lambda(\beta, X)\)</span>. The corresponding cumulative hazard function is <span class="math display">\[
+    H(t, \alpha, \beta, x) =
+    \big(\lambda(\beta, x) t\big)^\alpha.
+\]</span> With left-truncated and right-censored data as in <a href="#eq-survdata" class="quarto-xref">Equation&nbsp;<span>10.3</span></a>, the log likelihood for <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> is <span id="eq-lweib"><span class="math display">\[
+    \ell(\alpha, \beta) =
+    \sum_{i = 1}^n \Big(\delta_i \ln h(\texit_i, x_i, \alpha, \beta)
+      - H(t_i, x_i, \alpha, \beta) + H(\tentry_i, x_i, \alpha, \beta)\Big).
+\tag{10.4}\]</span></span> Point and interval estimates of <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> can be obtained using maximum likelihood estimation or Bayesian methods.</p>
+</section>
+<section id="log-logistic-aft-model" class="level3" data-number="10.2.3">
+<h3 data-number="10.2.3" class="anchored" data-anchor-id="log-logistic-aft-model"><span class="header-section-number">10.2.3</span> Log-logistic AFT model</h3>
+<p>The log-logistic AFT model has the same likelihood as the Weibull AFT model except that we replace the Weibull hazard and cumulative hazard functions with the log-logistic hazard and cumulative hazard functions. As in the exponential and Weibull AFT models, the rate parameter is determined by <span class="math inline">\(x\)</span> and <span class="math inline">\(\beta\)</span> as in <a href="#eq-AFTrate" class="quarto-xref">Equation&nbsp;<span>10.2</span></a>. The log-logistic hazard function is <span class="math display">\[
+  h(t, x, \alpha, \beta) =
+  \frac{\alpha \lambda(x, \beta)^\alpha t^{\alpha - 1}}
+    {1 + \big(\lambda(x, \beta) t\big)^\alpha},
+\]</span> and the cumulative hazard function is <span class="math display">\[
+  H(t, X, \beta, \alpha) =
+  \ln\Bigl(1 + t^\alpha e^{-\alpha (\beta_0 + \beta_1 X)}\Bigr).
+\]</span> With left-truncated and right-censored data as in <a href="#eq-survdata" class="quarto-xref">Equation&nbsp;<span>10.3</span></a>, the likelihood is given by <a href="#eq-lweib" class="quarto-xref">Equation&nbsp;<span>10.4</span></a>. Point and interval estimates of <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> can be obtained using maximum likelihood estimation or Bayesian methods.</p>
+</section>
+</section>
+<section id="sec-logrank" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="sec-logrank"><span class="header-section-number">10.3</span> Log-rank test</h2>
+<p>The log rank test <span class="citation" data-cites="mantel1966evaluation">(<a href="references.html#ref-mantel1966evaluation" role="doc-biblioref">Mantel 1966</a>)</span> is a nonparametric score test for the null hypothesis that two groups have the same failure time distribution. Let <span class="math inline">\(t_1 &lt; t_2 &lt; \cdots &lt; t_m\)</span> be the distinct times where failures occur. Let <span class="math inline">\(d_i\)</span> denote the number of failures at time <span class="math inline">\(t_i\)</span>, and let <span class="math inline">\(n_i\)</span> denote the number of people in the risk set <span class="math inline">\(\mathcal{R}_i\)</span> (i.e., the set of people at risk of failure at time <span class="math inline">\(t_i\)</span>). Let <span class="math inline">\(X\)</span> be a binary covariate. Let <span class="math inline">\(n_{1i}\)</span> denote the number of people in <span class="math inline">\(R_i\)</span> with <span class="math inline">\(X = 1\)</span>, and let <span class="math inline">\(d_{1i}\)</span> denote the number of of these that fail at time <span class="math inline">\(t_i\)</span>. For now, we assume no tied failure times, so <span class="math inline">\(d_{1i} = 0\)</span> or <span class="math inline">\(d_{1i} = 1\)</span> for each <span class="math inline">\(i\)</span>.</p>
+<section id="observed-and-expected-failures-among-the-exposed" class="level3" data-number="10.3.1">
+<h3 data-number="10.3.1" class="anchored" data-anchor-id="observed-and-expected-failures-among-the-exposed"><span class="header-section-number">10.3.1</span> Observed and expected failures among the exposed</h3>
+<p>The log-rank test is a score test, so it uses a test statistic calculated assuming the null hypothesis is true. Here, the null hypothesis is that the survival time distribution is the same among the exposed (<span class="math inline">\(X = 1\)</span>) and the unexposed (<span class="math inline">\(X = 0\)</span>). Under the null hypothesis, the <span class="math inline">\(d_i\)</span> failures at time <span class="math inline">\(t_i\)</span> occur in individuals randomly chosen from <span class="math inline">\(n_i\)</span> individuals in the risk set <span class="math inline">\(\mathcal{R}(t_i)\)</span>. The number of exposed individuals <span class="math inline">\(D_{1i}\)</span> among the randomly chosen <span class="math inline">\(d_i\)</span> individuals has a hypergeometric distribution (see <a href="studydesign.html#sec-hypergeometric" class="quarto-xref"><span>Section 7.1.1</span></a>) with mean <span class="math display">\[
+    \E(D_{1i}) = d_{i} p_{1i}
+\]</span> where <span class="math display">\[
+    p_{1i} = \frac{n_{1i}}{n_i}
+\]</span> is the proportion of the risk set that is exposed. Its variance is <span class="math display">\[
+  \Var(D_{1i})
+  = p_{1i} (1 - p_{1i}) \frac{d_i (n_i - d_i)}{n_i - 1}.
+\]</span> In the special case where <span class="math inline">\(d_i = 1\)</span>, this hypergeometric distribution is a Bernoulli(<span class="math inline">\(p_{1i}\)</span>) distribution with mean <span class="math inline">\(p_{1i}\)</span> and variance <span class="math inline">\(p_{1i} (1 - p_{1i})\)</span>.</p>
+</section>
+<section id="chi-squared-statistic" class="level3" data-number="10.3.2">
+<h3 data-number="10.3.2" class="anchored" data-anchor-id="chi-squared-statistic"><span class="header-section-number">10.3.2</span> Chi-squared statistic</h3>
+<p>The numerator of the log-rank chi-squared statistic is total number of observed failures among the exposed minus the total number of expected failures among the exposed under the null hypothesis: <span id="eq-logrank-U"><span class="math display">\[
+  U = \sum_{i = 1}^m \Big(d_{1i} - d_i p_{1i}\Big).
+\tag{10.5}\]</span></span> The denominator is the variance of <span class="math inline">\(U_\text{logrank}\)</span>, which is <span class="math display">\[
+  \Var(U)
+  = \sum_{i = 1}^m p_{1i} (1 - p_{1i}) \frac{d_i (n_i - d_i)}{n_i - 1}
+\]</span> because the <span class="math inline">\(D_{1i}\)</span> are independent. The log-rank test statistic is <span id="eq-logrank-S"><span class="math display">\[
+  \chi^2_\text{logrank} = \frac{U^2}{\Var(U)}.
+\tag{10.6}\]</span></span> When the number of observed failures is large, this has a chi-squared distribution with one degree of freedom under the null. We reject the null hypothesis for large values of <span class="math inline">\(\chi^2_\text{logrank}\)</span>. We get exactly the same chi-squared statistic and p-value if we use the observed and expected number of failures among the unexposed.</p>
+<!-- Explain why we get the same statistic if we used observed and expected failures among the unexposed. -->
+</section>
+<section id="weighted-log-rank-tests" class="level3" data-number="10.3.3">
+<h3 data-number="10.3.3" class="anchored" data-anchor-id="weighted-log-rank-tests"><span class="header-section-number">10.3.3</span> Weighted log-rank tests</h3>
+<p>Many nonparametric tests of differences between survival curves are weighted versions of the log-rank test. The weighted sum of the differences between the observed and expected numbers of events among the exposed is <span class="math display">\[
+    U = \sum_{i = 1}^m w_i (d_{1i} - d_i p_{1i}),
+\]</span> and the corresponding variance is <span class="math display">\[
+  V = \sum_{i = 1}^m w_i^2 \bigg(p_{1i}(1 - p_{1i}) \frac{d_i (n_i - d_i)}{n_i - 1}\bigg).
+\]</span> <a href="#tbl-logranktests" class="quarto-xref">Table&nbsp;<span>10.1</span></a> shows the weights used by various tests. In the weights, <span class="math inline">\(\hat{S}(t)\)</span> is the Kaplan-Meier estimate of the survival function, <span class="math inline">\(\hat{S}_0(t)\)</span> is the Kaplan-Meier estimate among the unexposed, and <span class="math inline">\(\hat{S}_1(t)\)</span> is the Kaplan-Meier estimate among the exposed. The Harrington-Fleming test is equivalent to the log-rank test when <span class="math inline">\(\rho = 0\)</span>, and it approximates the Peto-Prentice test when <span class="math inline">\(\rho = 1\)</span>. The weighted tests often give larger weights to earlier survival times, where there is usually more data.</p>
+<div id="tbl-logranktests" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-logranktests-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;10.1: Weighted log-rank tests <span class="citation" data-cites="aalen2008survival">(<a href="references.html#ref-aalen2008survival" role="doc-biblioref">Aalen, Borgan, and Gjessing 2008</a>)</span>.
+</figcaption>
+<div aria-describedby="tbl-logranktests-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Test</th>
+<th style="text-align: center;">Weight (proportional to <span class="math inline">\(w_i\)</span>)</th>
+<th style="text-align: left;">Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Log-rank</td>
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: left;"><span class="citation" data-cites="mantel1966evaluation">(<a href="references.html#ref-mantel1966evaluation" role="doc-biblioref">Mantel 1966</a>)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gehan-Breslow</td>
+<td style="text-align: center;"><span class="math inline">\(n_i\)</span></td>
+<td style="text-align: left;"><span class="citation" data-cites="gehan1965generalized breslow1970generalized">(<a href="references.html#ref-gehan1965generalized" role="doc-biblioref">Gehan 1965</a>; <a href="references.html#ref-breslow1970generalized" role="doc-biblioref">N. Breslow 1970</a>)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Tarone-Ware</td>
+<td style="text-align: center;"><span class="math inline">\(\sqrt{n_i}\)</span></td>
+<td style="text-align: left;"><span class="citation" data-cites="tarone1977distribution">(<a href="references.html#ref-tarone1977distribution" role="doc-biblioref">Tarone and Ware 1977</a>)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Harrington-Fleming</td>
+<td style="text-align: center;"><span class="math inline">\(\hat{S}(t_{i - 1})^\rho\)</span></td>
+<td style="text-align: left;"><span class="citation" data-cites="harrington1982class">(<a href="references.html#ref-harrington1982class" role="doc-biblioref">Harrington and Fleming 1982</a>)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Efron</td>
+<td style="text-align: center;"><span class="math inline">\(\hat{S}_0(t_{i - 1}) \hat{S}_1(t_{i - 1})\)</span></td>
+<td style="text-align: left;"><span class="citation" data-cites="efron1967two">(<a href="references.html#ref-efron1967two" role="doc-biblioref">Efron 1967</a>)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Peto-Prentice</td>
+<td style="text-align: center;"><span class="math inline">\(\prod_{i: t_i &lt; t} \Big(1 - \frac{d_i}{n_i + 1}\Big)\)</span></td>
+<td style="text-align: left;"><span class="citation" data-cites="peto1972asymptotically prentice1978linear">(<a href="references.html#ref-peto1972asymptotically" role="doc-biblioref">Peto and Peto 1972</a>; <a href="references.html#ref-prentice1978linear" role="doc-biblioref">Prentice 1978</a>)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+</section>
+<section id="cox-regression" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="cox-regression"><span class="header-section-number">10.4</span> Cox regression</h2>
+<p>The <strong>Cox proportional hazards model</strong> [<span class="citation" data-cites="cox1972regression">Cox (<a href="references.html#ref-cox1972regression" role="doc-biblioref">1972</a>)</span>} is a regression model that can estimate hazard ratios without making any other assumption about the underlying failure time distributions.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> It is a <strong>semiparametric</strong> model, which means that it has a parametric component and a nonparametric component. In the Cox model, the hazard function is <span id="eq-Cox-haz"><span class="math display">\[
+  h(t, x, \beta) = e^{\beta_1 x_1 + \ldots + \beta_k x_k} h_0(t),
+\tag{10.7}\]</span></span> where the first term on the right-hand side is the <strong>relative hazard function</strong> and <span class="math inline">\(h_0(t)\)</span> is an unspecified <strong>baseline hazard function</strong>. The parametric component of the model is the relative hazard, where each predictor has a multiplicative effect on the hazard function. The nonparametric component of the model is the unspecified baseline hazard. There is no intercept because <span class="math inline">\(h_0(t)\)</span> represents the hazard for an individual with all predictors equal to zero.</p>
+<p>For simplicity, we will focus on Cox models with a single binary predictor <span class="math inline">\(X\)</span>. In these models, the relative hazard is <span class="math display">\[
+  e^{\beta_1 x} =
+  \begin{cases}
+    1           &amp; \text{in the unexposed,}\\
+    e^{\beta_1} &amp; \text{in the exposed.}
+  \end{cases}
+\]</span> Thus, the hazard ratio comparing the exposed to the unexposed is <span class="math inline">\(e^{\beta_1}\)</span>. The Cox model gives us a way of estimating the hazard ratio without making any assumption about the distributions of times to events in the exposed and unexposed except for proportional hazards. In a Cox model with a single binary covariate, the log-rank test from <a href="#sec-logrank" class="quarto-xref"><span>Section 10.3</span></a> is a score test of the null hypothesis that <span class="math inline">\(\beta = 0\)</span>.</p>
+<section id="proportional-hazards-assumption" class="level3" data-number="10.4.1">
+<h3 data-number="10.4.1" class="anchored" data-anchor-id="proportional-hazards-assumption"><span class="header-section-number">10.4.1</span> Proportional hazards assumption</h3>
+<p>The proportional hazards assumption is much weaker than any assumption that the times to events in the exposed and unexposed come from a specific family, such as exponential, Weibull, or log-logistic distributions. However, it is still an assumption. The exponential and Weibull AFT models are special cases of the Cox model because the hazard ratio comparing the exposed to the unexposed is always <span class="math inline">\((\lambda_1 / \lambda_0)^\alpha\)</span> where <span class="math inline">\(\lambda_1\)</span> is the rate parameter for the exposed, <span class="math inline">\(\lambda_0\)</span> is the rate parameter for the unexposed, and <span class="math inline">\(\alpha\)</span> is the shape parameter. When the underlying failure times are truly exponential or Weibull, the corresponding AFT models will have slightly more power than the Cox model. The log-logistic AFT model is not a proportional hazards model because the hazard ratio changes over time, as shown in <a href="#eq-hazratio-llog" class="quarto-xref">Equation&nbsp;<span>10.1</span></a>.</p>
+</section>
+<section id="partial-likelihood" class="level3" data-number="10.4.2">
+<h3 data-number="10.4.2" class="anchored" data-anchor-id="partial-likelihood"><span class="header-section-number">10.4.2</span> Partial likelihood</h3>
+<p>The Cox model is fit using a <strong>partial likelihood</strong>, which leaves out parts of the full likelihood but behaves like a likelihood for the purposes of maximum likelihood estimation. The Cox partial likelihood retains critical information about the hazard ratios without placing constraints on the baseline hazard. To do this, it relies an fundamental relationship between conditional probabilities and hazard functions.</p>
+<p>Suppose <span class="math inline">\(T_1\)</span> and <span class="math inline">\(T_2\)</span> are independent failure times with survival functions <span class="math inline">\(S_1(t)\)</span> and <span class="math inline">\(S_2(t)\)</span>, respectively. Let <span class="math inline">\(T = \min(T_1, T_2)\)</span>. Then the survival function of <span class="math inline">\(T\)</span> is <span class="math display">\[
+  S(t) = S_1(t)S_2(t)
+\]</span> because <span class="math inline">\(T &gt; t\)</span> if and only if <span class="math inline">\(T_1 &gt; t\)</span> and <span class="math inline">\(T_2 &gt; t\)</span>. The cumulative hazard function of <span class="math inline">\(T\)</span> is <span class="math display">\[
+  H(t) = -\ln S(t)
+  = -\ln S_1(t) - \ln S_2(t)
+  = H_1(t) + H_2(t),
+\]</span> where <span class="math inline">\(H_1(t)\)</span> an <span class="math inline">\(H_2(t)\)</span> are the cumulative hazard functions of <span class="math inline">\(T_1\)</span> and <span class="math inline">\(T_2\)</span>. Taking derivatives, we get the hazard function <span class="math display">\[
+  h(t) = H'(t)
+  = H_1'(t) + H_2'(t)
+  = h_1(t) + h_2(t),
+\]</span> where <span class="math inline">\(h_1(t)\)</span> and <span class="math inline">\(h_2(t)\)</span> are the hazard functions of <span class="math inline">\(T_1\)</span> and <span class="math inline">\(T_2\)</span>.</p>
+<p>This logic extends to the minimum of any finite set of survival times <span class="math inline">\(T_1, \ldots, T_n\)</span>. The survival function of <span class="math inline">\(T = \min(T_1, \ldots, T_n)\)</span> is <span id="eq-survmin"><span class="math display">\[
+  S(t) = \prod_{i = 1}^n S_i(t),
+\tag{10.8}\]</span></span> and the hazard function is <span id="eq-hmin"><span class="math display">\[
+  h(t) = \sum_{i = 1}^n h_i(t),
+\tag{10.9}\]</span></span> where <span class="math inline">\(S_i(t)\)</span> is the survival function and <span class="math inline">\(h_i(t)\)</span> is the hazard function of <span class="math inline">\(T_i\)</span>.</p>
+<p>The probability density function is the product of the hazard in <a href="#eq-hmin" class="quarto-xref">Equation&nbsp;<span>10.9</span></a> and the survival in <a href="#eq-survmin" class="quarto-xref">Equation&nbsp;<span>10.8</span></a>. The probability density for a failure in any individual at time <span class="math inline">\(t\)</span> is <span id="eq-Lfail"><span class="math display">\[
+  \big(h_1(t) + \ldots + h_n(t)\big) \prod_{i = 1}^n S_i(t).
+\tag{10.10}\]</span></span> If the first failure occurred in person <span class="math inline">\(k\)</span>, then the likelihood contribution would be <span id="eq-Lfail1"><span class="math display">\[
+  h_k(t) \prod_{i = 1}^n S_i(t).
+\tag{10.11}\]</span></span> because the person who has an event contributes a hazard term and everyone (including the person who failed) contributes a survival term. To calculate the conditional probability that the failure occurred in person <span class="math inline">\(k\)</span> given that there was a failure at time <span class="math inline">\(t\)</span>, we divide the likelihood in <a href="#eq-Lfail1" class="quarto-xref">Equation&nbsp;<span>10.11</span></a> by the likelihood in <a href="#eq-Lfail" class="quarto-xref">Equation&nbsp;<span>10.10</span></a>: <span class="math display">\[
+  \frac{h_k(t) \prod_{i = 1}^n S_i(t)}
+       {\big(h_1(t) + \ldots + h_n(t)\big) \prod_{i = 1}^n S_i(t)}
+  = \frac{h_k(t)}{h_1(t) + \ldots + h_n(t)}.
+\]</span> The survival functions cancel out, leaving only the hazards. Given that there is a failure at time <span class="math inline">\(t\)</span>, the probability that it occurred in person <span class="math inline">\(k\)</span> is proportional to their hazard <span class="math inline">\(h_k(t)\)</span>.</p>
+<p>The same logic applies to failures other than the first. As before, let <span class="math inline">\(\mathcal{R}(t)\)</span> denote the risk set (i.e., the set of individuals at risk of an observed event) at time <span class="math inline">\(t\)</span>. Given that a failure occurs at time <span class="math inline">\(t\)</span>, the probability that it occurred in person <span class="math inline">\(k\)</span> is <span class="math display">\[
+  \frac{h_k(t)}{\sum_{j \in \mathcal{R}(t)} h_j(t)}.
+\]</span> At any failure time <span class="math inline">\(t\)</span>, these probabilities add up to one. If we substitute the hazard function for the Cox model from <a href="#eq-Cox-haz" class="quarto-xref">Equation&nbsp;<span>10.7</span></a>, we get <span class="math display">\[
+  \frac{e^{\beta x_k} h_0(t)}{\sum_{j \in \mathcal{R}(t) e^{\beta x_j} h_0(t)}}
+  = \frac{e^{\beta x_k}}{\sum_{j \in \mathcal{R}(t) e^{\beta x_j}}}.
+\]</span> because the baseline hazard <span class="math inline">\(h_0(t)\)</span> cancels out. When there are no tied failure times, let <span class="math inline">\(i\)</span> be the index of the individual who has an event at time <span class="math inline">\(t_i\)</span>. Then the Cox partial likelihood is <span class="math display">\[
+  L_\text{Cox}(\beta)
+  = \prod_{i = 1}^m \frac{e^{\beta x_i}}{\sum_{j \in \mathcal{R}(t_i)} e^{\beta x_j}}.
+\]</span> The risk sets are determined in exactly the same way as the Kaplan-Meier and Nelson-Aalen estimators in <a href="survival.html" class="quarto-xref"><span>Chapter 6</span></a>, so the Cox model can handle left truncation (i.e., delayed entry) and right censoring. It uses the same data from <a href="#eq-survdata" class="quarto-xref">Equation&nbsp;<span>10.3</span></a> as the AFT models. For estimation of <span class="math inline">\(\beta\)</span>, the partial likelihood can be used just like a normal likelihood. This is a consequence of the fact that it can be derived as a <em>profile likelihood</em> where the likelihood for <span class="math inline">\(\beta\)</span> is the full likelihood maximized over all possible baseline hazard functions <span class="citation" data-cites="johansen1983extension">(<a href="references.html#ref-johansen1983extension" role="doc-biblioref">Johansen 1983</a>)</span>.</p>
+</section>
+<section id="correction-for-ties" class="level3" data-number="10.4.3">
+<h3 data-number="10.4.3" class="anchored" data-anchor-id="correction-for-ties"><span class="header-section-number">10.4.3</span> Correction for ties*</h3>
+<p>There are three common methods for dealing with ties in a Cox model (in order of complexity): Breslow, Efron, and exact. The Breslow approximation <span class="citation" data-cites="peto1972contribution breslow1974covariance">(<a href="references.html#ref-peto1972contribution" role="doc-biblioref">Peto 1972</a>; <a href="references.html#ref-breslow1974covariance" role="doc-biblioref">N. Breslow 1974</a>)</span> is the simplest but least accurate. The exact method is accurate but computationally complex <span class="citation" data-cites="kalbfleisch2011statistical">(<a href="references.html#ref-kalbfleisch2011statistical" role="doc-biblioref">Kalbfleisch and Prentice 2011</a>)</span>. The Efron approximation <span class="citation" data-cites="efron1977efficiency">(<a href="references.html#ref-efron1977efficiency" role="doc-biblioref">Efron 1977</a>)</span> is both accurate and computationally efficient. All of these methods assume that failures happen in continuous time and that ties are caused by rounding off of survival times (i.e., times measured to the day or week rather than hour, minute, and second).</p>
+<section id="exact-method" class="level4" data-number="10.4.3.1">
+<h4 data-number="10.4.3.1" class="anchored" data-anchor-id="exact-method"><span class="header-section-number">10.4.3.1</span> Exact method</h4>
+<p>If there are tied survival times at time <span class="math inline">\(t_i\)</span>, then the exact method calculates the mean partial likelihood contribution at time <span class="math inline">\(t_i\)</span> over all <span class="math inline">\(d_i!\)</span> possible ways of breaking ties among the people who failed at time <span class="math inline">\(t_i\)</span> <span class="citation" data-cites="kalbfleisch2011statistical">(<a href="references.html#ref-kalbfleisch2011statistical" role="doc-biblioref">Kalbfleisch and Prentice 2011</a>)</span>. These calculations get complex quickly—there are <span class="math inline">\(5! = 120\)</span> ways to break ties among 5 events, <span class="math inline">\(10! = 3,628,800\)</span> ways among 10 events, <span class="math inline">\(15! \approx 1.3\)</span> trillion ways among 15 events, and so on. For simplicity, we illustrate the calculation for two events.</p>
+<p>Let <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> denote the indices of the individuals who fail at time <span class="math inline">\(t_i\)</span>, with <span class="math inline">\(d_i = 2\)</span>. Let <span class="math inline">\(x_A\)</span> and <span class="math inline">\(x_B\)</span> denote their covariates. There are two ways to break the tie: <span class="math inline">\(A\)</span> fails first or <span class="math inline">\(B\)</span> fails first. If <span class="math inline">\(A\)</span> fails first, then the partial likelihood contribution from the two failures is <span class="math display">\[
+  \frac{e^{\beta x_A}}{\sum_{j \in \mathcal{R}(t_i)} e^{\beta x_j}}
+  \times \frac{e^{\beta x_B}}{\Big(\sum_{j \in \mathcal{R}(t_i)} e^{\beta x_j}\Big) - e^{\beta x_A}},
+\]</span> where the denominator in the second term accounts for the fact that <span class="math inline">\(A\)</span> is no longer in the risk set when <span class="math inline">\(B\)</span> fails. If <span class="math inline">\(B\)</span> fails first, the likelihood contribution from the two failures is <span class="math display">\[
+  \frac{e^{\beta x_B}}{\sum_{j \in \mathcal{R}(t_i)} e^{\beta x_j}}
+  \times \frac{e^{\beta x_A}}{\Big(\sum_{j \in \mathcal{R}(t_i)} e^{\beta x_j}\Big) - e^{\beta x_B}},
+\]</span> where the denominator in the second term accounts for the fact that <span class="math inline">\(B\)</span> is no longer in the risk set when <span class="math inline">\(A\)</span> fails. In both cases, the numerator is <span class="math inline">\(e^{\beta x_A + x_B}\)</span>, but the denominator is slightly different. If both possibilities are equally likely (which is true if <span class="math inline">\(\beta = 0\)</span> or <span class="math inline">\(x_A = x_B\)</span>), the average likelihood contribution is <span id="eq-ties-exact"><span class="math display">\[
+  \begin{aligned}
+    &amp;\frac{1}{2} \frac{e^{\beta (x_A + x_B)}}
+      {\Big(\sum_{j \in \mathcal{R}(t_i)} e^{\beta x_j}\Big) \Big[\Big(\sum_{j \in \mathcal{R}(t_i)} e^{\beta X_j}\Big) - e^{\beta x_A}\Big]}  \\
+    &amp;\qquad + \frac{1}{2} \frac{e^{\beta (x_A + x_B)}}
+      {\Big(\sum_{j \in \mathcal{R}(t_i)} e^{\beta x_j}\Big) \Big[\Big(\sum_{j \in \mathcal{R}(t_i)} e^{\beta X_j}\Big) - e^{\beta x_B}\Big]}
+  \end{aligned}
+\tag{10.12}\]</span></span> Extending this to larger numbers of ties is straightforward but tedious. When there are failure times with a large number of ties, this approach becomes computationally intractable.</p>
+</section>
+<section id="efron-approximation" class="level4" data-number="10.4.3.2">
+<h4 data-number="10.4.3.2" class="anchored" data-anchor-id="efron-approximation"><span class="header-section-number">10.4.3.2</span> Efron approximation</h4>
+<p>Let <span class="math inline">\(\mathcal{D}(t_i)\)</span> denote the set of individuals who fail at time <span class="math inline">\(t_i\)</span>. The Efron approximation <span class="citation" data-cites="efron1977efficiency">(<a href="references.html#ref-efron1977efficiency" role="doc-biblioref">Efron 1977</a>)</span> approximates the denominator of the exact estimate using the mean relative hazard among the <span class="math inline">\(d_i\)</span> individuals in <span class="math inline">\(\mathcal{D}(t_i)\)</span>, which is <span class="math display">\[
+  \frac{1}{d_i} \sum_{j \in \mathcal{D}(t_i)} e^{\beta x_j}.
+\]</span> This is also the average amount taken out of the sum in the denominator for each of the first <span class="math inline">\(d_i - 1\)</span> failures at time <span class="math inline">\(t_i\)</span>. The Efron approximation to the exact mean likelihood contribution is <span class="math display">\[
+  \frac{\prod_{j \in \mathcal{D}(t_i)} e^{\beta x_j}}
+    {\prod_{k = 1}^{d_i} \Big(\sum_{j \in \mathcal{R}(t_i)} e^{\beta x_j} - \frac{k - 1}{d_i} \sum_{j \in \mathcal{D}(t_i)} e^{\beta x_j}\Big)}
+\]</span> This is easy to calculate and is a good approximation to the exact mean likelihood contribution even when there are many ties.</p>
+<p>In our example with two tied failures, the Efron approximation to the likelihood contribution in equation~<a href="#eq:exact" data-reference-type="eqref" data-reference="eq:exact">[eq:exact]</a> is <span class="math display">\[\frac{e^{\beta (x_A + x_B)}}{\Big(\sum_{j \in \mathcal{R}(t_i)} e^{\beta x_j}\Big) \Big(\sum_{j \in \mathcal{R}(t_i)} e^{\beta x_j} - \frac{1}{2} \big(e^{\beta x_A} + e^{\beta x_B}\big)\Big)}.\]</span> In the second term in the denominator, we have taken out the average of individuals <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>.</p>
+</section>
+<section id="breslow-approximation" class="level4" data-number="10.4.3.3">
+<h4 data-number="10.4.3.3" class="anchored" data-anchor-id="breslow-approximation"><span class="header-section-number">10.4.3.3</span> Breslow approximation</h4>
+<p>The Breslow approximation <span class="citation" data-cites="peto1972contribution breslow1972contribution">(<a href="references.html#ref-peto1972contribution" role="doc-biblioref">Peto 1972</a>; <a href="references.html#ref-breslow1972contribution" role="doc-biblioref">N. E. Breslow 1972</a>)</span> simply ignores the fact that failures are removed from the risk set, giving the following approximation to the exact likelihood contribution: <span class="math display">\[
+  \frac{\prod_{j \in D_i} e^{\beta X_j}}{\Big(\sum_{j \in R_i} e^{\beta X_j}\Big)^{d_i}}.
+\]</span> In our example with tied failure times in <span class="math inline">\(y\)</span> and <span class="math inline">\(z\)</span>, the Breslow approximation to the likelihood contribution in <a href="#eq-ties-exact" class="quarto-xref">Equation&nbsp;<span>10.12</span></a> is <span class="math display">\[
+  \frac{e^{\beta (x_A + x_B)}}{\Big(\sum_{j \in \mathcal{R}(t_i)} e^{\beta x_j}\Big)^2}.
+\]</span> This leaves the first person to fail (<span class="math inline">\(A\)</span> or <span class="math inline">\(B\)</span>) in the risk set when the second person fails. When the size of the risk set is large compared to the number of failures, this is not a terrible approximation. However, the Efron approximation stays accurate when ties become more severe.</p>
+</section>
+</section>
+<section id="estimation-of-baseline-survival-and-cumulative-hazard" class="level3" data-number="10.4.4">
+<h3 data-number="10.4.4" class="anchored" data-anchor-id="estimation-of-baseline-survival-and-cumulative-hazard"><span class="header-section-number">10.4.4</span> Estimation of baseline survival and cumulative hazard*</h3>
+<p>Given an estimate of <span class="math inline">\(\hat{\beta}\)</span> of <span class="math inline">\(\beta_\true\)</span>, we can estimate the baseline cumulative hazard <span class="math display">\[
+  H_0(t) = \int_0^t h(u) \,\dif u
+\]</span> and the baseline survival <span class="math display">\[
+  S_0(t) = e^{-H_0(t)}.
+\]</span> This allows us to estimate the cumulative hazard or survival for any given combination of covariates <span class="math inline">\(x\)</span>:We can also estimate the cumulative hazard function for any given covariate <span class="math inline">\(x\)</span>: <span class="math display">\[
+  \hat{H}(t, x) = e^{\hat{\beta} x} \hat{H}_0(t)
+\]</span> and <span class="math display">\[
+  \hat{S}(t, x) = e^{-\hat{H}(t, x)}.
+\]</span> Thus, a Cox model can be used to estimate risks, odds, and measures of association such as the risk difference, risk ratio, or odds ratio. As in <a href="#sec-surv-meas" class="quarto-xref"><span>Section 10.1</span></a>, these measures of association will often depend on <span class="math inline">\(t\)</span>.</p>
+<p>One way to estimate the baseline cumulative hazard is to calculate a Nelson-Aalen estimate in the subset with <span class="math inline">\(X = 0\)</span>. However, it is much more efficient to use all of the data. Here, we look at three methods that do this. Two of them are generalizations of the Nelson-Aalen estimator, and one is a generalization of the Kaplan-Meier estimator. Variance estimation for these baseline hazard estimators accounts for two sources of uncertainty: the uncertainty in our estimate of <span class="math inline">\(\beta_\true\)</span> and the uncertainty that we would have in the baseline cumulative hazard or survival even if we knew <span class="math inline">\(\beta_\true\)</span> (similar to the variance of the Nelson-Aalen estimator in <a href="survival.html#sec-NA" class="quarto-xref"><span>Section 6.3</span></a> or Kaplan-Meier estimator in <a href="survival.html#sec-KM" class="quarto-xref"><span>Section 6.2</span></a>). For simplicity, we will focus only on the point estimates.</p>
+<section id="breslow-estimate-of-the-baseline-cumulative-hazard" class="level4" data-number="10.4.4.1">
+<h4 data-number="10.4.4.1" class="anchored" data-anchor-id="breslow-estimate-of-the-baseline-cumulative-hazard"><span class="header-section-number">10.4.4.1</span> Breslow estimate of the baseline cumulative hazard</h4>
+<p>The Breslow estimator of <span class="math inline">\(H_0(t)\)</span> is <span class="math display">\[
+  \hat{H}_0(t)
+  = \sum_{i: t_i \leq t} \frac{d_i}{\sum_{j \in \mathcal{R}(t_i)} e^{\hat{\beta} x_j}},
+\]</span> where <span class="math inline">\(\hat{\beta}\)</span> is the maximum partial likelihood estimate of <span class="math inline">\(\beta\)</span> <span class="citation" data-cites="breslow1972contribution">(<a href="references.html#ref-breslow1972contribution" role="doc-biblioref">N. E. Breslow 1972</a>)</span>. When <span class="math inline">\(\hat{\beta} = 0\)</span>, this reduces to the Nelson-Aalen estimator from <a href="survival.html#sec-NA" class="quarto-xref"><span>Section 6.3</span></a>.</p>
+</section>
+<section id="efron-estimate-of-the-baseline-cumulative-hazard" class="level4" data-number="10.4.4.2">
+<h4 data-number="10.4.4.2" class="anchored" data-anchor-id="efron-estimate-of-the-baseline-cumulative-hazard"><span class="header-section-number">10.4.4.2</span> Efron estimate of the baseline cumulative hazard</h4>
+<p>The Efron estimate of <span class="math inline">\(H_0(t)\)</span> handles ties in the same way as the Efron approximation for the partial likelihood. Whenever there are <span class="math inline">\(d_i &gt; 1\)</span> failures at time <span class="math inline">\(t_i\)</span> in risk set <span class="math inline">\(R_i\)</span>, the contribution to the cumulative hazard estimate is <span class="math display">\[
+  \sum_{k = 1}^{d_i}
+    \frac{1}{\sum_{j \in \mathcal{R}(t_i)} e^{\hat{\beta} x_j}
+      - \frac{k - 1}{d_i} \sum_{j \in \mathcal{D}(t_i)} e^{\hat{\beta} X_j}},
+\]</span> where <span class="math inline">\(\mathcal{D}(t_i)\)</span> represents the set of <span class="math inline">\(d_i\)</span> individuals who failed. The Efron estimate of <span class="math inline">\(H_0(t)\)</span> is <span class="math display">\[
+  \hat{H}_0(t)
+  = \sum_{i : t_i \leq t} \sum_{k = 1}^{d_i}
+    \frac{1}{\sum_{j \in \mathcal{R}(t_i)} e^{\hat{\beta} x_j}
+      - \frac{k - 1}{d_i} \sum_{j \in \mathcal{D}(t_i)} e^{\hat{\beta} x_j}}.
+\]</span> When <span class="math inline">\(\hat{\beta} = 0\)</span>, this reduces to the Nelson-Aalen estimator with the Fleming-Harrington correction for ties from <a href="survival.html#sec-FH" class="quarto-xref"><span>Section 6.3.1</span></a>.</p>
+</section>
+<section id="kalbfleisch-prentice-estimate-of-the-baseline-survival" class="level4" data-number="10.4.4.3">
+<h4 data-number="10.4.4.3" class="anchored" data-anchor-id="kalbfleisch-prentice-estimate-of-the-baseline-survival"><span class="header-section-number">10.4.4.3</span> Kalbfleisch-Prentice estimate of the baseline survival</h4>
+<p>The Kalbfleisch-Prentice estimate of the survival function is based on treating the observed failure times as discrete time points where the probability of failure at time <span class="math inline">\(t_i\)</span> is <span class="math inline">\(1 - s_i\)</span> when <span class="math inline">\(X = 0\)</span>. Let <span class="math inline">\(\mathbf{s} = (s_1, \ldots, s_m)\)</span>. Then the likelihood for the data is <span class="math display">\[
+  L(\mathbf{s}) = \prod_{i = 1}^m \bigg(\prod_{j \in \mathcal{D}(t_i)} \Big(1 - s_i^{\exp(\hat{\beta} x_j)}\Big) \prod_{j \in \mathcal{R}(t_i) \setminus \mathcal{D}(t_i)} s_i^{\exp(\hat{\beta} X_j)}\bigg),
+\]</span> where <span class="math inline">\(\mathcal{R}(t_i) \setminus \mathcal{D}(t_i)\)</span> is the set of people in the risk set at time <span class="math inline">\(t_i\)</span> who did not fail. The corresponding log likelihood is <span class="math display">\[
+  \ell(\mathbf{s})
+  = \sum_{i = 1}^m \bigg(\sum_{j \in \mathcal{D}(t_i)} \ln\Big(1 - s_i^{\exp(\hat{\beta} x_j)}\Big)
+    + \sum_{j \in \mathcal{R}(t_i) \setminus \mathcal{D}(t_i)} e^{\hat{\beta} x_j} \ln s_i\bigg).
+\]</span> Differentiating <span class="math inline">\(\ell(\mathbf{s})\)</span> with respect to <span class="math inline">\(s_i\)</span> and rearranging, we find that <span class="math inline">\(s_i\)</span> solves the equation <span id="eq-si"><span class="math display">\[
+  \sum_{j \in \mathcal{D}(t_i)} \frac{e^{\hat{\beta} x_j}}{1 - s_i^{\exp(\hat{\beta} x_j)}}
+  = \sum_{j \in \mathcal{R}(t_i)} e^{\hat{\beta} X_j}.
+\tag{10.13}\]</span></span> When <span class="math inline">\(d_i = 1\)</span> and person <span class="math inline">\(i\)</span> fails at time <span class="math inline">\(t_i\)</span>, this is solved by <span class="math display">\[
+  \hat{s}_i
+  = \bigg(1 - \frac{e^{\hat{\beta} x_i}}{\sum_{j \in \mathcal{R}(t_i)} e^{\hat{\beta} x_j}}\bigg)^{\exp(-\beta x_i)}.
+\]</span> When <span class="math inline">\(d_i &gt; 1\)</span>, <a href="#eq-si" class="quarto-xref">Equation&nbsp;<span>10.13</span></a> must be solved numerically. The Kalbfleisch-Prentice estimate of the survival function is <span class="math display">\[
+  \hat{S}_0(t) = \prod_{i : t_i \leq t} \hat{s}_i.
+\]</span> When <span class="math inline">\(\hat{\beta} = 0\)</span>, this reduces to the Kaplan-Meier survival estimate from <a href="survival.html#sec-KM" class="quarto-xref"><span>Section 6.2</span></a>.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-aalen2008survival" class="csl-entry" role="listitem">
+Aalen, Odd, Ørnulf Borgan, and Håkon Gjessing. 2008. <em>Survival and Event History Analysis: A Process Point of View</em>. Springer Science &amp; Business Media.
+</div>
+<div id="ref-breslow1970generalized" class="csl-entry" role="listitem">
+Breslow, Norman. 1970. <span>“A Generalized Kruskal-Wallis Test for Comparing k Samples Subject to Unequal Patterns of Censorship.”</span> <em>Biometrika</em> 57 (3): 579–94.
+</div>
+<div id="ref-breslow1974covariance" class="csl-entry" role="listitem">
+———. 1974. <span>“Covariance Analysis of Censored Survival Data.”</span> <em>Biometrics</em> 30 (1): 89–99.
+</div>
+<div id="ref-breslow1972contribution" class="csl-entry" role="listitem">
+Breslow, Norman E. 1972. <span>“Contribution to Discussion of Paper by DR Cox.”</span> <em>Journal of the Royal Statistical Society: Series B (Methodological)</em> 34: 216–17.
+</div>
+<div id="ref-cox1958regression" class="csl-entry" role="listitem">
+Cox, David R. 1958. <span>“The Regression Analysis of Binary Sequences.”</span> <em>Journal of the Royal Statistical Society Series B: Statistical Methodology</em> 20 (2): 215–32.
+</div>
+<div id="ref-cox1972regression" class="csl-entry" role="listitem">
+———. 1972. <span>“Regression Models and Life-Tables.”</span> <em>Journal of the Royal Statistical Society: Series B (Methodological)</em> 34 (2): 187–202.
+</div>
+<div id="ref-efron1967two" class="csl-entry" role="listitem">
+Efron, Bradley. 1967. <span>“The Two Sample Problem with Censored Data.”</span> In <em>Proceedings of the Fifth Berkeley Symposium on Mathematical Statistics and Probability</em>, 4:831–53. University of California Press.
+</div>
+<div id="ref-efron1977efficiency" class="csl-entry" role="listitem">
+———. 1977. <span>“The Efficiency of Cox’s Likelihood Function for Censored Data.”</span> <em>Journal of the American Statistical Association</em> 72 (359): 557–65.
+</div>
+<div id="ref-gehan1965generalized" class="csl-entry" role="listitem">
+Gehan, Edmund A. 1965. <span>“A Generalized Wilcoxon Test for Comparing Arbitrarily Singly-Censored Samples.”</span> <em>Biometrika</em> 52 (1-2): 203–24.
+</div>
+<div id="ref-harrington1982class" class="csl-entry" role="listitem">
+Harrington, David P, and Thomas R Fleming. 1982. <span>“A Class of Rank Test Procedures for Censored Survival Data.”</span> <em>Biometrika</em> 69 (3): 553–66.
+</div>
+<div id="ref-johansen1983extension" class="csl-entry" role="listitem">
+Johansen, Søren. 1983. <span>“An Extension of Cox’s Regression Model.”</span> <em>International Statistical Review</em> 51 (2): 165–74.
+</div>
+<div id="ref-kalbfleisch2011statistical" class="csl-entry" role="listitem">
+Kalbfleisch, John D, and Ross L Prentice. 2011. <em>The Statistical Analysis of Failure Time Data</em>. John Wiley &amp; Sons.
+</div>
 <div id="ref-mantel1966evaluation" class="csl-entry" role="listitem">
 Mantel, Nathan. 1966. <span>“Evaluation of Survival Data and Two New Rank Order Statistics Arising in Its Consideration.”</span> <em>Cancer Chemotherapy Reports</em> 50 (3): 163–70.
 </div>
+<div id="ref-peto1972contribution" class="csl-entry" role="listitem">
+Peto, Richard. 1972. <span>“Contribution to Discussion of Paper by DR Cox.”</span> <em>Journal of the Royal Statistical Society: Series B (Methodological)</em> 34: 202–7.
 </div>
+<div id="ref-peto1972asymptotically" class="csl-entry" role="listitem">
+Peto, Richard, and Julian Peto. 1972. <span>“Asymptotically Efficient Rank Invariant Test Procedures.”</span> <em>Journal of the Royal Statistical Society: Series A (General)</em> 135 (2): 185–98.
+</div>
+<div id="ref-prentice1978linear" class="csl-entry" role="listitem">
+Prentice, Ross L. 1978. <span>“Linear Rank Tests with Right Censored Data.”</span> <em>Biometrika</em> 65 (1): 167–79.
+</div>
+<div id="ref-tarone1977distribution" class="csl-entry" role="listitem">
+Tarone, Robert E, and James Ware. 1977. <span>“On Distribution-Free Tests for Equality of Survival Distributions.”</span> <em>Biometrika</em> 64 (1): 156–60.
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p> <a href="https://en.wikipedia.org/wiki/David_Cox_(statistician)">Sir David Roxbee Cox</a> (1924–2022) is a British statistician who helped develop logistic regression <span class="citation" data-cites="cox1958regression">(<a href="references.html#ref-cox1958regression" role="doc-biblioref">Cox 1958</a>)</span> and proportional hazards regression. He worked at Imperial College London and Oxford University. As of 6 February 2025, <span class="citation" data-cites="cox1972regression">Cox (<a href="references.html#ref-cox1972regression" role="doc-biblioref">1972</a>)</span> has 63,224 citations on Google Scholar.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -789,8 +1243,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./cohort.html" class="pagination-link" aria-label="Measures of association in cohort studies">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Measures of association in cohort studies</span></span>
+      <a href="./cohort.html" class="pagination-link" aria-label="Measures of Association in Cohort Studies">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Measures of Association in Cohort Studies</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
