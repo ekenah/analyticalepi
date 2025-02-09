@@ -139,6 +139,7 @@ div.csl-indent {
         chisqH: "\\chi^2_\\text\{H\}",
         chisqP: "\\chi^2_\\text\{P\}",
         chisqPobs: "\\chi^2_\\text\{Pobs\}",
+        cHR: "\\text\{cHR\}",
         cloglog: ["\\operatorname\{cloglog\}"],
         comp: "\\mathsf\{C\}",
         Cov: ["\\operatorname\{Cov\}"],
@@ -341,13 +342,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./survival2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-Sample Survival Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-Sample Survival Analysis and the Cox Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./casecontrol.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Measures of association in case-control studies</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Design and Analysis of Case-Control and Case-Cohort studies</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -412,13 +413,14 @@ window.Quarto = {
   <li><a href="#sec-RRglm" id="toc-sec-RRglm" class="nav-link" data-scroll-target="#sec-RRglm"><span class="header-section-number">9.2.2</span> Risk ratios and the log link</a></li>
   <li><a href="#sec-ORglm" id="toc-sec-ORglm" class="nav-link" data-scroll-target="#sec-ORglm"><span class="header-section-number">9.2.3</span> Odds ratios and the logit link</a></li>
   <li><a href="#sec-HRglm" id="toc-sec-HRglm" class="nav-link" data-scroll-target="#sec-HRglm"><span class="header-section-number">9.2.4</span> Cumulative hazard ratio and the complementary log-log link*</a></li>
-  <li><a href="#poisson-glms-for-risks" id="toc-poisson-glms-for-risks" class="nav-link" data-scroll-target="#poisson-glms-for-risks"><span class="header-section-number">9.2.5</span> Poisson GLMs for risks</a></li>
-  <li><a href="#poisson-glms-for-rates" id="toc-poisson-glms-for-rates" class="nav-link" data-scroll-target="#poisson-glms-for-rates"><span class="header-section-number">9.2.6</span> Poisson GLMs for rates</a></li>
+  <li><a href="#poisson-glms-for-incidence-rate-ratios" id="toc-poisson-glms-for-incidence-rate-ratios" class="nav-link" data-scroll-target="#poisson-glms-for-incidence-rate-ratios"><span class="header-section-number">9.2.5</span> Poisson GLMs for incidence rate ratios</a></li>
+  <li><a href="#poisson-glms-for-risks" id="toc-poisson-glms-for-risks" class="nav-link" data-scroll-target="#poisson-glms-for-risks"><span class="header-section-number">9.2.6</span> Poisson GLMs for risks</a></li>
   </ul></li>
   <li><a href="#rothman-diagrams" id="toc-rothman-diagrams" class="nav-link" data-scroll-target="#rothman-diagrams"><span class="header-section-number">9.3</span> Rothman diagrams</a>
   <ul class="collapse">
   <li><a href="#contour-lines" id="toc-contour-lines" class="nav-link" data-scroll-target="#contour-lines"><span class="header-section-number">9.3.1</span> Contour lines</a></li>
-  <li><a href="#relationships-between-changes-in-the-rd-rr-and-or" id="toc-relationships-between-changes-in-the-rd-rr-and-or" class="nav-link" data-scroll-target="#relationships-between-changes-in-the-rd-rr-and-or"><span class="header-section-number">9.3.2</span> Relationships between changes in the RD, RR, and OR</a></li>
+  <li><a href="#relationships-among-the-rr-or-and-hr" id="toc-relationships-among-the-rr-or-and-hr" class="nav-link" data-scroll-target="#relationships-among-the-rr-or-and-hr"><span class="header-section-number">9.3.2</span> Relationships among the RR, OR, and HR</a></li>
+  <li><a href="#relationships-between-changes-in-the-rd-rr-and-or" id="toc-relationships-between-changes-in-the-rd-rr-and-or" class="nav-link" data-scroll-target="#relationships-between-changes-in-the-rd-rr-and-or"><span class="header-section-number">9.3.3</span> Relationships between changes in the RD, RR, and OR*</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -450,7 +452,7 @@ window.Quarto = {
 </blockquote>
 <section id="sec-massociation" class="level2" data-number="9.1">
 <h2 data-number="9.1" class="anchored" data-anchor-id="sec-massociation"><span class="header-section-number">9.1</span> Measures of association</h2>
-<p>A <strong>measure of association</strong> indicates both the direction and magnitude of the difference between two groups, so a point and interval estimate of a measure of association conveys much more information than a hypothesis test <span class="citation" data-cites="rothman1978show">(<a href="references.html#ref-rothman1978show" role="doc-biblioref">Rothman 1978</a>)</span>. We will first consider measures of association in cohort studies, where participants are selected based on exposure and then followed up (prospectively or retrospectively) to measure disease occurrence. As before, let <span class="math inline">\(X\)</span> be a binary treatment or exposure, and let <span class="math inline">\(D\)</span> be a binary disease outcome. We assume that the exposure <span class="math inline">\(X_i\)</span> of person <span class="math inline">\(i\)</span> is fixed by his or her time origin, that our study sample consists of individuals who were at risk of the outcome, and that there was no delayed entry (left truncation) or right censoring. Our results can be summarized in a 2x2 table as in <a href="condprob.html#tbl-2x2" class="quarto-xref">Table&nbsp;<span>2.1</span></a>.</p>
+<p>A <strong>measure of association</strong> indicates both the direction and magnitude of the difference between two groups, so a point and interval estimate of a measure of association conveys much more information than a hypothesis test <span class="citation" data-cites="rothman1978show">(<a href="references.html#ref-rothman1978show" role="doc-biblioref">Rothman 1978</a>)</span>. We will first consider measures of association in cohort studies, where participants are selected based on exposure and then followed up (prospectively or retrospectively) to measure disease occurrence. As before, let <span class="math inline">\(X\)</span> be a binary treatment or exposure, and let <span class="math inline">\(D\)</span> be a binary disease outcome. We assume that the exposure <span class="math inline">\(X_i\)</span> of person <span class="math inline">\(i\)</span> is fixed by his or her time origin, that our study sample consists of individuals who were at risk of the outcome, and that there was no left truncation (i.e., delayed entry) or right censoring due to loss to follow-up. Our results can be summarized in a 2x2 table as in <a href="condprob.html#tbl-2x2" class="quarto-xref">Table&nbsp;<span>2.1</span></a>.</p>
 <p>Ideally, the groups in a cohort study are identical except for exposure so that any difference in the outcomes can be attributed to a causal effect of the difference in exposure. In a clinical trial, this similarity can be achieved by randomizing participants to different levels of exposure. If the number of study participants is large enough, the different groups will be nearly identical in both measured and unmeasured covariates. In an observational study, exposure groups can have differences other than exposure that completely or partially explain the observed differences in outcomes, which is called <strong>confounding</strong> <span class="citation" data-cites="simpson1951interpretation miettinen1981confounding">(<a href="references.html#ref-simpson1951interpretation" role="doc-biblioref">Simpson 1951</a>; <a href="references.html#ref-miettinen1981confounding" role="doc-biblioref">O. S. Miettinen and Cook 1981</a>)</span>. For now, we will not worry about whether the differences between groups are causal effects of treatment or exposure, which is why we call these measures of <em>association</em>.</p>
 <!-- With complete follow-up, measures of association can be calculated using a class of regression models called \emph{generalized linear models} (GLMs).
 When there is right censoring or left truncation, methods from survival analysis can be used to calculate measures of association. -->
@@ -459,7 +461,7 @@ When there is right censoring or left truncation, methods from survival analysis
 <p>If the risk of disease onset in <span class="math inline">\((0, t]\)</span> is <span class="math inline">\(p_1\)</span> in the exposed and <span class="math inline">\(p_0\)</span> in the unexposed, then the <strong>risk difference</strong> is <span class="math display">\[
   \RD = p_1 - p_0,
 \]</span> which can take any value in <span class="math inline">\([-1, 1]\)</span>. When exposure and disease are independent, <span class="math inline">\(\RD = 0\)</span> because <span class="math inline">\(p_1 = p_0\)</span> (see <a href="studydesign.html#sec-indep-condprob" class="quarto-xref"><span>Section 7.2.1</span></a>).</p>
-<p>When there is no left truncation or right censoring, the risk (cumulative incidence) in any given time interval <span class="math inline">\((0, t]\)</span> can be estimated using methods for a binomial proportion. Based on the results from <a href="mlestimation.html#sec-score" class="quarto-xref"><span>Section 3.1.3</span></a>, the maximum likelihood estimate (MLE) of the risk difference is <span id="eq-RDmle"><span class="math display">\[
+<p>When there is no delayed entry or loss to follow-up, the risk (cumulative incidence) in any given time interval <span class="math inline">\((0, t]\)</span> can be estimated using methods for a binomial proportion. Based on the results from <a href="mlestimation.html#sec-score" class="quarto-xref"><span>Section 3.1.3</span></a>, the maximum likelihood estimate (MLE) of the risk difference is <span id="eq-RDmle"><span class="math display">\[
   \hat{\RD}
   = \hat{p}_1 - \hat{p}_0
   = \frac{a}{r_1} - \frac{c}{r_0},
@@ -471,7 +473,7 @@ When there is right censoring or left truncation, methods from survival analysis
   Z_{\RD} = \frac{\hat{\RD} - \RD_0}{\sqrt{\hat{\Var}(\hat{\RD})}}.
 \tag{9.3}\]</span></span> In large samples under the null, <span class="math inline">\(Z_{\RD}\)</span> has a standard normal distribution and <span class="math inline">\(Z_{\RD}^2\)</span> has a chi-squared distribution with one degree of freedom. The corresponding <span class="math inline">\(1 - \alpha\)</span> Wald confidence limits for the <span class="math inline">\(\RD\)</span> are <span id="eq-RDci"><span class="math display">\[
   \hat{\RD} \pm z_{1 - \frac{\alpha}{2}} \sqrt{\hat{\Var}(\hat{\RD})}.
-\tag{9.4}\]</span></span> As in <a href="mlestimation.html#sec-wslr-ci" class="quarto-xref"><span>Section 3.4</span></a>, this confidence interval includes all values of <span class="math inline">\(\RD_0\)</span> such that a Wald test in <a href="#eq-Wald-RD" class="quarto-xref">Equation&nbsp;<span>9.3</span></a> would fail to reject the null hypothesis at significance level <span class="math inline">\(\alpha\)</span>. For a 95% confidence interval, <span class="math inline">\(z_{1 - \frac{\alpha}{2}} \approx 1.96\)</span>. When the expected numbers of events are small, this confidence interval can have limits outside <span class="math inline">\([-1, 1]\)</span>. Confidence intervals with better performance can be obtained by inverting score or likelihood ratio tests or by using Bayesian methods <span class="citation" data-cites="agresti2005frequentist">(<a href="references.html#ref-agresti2005frequentist" role="doc-biblioref">Agresti and Min 2005</a>)</span>.</p>
+\tag{9.4}\]</span></span> As in <a href="mlestimation.html#sec-wslr-ci" class="quarto-xref"><span>Section 3.4</span></a>, this confidence interval includes all values of <span class="math inline">\(\RD_0\)</span> such that the Wald test in <a href="#eq-Wald-RD" class="quarto-xref">Equation&nbsp;<span>9.3</span></a> would fail to reject the null hypothesis at significance level <span class="math inline">\(\alpha\)</span>. For a 95% confidence interval, <span class="math inline">\(z_{1 - \frac{\alpha}{2}} \approx 1.96\)</span>. When the expected numbers of events are small, this confidence interval can have limits outside <span class="math inline">\([-1, 1]\)</span>. Confidence intervals with better performance can be obtained by inverting score or likelihood ratio tests or by using Bayesian methods <span class="citation" data-cites="agresti2005frequentist">(<a href="references.html#ref-agresti2005frequentist" role="doc-biblioref">Agresti and Min 2005</a>)</span>.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">R</a></li></ul>
 <div class="tab-content">
@@ -542,7 +544,7 @@ When there is right censoring or left truncation, methods from survival analysis
   Z_{\RR}
   = \frac{\ln\hat{\RR} - \ln\RR_0}{\sqrt{\hat{\Var}(\ln\hat{\RR})}}
   = \frac{\ln\hat{\RR} - \ln\RR_0}{\sqrt{\frac{1}{a} - \frac{1}{r_1} + \frac{1}{c} - \frac{1}{r_0}}}.
-\tag{9.6}\]</span></span> Because <span class="math inline">\(a \leq r_1\)</span>, we have <span class="math inline">\(1 / a \geq 1 / r_1\)</span> with equality only if <span class="math inline">\(a = r_1\)</span>. Similarly, <span class="math inline">\(1 / c \geq 1 / r_0\)</span> with equality only if <span class="math inline">\(c = r_0\)</span>. In large samples under the null, <span class="math inline">\(Z_{\RR}\)</span> has a standard normal distribution and <span class="math inline">\(Z_{\RR}^2\)</span> has a chi-squared distribution with one degree of freedom.</p>
+\tag{9.6}\]</span></span> Because <span class="math inline">\(a \leq r_1\)</span>, we have <span class="math inline">\(1 / a \geq 1 / r_1\)</span> with equality only if <span class="math inline">\(a = r_1\)</span>. Similarly, <span class="math inline">\(1 / c \geq 1 / r_0\)</span> with equality only if <span class="math inline">\(c = r_0\)</span>. In large samples under the null, <span class="math inline">\(Z_{\RR}\)</span> has a standard normal distribution and <span class="math inline">\(Z_{\RR}^2\)</span> has a chi-squared distribution with one degree of freedom <span class="citation" data-cites="katz1978obtaining">(<a href="references.html#ref-katz1978obtaining" role="doc-biblioref">Katz et al. 1978</a>)</span>.</p>
 <p>The <span class="math inline">\(1 - \alpha\)</span> Wald confidence limits for <span class="math inline">\(\ln \RR\)</span> are <span id="eq-lnRRci"><span class="math display">\[
     \ln \hat{\RR} \pm
     z_{1 - \frac{\alpha}{2}}
@@ -638,7 +640,7 @@ When there is right censoring or left truncation, methods from survival analysis
   = \frac{1}{m_i} + \frac{1}{r_i - m_i}
 \]</span> where <span class="math inline">\(m_1 = a\)</span> and <span class="math inline">\(m_0 = c\)</span>. The Wald test statistic for the null hypothesis <span class="math inline">\(H_0: \OR = \OR_0\)</span> is calculated on the log scale: <span id="eq-Wald-OR"><span class="math display">\[
   Z_{\OR} = \frac{\ln\hat{\OR} - \ln\OR_0}{\sqrt{\hat{\Var}(\ln\hat{\OR})}}.
-\tag{9.11}\]</span></span> In large samples under the null, <span class="math inline">\(Z_{\OR}\)</span> has a standard normal distribution and <span class="math inline">\(Z_{\OR}^2\)</span> has a chi-squared distribution with one degree of freedom.</p>
+\tag{9.11}\]</span></span> In large samples under the null, <span class="math inline">\(Z_{\OR}\)</span> has a standard normal distribution and <span class="math inline">\(Z_{\OR}^2\)</span> has a chi-squared distribution with one degree of freedom <span class="citation" data-cites="woolf1955estimating">(<a href="references.html#ref-woolf1955estimating" role="doc-biblioref">Woolf 1955</a>)</span>.</p>
 <p>The <span class="math inline">\(1 - \alpha\)</span> Wald confidence limits for <span class="math inline">\(\ln \OR\)</span> are <span id="eq-lnORci"><span class="math display">\[
   \ln \hat{\OR}
   \pm z_{1 - \frac{\alpha}{2}}
@@ -649,15 +651,6 @@ When there is right censoring or left truncation, methods from survival analysis
             \sqrt{\frac{1}{a} + \frac{1}{b}
                   + \frac{1}{c} + \frac{1}{d}}\Biggr)
 \tag{9.13}\]</span></span> As in <a href="mlestimation.html#sec-wslr-ci" class="quarto-xref"><span>Section 3.4</span></a>, this confidence interval includes all possible values <span class="math inline">\(\OR_0\)</span> such that the Wald test in <a href="#eq-Wald-OR" class="quarto-xref">Equation&nbsp;<span>9.11</span></a> would fail to reject the null hypothesis at significance level <span class="math inline">\(\alpha\)</span>. The log transformation ensures that the confidence interval has appropriate bounds because <span class="math inline">\(\ln\OR \in (-\infty, \infty)\)</span> if and only if <span class="math inline">\(\OR \in (0, \infty)\)</span>. Confidence intervals with better performance can be obtained by inverting score or likelihood ratio tests or by using Bayesian methods <span class="citation" data-cites="agresti2005frequentist">(<a href="references.html#ref-agresti2005frequentist" role="doc-biblioref">Agresti and Min 2005</a>)</span>.</p>
-<p>The odds ratio is always farther from the null than the risk ratio because <span class="math display">\[
-  \OR = \RR \frac{1 - p_0}{1 - p_1}
-  \implies
-  \begin{cases}
-    \OR &gt; \RR &amp;\text{if } p_1 &gt; p_0, \\
-    \OR = \RR &amp;\text{if } p_1 = p_0, \\
-    \OR &lt; \RR &amp;\text{if } p_1 &lt; p_0.
-  \end{cases}
-\]</span> Because <span class="math inline">\(\Var(\ln \hat{\OR}) &gt; \Var(\ln \hat{\RR})\)</span>, this does not imply that a hypothesis test based on the odds ratio is more powerful than a test based on the risk ratio.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">R</a></li></ul>
 <div class="tab-content">
@@ -717,7 +710,7 @@ When there is right censoring or left truncation, methods from survival analysis
 </section>
 <section id="incidence-rate-ratio" class="level3" data-number="9.1.4">
 <h3 data-number="9.1.4" class="anchored" data-anchor-id="incidence-rate-ratio"><span class="header-section-number">9.1.4</span> Incidence rate ratio</h3>
-<p>If there is right censoring and left truncation, we cannot calculate a risk ratio or odds ratio directly but we can still calculate the incidence rate in each group. Recall that the incidence rate is a maximum likelihood for an exponential rate parameter <span class="math inline">\(\lambda\)</span>. If times to disease onset in the each exposure groups have an exponential distribution, then the <strong>incidence rate ratio</strong> is <span class="math display">\[
+<p>If there is delayed entry or loss to follow-up, we cannot calculate a risk ratio or odds ratio directly but we can still calculate the incidence rate in each group. Recall that the incidence rate is a maximum likelihood for an exponential rate parameter <span class="math inline">\(\lambda\)</span>. If times to disease onset in the each exposure groups have an exponential distribution, then the <strong>incidence rate ratio</strong> is <span class="math display">\[
   \IRR = \frac{\lambda_1}{\lambda_0}
 \]</span> where <span class="math inline">\(\lambda_1\)</span> is the rate in the exposed and <span class="math inline">\(\lambda_0\)</span> is the rate in the unexposed. It is defined whenever <span class="math inline">\(\lambda_1 \geq 0\)</span> and <span class="math inline">\(\lambda_0 &gt; 0\)</span>, and it can take any value in <span class="math inline">\([0, \infty)\)</span>. When exposure and disease are independent, <span class="math inline">\(\IRR = 1\)</span> because <span class="math inline">\(\lambda_1 = \lambda_0\)</span>. The incidence rate ratio is sometimes called the <em>incidence density ratio</em> <span class="citation" data-cites="miettinen1976estimability">(<a href="references.html#ref-miettinen1976estimability" role="doc-biblioref">O. Miettinen 1976</a>)</span>, and it equals the hazard ratio when the times to events in both exposure groups have exponential distributions.</p>
 <p>Let <span class="math inline">\(T_1\)</span> be the total person-time in the exposed group and <span class="math inline">\(T_0\)</span> be the total person-time in the unexposed group. Based on the results from <a href="longitudinal.html#sec-incrate" class="quarto-xref"><span>Section 5.3.2</span></a>, the MLE of the incidence rate ratio is <span id="eq-irr"><span class="math display">\[
@@ -746,7 +739,7 @@ When there is right censoring or left truncation, methods from survival analysis
   \hat{\IRR}
   \exp\Bigg(\pm z_{1 - \frac{\alpha}{2}}
             \sqrt{\frac{1}{a} + \frac{1}{c}}\Bigg).
-\tag{9.17}\]</span></span> This confidence interval includes all possible values <span class="math inline">\(\IRR_0\)</span> such that a Wald test in <a href="#eq-Wald-IRR" class="quarto-xref">Equation&nbsp;<span>9.16</span></a> would fail to reject the null hypothesis at significance level <span class="math inline">\(\alpha\)</span>. The log transformation ensures that the confidence interval has appropriate bounds because <span class="math inline">\(\ln\IRR \in (-\infty, \infty)\)</span> if and only if <span class="math inline">\(\IRR \in (0, \infty)\)</span>. Confidence intervals with better performance can be obtained by inverting score or likelihood ratio tests or by using Bayesian methods <span class="citation" data-cites="agresti2012categorical">(<a href="references.html#ref-agresti2012categorical" role="doc-biblioref">Agresti 2013</a>)</span>.</p>
+\tag{9.17}\]</span></span> This confidence interval includes all possible values <span class="math inline">\(\IRR_0\)</span> such that the Wald test in <a href="#eq-Wald-IRR" class="quarto-xref">Equation&nbsp;<span>9.16</span></a> would fail to reject the null hypothesis at significance level <span class="math inline">\(\alpha\)</span>. The log transformation ensures that the confidence interval has appropriate bounds because <span class="math inline">\(\ln\IRR \in (-\infty, \infty)\)</span> if and only if <span class="math inline">\(\IRR \in (0, \infty)\)</span>. Confidence intervals with better performance can be obtained by inverting score or likelihood ratio tests or by using Bayesian methods <span class="citation" data-cites="agresti2012categorical">(<a href="references.html#ref-agresti2012categorical" role="doc-biblioref">Agresti 2013</a>)</span>.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">R</a></li></ul>
 <div class="tab-content">
@@ -1064,7 +1057,7 @@ Figure&nbsp;9.2: The gray area shows the possible combinations of the intercept 
 <span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>RRhat</span>
 <span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(lnRRci)</span>
 <span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Binomial GLM with log link (log-binomial model) for the RR</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="co"># binomial GLM with log link (log-binomial model) for the RR</span></span>
 <span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Default binomial link = "logit", so we must specify link = "log".</span></span>
 <span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>RRglm <span class="ot">&lt;-</span> <span class="fu">glm</span>(status <span class="sc">~</span> rx, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"log"</span>), <span class="at">data =</span> rats)</span>
 <span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(RRglm)                  <span class="co"># point estimates, p-values, CIs, global tests</span></span>
@@ -1117,7 +1110,8 @@ Figure&nbsp;9.2: The gray area shows the possible combinations of the intercept 
 \]</span> and the risk of disease in the exposed is <span class="math display">\[
   \expit\bigl(e^{\beta_0 + \beta_1}\bigr)
   = \frac{1}{1 + e^{-(e^{\beta_0 + \beta_1})}}.
-\]</span> Point estimates of these risks can be obtained by replacing the unknown <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> with their maximum likelihood estimates <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>, and these estimated risks can be used to obtain point estimates of the risk ratio and risk difference. Confidence limits for the risks in the exposed and unexposed can be obtained by applying the logistic function to the confidence limits for the corresponding odds. Because the same odds ratio can occur with many different values of the risk difference or risk ratio, confidence limits for the <span class="math inline">\(\RD\)</span> or <span class="math inline">\(\RR\)</span> cannot be obtained directly from the confidence limits for the <span class="math inline">\(\OR\)</span>. However, Wald confidence limits for the risk difference or risk ratio could be obtained using the covariance matrix from the fitted logistic regression model and the delta method from <a href="mlestimation.html#sec-delta" class="quarto-xref"><span>Section 3.4.1</span></a>. Similarly, the binomial GLM for the risk difference in <a href="#sec-RDglm" class="quarto-xref"><span>Section 9.2.1</span></a> could be used to obtain point and interval estimates of the risk ratio or odds ratio, and the log-binomial for the risk ratio in <a href="#sec-RRglm" class="quarto-xref"><span>Section 9.2.2</span></a> could be used to obtain point and interval estimates of the risk difference or odds ratio. Although it is more convenient to use a regression model that expresses your preferred measure of association in terms of a single coefficient, the measure of association should not necessarily dictate the choice of regression model.</p>
+\]</span> Point estimates of these risks can be obtained by replacing the unknown <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> with their maximum likelihood estimates <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>, and these estimated risks can be used to obtain point estimates of the risk ratio and risk difference. Confidence limits for the risks in the exposed and unexposed can be obtained by applying the logistic function to the confidence limits for the corresponding odds. Because the same odds ratio can occur with many different values of the risk difference or risk ratio, confidence limits for the <span class="math inline">\(\RD\)</span> or <span class="math inline">\(\RR\)</span> cannot be obtained directly from the confidence limits for the <span class="math inline">\(\OR\)</span>.</p>
+<p>Because the risks of disease in the exposed and unexposed can be calculated using the logistic regression model, we can also get point estimates of the risk difference and risk ratio. Logit-transformed Wald confidence limits for the risk difference or risk ratio can be obtained using a multivariable version of the delta method from <a href="mlestimation.html#sec-delta" class="quarto-xref"><span>Section 3.4.1</span></a> and the covariance matrix from the fitted logistic regression model. Similarly, the binomial GLM for the risk difference in <a href="#sec-RDglm" class="quarto-xref"><span>Section 9.2.1</span></a> could be used to obtain point and interval estimates of the risk ratio or odds ratio, and the log-binomial for the risk ratio in <a href="#sec-RRglm" class="quarto-xref"><span>Section 9.2.2</span></a> could be used to obtain point and interval estimates of the risk difference or odds ratio. Although it is more convenient to use a regression model that expresses your preferred measure of association in terms of a single coefficient, the measure of association does not dictate the choice of regression model or vice versa.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true">R</a></li></ul>
 <div class="tab-content">
@@ -1173,22 +1167,26 @@ Figure&nbsp;9.2: The gray area shows the possible combinations of the intercept 
 <span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>odds1hat</span>
 <span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>odds1hat <span class="sc">*</span> <span class="fu">exp</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">qnorm</span>(<span class="fl">0.975</span>) <span class="sc">*</span> <span class="fu">sqrt</span>(lnodds1var))</span>
 <span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a><span class="co"># estimates of risks and risk ratio based on odds</span></span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a><span class="co"># estimates of risks, risk difference, and risk ratio based on odds</span></span>
 <span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>expit <span class="ot">&lt;-</span> <span class="cf">function</span>(v) <span class="dv">1</span> <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span>v))    <span class="co"># logistic function</span></span>
 <span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>beta0 <span class="ot">&lt;-</span> <span class="fu">coef</span>(ORglm)[<span class="st">"(Intercept)"</span>]</span>
 <span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a>beta1 <span class="ot">&lt;-</span> <span class="fu">coef</span>(ORglm)[<span class="st">"rx"</span>]</span>
-<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>risk0 <span class="ot">&lt;-</span> c <span class="sc">/</span> r0</span>
-<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>risk0</span>
-<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a><span class="fu">expit</span>(beta0)</span>
-<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>risk1 <span class="ot">&lt;-</span> a <span class="sc">/</span> r1</span>
-<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>risk1</span>
-<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a><span class="fu">expit</span>(beta0 <span class="sc">+</span> beta1)</span>
-<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a>RRhat <span class="ot">&lt;-</span> risk1 <span class="sc">/</span> risk0</span>
-<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a>RRhat</span>
-<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a><span class="fu">expit</span>(beta0 <span class="sc">+</span> beta1) <span class="sc">/</span> <span class="fu">expit</span>(beta0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a><span class="co"># risk in exposed</span></span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>risk1 <span class="ot">&lt;-</span> a <span class="sc">/</span> r1</span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>risk1</span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a><span class="fu">expit</span>(beta0 <span class="sc">+</span> beta1)</span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a><span class="co"># risk in unexposed</span></span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>risk0 <span class="ot">&lt;-</span> c <span class="sc">/</span> r0</span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>risk0</span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a><span class="fu">expit</span>(beta0)</span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a><span class="co"># risk difference</span></span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a>RDhat <span class="ot">&lt;-</span> risk1 <span class="sc">-</span> risk0</span>
+<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a>RDhat</span>
+<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a><span class="fu">expit</span>(beta0 <span class="sc">+</span> beta1) <span class="sc">-</span> <span class="fu">expit</span>(beta0)</span>
+<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a><span class="co"># risk ratio</span></span>
+<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a>RRhat <span class="ot">&lt;-</span> risk1 <span class="sc">/</span> risk0</span>
+<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a>RRhat</span>
+<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a><span class="fu">expit</span>(beta0 <span class="sc">+</span> beta1) <span class="sc">/</span> <span class="fu">expit</span>(beta0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -1196,38 +1194,194 @@ Figure&nbsp;9.2: The gray area shows the possible combinations of the intercept 
 </section>
 <section id="sec-HRglm" class="level3" data-number="9.2.4">
 <h3 data-number="9.2.4" class="anchored" data-anchor-id="sec-HRglm"><span class="header-section-number">9.2.4</span> Cumulative hazard ratio and the complementary log-log link*</h3>
-<p>Let <span class="math inline">\(h_1(t)\)</span> be the hazard function in the exposed and <span class="math inline">\(h_0(t)\)</span> be the hazard function in the unexposed (see <a href="longitudinal.html#sec-haz" class="quarto-xref"><span>Section 5.2.2</span></a>). Suppose there is a constant hazard ratio <span id="eq-HR"><span class="math display">\[
-  \HR = \frac{h_1(t)}{h_0(t)}
-\tag{9.23}\]</span></span> comparing the exposed to the unexposed. If <span class="math inline">\(H_1(t)\)</span> and <span class="math inline">\(H_0(t)\)</span> are the corresponding cumulative hazards (see <a href="longitudinal.html#sec-cumhaz" class="quarto-xref"><span>Section 5.2.3</span></a>), then <span class="math display">\[
-  H_1(t) = \HR \times H_0(t).
-\]</span> If <span class="math inline">\(S_1(t)\)</span> and <span class="math inline">\(S_0(t)\)</span> are the corresponding survival functions (see <a href="longitudinal.html#sec-surv" class="quarto-xref"><span>Section 5.2.1</span></a>), then <span class="math display">\[
-  S_1(t) = e^{-H_1(t)} = e^{-\HR \times H_0(t)} = S_0(t)^\HR.
-\]</span> If <span class="math inline">\(p_1\)</span> and <span class="math inline">\(p_0\)</span> are risks in the exposed and unexposed defined over the same interval, then <span id="eq-p1p0-HR"><span class="math display">\[
-  1 - p_1 = (1 - p_0)^\HR.
-\tag{9.24}\]</span></span> The <strong>complementary log-log</strong> link function is <span class="math display">\[
-  \cloglog(p) = \ln(-\ln (1 - p))
-\]</span> and it has the inverse function <span class="math display">\[
-  \cloglog^{-1}(v) = 1 - e^{-(e^v)}.
-\]</span> If we take the complementary log-log link on both sides of <a href="#eq-p1p0-HR" class="quarto-xref">Equation&nbsp;<span>9.24</span></a>, then <span class="math display">\[
-  \cloglog(p_1)
-  = \ln (\HR \times -\ln p_0)
-  = \ln \HR  + \cloglog(p_0).
-\]</span> In a binomial GLM with the complementary log-log link, <span id="eq-glm-HR"><span class="math display">\[
-  \cloglog\bigl(\Pr(D = 1 \given{} X = x)\bigr) = \beta_0 + \beta_1 x.
-\tag{9.25}\]</span></span> The risk of disease in the unexposed is <span class="math display">\[
-  \cloglog^{-1}(\beta_0) = 1 - e^{-(e^{\beta_0})},
-\]</span> and the hazard ratio comparing the exposed to the unexposed is <span class="math display">\[
-  \cloglog^{-1}(\beta_1) = 1 - e^{-(e^{\beta_1})},
-\]</span> and the risk of disease in the exposed is <span class="math display">\[
-  \cloglog^{-1}(\beta_0 + \beta_1) = e^{-(e^{\beta_0 + \beta_1})}.
-\]</span> Point estimates of these quantities can be obtained by replacing the unknown <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> with their maximum likelihood estimates <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>. Confidence intervals for the risk of disease in the exposed and the hazard ratio can be obtained by applying the <span class="math inline">\(\cloglog^{-1}\)</span> function to the confidence limits for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, respectively.</p>
-<p>The GLM for the hazard ratio in <a href="#eq-glm-HR" class="quarto-xref">Equation&nbsp;<span>9.25</span></a> assumes complete follow-up of all participants in the interval <span class="math inline">\((0, t]\)</span> over which the risks <span class="math inline">\(p_1\)</span> and <span class="math inline">\(p_0\)</span> are defined, so it cannot be used if there is left truncation (delayed entry) or right censoring. However, it does not actually require proportional hazards as in <a href="#eq-HR" class="quarto-xref">Equation&nbsp;<span>9.23</span></a>. The hazard ratio that it estimates is actually a ratio of cumulative hazards <span class="math display">\[
+<p>If <span class="math inline">\(H_1(t)\)</span> is the cumulative hazard function in the exposed and <span class="math inline">\(H_0(t)\)</span> is the cumulative hazard function in the unexposed (see <a href="longitudinal.html#sec-cumhaz" class="quarto-xref"><span>Section 5.2.3</span></a>), then <span class="math display">\[
+  H_1(t) = -\ln(1 - p_1)
+\]</span> and <span class="math display">\[
+  H_0(t) = -\ln(1 - p_0).
+\]</span> The <strong>cumulative hazard ratio</strong> is <span id="eq-cHR"><span class="math display">\[
+  \cHR(t)
+  = \frac{H_1(t)}{H_0(t)}
+  = \frac{-\ln(1 - p_1)}{-\ln(1 - p_0)}.
+\tag{9.23}\]</span></span> If the instantaneous hazard ratio <span class="math inline">\(h_1(t) / h_0(t)\)</span> is constant in time, then this is equal to the cumulative hazard ratio. If the unexposed have exponential times to events, then <span class="math inline">\(h_0(t) = \lambda_0\)</span> and the cumulative hazard ratio equals <span class="math display">\[
   \frac{H_1(t)}{H_0(t)}
-  = \frac{\frac{1}{t} \int_0^t h_1(u) \,\dif u}{\frac{1}{t} \int_0^t h_0(u) \,\dif u}.
-\]</span> The numerator of the right-hand side is the average hazard in the exposed over the interval <span class="math inline">\((0, t]\)</span>, and the denominator is the average hazard in the unexposed over the same time interval. In the special case of proportional hazards, the ratio of these average hazards equals the hazard ratio. When there is left truncation or right censoring, methods from survival analysis are needed to estimate the hazard ratio.</p>
+  = \frac{\int_0^t h_1(u) \,\dif u}{\lambda_0 t}
+  = \frac{1}{t} \int_0^t \frac{h_1(u)}{\lambda_0} \,\dif u,
+\]</span> which is the average instantaneous hazard ratio over <span class="math inline">\((0, t]\)</span>.</p>
+<p>If we take logarithms on both sides of <a href="#eq-cHR" class="quarto-xref">Equation&nbsp;<span>9.23</span></a>, we get <span class="math display">\[
+  \ln\bigl(-\ln(1 - p_1)\bigr)
+  = \ln(\cHR(t)) + \ln\bigl(-\ln(1 - p_0)\bigr).
+\]</span> The function of <span class="math inline">\(p_1\)</span> and <span class="math inline">\(p_0\)</span> in this equation is the <strong>complementary log-log</strong> function <span class="math display">\[
+  \cloglog(p) = \ln(-\ln (1 - p)),
+\]</span> which has the inverse function <span class="math display">\[
+  \cloglog^{-1}(v) = 1 - e^{-(e^v)}.
+\]</span> If we have data with no delayed entry or loss to follow-up, the complementary log-log link function allows us to estimate the cumulative hazard ratio using a binomial GLM.</p>
+<p>In a binomial GLM with the complementary log-log link, <span id="eq-glm-HR"><span class="math display">\[
+  \cloglog\bigl(\Pr(D = 1 \given{} X = x)\bigr) = \beta_0 + \beta_1 x.
+\tag{9.24}\]</span></span> The cumulative hazard of disease in the unexposed (<span class="math inline">\(x = 0\)</span>) is <span class="math inline">\(e^{\beta_0}\)</span>, so their risk of disease is <span class="math display">\[
+  \cloglog^{-1}(\beta_0)
+  = 1 - e^{-(e^{\beta_0})}.
+\]</span> The cumulative hazard in the exposed (<span class="math inline">\(x = 1\)</span>) is <span class="math inline">\(e^{\beta_0 + \beta_1}\)</span>, so their risk of disease is <span class="math display">\[
+  \cloglog^{-1}(\beta_0 + \beta_1)
+  = 1 - e^{-(e^{\beta_0 + \beta_1})}.
+\]</span> The cumulative hazard ratio comparing the exposed to the unexposed is <span class="math display">\[
+  \frac{e^{\beta_0 + \beta_1}}{e^{\beta_0}}
+  = e^{\beta_1}
+\]</span> Point estimates of these quantities can be obtained by replacing the unknown <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> with their maximum likelihood estimates <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>. The <span class="math inline">\(1 - \alpha\)</span> confidence limits for the cumulative hazard in the unexposed can be obtained by exponentiating the confidence limits for <span class="math inline">\(\beta_0\)</span>, and confidence limits for their risk of disease can be obtained by applying <span class="math inline">\(\cloglog^{-1}\)</span> to the confidence limits for <span class="math inline">\(\beta_0\)</span>. Confidence limits for the cumulative hazard ratio can be obtained by applying <span class="math inline">\(\cloglog^{-1}\)</span> to the <span class="math inline">\(1 - \alpha\)</span> confidence limits for <span class="math inline">\(\beta_1\)</span>.</p>
+<p>Because risks can be estimated for both exposure groups, we can also calculate point estimates of the risk difference, risk ratio, and odds ratio. Complementary log-log-transformed Wald confidence limits for each of these measures of association can be calculated using the multivariable version of the delta method from <a href="mlestimation.html#sec-delta" class="quarto-xref"><span>Section 3.4.1</span></a> and the covariance matrix from the fitted model.</p>
+<p>The binomial GLM for the cumulative hazard ratio in <a href="#eq-glm-HR" class="quarto-xref">Equation&nbsp;<span>9.24</span></a> assumes complete follow-up of all participants in the interval <span class="math inline">\((0, t]\)</span> over which the risks <span class="math inline">\(p_1\)</span> and <span class="math inline">\(p_0\)</span> are defined, so it cannot be used if there is delayed entry or loss to follow-up. When there is delayed entry or loss to follow-up, methods from survival analysis are needed to estimate the hazard ratio.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true">R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>cumhazratio-GLM.R</strong></pre>
+</div>
+<div class="sourceCode" id="cb10" data-filename="cumhazratio-GLM.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Cumulative hazard ratio estimation with a GLM</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># rats data is in the survival package</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Mantel, Bohidar, and Ciminera (1977). Cancer Research 37: 3863-3868.</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)     <span class="co"># rats data</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)       <span class="co"># coefci() for Wald confidence intervals</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># numbers of events and total rat-weeks</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co"># The subset() function can be used as an alternative to vector indexing.</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">sum</span>(rats<span class="sc">$</span>status[rats<span class="sc">$</span>rx <span class="sc">==</span> <span class="dv">1</span>])</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>T1 <span class="ot">&lt;-</span> <span class="fu">sum</span>(rats<span class="sc">$</span>time[rats<span class="sc">$</span>rx <span class="sc">==</span> <span class="dv">1</span>])</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">with</span>(<span class="fu">subset</span>(rats, rx <span class="sc">==</span> <span class="dv">0</span>), <span class="fu">sum</span>(status))</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>T0 <span class="ot">&lt;-</span> <span class="fu">with</span>(<span class="fu">subset</span>(rats, rx <span class="sc">==</span> <span class="dv">0</span>), <span class="fu">sum</span>(time))</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>ir1hat <span class="ot">&lt;-</span> a <span class="sc">/</span> T1</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>ir0hat <span class="ot">&lt;-</span> c <span class="sc">/</span> T0</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>IRRhat <span class="ot">&lt;-</span> ir1hat <span class="sc">/</span> ir0hat</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>lnIRRvar <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> a <span class="sc">+</span> <span class="dv">1</span> <span class="sc">/</span> c</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>lnIRRci <span class="ot">&lt;-</span> <span class="fu">log</span>(IRRhat) <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">qnorm</span>(<span class="fl">0.975</span>) <span class="sc">*</span> <span class="fu">sqrt</span>(lnIRRvar)</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="co"># point and interval estimate of the IRR</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>IRRhat</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(lnIRRci)</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="co"># binomial GLM with complementary log-log link</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="co"># The cumulative hazard ratio equals the hazard ratio if the HR is constant.</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>HRglm <span class="ot">&lt;-</span> <span class="fu">glm</span>(status <span class="sc">~</span> rx, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"cloglog"</span>), <span class="at">data =</span> rats)</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(HRglm)                  <span class="co"># point estimates, p-values, CIs, global tests</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(HRglm)                    <span class="co"># parts of the fitted model</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(HRglm))                <span class="co"># cumulative hazard (x = 0) and HR</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">confint</span>(HRglm))             <span class="co"># likelihood ratio CIs (better)</span></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coefci</span>(HRglm))              <span class="co"># log-transformed Wald CI for RD matches above</span></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a><span class="co"># estimates of risks, RR, and RD based on log cumulative hazard</span></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>invcloglog <span class="ot">&lt;-</span> <span class="cf">function</span>(v) <span class="dv">1</span> <span class="sc">-</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="fu">exp</span>(v))  <span class="co"># inverse of complementary log-log</span></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>beta0 <span class="ot">&lt;-</span> <span class="fu">coef</span>(HRglm)[<span class="st">"(Intercept)"</span>]</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>beta1 <span class="ot">&lt;-</span> <span class="fu">coef</span>(HRglm)[<span class="st">"rx"</span>]</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a><span class="co"># risk in exposed</span></span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>risk1 <span class="ot">&lt;-</span> a <span class="sc">/</span> <span class="fu">sum</span>(rats<span class="sc">$</span>rx <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>risk1</span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a><span class="fu">invcloglog</span>(beta0 <span class="sc">+</span> beta1)</span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a><span class="co"># risk in unexposed</span></span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>risk0 <span class="ot">&lt;-</span> c <span class="sc">/</span> <span class="fu">sum</span>(rats<span class="sc">$</span>rx <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>risk0</span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a><span class="fu">invcloglog</span>(beta0)</span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a><span class="co"># risk difference</span></span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>risk1 <span class="sc">-</span> risk0</span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a><span class="fu">invcloglog</span>(beta0 <span class="sc">+</span> beta1) <span class="sc">-</span> <span class="fu">invcloglog</span>(beta0)</span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a><span class="co"># risk ratio</span></span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>risk1 <span class="sc">/</span> risk0</span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a><span class="fu">invcloglog</span>(beta0 <span class="sc">+</span> beta1) <span class="sc">/</span> <span class="fu">invcloglog</span>(beta0)</span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a><span class="co"># odds ratio</span></span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>odds <span class="ot">&lt;-</span> <span class="cf">function</span>(p) p <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a><span class="fu">odds</span>(risk1) <span class="sc">/</span> <span class="fu">odds</span>(risk0)</span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a><span class="fu">odds</span>(<span class="fu">invcloglog</span>(beta0 <span class="sc">+</span> beta1)) <span class="sc">/</span> <span class="fu">odds</span>(<span class="fu">invcloglog</span>(beta0))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
 </section>
-<section id="poisson-glms-for-risks" class="level3" data-number="9.2.5">
-<h3 data-number="9.2.5" class="anchored" data-anchor-id="poisson-glms-for-risks"><span class="header-section-number">9.2.5</span> Poisson GLMs for risks</h3>
+<section id="poisson-glms-for-incidence-rate-ratios" class="level3" data-number="9.2.5">
+<h3 data-number="9.2.5" class="anchored" data-anchor-id="poisson-glms-for-incidence-rate-ratios"><span class="header-section-number">9.2.5</span> Poisson GLMs for incidence rate ratios</h3>
+<p>When times to events have an exponential(<span class="math inline">\(\lambda\)</span>) distribution, then the number of events in a total person-time of <span class="math inline">\(T\)</span> has a Poisson(<span class="math inline">\(\lambda T\)</span>) distribution (see <a href="longitudinal.html#sec-Poisson" class="quarto-xref"><span>Section 5.4</span></a>). In a Poisson GLM with a log link for incidence data, we have <span class="math display">\[
+  \ln\big(\E[\text{count} \given{} X, T_X]\big) = \ln \lambda(X) + \ln T_X
+\]</span> where <span class="math inline">\(T_X\)</span> is the total person time in the group with exposure <span class="math inline">\(X\)</span>. Let <span class="math inline">\(\mu(x) = \lambda(x) T_x\)</span> be expected count in the group with <span class="math inline">\(X = x\)</span>. The Poisson GLM is <span class="math display">\[
+  \ln \mu(x)
+  = \ln \lambda(x) + \ln T_x
+  = \beta_0 + \beta_1 x + \ln T_x.
+\]</span> The term <span class="math inline">\(\ln T_x\)</span> is an <strong>offset</strong> because it has a fixed coefficient, which equals one in this case. Thus, <span class="math display">\[
+  \ln \lambda(x) = \beta_0 + \beta_1 x.
+\]</span> The incidence rate in the unexposed is <span class="math display">\[
+  \lambda_0 = e^{\beta_0},
+\]</span> the incidence rate in the exposed is <span class="math display">\[
+  \lambda_1 = e^{\beta_0 + \beta_1},
+\]</span> and the incidence rate ratio is <span class="math display">\[
+  \IRR = \frac{e^{\beta_0 + \beta_1}}{e^{\beta_0}} = e^{\beta_1}.
+\]</span> The point estimates and <span class="math inline">\(1 - \alpha\)</span> confidence limits for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, for the incidence rate in the unexposed and the IRR, and for the risk in the exposed can be obtained in the same way as in a log-binomial GLM. Because the sum of Poisson random variables is also a Poisson random variable, this models can be fit with either individual or grouped person-time data. This model does not directly assume rare events, and a robust variance is not necessary. However, if an event can occur only once per participant, the rare event assumption ensures that the count of events has a low probability of being limited by the numbers of exposed and unexposed participants in the study.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-9-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-1" role="tab" aria-controls="tabset-9-1" aria-selected="true">R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-9-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-9-1-tab">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>irratio-GLM.R</strong></pre>
+</div>
+<div class="sourceCode" id="cb11" data-filename="irratio-GLM.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Incidence rate ratio estimation with a Poisson GLM</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># to get help on GLMs in R (type q to exit)</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>?glm</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>?family</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># rats data is in the survival package</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Mantel, Bohidar, and Ciminera (1977). Cancer Research 37: 3863-3868.</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)     <span class="co"># rats data</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)       <span class="co"># coefci() for Wald confidence intervals</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co"># numbers of events and total rat-weeks</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co"># The subset() function can be used as an alternative to vector indexing.</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">sum</span>(rats<span class="sc">$</span>status[rats<span class="sc">$</span>rx <span class="sc">==</span> <span class="dv">1</span>])</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>T1 <span class="ot">&lt;-</span> <span class="fu">sum</span>(rats<span class="sc">$</span>time[rats<span class="sc">$</span>rx <span class="sc">==</span> <span class="dv">1</span>])</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">with</span>(<span class="fu">subset</span>(rats, rx <span class="sc">==</span> <span class="dv">0</span>), <span class="fu">sum</span>(status))</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>T0 <span class="ot">&lt;-</span> <span class="fu">with</span>(<span class="fu">subset</span>(rats, rx <span class="sc">==</span> <span class="dv">0</span>), <span class="fu">sum</span>(time))</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>ir1hat <span class="ot">&lt;-</span> a <span class="sc">/</span> T1</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>ir0hat <span class="ot">&lt;-</span> c <span class="sc">/</span> T0</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>IRRhat <span class="ot">&lt;-</span> ir1hat <span class="sc">/</span> ir0hat</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>lnIRRvar <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> a <span class="sc">+</span> <span class="dv">1</span> <span class="sc">/</span> c</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>lnIRRci <span class="ot">&lt;-</span> <span class="fu">log</span>(IRRhat) <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">qnorm</span>(<span class="fl">0.975</span>) <span class="sc">*</span> <span class="fu">sqrt</span>(lnIRRvar)</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a><span class="co"># point and interval estimate of the IRR</span></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>IRRhat</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(lnIRRci)</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Poisson GLM with log(rat-weeks) offset to get incidence rate ratio</span></span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a><span class="co"># The default link = "log".</span></span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>IRRglm <span class="ot">&lt;-</span> <span class="fu">glm</span>(status <span class="sc">~</span> rx  <span class="sc">+</span> <span class="fu">offset</span>(<span class="fu">log</span>(time)), <span class="at">family =</span> <span class="fu">poisson</span>(), <span class="at">data =</span> rats)</span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(IRRglm)                 <span class="co"># point estimates, p-values, CIs, global tests</span></span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(IRRglm)                   <span class="co"># parts of the fitted model</span></span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(IRRglm))               <span class="co"># estimated incidence rate (x = 0) and IRR</span></span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">confint</span>(IRRglm))            <span class="co"># likelihood ratio CIs (better)</span></span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coefci</span>(IRRglm))             <span class="co"># log-transformed Wald CI for IRR matches above</span></span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a><span class="co"># point and interval estimates for incidence rate in the exposed</span></span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a><span class="co"># The vector c(1, 1) represents 1 * beta0 + 1 * beta1,</span></span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a><span class="co"># and as.numeric() is used to return a number instead of a matrix.</span></span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>rate1hat <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fu">sum</span>(<span class="fu">coef</span>(IRRglm)))</span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>lnrate1var <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">%*%</span> <span class="fu">vcov</span>(IRRglm) <span class="sc">%*%</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>rate1hat</span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>rate1hat <span class="sc">*</span> <span class="fu">exp</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">qnorm</span>(<span class="fl">0.975</span>) <span class="sc">*</span> <span class="fu">sqrt</span>(lnrate1var))</span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Poisson regression using counts in each exposure group</span></span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Make data frame with counts and total rat-time in each treatment group.</span></span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>countdat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">rx =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>                       <span class="at">count =</span> <span class="fu">as.vector</span>(<span class="fu">by</span>(rats<span class="sc">$</span>status, rats<span class="sc">$</span>rx, sum)),</span>
+<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a>                       <span class="at">time =</span> <span class="fu">as.vector</span>(<span class="fu">by</span>(rats<span class="sc">$</span>time, rats<span class="sc">$</span>rx, sum)))</span>
+<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>IRRcount <span class="ot">&lt;-</span> <span class="fu">glm</span>(count <span class="sc">~</span> rx <span class="sc">+</span> <span class="fu">offset</span>(<span class="fu">log</span>(time)),</span>
+<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>                <span class="at">family =</span> <span class="fu">poisson</span>(), <span class="at">data =</span> countdat)</span>
+<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(IRRcount))       <span class="co"># point estimates identical to IRRglm</span></span>
+<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">confint</span>(IRRcount))    <span class="co"># likelihood ratio CIs identical to IRRglm</span></span>
+<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coefci</span>(IRRcount))     <span class="co"># Wald CIs also identical to IRRglm</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="poisson-glms-for-risks" class="level3" data-number="9.2.6">
+<h3 data-number="9.2.6" class="anchored" data-anchor-id="poisson-glms-for-risks"><span class="header-section-number">9.2.6</span> Poisson GLMs for risks</h3>
 <p>For rare events (i.e., events with probabilities close to zero), the Poisson likelihood is almost the same as the binomial likelihood. If <span class="math inline">\(X \sim \text{Poisson}(p)\)</span> and <span class="math inline">\(p\)</span> is close to zero, then <span class="math display">\[
   \begin{aligned}
     \Pr(X = 0)  &amp;= e^{-p} \approx 1 - p, \\
@@ -1245,7 +1399,7 @@ Figure&nbsp;9.2: The gray area shows the possible combinations of the intercept 
   \ln \mu(x)
   = \ln p(x) + \ln N_x
   = \beta_0 + \beta_1 x + \ln N_x.
-\]</span> The term <span class="math inline">\(\ln N_x\)</span> is an <strong>offset</strong> because it has a fixed coefficient, which equals one in this case. Thus, <span class="math display">\[
+\]</span> The term <span class="math inline">\(\ln N_x\)</span> on the right-hand side is an offset because it has a fixed coefficient equal to one. Thus, <span class="math display">\[
   \ln p(x) = \beta_0 + \beta_1 x.
 \]</span> The risk in the unexposed is <span class="math display">\[
   p_0 = e^{\beta_0},
@@ -1253,26 +1407,8 @@ Figure&nbsp;9.2: The gray area shows the possible combinations of the intercept 
   p_1 = e^{\beta_0 + \beta_1},
 \]</span> and the risk ratio is <span class="math display">\[
   \RR = \frac{e^{\beta_0 + \beta_1}}{e^{\beta_0}} = e^{\beta_1}.
-\]</span> The point estimates and <span class="math inline">\(1 - \alpha\)</span> confidence limits for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, for the risk in the unexposed and the risk ratio, and for the risk in the exposed can be obtained in the same way as in a log-binomial GLM. When the event is not rare, a robust variance should be used.</p>
-<p>The primary drawback of using Poisson GLMs to estimate risks and risk ratios is that the likelihood is not quite correct—especially for events that are not rare. This limits their use in Bayesian methods and forces the use of Wald instead of score or likelihood ratio confidence intervals.</p>
-</section>
-<section id="poisson-glms-for-rates" class="level3" data-number="9.2.6">
-<h3 data-number="9.2.6" class="anchored" data-anchor-id="poisson-glms-for-rates"><span class="header-section-number">9.2.6</span> Poisson GLMs for rates</h3>
-<p>In a Poisson model for incidence data, we have <span class="math display">\[
-  \ln\big(\E[\text{count} \given{} X, T_X]\big) = \ln \lambda(X) + \ln T_X
-\]</span> where <span class="math inline">\(T_X\)</span> is the total person time in the group with exposure <span class="math inline">\(X\)</span>. Let <span class="math inline">\(\mu(x) = \lambda(x) T_x\)</span> be expected count in the group with <span class="math inline">\(X = x\)</span>. The Poisson GLM is <span class="math display">\[
-  \ln \mu(x)
-  = \ln \lambda(x) + \ln T_x
-  = \beta_0 + \beta_1 x + \ln T_x.
-\]</span> The term <span class="math inline">\(\ln T_x\)</span> on the right-hand side is an offset because it has a fixed coefficient equal to one. Thus, <span class="math display">\[
-  \ln \lambda(x) = \beta_0 + \beta_1 x.
-\]</span> The incidence rate in the unexposed is <span class="math display">\[
-  \lambda_0 = e^{\beta_0},
-\]</span> the incidence rate in the exposed is <span class="math display">\[
-  \lambda_1 = e^{\beta_0 + \beta_1},
-\]</span> and the incidence rate ratio is <span class="math display">\[
-  \IRR = \frac{e^{\beta_0 + \beta_1}}{e^{\beta_0}} = e^{\beta_1}.
-\]</span> The point estimates and <span class="math inline">\(1 - \alpha\)</span> confidence limits for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, for the incidence rate in the unexposed and the IRR, and for the risk in the exposed can be obtained in the same way as in a log-binomial GLM. Because the sum of Poisson random variables is also a Poisson random variable, this models can be fit with either individual or grouped person-time data. This model does not directly assume rare events, and a robust variance is not necessary. However, if an event can occur only once per participant, the rare event assumption ensures that the count of events has a low probability of being limited by the numbers of exposed and unexposed participants in the study.</p>
+\]</span> The point estimates and <span class="math inline">\(1 - \alpha\)</span> confidence limits for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, the risk in the unexposed, the risk ratio, and the risk in the exposed can be obtained in the same way as in a log-binomial GLM. When the event is not rare, a robust variance should be used. However, this adjustment will underestimate the variance when the number of groups is small.</p>
+<p>The primary drawback of using Poisson GLMs to estimate risks and risk ratios is that the likelihood is not quite correct—especially for events that are not rare. This limits their use in Bayesian methods and forces the use of Wald instead of score or likelihood ratio confidence intervals. However, a Poisson GLM with a log link and a robust variance is an alternative to a log-binomial GLM when the latter fails to converge.</p>
 <!-- ### Robust variance* -->
 </section>
 </section>
@@ -1297,92 +1433,92 @@ Figure&nbsp;9.2: The gray area shows the possible combinations of the intercept 
 <div class="code-with-filename-file">
 <pre><strong>contours.R</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Contour lines for measures of association</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(plotrix, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># odds, logistic, and cumulative hazard functions</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>odds <span class="ot">&lt;-</span> <span class="cf">function</span>(p) p <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> p)</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>invodds <span class="ot">&lt;-</span> <span class="cf">function</span>(odds) odds <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> odds)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>cumhaz <span class="ot">&lt;-</span> <span class="cf">function</span>(p) <span class="sc">-</span><span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> p)</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co"># risk difference contours</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>riskdiff_contours <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(x, x, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">main =</span> <span class="st">"Risk difference contours"</span>,</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">"Risk in the exposed"</span>)</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grid</span>()</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">boxed.labels</span>(.<span class="dv">5</span>, .<span class="dv">5</span>, <span class="st">"0"</span>, <span class="at">xpad =</span> <span class="fl">1.5</span>, <span class="at">ypad =</span> <span class="fl">1.5</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (riskdiff <span class="cf">in</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="sc">-</span><span class="fl">0.2</span>, <span class="dv">0</span>, <span class="fl">0.2</span>, <span class="fl">0.5</span>)) {</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    y <span class="ot">&lt;-</span> x <span class="sc">+</span> riskdiff</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    yrange <span class="ot">&lt;-</span> y <span class="sc">&gt;=</span> <span class="dv">0</span> <span class="sc">&amp;</span> y <span class="sc">&lt;=</span> <span class="dv">1</span></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines</span>(x[yrange], y[yrange], <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">boxed.labels</span>(<span class="fl">0.5</span> <span class="sc">-</span> riskdiff <span class="sc">/</span> <span class="dv">2</span>, <span class="fl">0.5</span> <span class="sc">+</span> riskdiff <span class="sc">/</span> <span class="dv">2</span>,</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">as.character</span>(riskdiff),</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>                 <span class="at">xpad =</span> <span class="fl">1.5</span>, <span class="at">ypad =</span> <span class="fl">1.5</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="co"># risk ratio contours</span></span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>riskratio_contours <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(x, x, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">main =</span> <span class="st">"Risk ratio contours"</span>,</span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>)</span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grid</span>()</span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">boxed.labels</span>(.<span class="dv">5</span>, .<span class="dv">5</span>, <span class="st">"1"</span>, <span class="at">xpad =</span> <span class="fl">1.5</span>, <span class="at">ypad =</span> <span class="fl">1.5</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (riskratio <span class="cf">in</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="dv">2</span>, <span class="dv">5</span>)) {</span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>    y <span class="ot">&lt;-</span> riskratio <span class="sc">*</span> x</span>
-<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>    yrange <span class="ot">&lt;-</span> y <span class="sc">&lt;=</span> <span class="dv">1</span></span>
-<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines</span>(x[yrange], y[yrange], <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
-<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">boxed.labels</span>(<span class="dv">1</span> <span class="sc">/</span> (riskratio <span class="sc">+</span> <span class="dv">1</span>), riskratio <span class="sc">/</span> (riskratio <span class="sc">+</span> <span class="dv">1</span>),</span>
-<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">as.character</span>(riskratio),</span>
-<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>                 <span class="at">xpad =</span> <span class="fl">1.5</span>, <span class="at">ypad =</span> <span class="fl">1.5</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a><span class="co"># odds ratio contours</span></span>
-<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>oddsratio_contours <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
-<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(x, x, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">main =</span> <span class="st">"Odds ratio contours"</span>,</span>
-<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab =</span> <span class="st">"Risk in the unexposed"</span>,</span>
-<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab =</span> <span class="st">"Risk in the exposed"</span>)</span>
-<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grid</span>()</span>
-<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">boxed.labels</span>(.<span class="dv">5</span>, .<span class="dv">5</span>, <span class="st">"1"</span>, <span class="at">xpad =</span> <span class="fl">1.5</span>, <span class="at">ypad =</span> <span class="fl">1.5</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (oddsratio <span class="cf">in</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="dv">2</span>, <span class="dv">5</span>)) {</span>
-<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines</span>(x, <span class="fu">invodds</span>(oddsratio <span class="sc">*</span> <span class="fu">odds</span>(x)), <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
-<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>    <span class="fu">boxed.labels</span>((<span class="fu">sqrt</span>(oddsratio) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">/</span> (oddsratio <span class="sc">-</span> <span class="dv">1</span>),</span>
-<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>                 (oddsratio <span class="sc">-</span> <span class="fu">sqrt</span>(oddsratio)) <span class="sc">/</span> (oddsratio <span class="sc">-</span> <span class="dv">1</span>),</span>
-<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">as.character</span>(oddsratio),</span>
-<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>                 <span class="at">xpad =</span> <span class="fl">1.5</span>, <span class="at">ypad =</span> <span class="fl">1.5</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a><span class="co"># hazard ratios</span></span>
-<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a>hazratio_contours <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
-<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(x, x, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">main =</span> <span class="st">"Hazard ratio contours"</span>,</span>
-<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab =</span> <span class="st">"Risk in the unexposed"</span>, <span class="at">ylab =</span> <span class="st">""</span>)</span>
-<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grid</span>()</span>
-<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">boxed.labels</span>(.<span class="dv">5</span>, .<span class="dv">5</span>, <span class="st">"1"</span>, <span class="at">xpad =</span> <span class="fl">1.5</span>, <span class="at">ypad =</span> <span class="fl">1.5</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (hazratio <span class="cf">in</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="dv">2</span>, <span class="dv">5</span>)) {</span>
-<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines</span>(<span class="fu">c</span>(x, <span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> x)<span class="sc">^</span>hazratio, <span class="dv">1</span>), <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
-<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a>    labelx <span class="ot">&lt;-</span> <span class="fu">uniroot</span>(<span class="cf">function</span>(x) x <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> x)<span class="sc">^</span>hazratio, <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))<span class="sc">$</span>root</span>
-<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a>    labely <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> labelx</span>
-<span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a>    <span class="fu">boxed.labels</span>(labelx, labely, <span class="fu">as.character</span>(hazratio),</span>
-<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a>                 <span class="at">xpad =</span> <span class="fl">1.5</span>, <span class="at">ypad =</span> <span class="fl">1.5</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a><span class="co"># save old graphical parameters and set new ones</span></span>
-<span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a>oldmar <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="st">"mar"</span>)</span>
-<span id="cb10-74"><a href="#cb10-74" aria-hidden="true" tabindex="-1"></a>oldmgp <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="st">"mgp"</span>)</span>
-<span id="cb10-75"><a href="#cb10-75" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fl">0.6</span> <span class="sc">*</span> (<span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">1</span>) <span class="sc">+</span> <span class="fl">0.1</span>), <span class="at">mgp =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
-<span id="cb10-76"><a href="#cb10-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-77"><a href="#cb10-77" aria-hidden="true" tabindex="-1"></a><span class="co"># grid of plots</span></span>
-<span id="cb10-78"><a href="#cb10-78" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.001</span>, <span class="fl">0.999</span>, <span class="at">by =</span> <span class="fl">0.001</span>)</span>
-<span id="cb10-79"><a href="#cb10-79" aria-hidden="true" tabindex="-1"></a><span class="fu">riskdiff_contours</span>()</span>
-<span id="cb10-80"><a href="#cb10-80" aria-hidden="true" tabindex="-1"></a><span class="fu">riskratio_contours</span>()</span>
-<span id="cb10-81"><a href="#cb10-81" aria-hidden="true" tabindex="-1"></a><span class="fu">oddsratio_contours</span>()</span>
-<span id="cb10-82"><a href="#cb10-82" aria-hidden="true" tabindex="-1"></a><span class="fu">hazratio_contours</span>()</span>
-<span id="cb10-83"><a href="#cb10-83" aria-hidden="true" tabindex="-1"></a><span class="co"># dev.copy2pdf(file = "contours.pdf")</span></span>
-<span id="cb10-84"><a href="#cb10-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-85"><a href="#cb10-85" aria-hidden="true" tabindex="-1"></a><span class="co"># reset graphical parameters</span></span>
-<span id="cb10-86"><a href="#cb10-86" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="at">mar =</span> oldmar, <span class="at">mgp =</span> oldmgp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Contour lines for measures of association</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(plotrix, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># odds, logistic, and cumulative hazard functions</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>odds <span class="ot">&lt;-</span> <span class="cf">function</span>(p) p <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>invodds <span class="ot">&lt;-</span> <span class="cf">function</span>(odds) odds <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> odds)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>cumhaz <span class="ot">&lt;-</span> <span class="cf">function</span>(p) <span class="sc">-</span><span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co"># risk difference contours</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>riskdiff_contours <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(x, x, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">main =</span> <span class="st">"Risk difference contours"</span>,</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">"Risk in the exposed"</span>)</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grid</span>()</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">boxed.labels</span>(.<span class="dv">5</span>, .<span class="dv">5</span>, <span class="st">"0"</span>, <span class="at">xpad =</span> <span class="fl">1.5</span>, <span class="at">ypad =</span> <span class="fl">1.5</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (riskdiff <span class="cf">in</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="sc">-</span><span class="fl">0.2</span>, <span class="dv">0</span>, <span class="fl">0.2</span>, <span class="fl">0.5</span>)) {</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    y <span class="ot">&lt;-</span> x <span class="sc">+</span> riskdiff</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    yrange <span class="ot">&lt;-</span> y <span class="sc">&gt;=</span> <span class="dv">0</span> <span class="sc">&amp;</span> y <span class="sc">&lt;=</span> <span class="dv">1</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines</span>(x[yrange], y[yrange], <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">boxed.labels</span>(<span class="fl">0.5</span> <span class="sc">-</span> riskdiff <span class="sc">/</span> <span class="dv">2</span>, <span class="fl">0.5</span> <span class="sc">+</span> riskdiff <span class="sc">/</span> <span class="dv">2</span>,</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">as.character</span>(riskdiff),</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>                 <span class="at">xpad =</span> <span class="fl">1.5</span>, <span class="at">ypad =</span> <span class="fl">1.5</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="co"># risk ratio contours</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>riskratio_contours <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(x, x, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">main =</span> <span class="st">"Risk ratio contours"</span>,</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>)</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grid</span>()</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">boxed.labels</span>(.<span class="dv">5</span>, .<span class="dv">5</span>, <span class="st">"1"</span>, <span class="at">xpad =</span> <span class="fl">1.5</span>, <span class="at">ypad =</span> <span class="fl">1.5</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (riskratio <span class="cf">in</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="dv">2</span>, <span class="dv">5</span>)) {</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>    y <span class="ot">&lt;-</span> riskratio <span class="sc">*</span> x</span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>    yrange <span class="ot">&lt;-</span> y <span class="sc">&lt;=</span> <span class="dv">1</span></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines</span>(x[yrange], y[yrange], <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">boxed.labels</span>(<span class="dv">1</span> <span class="sc">/</span> (riskratio <span class="sc">+</span> <span class="dv">1</span>), riskratio <span class="sc">/</span> (riskratio <span class="sc">+</span> <span class="dv">1</span>),</span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">as.character</span>(riskratio),</span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>                 <span class="at">xpad =</span> <span class="fl">1.5</span>, <span class="at">ypad =</span> <span class="fl">1.5</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a><span class="co"># odds ratio contours</span></span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a>oddsratio_contours <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(x, x, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">main =</span> <span class="st">"Odds ratio contours"</span>,</span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab =</span> <span class="st">"Risk in the unexposed"</span>,</span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab =</span> <span class="st">"Risk in the exposed"</span>)</span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grid</span>()</span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">boxed.labels</span>(.<span class="dv">5</span>, .<span class="dv">5</span>, <span class="st">"1"</span>, <span class="at">xpad =</span> <span class="fl">1.5</span>, <span class="at">ypad =</span> <span class="fl">1.5</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (oddsratio <span class="cf">in</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="dv">2</span>, <span class="dv">5</span>)) {</span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines</span>(x, <span class="fu">invodds</span>(oddsratio <span class="sc">*</span> <span class="fu">odds</span>(x)), <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a>    <span class="fu">boxed.labels</span>((<span class="fu">sqrt</span>(oddsratio) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">/</span> (oddsratio <span class="sc">-</span> <span class="dv">1</span>),</span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a>                 (oddsratio <span class="sc">-</span> <span class="fu">sqrt</span>(oddsratio)) <span class="sc">/</span> (oddsratio <span class="sc">-</span> <span class="dv">1</span>),</span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">as.character</span>(oddsratio),</span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>                 <span class="at">xpad =</span> <span class="fl">1.5</span>, <span class="at">ypad =</span> <span class="fl">1.5</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a><span class="co"># hazard ratios</span></span>
+<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>hazratio_contours <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(x, x, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">main =</span> <span class="st">"Hazard ratio contours"</span>,</span>
+<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab =</span> <span class="st">"Risk in the unexposed"</span>, <span class="at">ylab =</span> <span class="st">""</span>)</span>
+<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grid</span>()</span>
+<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">boxed.labels</span>(.<span class="dv">5</span>, .<span class="dv">5</span>, <span class="st">"1"</span>, <span class="at">xpad =</span> <span class="fl">1.5</span>, <span class="at">ypad =</span> <span class="fl">1.5</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (hazratio <span class="cf">in</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="dv">2</span>, <span class="dv">5</span>)) {</span>
+<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines</span>(<span class="fu">c</span>(x, <span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> x)<span class="sc">^</span>hazratio, <span class="dv">1</span>), <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a>    labelx <span class="ot">&lt;-</span> <span class="fu">uniroot</span>(<span class="cf">function</span>(x) x <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> x)<span class="sc">^</span>hazratio, <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))<span class="sc">$</span>root</span>
+<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a>    labely <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> labelx</span>
+<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a>    <span class="fu">boxed.labels</span>(labelx, labely, <span class="fu">as.character</span>(hazratio),</span>
+<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a>                 <span class="at">xpad =</span> <span class="fl">1.5</span>, <span class="at">ypad =</span> <span class="fl">1.5</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a><span class="co"># save old graphical parameters and set new ones</span></span>
+<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a>oldmar <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="st">"mar"</span>)</span>
+<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a>oldmgp <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="st">"mgp"</span>)</span>
+<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fl">0.6</span> <span class="sc">*</span> (<span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">1</span>) <span class="sc">+</span> <span class="fl">0.1</span>), <span class="at">mgp =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a><span class="co"># grid of plots</span></span>
+<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.001</span>, <span class="fl">0.999</span>, <span class="at">by =</span> <span class="fl">0.001</span>)</span>
+<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a><span class="fu">riskdiff_contours</span>()</span>
+<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a><span class="fu">riskratio_contours</span>()</span>
+<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a><span class="fu">oddsratio_contours</span>()</span>
+<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a><span class="fu">hazratio_contours</span>()</span>
+<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a><span class="co"># dev.copy2pdf(file = "contours.pdf")</span></span>
+<span id="cb12-84"><a href="#cb12-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a><span class="co"># reset graphical parameters</span></span>
+<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="at">mar =</span> oldmar, <span class="at">mgp =</span> oldmgp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell-output-display">
@@ -1401,9 +1537,21 @@ Figure&nbsp;9.3: Contour lines for the odds ratio, risk ratio, risk difference, 
 <!-- ### Relationships between the RR, OR, and HR
 In general  -->
 </section>
-<section id="relationships-between-changes-in-the-rd-rr-and-or" class="level3" data-number="9.3.2">
-<h3 data-number="9.3.2" class="anchored" data-anchor-id="relationships-between-changes-in-the-rd-rr-and-or"><span class="header-section-number">9.3.2</span> Relationships between changes in the RD, RR, and OR</h3>
-<p>It is surprising but true that the odds ratio, risk ratio, and risk difference can change in different directions relative to the null when the risks of disease in the exposed or the unexposed change. Even if we accept this possiblity, it can seem pathological.</p>
+<section id="relationships-among-the-rr-or-and-hr" class="level3" data-number="9.3.2">
+<h3 data-number="9.3.2" class="anchored" data-anchor-id="relationships-among-the-rr-or-and-hr"><span class="header-section-number">9.3.2</span> Relationships among the RR, OR, and HR</h3>
+<p>The odds ratio is always farther from the null than the risk ratio because <span class="math display">\[
+  \OR = \RR \frac{1 - p_0}{1 - p_1}
+  \implies
+  \begin{cases}
+    \OR &gt; \RR &amp;\text{if } p_1 &gt; p_0, \\
+    \OR = \RR &amp;\text{if } p_1 = p_0, \\
+    \OR &lt; \RR &amp;\text{if } p_1 &lt; p_0.
+  \end{cases}
+\]</span> Because <span class="math inline">\(\Var(\ln \hat{\OR}) &gt; \Var(\ln \hat{\RR})\)</span>, this does not imply that a hypothesis test based on the odds ratio is more powerful than a test based on the risk ratio.</p>
+</section>
+<section id="relationships-between-changes-in-the-rd-rr-and-or" class="level3" data-number="9.3.3">
+<h3 data-number="9.3.3" class="anchored" data-anchor-id="relationships-between-changes-in-the-rd-rr-and-or"><span class="header-section-number">9.3.3</span> Relationships between changes in the RD, RR, and OR*</h3>
+<p>It is surprising but true that the odds ratio, risk ratio, and risk difference can change in different directions relative to ther null values when the risks of disease in the exposed or the unexposed change. Even if we accept this possiblity, it can seem pathological and the algebra can be complicated <span class="citation" data-cites="brumback2008effect">(<a href="references.html#ref-brumback2008effect" role="doc-biblioref">Brumback and Berg 2008</a>)</span>. The problem becomes simpler if we focus on local changes where we start at a point on a Rothman diagram and keep track of the changes in the risk difference, risk ratio, and odds ratio as we move away from it.</p>
 <p>There are no surprises if we start on the null line where <span class="math inline">\(p_1 = p_0\)</span>, so <span class="math inline">\(\RD = 0\)</span>, <span class="math inline">\(\RR = 1\)</span>, and <span class="math inline">\(\OR = 1\)</span>. If we move along the null line, all measures stay the same. If we move to a point where <span class="math inline">\(p_1 &gt; p_0\)</span>, then all three measures increase so <span class="math inline">\(\RD &gt; 0\)</span>, <span class="math inline">\(\RR &gt; 1\)</span>, and <span class="math inline">\(\OR &gt; 1\)</span>. If we move to a point where <span class="math inline">\(p_1 &lt; p_0\)</span>, then all three measures decrease so <span class="math inline">\(\RD &lt; 0\)</span>, <span class="math inline">\(\RR &lt; 1\)</span>, and <span class="math inline">\(\OR &lt; 1\)</span>. Thus, all three measures agree about which direction we are moving relative to the null.</p>
 <p>If we start at any point off the null line, these measures of association can change in different directions—some toward the null and others away from the null. If we allow the risk difference, risk ratio, and odds ratio to move independently toward or away from their null values, there are <span class="math inline">\(2^3 = 8\)</span> possible combinations. It turns out that six of these combinations are possible around any point off the null line. This is hard to see algebraically, but it is easy to see on a Rothman diagram. <a href="#fig-changes" class="quarto-xref">Figure&nbsp;<span>9.4</span></a> shows the contours of the risk difference, risk ratio, and odds ratio passing through two points: (0.2, 0.6) above the null line and (0.8, 0.4) below the null line. <a href="#fig-changesA" class="quarto-xref">Figure&nbsp;<span>9.5</span></a> shows the gray square around (0.2, 0.6), where the contour line for the <span class="math inline">\(\OR\)</span> is between the contours for the <span class="math inline">\(\RD\)</span> and <span class="math inline">\(\RR\)</span>. If the <span class="math inline">\(\RD\)</span> and <span class="math inline">\(\RR\)</span> both move in the same direction, the <span class="math inline">\(\OR\)</span> must follow them—precluding two of the eight possible combinations of changes toward and away from the null. <a href="#fig-changesB" class="quarto-xref">Figure&nbsp;<span>9.6</span></a> shows the gray square around (0.8, 0.4), where the contour line for the <span class="math inline">\(\RD\)</span> is between the contours for the <span class="math inline">\(\RR\)</span> and <span class="math inline">\(\OR\)</span>. If the <span class="math inline">\(\RR\)</span> and <span class="math inline">\(\OR\)</span> both move in the same direction, the <span class="math inline">\(\RD\)</span> must follow them—which prevents two of the eight possible combinations of changes toward and away from the null. At both points, six of the eight possible combations of movements toward or away from the null are possible, one in each of the six angles defined by the contour lines through the point. However, the regions where all three measures of associaton agree about whether we are moving toward or away from the null occupy much larger angles than the regions where they disagree.</p>
 <div class="cell">
@@ -1413,61 +1561,61 @@ In general  -->
 <div class="code-with-filename-file">
 <pre><strong>changes.R</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Contours for the RD, RR, and OR at (0.2, 0.6) and (0.8, 0.4)</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># required packages</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ggplot2, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(geomtextpath, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># odds and logistic functions</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>odds <span class="ot">&lt;-</span> <span class="cf">function</span>(p) p <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> p)</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>invodds <span class="ot">&lt;-</span> <span class="cf">function</span>(odds) odds <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> odds)</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Point A at (0.2, 0.6) with OR = 6, RR = 3, and RD = 0.4</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co"># and point B at (0.6, 0.2) with OR = 1/6, RR = 1/3, and RD = -0.4</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.001</span>, <span class="fl">0.999</span>, <span class="at">by =</span> <span class="fl">0.001</span>)</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x, <span class="at">yORa =</span> <span class="fu">invodds</span>(<span class="dv">6</span> <span class="sc">*</span> <span class="fu">odds</span>(x)),</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>                  <span class="at">yRRa =</span> <span class="dv">3</span> <span class="sc">*</span> x, <span class="at">yRDa =</span> x <span class="sc">+</span> <span class="fl">0.4</span>,</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>                  <span class="at">yORb =</span> <span class="fu">invodds</span>(<span class="fu">odds</span>(x) <span class="sc">/</span> <span class="dv">6</span>), <span class="at">yRRb =</span> x <span class="sc">/</span> <span class="dv">2</span>,</span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>                  <span class="at">yRDb =</span> x <span class="sc">-</span> <span class="fl">0.4</span>)</span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="co"># with points 1A and 1B</span></span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>(<span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(x, yORa))</span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">theme_bw</span>()</span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fl">0.02</span>),</span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>                       <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.2</span>))</span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fl">0.02</span>),</span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>                       <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.2</span>))</span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Risk in the unexposed"</span>)</span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Risk in the exposed"</span>)</span>
-<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>  <span class="co"># point A</span></span>
-<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"point"</span>, <span class="at">x =</span> <span class="fl">0.2</span>, <span class="at">y =</span> <span class="fl">0.6</span>, <span class="at">size =</span> <span class="dv">3</span>)</span>
-<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fl">0.2</span>, <span class="at">y =</span> <span class="fl">0.58</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">vjust =</span> <span class="dv">1</span>,</span>
-<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"(0.2, 0.6)"</span>)</span>
-<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="at">label =</span> <span class="st">"OR = 6"</span>, <span class="at">hjust =</span> <span class="fl">0.8</span>)</span>
-<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="fu">aes</span>(x, yRRa), <span class="at">label =</span> <span class="st">"RR = 3"</span>, <span class="at">hjust =</span> <span class="fl">0.9</span>,</span>
-<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>                  <span class="at">linetype =</span> <span class="st">"dashed"</span>)</span>
-<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="fu">aes</span>(x, yRDa), <span class="at">label =</span> <span class="st">"RD = 0.4"</span>, <span class="at">hjust =</span> <span class="fl">0.9</span>,</span>
-<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>                  <span class="at">linetype =</span> <span class="st">"dotted"</span>)</span>
-<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="fu">aes</span>(x, x), <span class="at">col =</span> <span class="st">"darkgray"</span>, <span class="at">label =</span> <span class="st">"Null line"</span>)</span>
-<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"rect"</span>, <span class="at">xmin =</span> <span class="fl">0.09</span>, <span class="at">xmax =</span> <span class="fl">0.31</span>, <span class="at">ymin =</span> <span class="fl">0.49</span>, <span class="at">ymax =</span> <span class="fl">0.71</span>,</span>
-<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha =</span> <span class="fl">0.2</span>)</span>
-<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fl">0.11</span>, <span class="at">y =</span> <span class="fl">0.69</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">vjust =</span> <span class="dv">1</span>,</span>
-<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"Fig. 9.5"</span>)</span>
-<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>  <span class="co"># point B</span></span>
-<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"point"</span>, <span class="at">x =</span> <span class="fl">0.8</span>, <span class="at">y =</span> <span class="fl">0.4</span>, <span class="at">size =</span> <span class="dv">3</span>)</span>
-<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fl">0.8</span>, <span class="at">y =</span> <span class="fl">0.38</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">vjust =</span> <span class="dv">1</span>,</span>
-<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"(0.8, 0.4)"</span>)</span>
-<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="fu">aes</span>(x, yORb), <span class="at">hjust =</span> <span class="fl">0.8</span>, <span class="at">label =</span> <span class="st">"OR = 1/6"</span>)</span>
-<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="fu">aes</span>(x, yRRb), <span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>,</span>
-<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>                  <span class="at">label =</span> <span class="st">"RR = 1/2"</span>)</span>
-<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="fu">aes</span>(x, yRDb), <span class="at">hjust =</span> <span class="fl">0.05</span>, <span class="at">linetype =</span> <span class="st">"dotted"</span>,</span>
-<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>                  <span class="at">label =</span> <span class="st">"RD = -0.4"</span>)</span>
-<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"rect"</span>, <span class="at">xmin =</span> <span class="fl">0.69</span>, <span class="at">xmax =</span> <span class="fl">0.91</span>, <span class="at">ymin =</span> <span class="fl">0.29</span>, <span class="at">ymax =</span> <span class="fl">0.51</span>,</span>
-<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha =</span> <span class="fl">0.2</span>)</span>
-<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fl">0.71</span>, <span class="at">y =</span> <span class="fl">0.49</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">vjust =</span> <span class="dv">1</span>,</span>
-<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"Fig. 9.6"</span>)</span>
-<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Contours for the RD, RR, and OR at (0.2, 0.6) and (0.8, 0.4)</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># required packages</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ggplot2, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(geomtextpath, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># odds and logistic functions</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>odds <span class="ot">&lt;-</span> <span class="cf">function</span>(p) p <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>invodds <span class="ot">&lt;-</span> <span class="cf">function</span>(odds) odds <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> odds)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Point A at (0.2, 0.6) with OR = 6, RR = 3, and RD = 0.4</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co"># and point B at (0.6, 0.2) with OR = 1/6, RR = 1/3, and RD = -0.4</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.001</span>, <span class="fl">0.999</span>, <span class="at">by =</span> <span class="fl">0.001</span>)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x, <span class="at">yORa =</span> <span class="fu">invodds</span>(<span class="dv">6</span> <span class="sc">*</span> <span class="fu">odds</span>(x)),</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>                  <span class="at">yRRa =</span> <span class="dv">3</span> <span class="sc">*</span> x, <span class="at">yRDa =</span> x <span class="sc">+</span> <span class="fl">0.4</span>,</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>                  <span class="at">yORb =</span> <span class="fu">invodds</span>(<span class="fu">odds</span>(x) <span class="sc">/</span> <span class="dv">6</span>), <span class="at">yRRb =</span> x <span class="sc">/</span> <span class="dv">2</span>,</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>                  <span class="at">yRDb =</span> x <span class="sc">-</span> <span class="fl">0.4</span>)</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="co"># with points 1A and 1B</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>(<span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(x, yORa))</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">theme_bw</span>()</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fl">0.02</span>),</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>                       <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.2</span>))</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fl">0.02</span>),</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>                       <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.2</span>))</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Risk in the unexposed"</span>)</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Risk in the exposed"</span>)</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>  <span class="co"># point A</span></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"point"</span>, <span class="at">x =</span> <span class="fl">0.2</span>, <span class="at">y =</span> <span class="fl">0.6</span>, <span class="at">size =</span> <span class="dv">3</span>)</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fl">0.2</span>, <span class="at">y =</span> <span class="fl">0.58</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">vjust =</span> <span class="dv">1</span>,</span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"(0.2, 0.6)"</span>)</span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="at">label =</span> <span class="st">"OR = 6"</span>, <span class="at">hjust =</span> <span class="fl">0.8</span>)</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="fu">aes</span>(x, yRRa), <span class="at">label =</span> <span class="st">"RR = 3"</span>, <span class="at">hjust =</span> <span class="fl">0.9</span>,</span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>                  <span class="at">linetype =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="fu">aes</span>(x, yRDa), <span class="at">label =</span> <span class="st">"RD = 0.4"</span>, <span class="at">hjust =</span> <span class="fl">0.9</span>,</span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>                  <span class="at">linetype =</span> <span class="st">"dotted"</span>)</span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="fu">aes</span>(x, x), <span class="at">col =</span> <span class="st">"darkgray"</span>, <span class="at">label =</span> <span class="st">"Null line"</span>)</span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"rect"</span>, <span class="at">xmin =</span> <span class="fl">0.09</span>, <span class="at">xmax =</span> <span class="fl">0.31</span>, <span class="at">ymin =</span> <span class="fl">0.49</span>, <span class="at">ymax =</span> <span class="fl">0.71</span>,</span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha =</span> <span class="fl">0.2</span>)</span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fl">0.11</span>, <span class="at">y =</span> <span class="fl">0.69</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">vjust =</span> <span class="dv">1</span>,</span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"Fig. 9.5"</span>)</span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a>  <span class="co"># point B</span></span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"point"</span>, <span class="at">x =</span> <span class="fl">0.8</span>, <span class="at">y =</span> <span class="fl">0.4</span>, <span class="at">size =</span> <span class="dv">3</span>)</span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fl">0.8</span>, <span class="at">y =</span> <span class="fl">0.38</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">vjust =</span> <span class="dv">1</span>,</span>
+<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"(0.8, 0.4)"</span>)</span>
+<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="fu">aes</span>(x, yORb), <span class="at">hjust =</span> <span class="fl">0.8</span>, <span class="at">label =</span> <span class="st">"OR = 1/6"</span>)</span>
+<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="fu">aes</span>(x, yRRb), <span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>,</span>
+<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a>                  <span class="at">label =</span> <span class="st">"RR = 1/2"</span>)</span>
+<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="fu">aes</span>(x, yRDb), <span class="at">hjust =</span> <span class="fl">0.05</span>, <span class="at">linetype =</span> <span class="st">"dotted"</span>,</span>
+<span id="cb13-50"><a href="#cb13-50" aria-hidden="true" tabindex="-1"></a>                  <span class="at">label =</span> <span class="st">"RD = -0.4"</span>)</span>
+<span id="cb13-51"><a href="#cb13-51" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"rect"</span>, <span class="at">xmin =</span> <span class="fl">0.69</span>, <span class="at">xmax =</span> <span class="fl">0.91</span>, <span class="at">ymin =</span> <span class="fl">0.29</span>, <span class="at">ymax =</span> <span class="fl">0.51</span>,</span>
+<span id="cb13-52"><a href="#cb13-52" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha =</span> <span class="fl">0.2</span>)</span>
+<span id="cb13-53"><a href="#cb13-53" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fl">0.71</span>, <span class="at">y =</span> <span class="fl">0.49</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">vjust =</span> <span class="dv">1</span>,</span>
+<span id="cb13-54"><a href="#cb13-54" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"Fig. 9.6"</span>)</span>
+<span id="cb13-55"><a href="#cb13-55" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell-output-display">
@@ -1490,56 +1638,56 @@ Figure&nbsp;9.4: Rothman diagram showing the contour lines for the odds ratio (s
 <div class="code-with-filename-file">
 <pre><strong>changesA.R</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Local changes in the RD, RR, and OR near (0.2, 0.6)</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># required packages</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ggplot2, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(geomtextpath, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># odds and logistic functions, conversion from degrees to radians</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>odds <span class="ot">&lt;-</span> <span class="cf">function</span>(p) p <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> p)</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>invodds <span class="ot">&lt;-</span> <span class="cf">function</span>(odds) odds <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> odds)</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>degtorad <span class="ot">&lt;-</span> <span class="cf">function</span>(degrees) pi <span class="sc">*</span> (degrees <span class="sc">/</span> <span class="dv">180</span>)</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Point A at (0.2, 0.6) with OR = 6, RR = 3, and RD = 0.4</span></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co"># and point B at (0.6, 0.2) with OR = 1/6, RR = 1/3, and RD = -0.4</span></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.001</span>, <span class="fl">0.999</span>, <span class="at">by =</span> <span class="fl">0.001</span>)</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>datA <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x, <span class="at">yORa =</span> <span class="fu">invodds</span>(<span class="dv">6</span> <span class="sc">*</span> <span class="fu">odds</span>(x)),</span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>                   <span class="at">yRRa =</span> <span class="dv">3</span> <span class="sc">*</span> x, <span class="at">yRDa =</span> x <span class="sc">+</span> <span class="fl">0.4</span>)</span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="co"># plot of contours near point A</span></span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>(<span class="fu">ggplot</span>(datA, <span class="fu">aes</span>(x, yORa))</span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.3</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.7</span>))</span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Risk in the unexposed"</span>)</span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Risk in the exposed"</span>)</span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"point"</span>, <span class="at">x =</span> <span class="fl">0.2</span>, <span class="at">y =</span> <span class="fl">0.6</span>, <span class="at">size =</span> <span class="dv">3</span>)</span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="fl">0.202</span>, <span class="fl">0.598</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">vjust =</span> <span class="dv">1</span>, <span class="at">label =</span> <span class="st">"(0.2, 0.6)"</span>)</span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="at">label =</span> <span class="st">"OR = 6"</span>, <span class="at">hjust =</span> <span class="fl">0.385</span>)</span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="fu">aes</span>(x, yRDa), <span class="at">label =</span> <span class="st">"RD = 0.40"</span>, <span class="at">hjust =</span> <span class="fl">0.22</span>,</span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>                  <span class="at">linetype =</span> <span class="st">"dotted"</span>)</span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="fu">aes</span>(x, yRRa), <span class="at">label =</span> <span class="st">"RR = 3"</span>, <span class="at">hjust =</span> <span class="fl">0.208</span>,</span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>                  <span class="at">linetype =</span> <span class="st">"dashed"</span>)</span>
-<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="fl">0.25</span>, <span class="fl">0.55</span>,</span>
-<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"All toward the null</span><span class="sc">\n</span><span class="st"> OR &lt; 6, RR &lt; 3, RD &lt; 0.4"</span>)</span>
-<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="fl">0.15</span>, <span class="fl">0.65</span>,</span>
-<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"All away from the null</span><span class="sc">\n</span><span class="st"> OR &gt; 6, RR &gt; 3, RD &gt; 0.4"</span>)</span>
-<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">angle =</span> <span class="dv">49</span>,</span>
-<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>             <span class="at">x =</span> <span class="fl">0.2</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="fu">degtorad</span>(<span class="dv">49</span>)),</span>
-<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fl">0.6</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">sin</span>(<span class="fu">degtorad</span>(<span class="dv">49</span>)),</span>
-<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"OR &lt; 6, RR &lt; 3, RD &gt; 0.4"</span>)</span>
-<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">angle =</span> <span class="dv">63</span>,</span>
-<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>             <span class="at">x =</span> <span class="fl">0.2</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="fu">degtorad</span>(<span class="dv">63</span>)),</span>
-<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fl">0.6</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">sin</span>(<span class="fu">degtorad</span>(<span class="dv">63</span>)),</span>
-<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"OR &gt; 6, RR &lt; 3, RD &gt; 0.4"</span>)</span>
-<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">angle =</span> <span class="dv">52</span>,</span>
-<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>             <span class="at">x =</span> <span class="fl">0.2</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="fu">degtorad</span>(<span class="dv">180</span> <span class="sc">+</span> <span class="dv">52</span>)),</span>
-<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fl">0.6</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">sin</span>(<span class="fu">degtorad</span>(<span class="dv">180</span> <span class="sc">+</span> <span class="dv">52</span>)),</span>
-<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"OR &gt; 6, RR &gt; 3, RD &lt; 0.4"</span>)</span>
-<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">angle =</span> <span class="dv">66</span>,</span>
-<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>             <span class="at">x =</span> <span class="fl">0.2</span> <span class="sc">+</span> <span class="fl">0.087</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="fu">degtorad</span>(<span class="dv">180</span> <span class="sc">+</span> <span class="dv">66</span>)),</span>
-<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fl">0.6</span> <span class="sc">+</span> <span class="fl">0.087</span> <span class="sc">*</span> <span class="fu">sin</span>(<span class="fu">degtorad</span>(<span class="dv">180</span> <span class="sc">+</span> <span class="dv">66</span>)),</span>
-<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"OR &lt; 6, RR &gt; 3, RD &lt; 0.4"</span>)</span>
-<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Local changes in the RD, RR, and OR near (0.2, 0.6)</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># required packages</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ggplot2, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(geomtextpath, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># odds and logistic functions, conversion from degrees to radians</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>odds <span class="ot">&lt;-</span> <span class="cf">function</span>(p) p <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>invodds <span class="ot">&lt;-</span> <span class="cf">function</span>(odds) odds <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> odds)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>degtorad <span class="ot">&lt;-</span> <span class="cf">function</span>(degrees) pi <span class="sc">*</span> (degrees <span class="sc">/</span> <span class="dv">180</span>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Point A at (0.2, 0.6) with OR = 6, RR = 3, and RD = 0.4</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co"># and point B at (0.6, 0.2) with OR = 1/6, RR = 1/3, and RD = -0.4</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.001</span>, <span class="fl">0.999</span>, <span class="at">by =</span> <span class="fl">0.001</span>)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>datA <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x, <span class="at">yORa =</span> <span class="fu">invodds</span>(<span class="dv">6</span> <span class="sc">*</span> <span class="fu">odds</span>(x)),</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>                   <span class="at">yRRa =</span> <span class="dv">3</span> <span class="sc">*</span> x, <span class="at">yRDa =</span> x <span class="sc">+</span> <span class="fl">0.4</span>)</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="co"># plot of contours near point A</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>(<span class="fu">ggplot</span>(datA, <span class="fu">aes</span>(x, yORa))</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.3</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.7</span>))</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Risk in the unexposed"</span>)</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Risk in the exposed"</span>)</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"point"</span>, <span class="at">x =</span> <span class="fl">0.2</span>, <span class="at">y =</span> <span class="fl">0.6</span>, <span class="at">size =</span> <span class="dv">3</span>)</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="fl">0.202</span>, <span class="fl">0.598</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">vjust =</span> <span class="dv">1</span>, <span class="at">label =</span> <span class="st">"(0.2, 0.6)"</span>)</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="at">label =</span> <span class="st">"OR = 6"</span>, <span class="at">hjust =</span> <span class="fl">0.385</span>)</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="fu">aes</span>(x, yRDa), <span class="at">label =</span> <span class="st">"RD = 0.40"</span>, <span class="at">hjust =</span> <span class="fl">0.22</span>,</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>                  <span class="at">linetype =</span> <span class="st">"dotted"</span>)</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="fu">aes</span>(x, yRRa), <span class="at">label =</span> <span class="st">"RR = 3"</span>, <span class="at">hjust =</span> <span class="fl">0.208</span>,</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>                  <span class="at">linetype =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="fl">0.25</span>, <span class="fl">0.55</span>,</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"All toward the null</span><span class="sc">\n</span><span class="st"> OR &lt; 6, RR &lt; 3, RD &lt; 0.4"</span>)</span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="fl">0.15</span>, <span class="fl">0.65</span>,</span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"All away from the null</span><span class="sc">\n</span><span class="st"> OR &gt; 6, RR &gt; 3, RD &gt; 0.4"</span>)</span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">angle =</span> <span class="dv">49</span>,</span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>             <span class="at">x =</span> <span class="fl">0.2</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="fu">degtorad</span>(<span class="dv">49</span>)),</span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fl">0.6</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">sin</span>(<span class="fu">degtorad</span>(<span class="dv">49</span>)),</span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"OR &lt; 6, RR &lt; 3, RD &gt; 0.4"</span>)</span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">angle =</span> <span class="dv">63</span>,</span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>             <span class="at">x =</span> <span class="fl">0.2</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="fu">degtorad</span>(<span class="dv">63</span>)),</span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fl">0.6</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">sin</span>(<span class="fu">degtorad</span>(<span class="dv">63</span>)),</span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"OR &gt; 6, RR &lt; 3, RD &gt; 0.4"</span>)</span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">angle =</span> <span class="dv">52</span>,</span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a>             <span class="at">x =</span> <span class="fl">0.2</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="fu">degtorad</span>(<span class="dv">180</span> <span class="sc">+</span> <span class="dv">52</span>)),</span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fl">0.6</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">sin</span>(<span class="fu">degtorad</span>(<span class="dv">180</span> <span class="sc">+</span> <span class="dv">52</span>)),</span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"OR &gt; 6, RR &gt; 3, RD &lt; 0.4"</span>)</span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">angle =</span> <span class="dv">66</span>,</span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a>             <span class="at">x =</span> <span class="fl">0.2</span> <span class="sc">+</span> <span class="fl">0.087</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="fu">degtorad</span>(<span class="dv">180</span> <span class="sc">+</span> <span class="dv">66</span>)),</span>
+<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fl">0.6</span> <span class="sc">+</span> <span class="fl">0.087</span> <span class="sc">*</span> <span class="fu">sin</span>(<span class="fu">degtorad</span>(<span class="dv">180</span> <span class="sc">+</span> <span class="dv">66</span>)),</span>
+<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"OR &lt; 6, RR &gt; 3, RD &lt; 0.4"</span>)</span>
+<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell-output-display">
@@ -1562,55 +1710,55 @@ Figure&nbsp;9.5: The odds ratio, risk ratio, and risk difference near the point 
 <div class="code-with-filename-file">
 <pre><strong>changesB.R</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Local changes in the RD, RR, and OR near (0.8, 0.4)</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># required packages</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ggplot2, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(geomtextpath, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># odds and logistic functions, conversion from degrees to radians</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>odds <span class="ot">&lt;-</span> <span class="cf">function</span>(p) p <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> p)</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>invodds <span class="ot">&lt;-</span> <span class="cf">function</span>(odds) odds <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> odds)</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>degtorad <span class="ot">&lt;-</span> <span class="cf">function</span>(degrees) pi <span class="sc">*</span> (degrees <span class="sc">/</span> <span class="dv">180</span>)</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Point A at (0.2, 0.6) with OR = 6, RR = 3, and RD = 0.4</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co"># and point B at (0.6, 0.2) with OR = 1/6, RR = 1/3, and RD = -0.4</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.001</span>, <span class="fl">0.999</span>, <span class="at">by =</span> <span class="fl">0.001</span>)</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>datB <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x, <span class="at">yORb =</span> <span class="fu">invodds</span>(<span class="fu">odds</span>(x) <span class="sc">/</span> <span class="dv">6</span>), <span class="at">yRRb =</span> x <span class="sc">/</span> <span class="dv">2</span>,</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>                   <span class="at">yRDb =</span> x <span class="sc">-</span> <span class="fl">0.4</span>)</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>(<span class="fu">ggplot</span>(datB, <span class="fu">aes</span>(x, yORb))</span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">0.7</span>, <span class="fl">0.9</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">0.3</span>, <span class="fl">0.5</span>))</span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Risk in the unexposed"</span>)</span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Risk in the exposed"</span>)</span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"point"</span>, <span class="at">x =</span> <span class="fl">0.8</span>, <span class="at">y =</span> <span class="fl">0.4</span>, <span class="at">size =</span> <span class="dv">3</span>)</span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="fl">0.802</span>, <span class="fl">0.398</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">vjust =</span> <span class="dv">1</span>, <span class="at">label =</span> <span class="st">"(0.8, 0.4)"</span>)</span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="at">label =</span> <span class="st">"OR = 1/6"</span>, <span class="at">hjust =</span> <span class="fl">0.615</span>)</span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="fu">aes</span>(x, yRDb), <span class="at">label =</span> <span class="st">"RD = -0.4"</span>, <span class="at">hjust =</span> <span class="fl">0.78</span>,</span>
-<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>                  <span class="at">linetype =</span> <span class="st">"dotted"</span>)</span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="fu">aes</span>(x, yRRb), <span class="at">label =</span> <span class="st">"RR = 1/2"</span>, <span class="at">hjust =</span> <span class="fl">0.84</span>,</span>
-<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>                  <span class="at">linetype =</span> <span class="st">"dashed"</span>)</span>
-<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="fl">0.75</span>, <span class="fl">0.45</span>,</span>
-<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"All toward the null</span><span class="sc">\n</span><span class="st"> OR &gt; 1/6, RR &gt; 1/2, RD &gt; -0.4"</span>)</span>
-<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="fl">0.85</span>, <span class="fl">0.35</span>,</span>
-<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"All away from the null</span><span class="sc">\n</span><span class="st"> OR &lt; 1/6, RR &lt; 1/2, RD &lt; -0.4"</span>)</span>
-<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">angle =</span> <span class="dv">36</span>,</span>
-<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>             <span class="at">x =</span> <span class="fl">0.8</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="fu">degtorad</span>(<span class="dv">36</span>)),</span>
-<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fl">0.4</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">sin</span>(<span class="fu">degtorad</span>(<span class="dv">36</span>)),</span>
-<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"OR &lt; 1/6, RR &gt; 1/2, RD &lt; -0.4"</span>)</span>
-<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">angle =</span> <span class="dv">52</span>,</span>
-<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>             <span class="at">x =</span> <span class="fl">0.8</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="fu">degtorad</span>(<span class="dv">52</span>)),</span>
-<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fl">0.4</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">sin</span>(<span class="fu">degtorad</span>(<span class="dv">52</span>)),</span>
-<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"OR &lt; 1/6, RR &gt; 1/2, RD &gt; -0.4"</span>)</span>
-<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">angle =</span> <span class="dv">36</span>,</span>
-<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a>             <span class="at">x =</span> <span class="fl">0.8</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="fu">degtorad</span>(<span class="dv">180</span> <span class="sc">+</span> <span class="dv">36</span>)),</span>
-<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fl">0.4</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">sin</span>(<span class="fu">degtorad</span>(<span class="dv">180</span> <span class="sc">+</span> <span class="dv">36</span>)),</span>
-<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"OR &gt; 1/6, RR &lt; 1/2, RD &gt; -0.4"</span>)</span>
-<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">angle =</span> <span class="dv">47</span>,</span>
-<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a>             <span class="at">x =</span> <span class="fl">0.8</span> <span class="sc">+</span> <span class="fl">0.095</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="fu">degtorad</span>(<span class="dv">180</span> <span class="sc">+</span> <span class="dv">49</span>)),</span>
-<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fl">0.4</span> <span class="sc">+</span> <span class="fl">0.095</span> <span class="sc">*</span> <span class="fu">sin</span>(<span class="fu">degtorad</span>(<span class="dv">180</span> <span class="sc">+</span> <span class="dv">49</span>)),</span>
-<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"OR &gt; 1/6, RR &lt; 1/2, RD &lt; -0.4"</span>)</span>
-<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Local changes in the RD, RR, and OR near (0.8, 0.4)</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># required packages</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ggplot2, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(geomtextpath, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># odds and logistic functions, conversion from degrees to radians</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>odds <span class="ot">&lt;-</span> <span class="cf">function</span>(p) p <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>invodds <span class="ot">&lt;-</span> <span class="cf">function</span>(odds) odds <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> odds)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>degtorad <span class="ot">&lt;-</span> <span class="cf">function</span>(degrees) pi <span class="sc">*</span> (degrees <span class="sc">/</span> <span class="dv">180</span>)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Point A at (0.2, 0.6) with OR = 6, RR = 3, and RD = 0.4</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="co"># and point B at (0.6, 0.2) with OR = 1/6, RR = 1/3, and RD = -0.4</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.001</span>, <span class="fl">0.999</span>, <span class="at">by =</span> <span class="fl">0.001</span>)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>datB <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x, <span class="at">yORb =</span> <span class="fu">invodds</span>(<span class="fu">odds</span>(x) <span class="sc">/</span> <span class="dv">6</span>), <span class="at">yRRb =</span> x <span class="sc">/</span> <span class="dv">2</span>,</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>                   <span class="at">yRDb =</span> x <span class="sc">-</span> <span class="fl">0.4</span>)</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>(<span class="fu">ggplot</span>(datB, <span class="fu">aes</span>(x, yORb))</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">0.7</span>, <span class="fl">0.9</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">0.3</span>, <span class="fl">0.5</span>))</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Risk in the unexposed"</span>)</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Risk in the exposed"</span>)</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"point"</span>, <span class="at">x =</span> <span class="fl">0.8</span>, <span class="at">y =</span> <span class="fl">0.4</span>, <span class="at">size =</span> <span class="dv">3</span>)</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="fl">0.802</span>, <span class="fl">0.398</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">vjust =</span> <span class="dv">1</span>, <span class="at">label =</span> <span class="st">"(0.8, 0.4)"</span>)</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="at">label =</span> <span class="st">"OR = 1/6"</span>, <span class="at">hjust =</span> <span class="fl">0.615</span>)</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="fu">aes</span>(x, yRDb), <span class="at">label =</span> <span class="st">"RD = -0.4"</span>, <span class="at">hjust =</span> <span class="fl">0.78</span>,</span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>                  <span class="at">linetype =</span> <span class="st">"dotted"</span>)</span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_textline</span>(<span class="fu">aes</span>(x, yRRb), <span class="at">label =</span> <span class="st">"RR = 1/2"</span>, <span class="at">hjust =</span> <span class="fl">0.84</span>,</span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>                  <span class="at">linetype =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="fl">0.75</span>, <span class="fl">0.45</span>,</span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"All toward the null</span><span class="sc">\n</span><span class="st"> OR &gt; 1/6, RR &gt; 1/2, RD &gt; -0.4"</span>)</span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="fl">0.85</span>, <span class="fl">0.35</span>,</span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"All away from the null</span><span class="sc">\n</span><span class="st"> OR &lt; 1/6, RR &lt; 1/2, RD &lt; -0.4"</span>)</span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">angle =</span> <span class="dv">36</span>,</span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>             <span class="at">x =</span> <span class="fl">0.8</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="fu">degtorad</span>(<span class="dv">36</span>)),</span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fl">0.4</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">sin</span>(<span class="fu">degtorad</span>(<span class="dv">36</span>)),</span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"OR &lt; 1/6, RR &gt; 1/2, RD &lt; -0.4"</span>)</span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">angle =</span> <span class="dv">52</span>,</span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>             <span class="at">x =</span> <span class="fl">0.8</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="fu">degtorad</span>(<span class="dv">52</span>)),</span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fl">0.4</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">sin</span>(<span class="fu">degtorad</span>(<span class="dv">52</span>)),</span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"OR &lt; 1/6, RR &gt; 1/2, RD &gt; -0.4"</span>)</span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">angle =</span> <span class="dv">36</span>,</span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a>             <span class="at">x =</span> <span class="fl">0.8</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="fu">degtorad</span>(<span class="dv">180</span> <span class="sc">+</span> <span class="dv">36</span>)),</span>
+<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fl">0.4</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> <span class="fu">sin</span>(<span class="fu">degtorad</span>(<span class="dv">180</span> <span class="sc">+</span> <span class="dv">36</span>)),</span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"OR &gt; 1/6, RR &lt; 1/2, RD &gt; -0.4"</span>)</span>
+<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">angle =</span> <span class="dv">47</span>,</span>
+<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a>             <span class="at">x =</span> <span class="fl">0.8</span> <span class="sc">+</span> <span class="fl">0.095</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="fu">degtorad</span>(<span class="dv">180</span> <span class="sc">+</span> <span class="dv">49</span>)),</span>
+<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fl">0.4</span> <span class="sc">+</span> <span class="fl">0.095</span> <span class="sc">*</span> <span class="fu">sin</span>(<span class="fu">degtorad</span>(<span class="dv">180</span> <span class="sc">+</span> <span class="dv">49</span>)),</span>
+<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="st">"OR &gt; 1/6, RR &lt; 1/2, RD &lt; -0.4"</span>)</span>
+<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell-output-display">
@@ -1638,8 +1786,14 @@ Agresti, Alan, and Yongyi Min. 2005. <span>“Frequentist Performance of <span>B
 <div id="ref-berkson1944application" class="csl-entry" role="listitem">
 Berkson, Joseph. 1944. <span>“Application of the Logistic Function to Bio-Assay.”</span> <em>Journal of the American Statistical Association</em> 39 (227): 357–65.
 </div>
+<div id="ref-brumback2008effect" class="csl-entry" role="listitem">
+Brumback, Babette, and Arthur Berg. 2008. <span>“On Effect-Measure Modification: Relationships Among Changes in the Relative Risk, Odds Ratio, and Risk Difference.”</span> <em>Statistics in Medicine</em> 27 (18): 3453–65.
+</div>
 <div id="ref-cox1958regression" class="csl-entry" role="listitem">
 Cox, David R. 1958. <span>“The Regression Analysis of Binary Sequences.”</span> <em>Journal of the Royal Statistical Society Series B: Statistical Methodology</em> 20 (2): 215–32.
+</div>
+<div id="ref-katz1978obtaining" class="csl-entry" role="listitem">
+Katz, DJSM, J Baptista, SP Azen, and MC Pike. 1978. <span>“Obtaining Confidence Intervals for the Risk Ratio in Cohort Studies.”</span> <em>Biometrics</em>, 469–74.
 </div>
 <div id="ref-kenah2024rothman" class="csl-entry" role="listitem">
 Kenah, Eben. 2024. <span>“Rothman Diagrams: The Geometry of Confounding and Standardization.”</span> <em>International Journal of Epidemiology</em> 53 (6): dyae139.
@@ -1679,6 +1833,9 @@ Simpson, Edward H. 1951. <span>“The Interpretation of Interaction in Contingen
 </div>
 <div id="ref-williamson2013log" class="csl-entry" role="listitem">
 Williamson, Tyler, Misha Eliasziw, and Gordon Hilton Fick. 2013. <span>“Log-Binomial Models: Exploring Failed Convergence.”</span> <em>Emerging Themes in Epidemiology</em> 10 (1): 1–10.
+</div>
+<div id="ref-woolf1955estimating" class="csl-entry" role="listitem">
+Woolf, Barnet. 1955. <span>“On Estimating the Relation Between Blood Group and Disease.”</span> <em>Annals of Human Genetics</em> 19 (4): 251–53.
 </div>
 <div id="ref-zou2004modified" class="csl-entry" role="listitem">
 Zou, Guangyong. 2004. <span>“A Modified <span>P</span>oisson Regression Approach to Prospective Studies with Binary Data.”</span> <em>American Journal of Epidemiology</em> 159 (7): 702–6.
@@ -2117,8 +2274,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./survival2.html" class="pagination-link" aria-label="Two-Sample Survival Analysis">
-        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-Sample Survival Analysis</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./survival2.html" class="pagination-link" aria-label="Two-Sample Survival Analysis and the Cox Model">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-Sample Survival Analysis and the Cox Model</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

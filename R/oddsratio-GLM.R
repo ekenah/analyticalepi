@@ -45,19 +45,23 @@ lnodds1var <- as.numeric(c(1, 1) %*% vcov(ORglm) %*% c(1, 1))
 odds1hat
 odds1hat * exp(c(-1, 1) * qnorm(0.975) * sqrt(lnodds1var))
 
-# estimates of risks and risk ratio based on odds
+# estimates of risks, risk difference, and risk ratio based on odds
 expit <- function(v) 1 / (1 + exp(-v))    # logistic function
 beta0 <- coef(ORglm)["(Intercept)"]
 beta1 <- coef(ORglm)["rx"]
-
-risk0 <- c / r0
-risk0
-expit(beta0)
-
+# risk in exposed
 risk1 <- a / r1
 risk1
 expit(beta0 + beta1)
-
+# risk in unexposed
+risk0 <- c / r0
+risk0
+expit(beta0)
+# risk difference
+RDhat <- risk1 - risk0
+RDhat
+expit(beta0 + beta1) - expit(beta0)
+# risk ratio
 RRhat <- risk1 / risk0
 RRhat
 expit(beta0 + beta1) / expit(beta0)

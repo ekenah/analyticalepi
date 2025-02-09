@@ -26,7 +26,7 @@ lnRRci <- log(RRhat) + c(-1, 1) * qnorm(.975) * sqrt(lnRRvar)
 RRhat
 exp(lnRRci)
 
-# Binomial GLM with log link (log-binomial model) for the RR
+# binomial GLM with log link (log-binomial model) for the RR
 # Default binomial link = "logit", so we must specify link = "log".
 RRglm <- glm(status ~ rx, family = binomial(link = "log"), data = rats)
 summary(RRglm)                  # point estimates, p-values, CIs, global tests

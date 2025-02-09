@@ -139,6 +139,7 @@ div.csl-indent {
         chisqH: "\\chi^2_\\text\{H\}",
         chisqP: "\\chi^2_\\text\{P\}",
         chisqPobs: "\\chi^2_\\text\{Pobs\}",
+        cHR: "\\text\{cHR\}",
         cloglog: ["\\operatorname\{cloglog\}"],
         comp: "\\mathsf\{C\}",
         Cov: ["\\operatorname\{Cov\}"],
@@ -341,13 +342,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./survival2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-Sample Survival Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-Sample Survival Analysis and the Cox Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./casecontrol.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Measures of association in case-control studies</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Design and Analysis of Case-Control and Case-Cohort studies</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -399,7 +400,7 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#incomplete-follow-up" id="toc-incomplete-follow-up" class="nav-link active" data-scroll-target="#incomplete-follow-up"><span class="header-section-number">5.1</span> Incomplete follow-up</a>
+  <li><a href="#sec-incomplete" id="toc-sec-incomplete" class="nav-link active" data-scroll-target="#sec-incomplete"><span class="header-section-number">5.1</span> Incomplete follow-up</a>
   <ul class="collapse">
   <li><a href="#right-censoring" id="toc-right-censoring" class="nav-link" data-scroll-target="#right-censoring"><span class="header-section-number">5.1.1</span> Right censoring</a></li>
   <li><a href="#delayed-entry-left-truncation" id="toc-delayed-entry-left-truncation" class="nav-link" data-scroll-target="#delayed-entry-left-truncation"><span class="header-section-number">5.1.2</span> Delayed entry (left truncation)</a></li>
@@ -419,7 +420,7 @@ window.Quarto = {
   <li><a href="#memoryless-property" id="toc-memoryless-property" class="nav-link" data-scroll-target="#memoryless-property"><span class="header-section-number">5.3.3</span> Memoryless property</a></li>
   <li><a href="#prevalence-incidence-and-duration-of-disease" id="toc-prevalence-incidence-and-duration-of-disease" class="nav-link" data-scroll-target="#prevalence-incidence-and-duration-of-disease"><span class="header-section-number">5.3.4</span> Prevalence, incidence, and duration of disease*</a></li>
   </ul></li>
-  <li><a href="#poisson-distribution" id="toc-poisson-distribution" class="nav-link" data-scroll-target="#poisson-distribution"><span class="header-section-number">5.4</span> Poisson distribution</a>
+  <li><a href="#sec-Poisson" id="toc-sec-Poisson" class="nav-link" data-scroll-target="#sec-Poisson"><span class="header-section-number">5.4</span> Poisson distribution</a>
   <ul class="collapse">
   <li><a href="#mean-and-variance-1" id="toc-mean-and-variance-1" class="nav-link" data-scroll-target="#mean-and-variance-1"><span class="header-section-number">5.4.1</span> Mean and variance</a></li>
   <li><a href="#incidence-rates-via-count-data" id="toc-incidence-rates-via-count-data" class="nav-link" data-scroll-target="#incidence-rates-via-count-data"><span class="header-section-number">5.4.2</span> Incidence rates via count data</a></li>
@@ -522,8 +523,8 @@ Table&nbsp;5.1: Time scales and time origins adapted from <span class="citation"
 </div>
 </figure>
 </div>
-<section id="incomplete-follow-up" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="incomplete-follow-up"><span class="header-section-number">5.1</span> Incomplete follow-up</h2>
+<section id="sec-incomplete" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="sec-incomplete"><span class="header-section-number">5.1</span> Incomplete follow-up</h2>
 <p>Let <span class="math inline">\(\tevent\)</span> be the failure time of individual <span class="math inline">\(i\)</span> and <span class="math inline">\(\tcens\)</span> be the last time at which they would be under observation if they had no disease onset. We assume all times are defined so that <span class="math inline">\(t = 0\)</span> at the time origin.</p>
 <section id="right-censoring" class="level3" data-number="5.1.1">
 <h3 data-number="5.1.1" class="anchored" data-anchor-id="right-censoring"><span class="header-section-number">5.1.1</span> Right censoring</h3>
@@ -865,8 +866,8 @@ Figure&nbsp;5.1: Mortality hazard (deaths per year) by age in the United States 
 \]</span> Under more realistic conditions, the relationship between prevalence, incidence, and the duration of disease is more complex <span class="citation" data-cites="freeman1980prevalence preston1987relations keiding1991age alho1992prevalence">(<a href="references.html#ref-freeman1980prevalence" role="doc-biblioref">Freeman and Hutchison 1980</a>; <a href="references.html#ref-preston1987relations" role="doc-biblioref">Preston 1987</a>; <a href="references.html#ref-keiding1991age" role="doc-biblioref">Keiding 1991</a>; <a href="references.html#ref-alho1992prevalence" role="doc-biblioref">Alho 1992</a>)</span>.</p>
 </section>
 </section>
-<section id="poisson-distribution" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="poisson-distribution"><span class="header-section-number">5.4</span> Poisson distribution</h2>
+<section id="sec-Poisson" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="sec-Poisson"><span class="header-section-number">5.4</span> Poisson distribution</h2>
 <p>The Poisson distribution<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> is one of the most important distributions in probability and statistics, and it has many applications in epidemiology. <a href="#sec-cumhaz" class="quarto-xref"><span>Section 5.2.3</span></a> showed that the cumulative hazard <span class="math inline">\(H(t)\)</span> is the expected number of events that occur in <span class="math inline">\((0, t]\)</span> when the event is repeatable. The number of events has a Poisson distribution with mean <span class="math inline">\(H(t)\)</span>.</p>
 <p>If events occur at a constant rate <span class="math inline">\(\lambda\)</span>, then the times between events have an exponential(<span class="math inline">\(\lambda\)</span>) distribution. The number <span class="math inline">\(X\)</span> of events that occur in a time interval of length <span class="math inline">\(T\)</span> will have a Poisson distribution with mean <span class="math inline">\(\lambda T\)</span>. The probability mass function (PMF) of a Poisson(<span class="math inline">\(\lambda T\)</span>) distribution is <span id="eq-PoissonPMF"><span class="math display">\[
   \Pr(X = x) = \frac{(\lambda T)^k}{k!} e^{-\lambda T}

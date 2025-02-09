@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>10&nbsp; Two-Sample Survival Analysis – Analytical Epidemiology</title>
+<title>10&nbsp; Two-Sample Survival Analysis and the Cox Model – Analytical Epidemiology</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 /* CSS for citations */
 div.csl-bib-body { }
@@ -102,6 +136,7 @@ div.csl-indent {
         chisqH: "\\chi^2_\\text\{H\}",
         chisqP: "\\chi^2_\\text\{P\}",
         chisqPobs: "\\chi^2_\\text\{Pobs\}",
+        cHR: "\\text\{cHR\}",
         cloglog: ["\\operatorname\{cloglog\}"],
         comp: "\\mathsf\{C\}",
         Cov: ["\\operatorname\{Cov\}"],
@@ -193,7 +228,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./studydesign.html">Study Design and Measures of Association</a></li><li class="breadcrumb-item"><a href="./survival2.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-Sample Survival Analysis</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./studydesign.html">Study Design and Measures of Association</a></li><li class="breadcrumb-item"><a href="./survival2.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-Sample Survival Analysis and the Cox Model</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -304,13 +339,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./survival2.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-Sample Survival Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-Sample Survival Analysis and the Cox Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./casecontrol.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Measures of association in case-control studies</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Design and Analysis of Case-Control and Case-Cohort studies</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -379,7 +414,7 @@ window.Quarto = {
   <li><a href="#chi-squared-statistic" id="toc-chi-squared-statistic" class="nav-link" data-scroll-target="#chi-squared-statistic"><span class="header-section-number">10.3.2</span> Chi-squared statistic</a></li>
   <li><a href="#weighted-log-rank-tests" id="toc-weighted-log-rank-tests" class="nav-link" data-scroll-target="#weighted-log-rank-tests"><span class="header-section-number">10.3.3</span> Weighted log-rank tests</a></li>
   </ul></li>
-  <li><a href="#cox-regression" id="toc-cox-regression" class="nav-link" data-scroll-target="#cox-regression"><span class="header-section-number">10.4</span> Cox regression</a>
+  <li><a href="#sec-Cox-model" id="toc-sec-Cox-model" class="nav-link" data-scroll-target="#sec-Cox-model"><span class="header-section-number">10.4</span> Cox model</a>
   <ul class="collapse">
   <li><a href="#proportional-hazards-assumption" id="toc-proportional-hazards-assumption" class="nav-link" data-scroll-target="#proportional-hazards-assumption"><span class="header-section-number">10.4.1</span> Proportional hazards assumption</a></li>
   <li><a href="#partial-likelihood" id="toc-partial-likelihood" class="nav-link" data-scroll-target="#partial-likelihood"><span class="header-section-number">10.4.2</span> Partial likelihood</a></li>
@@ -392,9 +427,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./studydesign.html">Study Design and Measures of Association</a></li><li class="breadcrumb-item"><a href="./survival2.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-Sample Survival Analysis</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./studydesign.html">Study Design and Measures of Association</a></li><li class="breadcrumb-item"><a href="./survival2.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-Sample Survival Analysis and the Cox Model</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-Sample Survival Analysis</span></h1>
+<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-Sample Survival Analysis and the Cox Model</span></h1>
 </div>
 
 
@@ -414,11 +449,11 @@ window.Quarto = {
 <blockquote class="blockquote">
 <p>Survival-time patterns should be compared properly in their entirety rather than at isolated points only. <span class="citation" data-cites="mantel1966evaluation">(<a href="references.html#ref-mantel1966evaluation" role="doc-biblioref">Mantel 1966</a>)</span></p>
 </blockquote>
-<p>Simple measures of association such as the risk ratio or odds ratio require the calculation of risks of disease over a specified time interval. Often, it is more meaningful to compare times to events throughout an interval rather than at isolated points. Under the assumption of exponential times to events, the incidence rate allows us to calculate a rate that applies througout the observed time period. However, it assumes exponential times to events in each exposure group.</p>
-<p>For one-sample inference, survival analysis allowed us to make more relaxed parametric assumptions (e.g., Weibull or log-logistic times to events) or to avoid any parametric assumption at all (e.g., Kaplan-Meier and Nelson-Aalen estimators). Survival analysis plays a similar role in two-sample inference, allowing us to relax assumptions and compare survival time distributions in their entirety. The resulting hypothesis tests and measures of association can be much more powerful and accurate than comparisons based on risks or incidence rates.</p>
+<p>Simple measures of association such as the risk ratio or odds ratio require the calculation of risks of disease over a specified time interval. Often, it is more efficient to compare times to events throughout an interval rather than at a single time point. Under the assumption of exponential times to events, the incidence rate allows us to calculate a rate that applies througout the observed time period. This is a step in the right direction, but calculations of incidence rates assume exponential times to events.</p>
+<p>For one-sample inference, survival analysis allowed us to make more relaxed parametric assumptions (e.g., Weibull or log-logistic times to events) or to avoid any parametric assumption at all (e.g., the Kaplan-Meier and Nelson-Aalen estimators). Survival analysis plays a similar role in two-sample inference, allowing us to relax assumptions and compare survival time distributions in their entirety. The resulting hypothesis tests and measures of association can be more powerful and accurate than comparisons based on risks or incidence rates. All of the measures of association we discussed in <a href="cohort.html" class="quarto-xref"><span>Chapter 9</span></a> can be calculated using survival analysis. We focus on a single binary exposure as before, and we assume independent left truncation (i.e., delayed entry) and right censoring as described in <a href="longitudinal.html#sec-incomplete" class="quarto-xref"><span>Section 5.1</span></a>.</p>
 <section id="sec-surv-meas" class="level2" data-number="10.1">
 <h2 data-number="10.1" class="anchored" data-anchor-id="sec-surv-meas"><span class="header-section-number">10.1</span> Measures of association in survival analysis</h2>
-<p>All of the measures of association that we have discussed can be used in survival analysis if we use a parametric model. Let <span class="math inline">\(\lambda_1\)</span> be the rate parameter for the exposed and <span class="math inline">\(\lambda_0\)</span> be the rate parameter for the unexposed, and assume (where needed) that both groups have the same shape parameter <span class="math inline">\(\alpha\)</span>. The <strong>rate ratio</strong> is just <span class="math inline">\(\lambda_1 / \lambda_0\)</span>. The <strong>hazard ratio</strong> at time <span class="math inline">\(t\)</span> is <span class="math display">\[
+<p>Let <span class="math inline">\(\lambda_1\)</span> be the rate parameter for the exposed and <span class="math inline">\(\lambda_0\)</span> be the rate parameter for the unexposed, and assume (where needed) that both groups have the same shape parameter <span class="math inline">\(\alpha\)</span>. The <strong>rate ratio</strong> is just <span class="math inline">\(\lambda_1 / \lambda_0\)</span>. The <strong>hazard ratio</strong> at time <span class="math inline">\(t\)</span> is <span class="math display">\[
   \HR(t) = \frac{h(t, \alpha, \lambda_1)}{h(t, \alpha, \lambda_0)}.
 \]</span> The risk of disease onset in any interval <span class="math inline">\((0, t]\)</span> can be calculated using the survival, cumulative hazard, or hazard functions. This allows us to calculate risk differences, risk ratios, or odds ratios similar to those in <a href="cohort.html" class="quarto-xref"><span>Chapter 9</span></a>. In many cases, these measures of association depend on <span class="math inline">\(t\)</span>.</p>
 <section id="rate-ratios-and-hazard-ratios" class="level3" data-number="10.1.1">
@@ -439,15 +474,15 @@ window.Quarto = {
 </section>
 <section id="risk-differences-risk-ratios-and-odds-ratios" class="level3" data-number="10.1.2">
 <h3 data-number="10.1.2" class="anchored" data-anchor-id="risk-differences-risk-ratios-and-odds-ratios"><span class="header-section-number">10.1.2</span> Risk differences, risk ratios, and odds ratios</h3>
-<p>If the times to events have Weibull distributions in both groups, the risk of disease onset in <span class="math inline">\((0, t]\)</span> given <span class="math inline">\(X = x\)</span> is <span class="math display">\[
+<p>All of the measures of association from <a href="cohort.html" class="quarto-xref"><span>Chapter 9</span></a> can be calculating using survival analysis because the estimated survival function can be used to calculate risks. For example: If the times to events have Weibull distributions in both groups, the risk of disease onset in <span class="math inline">\((0, t]\)</span> given <span class="math inline">\(X = x\)</span> is <span class="math display">\[
   1 - S(t, \alpha, \lambda_x)
   = 1 - e^{-(\lambda_x t)^\alpha}
-\]</span> where <span class="math inline">\(x = 1\)</span> (for the exposed) or <span class="math inline">\(x = 0\)</span> (for the unexposed). Thus, we can calculate the risk difference, risk ratio, and odds ratio comparing the exposed to the unexposed over any time interval <span class="math inline">\((0, t]\)</span>. For example, the odds of disease onset in <span class="math inline">\((0, t]\)</span> given <span class="math inline">\(X = x\)</span> is <span class="math display">\[
+\]</span> where <span class="math inline">\(x = 1\)</span> for the exposed and <span class="math inline">\(x = 0\)</span> for the unexposed. Using these risks, we can calculate the risk difference, risk ratio, and odds ratio comparing the exposed to the unexposed over any time interval <span class="math inline">\((0, t]\)</span>. The odds of disease onset in <span class="math inline">\((0, t]\)</span> given <span class="math inline">\(X = x\)</span> is <span class="math display">\[
   \frac{1 - e^{-(\lambda_x t)^\alpha}}{e^{-(\lambda_x t)^\alpha}}
   = e^{(\lambda_x t)^\alpha} - 1,
 \]</span> so the odds ratio comparing the exposed to the unexposed at time <span class="math inline">\(t\)</span> is <span class="math display">\[
   \OR(t) = \frac{e^{(\lambda_1 t)^\alpha} - 1}{e^{(\lambda_0 t)^\alpha} - 1}.
-\]</span> When <span class="math inline">\(\lambda_1 = \lambda_0\)</span>, this equals one at all <span class="math inline">\(t\)</span>. Similarly, the risk difference equals zero and the risk ratio equals one. When <span class="math inline">\(\lambda_1 \neq \lambda_0\)</span>, the risk difference, risk ratio, and odds ratio all vary with <span class="math inline">\(t\)</span>.</p>
+\]</span> When <span class="math inline">\(\lambda_1 = \lambda_0\)</span>, this equals one at all <span class="math inline">\(t\)</span>. When <span class="math inline">\(\lambda_1 \neq \lambda_0\)</span>, it varies with <span class="math inline">\(t\)</span>. Similarly, the risk difference equals zero and the risk ratio equals one when <span class="math inline">\(\lambda_1 = \lambda_0\)</span> but both vary with <span class="math inline">\(t\)</span> otherwise.</p>
 <p>If the failure time distributions are log-logistic with the same shape parameter <span class="math inline">\(\alpha\)</span>, the risk of disease onset in <span class="math inline">\((0, t]\)</span> given <span class="math inline">\(X = x\)</span> is <span class="math display">\[
   1 - S(t, \alpha, \lambda_x)
   = 1 - \frac{1}{1 + (\lambda_1 t)^\alpha}
@@ -458,71 +493,271 @@ window.Quarto = {
 \]</span> When <span class="math inline">\(\lambda_1 \neq \lambda_0\)</span>, the risk difference and risk ratio are not constant in time. However, the odds ratio is <span class="math display">\[
   \frac{(\lambda_1 t)^\alpha}{(\lambda_0 t)^\alpha}
   = \bigg(\frac{\lambda_1}{\lambda_0}\bigg)^\alpha,
-\]</span> which is constant in time and equal to <span class="math inline">\((\text{rate ratio})^\alpha\)</span>. Thus, the odds ratio for log-logistic times to events has the same form as the hazard ratio for Weibull times to events.</p>
+\]</span> which is constant in time and equal to <span class="math inline">\((\text{rate ratio})^\alpha\)</span>. Thus, the odds ratio for log-logistic times to events has the same form as the hazard ratio for Weibull times to events. The risk difference and risk ratio both vary with <span class="math inline">\(t\)</span> when <span class="math inline">\(\lambda_1 \neq \lambda_0\)</span>.</p>
 </section>
 </section>
 <section id="accelerated-failure-time-models" class="level2" data-number="10.2">
 <h2 data-number="10.2" class="anchored" data-anchor-id="accelerated-failure-time-models"><span class="header-section-number">10.2</span> Accelerated failure time models</h2>
-<p>In an <strong>accelerated failure time</strong> (AFT) regression model, the predictors act multiplicatively on the random time to event <span class="math inline">\(T\)</span>: <span class="math display">\[
+<p>Parametric regression models in survival analysis are based on <strong>rate parameters</strong>, which measure how quickly time passes relative to a baseline time-to-event distribution. In an <strong>accelerated failure time</strong> (AFT) regression model, predictors act multiplicatively on the random time to event <span class="math inline">\(T\)</span>: <span class="math display">\[
   T = e^{\beta_0 + \beta_1 x_1 + \ldots + \beta_k x_k} \times \tau,
-\]</span> where <span class="math inline">\(\tau\)</span> is a random sample from a baseline survival time distribution with a rate parameter (and scale parameter) equal to one. The multiplier of <span class="math inline">\(\tau\)</span> is the <strong>scale parameter</strong> <span class="math display">\[
+\]</span> where <span class="math inline">\(\tau\)</span> is a random sample from the baseline survival time distribution, which defines <span class="math inline">\(\lambda = 1\)</span>. The multiplier of <span class="math inline">\(\tau\)</span> is the <strong>scale parameter</strong> <span class="math display">\[
   \sigma(\beta, x) = e^{\beta_0 + \beta_1 x_1 + \ldots + \beta_k x_k},
-\]</span> which is the reciprocal of the <strong>rate parameter</strong> <span id="eq-AFTrate"><span class="math display">\[
+\]</span> which measures how much the baseline failure time distribution is compressed (<span class="math inline">\(\sigma &lt; 1\)</span>) or stretched out (<span class="math inline">\(\sigma &gt; 1\)</span>). A one-unit increase in <span class="math inline">\(x_j\)</span> with all other covariates held constant is associated with a survival time that is multiplied by <span class="math inline">\(\exp(\beta_j)\)</span>, which is called the <em>acceleration factor</em>. The rate parameter is <span id="eq-AFTrate"><span class="math display">\[
   \lambda(\beta, x) =
-  e^{-\big(\beta_0 + \beta_1 x_1 + \ldots + \beta_k x_k\big)}.
-\tag{10.2}\]</span></span> A one-unit increase in <span class="math inline">\(x_j\)</span> with all other covariates held constant is associated with a survival time that is multiplied by <span class="math inline">\(\exp(\beta_j)\)</span>, which is called the <em>acceleration factor</em>. Equivalently, it is associated with a <strong>rate ratio</strong> of <span class="math inline">\(\exp(-\beta_j)\)</span>, which is the reciprocal of the acceleration factor. The null hypothesis of no association with <span class="math inline">\(X_j\)</span> corresponds to <span class="math inline">\(\beta_j = 0\)</span>.</p>
-<p>We will discuss AFT models that use exponential, Weibull, and log-logistic distributions. The gamma and log-normal distributions are also widely used, but they do not have simple closed forms for the hazard, cumulative hazard, or survival functions. All of these models can be fit using data with left truncation and right censoring, and the construction of the likelihood is the same. AFT models are a useful alternative to analyses based on incidence rates when the times to events are not exponential.</p>
-<p>For simplicity, we will focus on AFT models with a single binary predictor <span class="math inline">\(X\)</span>. In these models, the rate parameter is <span class="math display">\[
+  e^{-\big(\beta_0 + \beta_1 x_1 + \ldots + \beta_k x_k\big)},
+\tag{10.2}\]</span></span> which measures how quickly time passes relative to the baseline failure-time distribution. A one-unit increase in <span class="math inline">\(x_j\)</span> with all other covariates held constant is associated with a <strong>rate ratio</strong> of <span class="math inline">\(\exp(-\beta_j)\)</span>. The null hypothesis of no association with <span class="math inline">\(X_j\)</span> corresponds to <span class="math inline">\(\beta_j = 0\)</span>.</p>
+<p>We will discuss AFT models that use exponential, Weibull, and log-logistic distributions with rate <span class="math inline">\(\lambda = 1\)</span> has their baseline distributions. The gamma and log-normal distributions are also widely used, but they do not have simple closed forms for the hazard, cumulative hazard, or survival functions. All of these models can be fit using data with left truncation and right censoring, and the construction of the likelihood is the same. AFT models are a useful alternative to analyses based on incidence rates when the times to events are not exponential.</p>
+<p>For simplicity, we will focus on AFT models with a single binary predictor <span class="math inline">\(X\)</span>. In these models, the rate parameter is <span id="eq-AFTrate"><span class="math display">\[
   \lambda(x, \beta)
   = e^{-(\beta_0 + \beta_1 x)} =
   \begin{cases}
     e^{-\beta_0}              &amp; \text{in the unexposed,}\\
     e^{-(\beta_0 + \beta_1)}  &amp; \text{in the exposed.}
   \end{cases}
-\]</span> {<a href="#eq-AFTrate" class="quarto-xref">Equation&nbsp;<span>10.2</span></a>} The rate ratio is <span class="math display">\[
+\tag{10.3}\]</span></span> The rate ratio is <span class="math display">\[
   \frac{\lambda_1}{\lambda_0}
   = \frac{e^{-(\beta_0 + \beta_1)}}{e^{-\beta_0}}
   = e^{-\beta_1}.
 \]</span> The relationship between this rate ratio and other measures of association depends on the underlying failure time distribution.</p>
 <section id="exponential-aft-model" class="level3" data-number="10.2.1">
 <h3 data-number="10.2.1" class="anchored" data-anchor-id="exponential-aft-model"><span class="header-section-number">10.2.1</span> Exponential AFT model</h3>
-<p>An exponential distribution has a rate parameter but no shape parameter, so an exponential AFT model only has to estimate the coefficient vector <span class="math inline">\(\beta\)</span> from <a href="#eq-AFTrate" class="quarto-xref">Equation&nbsp;<span>10.2</span></a>. In an exponential AFT model, the hazard function is <span class="math display">\[
+<p>An exponential distribution has a rate parameter but no shape parameter, so an exponential AFT model only has to estimate the coefficient vector <span class="math inline">\(\beta\)</span> from <a href="#eq-AFTrate" class="quarto-xref">Equation&nbsp;<span>10.3</span></a>. In an exponential AFT model, the hazard function is <span class="math display">\[
   h(t, x, \beta) = \lambda(x, \beta),
-\]</span> which is the exponential hazard function with <span class="math inline">\(\lambda = \lambda(x, \beta)\)</span> from <a href="#eq-AFTrate" class="quarto-xref">Equation&nbsp;<span>10.2</span></a>. The corresponding cumulative hazard is <span class="math display">\[
+\]</span> which is the exponential hazard function with <span class="math inline">\(\lambda = \lambda(x, \beta)\)</span> from <a href="#eq-AFTrate" class="quarto-xref">Equation&nbsp;<span>10.3</span></a>. The corresponding cumulative hazard is <span class="math display">\[
   H(t, x, \beta) = \lambda(X, \beta) t.
 \]</span> With left-truncated and right-censored data <span id="eq-survdata"><span class="math display">\[
   (\tentry_i, \texit_i, \delta_i, x_i) \text{ for } i = 1, \ldots, n,
-\tag{10.3}\]</span></span> the log likelihood for <span class="math inline">\(\beta\)</span> is <span class="math display">\[
+\tag{10.4}\]</span></span> the log likelihood for <span class="math inline">\(\beta\)</span> is <span class="math display">\[
   \ell(\beta)
   = \sum_{i = 1}^n
     \Big(\delta_i \ln h(\texit_i, x_i, \beta)
       - H(\texit_i, x_i, \beta) + H(\tentry_i, x_i, \beta)\Big).
 \]</span> Point and interval estimates of <span class="math inline">\(\beta\)</span> can be obtained using maximum likelihood estimation (as in <a href="mlestimation.html" class="quarto-xref"><span>Chapter 3</span></a>) or Bayesian methods (see <a href="bayes.html" class="quarto-xref"><span>Chapter 4</span></a>).</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>AFT-exponential.R</strong></pre>
+</div>
+<div class="sourceCode" id="cb1" data-filename="AFT-exponential.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Exponential accelerated failure time (AFT) model</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The rats data is from:</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Mantel, Bohidar, and Ciminera (1977). Cancer Research 37: 3863-3868.</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)               <span class="co"># rats data and survreg()</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)                 <span class="co"># coefci() for Wald confidence intervals</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># exponential AFT model</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Default distribution is Weibull, so we must specify dist = "exponential".</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Coefficients are log scale parameters = -log rate parameters.</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>aft_exp <span class="ot">&lt;-</span> <span class="fu">survreg</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> rx, <span class="at">data =</span> rats, <span class="at">dist =</span> <span class="st">"exponential"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="sc">-</span><span class="fu">coef</span>(aft_exp))             <span class="co"># estimated rate (x = 0) and rate ratio</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="sc">-</span><span class="fu">confint</span>(aft_exp))          <span class="co"># log-transformed 95% Wald confidence intervals</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># estimated rate in the exposed</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>lnrate1hat <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="fu">sum</span>(<span class="fu">coef</span>(aft_exp)))</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>lnrate1var <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">%*%</span> <span class="fu">vcov</span>(aft_exp) <span class="sc">%*%</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>lnrate1ci <span class="ot">&lt;-</span> lnrate1hat <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">qnorm</span>(<span class="fl">0.975</span>) <span class="sc">*</span> <span class="fu">sqrt</span>(lnrate1var)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(lnrate1hat)                 <span class="co"># point estimate</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(lnrate1ci)                  <span class="co"># log-transformed 95% Wald confidence interval</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># exponential AFT results match Poisson GLM with log(rat-weeks) offset</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>IRRglm <span class="ot">&lt;-</span> <span class="fu">glm</span>(status <span class="sc">~</span> rx  <span class="sc">+</span> <span class="fu">offset</span>(<span class="fu">log</span>(time)), <span class="at">family =</span> <span class="fu">poisson</span>(), <span class="at">data =</span> rats)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(IRRglm))               <span class="co"># estimated incidence rate (x = 0) and IRR</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coefci</span>(IRRglm))             <span class="co"># log-transformed Wald CIs matches above</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co"># compare with nonparametric estimates</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Nelson-Aalen estimates (with Fleming-Harrington correction for ties)</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Formula ~ rx produces a separate estimate for each treatment group.</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Arguments stype = 2 and ctype = 2 produces NA estimate with FH correction.</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>ratsNA <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> rx, <span class="at">data =</span> rats,</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>                  <span class="at">stype =</span> <span class="dv">2</span>, <span class="at">ctype =</span> <span class="dv">2</span>, <span class="at">conf.type =</span>  <span class="st">"log-log"</span>)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="co"># plot of Nelson-Aalen cumulative hazard curves in treated and untreated rats</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ratsNA, <span class="at">fun =</span> <span class="st">"cumhaz"</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"darkgray"</span>, <span class="st">"black"</span>),</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Weeks after treatment"</span>, <span class="at">ylab =</span> <span class="st">"Cumulative hazard"</span>)</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">bg =</span> <span class="st">"white"</span>, <span class="at">lty =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"solid"</span>, <span class="st">"dashed"</span>), <span class="at">times =</span> <span class="dv">2</span>),</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"darkgray"</span>), <span class="at">each =</span> <span class="dv">2</span>),</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Control (Nelson-Aalen)"</span>, <span class="st">"Control (Exponential AFT model)"</span>,</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Treated (Nelson-Aalen)"</span>, <span class="st">"Treated (Exponential AFT model)"</span>))</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="co"># estimated cumulative hazards from exponential AFT model</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>aft_exp <span class="ot">&lt;-</span> <span class="fu">survreg</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> rx, <span class="at">data =</span> rats, <span class="at">dist =</span> <span class="st">"exponential"</span>)</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>rate1_exp <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">exp</span>(<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">%*%</span> <span class="fu">coef</span>(aft_exp)))</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>rate0_exp <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="fu">coef</span>(aft_exp)[<span class="st">"(Intercept)"</span>])</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>H_exp <span class="ot">&lt;-</span> <span class="cf">function</span>(t, rate) rate <span class="sc">*</span> t</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="co"># add lines to plot</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fu">max</span>(ratsNA<span class="sc">$</span>time), <span class="at">by =</span> <span class="fl">0.1</span>)</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t, <span class="fu">H_exp</span>(t, rate1_exp), <span class="at">lty =</span> <span class="st">"dashed"</span>, <span class="at">col =</span> <span class="st">"black"</span>)</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t, <span class="fu">H_exp</span>(t, rate0_exp), <span class="at">lty =</span> <span class="st">"dashed"</span>, <span class="at">col =</span> <span class="st">"darkgray"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="weibull-aft-model" class="level3" data-number="10.2.2">
 <h3 data-number="10.2.2" class="anchored" data-anchor-id="weibull-aft-model"><span class="header-section-number">10.2.2</span> Weibull AFT model</h3>
-<p>The Weibull AFT model generalizes the exponential model in the same way that the Weibull distribution generalizes the exponential distribution. As in the exponential AFT model, the rate parameter is determined by <span class="math inline">\(x\)</span> and <span class="math inline">\(\beta\)</span> as in <a href="#eq-AFTrate" class="quarto-xref">Equation&nbsp;<span>10.2</span></a>. The hazard function in a Weibull AFT model is <span class="math display">\[
+<p>The Weibull AFT model generalizes the exponential model in the same way that the Weibull distribution generalizes the exponential distribution. As in the exponential AFT model, the rate parameter is determined by <span class="math inline">\(x\)</span> and <span class="math inline">\(\beta\)</span> as in <a href="#eq-AFTrate" class="quarto-xref">Equation&nbsp;<span>10.3</span></a>. The hazard function in a Weibull AFT model is <span class="math display">\[
   h(t, \alpha, \beta, x) =
   \alpha \lambda(\beta, x)^\alpha t^{\alpha - 1},
 \]</span> which is the hazard function of the Weibull(<span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\lambda\)</span>) distribution where <span class="math inline">\(\lambda = \lambda(\beta, X)\)</span>. The corresponding cumulative hazard function is <span class="math display">\[
     H(t, \alpha, \beta, x) =
     \big(\lambda(\beta, x) t\big)^\alpha.
-\]</span> With left-truncated and right-censored data as in <a href="#eq-survdata" class="quarto-xref">Equation&nbsp;<span>10.3</span></a>, the log likelihood for <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> is <span id="eq-lweib"><span class="math display">\[
+\]</span> With left-truncated and right-censored data as in <a href="#eq-survdata" class="quarto-xref">Equation&nbsp;<span>10.4</span></a>, the log likelihood for <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> is <span id="eq-lweib"><span class="math display">\[
     \ell(\alpha, \beta) =
     \sum_{i = 1}^n \Big(\delta_i \ln h(\texit_i, x_i, \alpha, \beta)
       - H(t_i, x_i, \alpha, \beta) + H(\tentry_i, x_i, \alpha, \beta)\Big).
-\tag{10.4}\]</span></span> Point and interval estimates of <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> can be obtained using maximum likelihood estimation or Bayesian methods.</p>
+\tag{10.5}\]</span></span> Point and interval estimates of <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> can be obtained using maximum likelihood estimation or Bayesian methods.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>AFT-Weibull.R</strong></pre>
+</div>
+<div class="sourceCode" id="cb2" data-filename="AFT-Weibull.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Weibull accelerated failure time (AFT) model</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The rats data is from:</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Mantel, Bohidar, and Ciminera (1977). Cancer Research 37: 3863-3868.</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)               <span class="co"># rats data and survreg()</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Weibull accelerated failure time model</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># The Weibull distribution is the default for survival::survreg().</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Coefficients are log scale parameters = -log rate parameters.</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>aft_weib <span class="ot">&lt;-</span> <span class="fu">survreg</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> rx, <span class="at">data =</span> rats)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="sc">-</span><span class="fu">coef</span>(aft_weib)[<span class="st">"rx"</span>])      <span class="co"># estimated rate (x = 0) and rate ratio</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="sc">-</span><span class="fu">confint</span>(aft_weib)[<span class="st">"rx"</span>, ]) <span class="co"># log-transformed 95% Wald confidence intervals</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>shapehat <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> aft_weib<span class="sc">$</span>scale  <span class="co"># shape parameter point estimate</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>shapehat</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># shape parameter Z-score and p-value</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># The null hypothesis shape = 0 corresponds to an exponential distribution.</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>lnshapevar <span class="ot">&lt;-</span> <span class="fu">vcov</span>(aft_weib)[<span class="st">"Log(scale)"</span>, <span class="st">"Log(scale)"</span>]</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>shapeZ <span class="ot">&lt;-</span> <span class="fu">log</span>(shapehat) <span class="sc">/</span> <span class="fu">sqrt</span>(lnshapevar)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>shapeZ</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">pnorm</span>(<span class="sc">-</span><span class="fu">abs</span>(shapeZ))</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co"># shape parameter 95% CI</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="sc">-</span><span class="fu">log</span>(aft_weib<span class="sc">$</span>scale) <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">qnorm</span>(.<span class="dv">975</span>) <span class="sc">*</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sqrt</span>(<span class="fu">vcov</span>(aft_weib)[<span class="st">"Log(scale)"</span>, <span class="st">"Log(scale)"</span>]))</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="co"># estimated rate in the exposed</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>lnrate1hat <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="fu">sum</span>(<span class="fu">coef</span>(aft_weib)))</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>lnrate1var <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>) <span class="sc">%*%</span> <span class="fu">vcov</span>(aft_weib) <span class="sc">%*%</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>lnrate1ci <span class="ot">&lt;-</span> lnrate1hat <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">qnorm</span>(<span class="fl">0.975</span>) <span class="sc">*</span> <span class="fu">sqrt</span>(lnrate1var)</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(lnrate1hat)                 <span class="co"># point estimate</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(lnrate1ci)                  <span class="co"># log-transformed 95% Wald confidence interval</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="co"># compare with nonparametric estimates</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Nelson-Aalen estimates (with Fleming-Harrington correction for ties)</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Formula ~ rx produces a separate estimate for each treatment group.</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Arguments stype = 2 and ctype = 2 produces NA estimate with FH correction.</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>ratsNA <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> rx, <span class="at">data =</span> rats,</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>                  <span class="at">stype =</span> <span class="dv">2</span>, <span class="at">ctype =</span> <span class="dv">2</span>, <span class="at">conf.type =</span>  <span class="st">"log-log"</span>)</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="co"># plot of Nelson-Aalen cumulative hazard curves in treated and untreated rats</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ratsNA, <span class="at">fun =</span> <span class="st">"cumhaz"</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"darkgray"</span>, <span class="st">"black"</span>),</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Weeks after treatment"</span>, <span class="at">ylab =</span> <span class="st">"Cumulative hazard"</span>)</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">bg =</span> <span class="st">"white"</span>, <span class="at">lty =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"solid"</span>, <span class="st">"dashed"</span>), <span class="at">times =</span> <span class="dv">2</span>),</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"darkgray"</span>), <span class="at">each =</span> <span class="dv">2</span>),</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Control (Nelson-Aalen)"</span>, <span class="st">"Control (Weibull AFT model)"</span>,</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Treated (Nelson-Aalen)"</span>, <span class="st">"Treated (Weibull AFT model)"</span>))</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="co"># estimated cumulative hazards from Weibull AFT model</span></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>aft_weib <span class="ot">&lt;-</span> <span class="fu">survreg</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> rx, <span class="at">data =</span> rats)</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>rate1_weib <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">exp</span>(<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">%*%</span> <span class="fu">coef</span>(aft_weib)))</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>rate0_weib <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="fu">coef</span>(aft_weib)[<span class="st">"(Intercept)"</span>])</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>shape_weib <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> aft_weib<span class="sc">$</span>scale</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>H_weib <span class="ot">&lt;-</span> <span class="cf">function</span>(t, shape, rate) (rate <span class="sc">*</span> t)<span class="sc">^</span>shape</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="co"># add lines to plot</span></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fu">max</span>(ratsNA<span class="sc">$</span>time), <span class="at">by =</span> <span class="fl">0.1</span>)</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t, <span class="fu">H_weib</span>(t, shape_weib, rate1_weib), <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t, <span class="fu">H_weib</span>(t, shape_weib, rate0_weib), <span class="at">lty =</span> <span class="st">"dashed"</span>, <span class="at">col =</span> <span class="st">"darkgray"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="log-logistic-aft-model" class="level3" data-number="10.2.3">
 <h3 data-number="10.2.3" class="anchored" data-anchor-id="log-logistic-aft-model"><span class="header-section-number">10.2.3</span> Log-logistic AFT model</h3>
-<p>The log-logistic AFT model has the same likelihood as the Weibull AFT model except that we replace the Weibull hazard and cumulative hazard functions with the log-logistic hazard and cumulative hazard functions. As in the exponential and Weibull AFT models, the rate parameter is determined by <span class="math inline">\(x\)</span> and <span class="math inline">\(\beta\)</span> as in <a href="#eq-AFTrate" class="quarto-xref">Equation&nbsp;<span>10.2</span></a>. The log-logistic hazard function is <span class="math display">\[
+<p>The log-logistic AFT model has the same likelihood as the Weibull AFT model except that we replace the Weibull hazard and cumulative hazard functions with the log-logistic hazard and cumulative hazard functions. As in the exponential and Weibull AFT models, the rate parameter is determined by <span class="math inline">\(x\)</span> and <span class="math inline">\(\beta\)</span> as in <a href="#eq-AFTrate" class="quarto-xref">Equation&nbsp;<span>10.3</span></a>. The log-logistic hazard function is <span class="math display">\[
   h(t, x, \alpha, \beta) =
   \frac{\alpha \lambda(x, \beta)^\alpha t^{\alpha - 1}}
     {1 + \big(\lambda(x, \beta) t\big)^\alpha},
 \]</span> and the cumulative hazard function is <span class="math display">\[
   H(t, X, \beta, \alpha) =
   \ln\Bigl(1 + t^\alpha e^{-\alpha (\beta_0 + \beta_1 X)}\Bigr).
-\]</span> With left-truncated and right-censored data as in <a href="#eq-survdata" class="quarto-xref">Equation&nbsp;<span>10.3</span></a>, the likelihood is given by <a href="#eq-lweib" class="quarto-xref">Equation&nbsp;<span>10.4</span></a>. Point and interval estimates of <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> can be obtained using maximum likelihood estimation or Bayesian methods.</p>
+\]</span> With left-truncated and right-censored data as in <a href="#eq-survdata" class="quarto-xref">Equation&nbsp;<span>10.4</span></a>, the likelihood is given by <a href="#eq-lweib" class="quarto-xref">Equation&nbsp;<span>10.5</span></a>. Point and interval estimates of <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> can be obtained using maximum likelihood estimation or Bayesian methods.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>AFT-loglogistic.R</strong></pre>
+</div>
+<div class="sourceCode" id="cb3" data-filename="AFT-loglogistic.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Log-logistic accelerated failure time (AFT) model</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The rats data is from:</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Mantel, Bohidar, and Ciminera (1977). Cancer Research 37: 3863-3868.</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)               <span class="co"># rats data and survreg()</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Log-logistic accelerated failure time model</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Default distribution is Weibull, so we must specify dist = "loglogistic".</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Coefficients are log scale parameters = -log rate parameters.</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>aft_llog <span class="ot">&lt;-</span> <span class="fu">survreg</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> rx, <span class="at">data =</span> rats, <span class="at">dist =</span> <span class="st">"loglogistic"</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="sc">-</span><span class="fu">coef</span>(aft_llog)[<span class="st">"rx"</span>])      <span class="co"># estimated rate (x = 0) and rate ratio</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="sc">-</span><span class="fu">confint</span>(aft_llog)[<span class="st">"rx"</span>, ]) <span class="co"># log-transformed 95% Wald confidence intervals</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">/</span> aft_llog<span class="sc">$</span>scale              <span class="co"># shape parameter point estimate</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co"># shape parameter 95% CI</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="sc">-</span><span class="fu">log</span>(aft_llog<span class="sc">$</span>scale) <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">qnorm</span>(.<span class="dv">975</span>) <span class="sc">*</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sqrt</span>(<span class="fu">vcov</span>(aft_llog)[<span class="st">"Log(scale)"</span>, <span class="st">"Log(scale)"</span>]))</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co"># estimated rate in the exposed</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>lnrate1hat <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">sum</span>(<span class="fu">coef</span>(aft_llog))</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>lnrate1var <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>) <span class="sc">%*%</span> <span class="fu">vcov</span>(aft_llog) <span class="sc">%*%</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>lnrate1ci <span class="ot">&lt;-</span> lnrate1hat <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">qnorm</span>(<span class="fl">0.975</span>) <span class="sc">*</span> <span class="fu">sqrt</span>(lnrate1var)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(lnrate1hat)                 <span class="co"># point estimate</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(lnrate1ci)                  <span class="co"># log-transformed 95% Wald confidence interval</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="co"># compare with nonparametric estimates</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Nelson-Aalen estimates (with Fleming-Harrington correction for ties)</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Formula ~ rx produces a separate estimate for each treatment group.</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Arguments stype = 2 and ctype = 2 produces NA estimate with FH correction.</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>ratsNA <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> rx, <span class="at">data =</span> rats,</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>                  <span class="at">stype =</span> <span class="dv">2</span>, <span class="at">ctype =</span> <span class="dv">2</span>, <span class="at">conf.type =</span>  <span class="st">"log-log"</span>)</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="co"># plot of Nelson-Aalen cumulative hazard curves in treated and untreated rats</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ratsNA, <span class="at">fun =</span> <span class="st">"cumhaz"</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"darkgray"</span>, <span class="st">"black"</span>),</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Weeks after treatment"</span>, <span class="at">ylab =</span> <span class="st">"Cumulative hazard"</span>)</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">bg =</span> <span class="st">"white"</span>, <span class="at">lty =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"solid"</span>, <span class="st">"dashed"</span>), <span class="at">times =</span> <span class="dv">2</span>),</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"darkgray"</span>), <span class="at">each =</span> <span class="dv">2</span>),</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Control (Nelson-Aalen)"</span>, <span class="st">"Control (Log-logistic AFT model)"</span>,</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Treated (Nelson-Aalen)"</span>, <span class="st">"Treated (Log-logistic AFT model)"</span>))</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="co"># estimated cumulative hazards from log-logistic AFT model</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>aft_llog <span class="ot">&lt;-</span> <span class="fu">survreg</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> rx, <span class="at">data =</span> rats, <span class="at">dist =</span> <span class="st">"loglogistic"</span>)</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>rate1_llog <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">exp</span>(<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">%*%</span> <span class="fu">coef</span>(aft_llog)))</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>rate0_llog <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="fu">coef</span>(aft_llog)[<span class="st">"(Intercept)"</span>])</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>shape_llog <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> aft_llog<span class="sc">$</span>scale</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>H_llog <span class="ot">&lt;-</span> <span class="cf">function</span>(t, shape, rate) <span class="fu">log</span>(<span class="dv">1</span> <span class="sc">+</span> (rate <span class="sc">*</span> t)<span class="sc">^</span>shape)</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a><span class="co"># add lines to plot</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fu">max</span>(ratsNA<span class="sc">$</span>time), <span class="at">by =</span> <span class="fl">0.1</span>)</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t, <span class="fu">H_llog</span>(t, shape_llog, rate1_llog), <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t, <span class="fu">H_llog</span>(t, shape_llog, rate0_llog), <span class="at">lty =</span> <span class="st">"dashed"</span>, <span class="at">col =</span> <span class="st">"darkgray"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
 </section>
 </section>
 <section id="sec-logrank" class="level2" data-number="10.3">
@@ -543,12 +778,12 @@ window.Quarto = {
 <h3 data-number="10.3.2" class="anchored" data-anchor-id="chi-squared-statistic"><span class="header-section-number">10.3.2</span> Chi-squared statistic</h3>
 <p>The numerator of the log-rank chi-squared statistic is total number of observed failures among the exposed minus the total number of expected failures among the exposed under the null hypothesis: <span id="eq-logrank-U"><span class="math display">\[
   U = \sum_{i = 1}^m \Big(d_{1i} - d_i p_{1i}\Big).
-\tag{10.5}\]</span></span> The denominator is the variance of <span class="math inline">\(U_\text{logrank}\)</span>, which is <span class="math display">\[
+\tag{10.6}\]</span></span> The denominator is the variance of <span class="math inline">\(U_\text{logrank}\)</span>, which is <span class="math display">\[
   \Var(U)
   = \sum_{i = 1}^m p_{1i} (1 - p_{1i}) \frac{d_i (n_i - d_i)}{n_i - 1}
 \]</span> because the <span class="math inline">\(D_{1i}\)</span> are independent. The log-rank test statistic is <span id="eq-logrank-S"><span class="math display">\[
   \chi^2_\text{logrank} = \frac{U^2}{\Var(U)}.
-\tag{10.6}\]</span></span> When the number of observed failures is large, this has a chi-squared distribution with one degree of freedom under the null. We reject the null hypothesis for large values of <span class="math inline">\(\chi^2_\text{logrank}\)</span>. We get exactly the same chi-squared statistic and p-value if we use the observed and expected number of failures among the unexposed.</p>
+\tag{10.7}\]</span></span> When the number of observed failures is large, this has a chi-squared distribution with one degree of freedom under the null. We reject the null hypothesis for large values of <span class="math inline">\(\chi^2_\text{logrank}\)</span>. We get exactly the same chi-squared statistic and p-value if we use the observed and expected number of failures among the unexposed.</p>
 <!-- Explain why we get the same statistic if we used observed and expected failures among the unexposed. -->
 </section>
 <section id="weighted-log-rank-tests" class="level3" data-number="10.3.3">
@@ -608,13 +843,51 @@ Table&nbsp;10.1: Weighted log-rank tests <span class="citation" data-cites="aale
 </div>
 </figure>
 </div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>logrank.R</strong></pre>
+</div>
+<div class="sourceCode" id="cb4" data-filename="logrank.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Log-rank test</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The log-rank test is done using survdiff() is in the survival package.</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># The rats data is from:</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Mantel, Bohidar, and Ciminera (1977). Cancer Research 37: 3863-3868.</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)               <span class="co"># rats data and survdiff</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)                 <span class="co"># coeftest() for Wald test of coefficients</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># log-rank test (rho = 0 by default)</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># More tumor incidence observed than expected under the null in treated rats.</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">survdiff</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> rx, <span class="at">data =</span> rats)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Peto-Prentice test (rho = 1)</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># More tumor incidence observed than expected under the null in treated rats.</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="fu">survdiff</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> rx, <span class="at">data =</span> rats, <span class="at">rho =</span> <span class="dv">1</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co"># comparison with parametric AFT models</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co"># exponential</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>aft_exp <span class="ot">&lt;-</span> <span class="fu">survreg</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> rx, <span class="at">data =</span> rats, <span class="at">dist =</span> <span class="st">"exponential"</span>)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="fu">coeftest</span>(aft_exp)[<span class="st">"rx"</span>, <span class="st">"Pr(&gt;|z|)"</span>]</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Weibull</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>aft_weib <span class="ot">&lt;-</span> <span class="fu">survreg</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> rx, <span class="at">data =</span> rats, <span class="at">dist =</span> <span class="st">"weibull"</span>)</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="fu">coeftest</span>(aft_weib)[<span class="st">"rx"</span>, <span class="st">"Pr(&gt;|z|)"</span>]</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co"># log-logistic</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>aft_llog <span class="ot">&lt;-</span> <span class="fu">survreg</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> rx, <span class="at">data =</span> rats, <span class="at">dist =</span> <span class="st">"loglogistic"</span>)</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="fu">coeftest</span>(aft_llog)[<span class="st">"rx"</span>, <span class="st">"Pr(&gt;|z|)"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
 </section>
 </section>
-<section id="cox-regression" class="level2" data-number="10.4">
-<h2 data-number="10.4" class="anchored" data-anchor-id="cox-regression"><span class="header-section-number">10.4</span> Cox regression</h2>
+<section id="sec-Cox-model" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="sec-Cox-model"><span class="header-section-number">10.4</span> Cox model</h2>
 <p>The <strong>Cox proportional hazards model</strong> [<span class="citation" data-cites="cox1972regression">Cox (<a href="references.html#ref-cox1972regression" role="doc-biblioref">1972</a>)</span>} is a regression model that can estimate hazard ratios without making any other assumption about the underlying failure time distributions.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> It is a <strong>semiparametric</strong> model, which means that it has a parametric component and a nonparametric component. In the Cox model, the hazard function is <span id="eq-Cox-haz"><span class="math display">\[
   h(t, x, \beta) = e^{\beta_1 x_1 + \ldots + \beta_k x_k} h_0(t),
-\tag{10.7}\]</span></span> where the first term on the right-hand side is the <strong>relative hazard function</strong> and <span class="math inline">\(h_0(t)\)</span> is an unspecified <strong>baseline hazard function</strong>. The parametric component of the model is the relative hazard, where each predictor has a multiplicative effect on the hazard function. The nonparametric component of the model is the unspecified baseline hazard. There is no intercept because <span class="math inline">\(h_0(t)\)</span> represents the hazard for an individual with all predictors equal to zero.</p>
+\tag{10.8}\]</span></span> where the first term on the right-hand side is the <strong>relative hazard function</strong> and <span class="math inline">\(h_0(t)\)</span> is an unspecified <strong>baseline hazard function</strong>. The parametric component of the model is the relative hazard, where each predictor has a multiplicative effect on the hazard function. The nonparametric component of the model is the unspecified baseline hazard. There is no intercept because <span class="math inline">\(h_0(t)\)</span> represents the hazard for an individual with all predictors equal to zero.</p>
 <p>For simplicity, we will focus on Cox models with a single binary predictor <span class="math inline">\(X\)</span>. In these models, the relative hazard is <span class="math display">\[
   e^{\beta_1 x} =
   \begin{cases}
@@ -628,7 +901,7 @@ Table&nbsp;10.1: Weighted log-rank tests <span class="citation" data-cites="aale
 </section>
 <section id="partial-likelihood" class="level3" data-number="10.4.2">
 <h3 data-number="10.4.2" class="anchored" data-anchor-id="partial-likelihood"><span class="header-section-number">10.4.2</span> Partial likelihood</h3>
-<p>The Cox model is fit using a <strong>partial likelihood</strong>, which leaves out parts of the full likelihood but behaves like a likelihood for the purposes of maximum likelihood estimation. The Cox partial likelihood retains critical information about the hazard ratios without placing constraints on the baseline hazard. To do this, it relies an fundamental relationship between conditional probabilities and hazard functions.</p>
+<p>The Cox model is fit using a <strong>partial likelihood</strong>, which leaves out parts of the full likelihood but behaves like a likelihood for the purposes of maximum likelihood estimation. The Cox partial likelihood retains critical information about the hazard ratios without placing constraints on the baseline hazard. To do this, it relies on a fundamental relationship between conditional probabilities and hazard functions.</p>
 <p>Suppose <span class="math inline">\(T_1\)</span> and <span class="math inline">\(T_2\)</span> are independent failure times with survival functions <span class="math inline">\(S_1(t)\)</span> and <span class="math inline">\(S_2(t)\)</span>, respectively. Let <span class="math inline">\(T = \min(T_1, T_2)\)</span>. Then the survival function of <span class="math inline">\(T\)</span> is <span class="math display">\[
   S(t) = S_1(t)S_2(t)
 \]</span> because <span class="math inline">\(T &gt; t\)</span> if and only if <span class="math inline">\(T_1 &gt; t\)</span> and <span class="math inline">\(T_2 &gt; t\)</span>. The cumulative hazard function of <span class="math inline">\(T\)</span> is <span class="math display">\[
@@ -642,27 +915,27 @@ Table&nbsp;10.1: Weighted log-rank tests <span class="citation" data-cites="aale
 \]</span> where <span class="math inline">\(h_1(t)\)</span> and <span class="math inline">\(h_2(t)\)</span> are the hazard functions of <span class="math inline">\(T_1\)</span> and <span class="math inline">\(T_2\)</span>.</p>
 <p>This logic extends to the minimum of any finite set of survival times <span class="math inline">\(T_1, \ldots, T_n\)</span>. The survival function of <span class="math inline">\(T = \min(T_1, \ldots, T_n)\)</span> is <span id="eq-survmin"><span class="math display">\[
   S(t) = \prod_{i = 1}^n S_i(t),
-\tag{10.8}\]</span></span> and the hazard function is <span id="eq-hmin"><span class="math display">\[
+\tag{10.9}\]</span></span> and the hazard function is <span id="eq-hmin"><span class="math display">\[
   h(t) = \sum_{i = 1}^n h_i(t),
-\tag{10.9}\]</span></span> where <span class="math inline">\(S_i(t)\)</span> is the survival function and <span class="math inline">\(h_i(t)\)</span> is the hazard function of <span class="math inline">\(T_i\)</span>.</p>
-<p>The probability density function is the product of the hazard in <a href="#eq-hmin" class="quarto-xref">Equation&nbsp;<span>10.9</span></a> and the survival in <a href="#eq-survmin" class="quarto-xref">Equation&nbsp;<span>10.8</span></a>. The probability density for a failure in any individual at time <span class="math inline">\(t\)</span> is <span id="eq-Lfail"><span class="math display">\[
+\tag{10.10}\]</span></span> where <span class="math inline">\(S_i(t)\)</span> is the survival function and <span class="math inline">\(h_i(t)\)</span> is the hazard function of <span class="math inline">\(T_i\)</span>.</p>
+<p>The probability density function is the product of the hazard in <a href="#eq-hmin" class="quarto-xref">Equation&nbsp;<span>10.10</span></a> and the survival in <a href="#eq-survmin" class="quarto-xref">Equation&nbsp;<span>10.9</span></a>. The probability density for a failure in any individual at time <span class="math inline">\(t\)</span> is <span id="eq-Lfail"><span class="math display">\[
   \big(h_1(t) + \ldots + h_n(t)\big) \prod_{i = 1}^n S_i(t).
-\tag{10.10}\]</span></span> If the first failure occurred in person <span class="math inline">\(k\)</span>, then the likelihood contribution would be <span id="eq-Lfail1"><span class="math display">\[
+\tag{10.11}\]</span></span> If the first failure occurred in person <span class="math inline">\(k\)</span>, then the likelihood contribution would be <span id="eq-Lfail1"><span class="math display">\[
   h_k(t) \prod_{i = 1}^n S_i(t).
-\tag{10.11}\]</span></span> because the person who has an event contributes a hazard term and everyone (including the person who failed) contributes a survival term. To calculate the conditional probability that the failure occurred in person <span class="math inline">\(k\)</span> given that there was a failure at time <span class="math inline">\(t\)</span>, we divide the likelihood in <a href="#eq-Lfail1" class="quarto-xref">Equation&nbsp;<span>10.11</span></a> by the likelihood in <a href="#eq-Lfail" class="quarto-xref">Equation&nbsp;<span>10.10</span></a>: <span class="math display">\[
+\tag{10.12}\]</span></span> because the person who has an event contributes a hazard term and everyone (including the person who failed) contributes a survival term. To calculate the conditional probability that the failure occurred in person <span class="math inline">\(k\)</span> given that there was a failure at time <span class="math inline">\(t\)</span>, we divide the likelihood in <a href="#eq-Lfail1" class="quarto-xref">Equation&nbsp;<span>10.12</span></a> by the likelihood in <a href="#eq-Lfail" class="quarto-xref">Equation&nbsp;<span>10.11</span></a>: <span class="math display">\[
   \frac{h_k(t) \prod_{i = 1}^n S_i(t)}
        {\big(h_1(t) + \ldots + h_n(t)\big) \prod_{i = 1}^n S_i(t)}
   = \frac{h_k(t)}{h_1(t) + \ldots + h_n(t)}.
 \]</span> The survival functions cancel out, leaving only the hazards. Given that there is a failure at time <span class="math inline">\(t\)</span>, the probability that it occurred in person <span class="math inline">\(k\)</span> is proportional to their hazard <span class="math inline">\(h_k(t)\)</span>.</p>
 <p>The same logic applies to failures other than the first. As before, let <span class="math inline">\(\mathcal{R}(t)\)</span> denote the risk set (i.e., the set of individuals at risk of an observed event) at time <span class="math inline">\(t\)</span>. Given that a failure occurs at time <span class="math inline">\(t\)</span>, the probability that it occurred in person <span class="math inline">\(k\)</span> is <span class="math display">\[
   \frac{h_k(t)}{\sum_{j \in \mathcal{R}(t)} h_j(t)}.
-\]</span> At any failure time <span class="math inline">\(t\)</span>, these probabilities add up to one. If we substitute the hazard function for the Cox model from <a href="#eq-Cox-haz" class="quarto-xref">Equation&nbsp;<span>10.7</span></a>, we get <span class="math display">\[
+\]</span> At any failure time <span class="math inline">\(t\)</span>, these probabilities add up to one. If we substitute the hazard function for the Cox model from <a href="#eq-Cox-haz" class="quarto-xref">Equation&nbsp;<span>10.8</span></a>, we get <span class="math display">\[
   \frac{e^{\beta x_k} h_0(t)}{\sum_{j \in \mathcal{R}(t) e^{\beta x_j} h_0(t)}}
   = \frac{e^{\beta x_k}}{\sum_{j \in \mathcal{R}(t) e^{\beta x_j}}}.
 \]</span> because the baseline hazard <span class="math inline">\(h_0(t)\)</span> cancels out. When there are no tied failure times, let <span class="math inline">\(i\)</span> be the index of the individual who has an event at time <span class="math inline">\(t_i\)</span>. Then the Cox partial likelihood is <span class="math display">\[
   L_\text{Cox}(\beta)
   = \prod_{i = 1}^m \frac{e^{\beta x_i}}{\sum_{j \in \mathcal{R}(t_i)} e^{\beta x_j}}.
-\]</span> The risk sets are determined in exactly the same way as the Kaplan-Meier and Nelson-Aalen estimators in <a href="survival.html" class="quarto-xref"><span>Chapter 6</span></a>, so the Cox model can handle left truncation (i.e., delayed entry) and right censoring. It uses the same data from <a href="#eq-survdata" class="quarto-xref">Equation&nbsp;<span>10.3</span></a> as the AFT models. For estimation of <span class="math inline">\(\beta\)</span>, the partial likelihood can be used just like a normal likelihood. This is a consequence of the fact that it can be derived as a <em>profile likelihood</em> where the likelihood for <span class="math inline">\(\beta\)</span> is the full likelihood maximized over all possible baseline hazard functions <span class="citation" data-cites="johansen1983extension">(<a href="references.html#ref-johansen1983extension" role="doc-biblioref">Johansen 1983</a>)</span>.</p>
+\]</span> The risk sets are determined in exactly the same way as the Kaplan-Meier and Nelson-Aalen estimators in <a href="survival.html" class="quarto-xref"><span>Chapter 6</span></a>, so the Cox model can handle left truncation (i.e., delayed entry) and right censoring. It uses the same data from <a href="#eq-survdata" class="quarto-xref">Equation&nbsp;<span>10.4</span></a> as the AFT models. For estimation of <span class="math inline">\(\beta\)</span>, the partial likelihood can be used just like a normal likelihood. This is a consequence of the fact that it can be derived as a <em>profile likelihood</em> where the likelihood for <span class="math inline">\(\beta\)</span> is the full likelihood maximized over all possible baseline hazard functions <span class="citation" data-cites="johansen1983extension">(<a href="references.html#ref-johansen1983extension" role="doc-biblioref">Johansen 1983</a>)</span>.</p>
 </section>
 <section id="correction-for-ties" class="level3" data-number="10.4.3">
 <h3 data-number="10.4.3" class="anchored" data-anchor-id="correction-for-ties"><span class="header-section-number">10.4.3</span> Correction for ties*</h3>
@@ -683,7 +956,7 @@ Table&nbsp;10.1: Weighted log-rank tests <span class="citation" data-cites="aale
     &amp;\qquad + \frac{1}{2} \frac{e^{\beta (x_A + x_B)}}
       {\Big(\sum_{j \in \mathcal{R}(t_i)} e^{\beta x_j}\Big) \Big[\Big(\sum_{j \in \mathcal{R}(t_i)} e^{\beta X_j}\Big) - e^{\beta x_B}\Big]}
   \end{aligned}
-\tag{10.12}\]</span></span> Extending this to larger numbers of ties is straightforward but tedious. When there are failure times with a large number of ties, this approach becomes computationally intractable.</p>
+\tag{10.13}\]</span></span> Extending this to larger numbers of ties is straightforward but tedious. When there are failure times with a large number of ties, this approach becomes computationally intractable.</p>
 </section>
 <section id="efron-approximation" class="level4" data-number="10.4.3.2">
 <h4 data-number="10.4.3.2" class="anchored" data-anchor-id="efron-approximation"><span class="header-section-number">10.4.3.2</span> Efron approximation</h4>
@@ -699,7 +972,7 @@ Table&nbsp;10.1: Weighted log-rank tests <span class="citation" data-cites="aale
 <h4 data-number="10.4.3.3" class="anchored" data-anchor-id="breslow-approximation"><span class="header-section-number">10.4.3.3</span> Breslow approximation</h4>
 <p>The Breslow approximation <span class="citation" data-cites="peto1972contribution breslow1972contribution">(<a href="references.html#ref-peto1972contribution" role="doc-biblioref">Peto 1972</a>; <a href="references.html#ref-breslow1972contribution" role="doc-biblioref">N. E. Breslow 1972</a>)</span> simply ignores the fact that failures are removed from the risk set, giving the following approximation to the exact likelihood contribution: <span class="math display">\[
   \frac{\prod_{j \in D_i} e^{\beta X_j}}{\Big(\sum_{j \in R_i} e^{\beta X_j}\Big)^{d_i}}.
-\]</span> In our example with tied failure times in <span class="math inline">\(y\)</span> and <span class="math inline">\(z\)</span>, the Breslow approximation to the likelihood contribution in <a href="#eq-ties-exact" class="quarto-xref">Equation&nbsp;<span>10.12</span></a> is <span class="math display">\[
+\]</span> In our example with tied failure times in <span class="math inline">\(y\)</span> and <span class="math inline">\(z\)</span>, the Breslow approximation to the likelihood contribution in <a href="#eq-ties-exact" class="quarto-xref">Equation&nbsp;<span>10.13</span></a> is <span class="math display">\[
   \frac{e^{\beta (x_A + x_B)}}{\Big(\sum_{j \in \mathcal{R}(t_i)} e^{\beta x_j}\Big)^2}.
 \]</span> This leaves the first person to fail (<span class="math inline">\(A\)</span> or <span class="math inline">\(B\)</span>) in the risk set when the second person fails. When the size of the risk set is large compared to the number of failures, this is not a terrible approximation. However, the Efron approximation stays accurate when ties become more severe.</p>
 </section>
@@ -747,12 +1020,117 @@ Table&nbsp;10.1: Weighted log-rank tests <span class="citation" data-cites="aale
 \]</span> Differentiating <span class="math inline">\(\ell(\mathbf{s})\)</span> with respect to <span class="math inline">\(s_i\)</span> and rearranging, we find that <span class="math inline">\(s_i\)</span> solves the equation <span id="eq-si"><span class="math display">\[
   \sum_{j \in \mathcal{D}(t_i)} \frac{e^{\hat{\beta} x_j}}{1 - s_i^{\exp(\hat{\beta} x_j)}}
   = \sum_{j \in \mathcal{R}(t_i)} e^{\hat{\beta} X_j}.
-\tag{10.13}\]</span></span> When <span class="math inline">\(d_i = 1\)</span> and person <span class="math inline">\(i\)</span> fails at time <span class="math inline">\(t_i\)</span>, this is solved by <span class="math display">\[
+\tag{10.14}\]</span></span> When <span class="math inline">\(d_i = 1\)</span> and person <span class="math inline">\(i\)</span> fails at time <span class="math inline">\(t_i\)</span>, this is solved by <span class="math display">\[
   \hat{s}_i
   = \bigg(1 - \frac{e^{\hat{\beta} x_i}}{\sum_{j \in \mathcal{R}(t_i)} e^{\hat{\beta} x_j}}\bigg)^{\exp(-\beta x_i)}.
-\]</span> When <span class="math inline">\(d_i &gt; 1\)</span>, <a href="#eq-si" class="quarto-xref">Equation&nbsp;<span>10.13</span></a> must be solved numerically. The Kalbfleisch-Prentice estimate of the survival function is <span class="math display">\[
+\]</span> When <span class="math inline">\(d_i &gt; 1\)</span>, <a href="#eq-si" class="quarto-xref">Equation&nbsp;<span>10.14</span></a> must be solved numerically. The Kalbfleisch-Prentice estimate of the survival function is <span class="math display">\[
   \hat{S}_0(t) = \prod_{i : t_i \leq t} \hat{s}_i.
 \]</span> When <span class="math inline">\(\hat{\beta} = 0\)</span>, this reduces to the Kaplan-Meier survival estimate from <a href="survival.html#sec-KM" class="quarto-xref"><span>Section 6.2</span></a>.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Cox-model.R</strong></pre>
+</div>
+<div class="sourceCode" id="cb5" data-filename="Cox-model.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Cox proportional hazards regression model</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The rats data is from:</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Mantel, Bohidar, and Ciminera (1977). Cancer Research 37: 3863-3868.</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)               <span class="co"># rats data and survreg()</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Cox model with Efron correction for ties (the default)</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># With a single binary predictor, the global score test is the log-rank test.</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>cox_efron <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> rx, <span class="at">data =</span> rats)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(cox_efron)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cox_efron)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># coefficient point estimates, confidence intervals, and covariance matrix</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(cox_efron)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(cox_efron)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="fu">vcov</span>(cox_efron)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co"># hazard ratio and confidence intervals</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(cox_efron))</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">confint</span>(cox_efron))</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Breslow correction for ties</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(rats<span class="sc">$</span>time[rats<span class="sc">$</span>status <span class="sc">==</span> <span class="dv">1</span>])  <span class="co"># table of number of tumor onsets</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>cox_breslow <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> rx, <span class="at">data =</span> rats,</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>                     <span class="at">ties =</span> <span class="st">"breslow"</span>)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cox_breslow)</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>cox_breslow<span class="sc">$</span>method</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="co"># exact correction for ties</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>cox_exact <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> rx, <span class="at">data =</span> rats,</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>                   <span class="at">ties =</span> <span class="st">"exact"</span>)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cox_exact)</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>cox_exact<span class="sc">$</span>method</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="co"># predicted survival in both treatment groups</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Method for estimating survival mirrors method used to correct for ties.</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>S_pred <span class="ot">&lt;-</span> <span class="fu">survfit</span>(cox_efron, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">rx =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)),</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>                   <span class="at">conf.type =</span> <span class="st">"log-log"</span>)</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>S_summary <span class="ot">&lt;-</span> <span class="fu">summary</span>(S.efron, <span class="at">times =</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">40</span>, <span class="dv">60</span>, <span class="dv">80</span>))</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>S_summary</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(S_summary)</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>S_summary<span class="sc">$</span>newdata     <span class="co"># order of predicted survival probabilities, etc.</span></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>S_summary<span class="sc">$</span>conf.int    <span class="co"># confidence level</span></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>S_summary<span class="sc">$</span>lower       <span class="co"># lower 95% confidence limits</span></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>S_summary<span class="sc">$</span>upper       <span class="co"># upper 95% confidence limits</span></span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a><span class="co"># predicted cumulative hazard and confidence limits</span></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a><span class="co"># The lower bound for H(t) comes from the upper bound for S(t) and vice versa.</span></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>S_summary<span class="sc">$</span>cumhaz</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fu">log</span>(S_summary<span class="sc">$</span>surv)</span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fu">log</span>(S_summary<span class="sc">$</span>upper)</span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fu">log</span>(S_summary<span class="sc">$</span>lower)</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a><span class="co"># plot of predicted cumulative hazards</span></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a><span class="co"># Uses data from both groups for each predicted cumulative hazard function.</span></span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(S_pred, <span class="at">fun =</span> <span class="st">"cumhaz"</span>, <span class="at">lty =</span> <span class="fu">c</span>(<span class="st">"dashed"</span>, <span class="st">"solid"</span>),</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Weeks since treatment"</span>, <span class="at">ylab =</span> <span class="st">"Cumulative hazard"</span>)</span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">bg =</span> <span class="st">"white"</span>, <span class="at">lty =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"solid"</span>, <span class="st">"dashed"</span>), <span class="at">each =</span> <span class="dv">2</span>),</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"darkgray"</span>), <span class="dv">2</span>),</span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Treated rats (Cox model)"</span>, <span class="st">"Treated rats (Nelson-Aalen)"</span>,</span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Untreated rats (Cox model)"</span>, <span class="st">"Unreated rats (Nelson-Aalen)"</span>))</span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a><span class="co"># add Nelson-Aalen curves</span></span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>NAest <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> rx, <span class="at">data =</span> rats, <span class="at">stype =</span> <span class="dv">2</span>, <span class="at">ctype =</span> <span class="dv">2</span>,</span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>                 <span class="at">conf.type =</span> <span class="st">"log-log"</span>)</span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(NAest, <span class="at">fun =</span> <span class="st">"cumhaz"</span>, <span class="at">col =</span> <span class="st">"darkgray"</span>, <span class="at">lty =</span> <span class="fu">c</span>(<span class="st">"dashed"</span>, <span class="st">"solid"</span>))</span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a><span class="co"># predicted survival in the untreated rats</span></span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>S1_pred <span class="ot">&lt;-</span> <span class="fu">survfit</span>(cox_efron, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">rx =</span> <span class="dv">1</span>),</span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>                   <span class="at">conf.type =</span> <span class="st">"log-log"</span>)</span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(S1_pred, <span class="at">times =</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">40</span>, <span class="dv">60</span>, <span class="dv">80</span>))</span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a><span class="co"># predicted survival in the treated rats</span></span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>S0_pred <span class="ot">&lt;-</span> <span class="fu">survfit</span>(cox_efron, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">rx =</span> <span class="dv">0</span>),</span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>                   <span class="at">conf.type =</span> <span class="st">"log-log"</span>)</span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(S0_pred, <span class="at">times =</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">40</span>, <span class="dv">60</span>, <span class="dv">80</span>))</span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a><span class="co"># plot of risk ratio, hazard ratio, and odds ratio over time</span></span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a><span class="co"># Risks are zero until time[3], which is 3.</span></span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a><span class="co"># Negative indices remove elements from vectors.</span></span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a>odds <span class="ot">&lt;-</span> <span class="cf">function</span>(p) p <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a>t_indices <span class="ot">&lt;-</span> <span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a>times <span class="ot">&lt;-</span> S0_pred<span class="sc">$</span>time[t_indices]</span>
+<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a>R1_pred <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> S1_pred<span class="sc">$</span>surv[t_indices]</span>
+<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a>R0_pred <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> S0_pred<span class="sc">$</span>surv[t_indices]</span>
+<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(times, R1_pred <span class="sc">/</span> R0_pred, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lty =</span> <span class="st">"dashed"</span>,</span>
+<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">1.7</span>, <span class="fl">2.3</span>), <span class="at">xlab =</span> <span class="st">"Weeks since treatment"</span>,</span>
+<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Estimated tumor incidence risk ratio"</span>)</span>
+<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(times, <span class="fu">odds</span>(R1_pred) <span class="sc">/</span> <span class="fu">odds</span>(R0_pred), <span class="at">lty =</span> <span class="st">"dotted"</span>)</span>
+<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">exp</span>(<span class="fu">coef</span>(cox_efron)[<span class="st">"rx"</span>]))</span>
+<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomleft"</span>, <span class="at">lty =</span> <span class="fu">c</span>(<span class="st">"dotted"</span>, <span class="st">"solid"</span>, <span class="st">"dashed"</span>), <span class="at">bg =</span> <span class="st">"white"</span>,</span>
+<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Odds ratio"</span>, <span class="st">"Hazard ratio"</span>, <span class="st">"Risk ratio"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
@@ -1248,8 +1626,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./casecontrol.html" class="pagination-link" aria-label="Measures of association in case-control studies">
-        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Measures of association in case-control studies</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./casecontrol.html" class="pagination-link" aria-label="Design and Analysis of Case-Control and Case-Cohort studies">
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Design and Analysis of Case-Control and Case-Cohort studies</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
