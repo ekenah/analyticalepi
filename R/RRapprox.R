@@ -16,13 +16,13 @@ plot(p0, p0, type = "l", col = "darkgray", xlim = c(0, 0.1), ylim = c(0, 0.1),
 grid()
 for (riskratio in riskratios) {
   p1 <- riskratio * p0
-  
+
   # risk ratio contours
   lines(p0, riskratio * p0, lty = "solid")
 
   # odds ratio contours
   lines(p0, invodds(riskratio * odds(p0)), lty = "dashed")
-  
+
   # cumulative hazard ratio contours
   lines(p0, 1 - (1 - p0)^riskratio, lty = "dotted")
 

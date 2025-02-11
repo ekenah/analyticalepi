@@ -1071,7 +1071,7 @@ Table&nbsp;10.1: Weighted log-rank tests <span class="citation" data-cites="aale
 <span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="co"># predicted survival in both treatment groups</span></span>
 <span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Method for estimating survival mirrors method used to correct for ties.</span></span>
 <span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>S_pred <span class="ot">&lt;-</span> <span class="fu">survfit</span>(cox_efron, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">rx =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)),</span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>                   <span class="at">conf.type =</span> <span class="st">"log-log"</span>)</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>                  <span class="at">conf.type =</span> <span class="st">"log-log"</span>)</span>
 <span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>S_summary <span class="ot">&lt;-</span> <span class="fu">summary</span>(S.efron, <span class="at">times =</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">40</span>, <span class="dv">60</span>, <span class="dv">80</span>))</span>
 <span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>S_summary</span>
 <span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(S_summary)</span>

@@ -35,7 +35,7 @@ cox_exact$method
 # predicted survival in both treatment groups
 # Method for estimating survival mirrors method used to correct for ties.
 S_pred <- survfit(cox_efron, newdata = data.frame(rx = c(0, 1)),
-                   conf.type = "log-log")
+                  conf.type = "log-log")
 S_summary <- summary(S.efron, times = c(20, 40, 60, 80))
 S_summary
 names(S_summary)
