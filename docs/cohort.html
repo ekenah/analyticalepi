@@ -405,7 +405,7 @@ window.Quarto = {
   <li><a href="#sec-RD" id="toc-sec-RD" class="nav-link" data-scroll-target="#sec-RD"><span class="header-section-number">9.1.1</span> Risk difference</a></li>
   <li><a href="#sec-RR" id="toc-sec-RR" class="nav-link" data-scroll-target="#sec-RR"><span class="header-section-number">9.1.2</span> Risk ratio</a></li>
   <li><a href="#sec-OR" id="toc-sec-OR" class="nav-link" data-scroll-target="#sec-OR"><span class="header-section-number">9.1.3</span> Odds ratio</a></li>
-  <li><a href="#incidence-rate-ratio" id="toc-incidence-rate-ratio" class="nav-link" data-scroll-target="#incidence-rate-ratio"><span class="header-section-number">9.1.4</span> Incidence rate ratio</a></li>
+  <li><a href="#sec-IRR" id="toc-sec-IRR" class="nav-link" data-scroll-target="#sec-IRR"><span class="header-section-number">9.1.4</span> Incidence rate ratio</a></li>
   </ul></li>
   <li><a href="#generalized-linear-models" id="toc-generalized-linear-models" class="nav-link" data-scroll-target="#generalized-linear-models"><span class="header-section-number">9.2</span> Generalized linear models</a>
   <ul class="collapse">
@@ -708,8 +708,8 @@ When there is right censoring or left truncation, methods from survival analysis
 </div>
 </div>
 </section>
-<section id="incidence-rate-ratio" class="level3" data-number="9.1.4">
-<h3 data-number="9.1.4" class="anchored" data-anchor-id="incidence-rate-ratio"><span class="header-section-number">9.1.4</span> Incidence rate ratio</h3>
+<section id="sec-IRR" class="level3" data-number="9.1.4">
+<h3 data-number="9.1.4" class="anchored" data-anchor-id="sec-IRR"><span class="header-section-number">9.1.4</span> Incidence rate ratio</h3>
 <p>If there is delayed entry or loss to follow-up, we cannot calculate a risk ratio or odds ratio directly but we can still calculate the incidence rate in each group. Recall that the incidence rate is a maximum likelihood for an exponential rate parameter <span class="math inline">\(\lambda\)</span>. If times to disease onset in the each exposure groups have an exponential distribution, then the <strong>incidence rate ratio</strong> is <span class="math display">\[
   \IRR = \frac{\lambda_1}{\lambda_0}
 \]</span> where <span class="math inline">\(\lambda_1\)</span> is the rate in the exposed and <span class="math inline">\(\lambda_0\)</span> is the rate in the unexposed. It is defined whenever <span class="math inline">\(\lambda_1 \geq 0\)</span> and <span class="math inline">\(\lambda_0 &gt; 0\)</span>, and it can take any value in <span class="math inline">\([0, \infty)\)</span>. When exposure and disease are independent, <span class="math inline">\(\IRR = 1\)</span> because <span class="math inline">\(\lambda_1 = \lambda_0\)</span>. The incidence rate ratio is sometimes called the <em>incidence density ratio</em> <span class="citation" data-cites="miettinen1976estimability">(<a href="references.html#ref-miettinen1976estimability" role="doc-biblioref">O. Miettinen 1976</a>)</span>, and it equals the hazard ratio when the times to events in both exposure groups have exponential distributions.</p>

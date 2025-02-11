@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -61,6 +95,9 @@ div.csl-indent {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-747bc48f972f7c4036e4d8e8c6d9e55a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -153,6 +190,35 @@ div.csl-indent {
   };
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -329,8 +395,27 @@ div.csl-indent {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="2">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#case-control-studies-for-rare-diseases" id="toc-case-control-studies-for-rare-diseases" class="nav-link active" data-scroll-target="#case-control-studies-for-rare-diseases"><span class="header-section-number">11.1</span> Case-control studies for rare diseases</a>
+  <ul class="collapse">
+  <li><a href="#sec-cumulative-casecontrol" id="toc-sec-cumulative-casecontrol" class="nav-link" data-scroll-target="#sec-cumulative-casecontrol"><span class="header-section-number">11.1.1</span> Cumulative case-control studies and the odds ratio</a></li>
+  <li><a href="#density-case-control-studies-and-risk-set-sampling" id="toc-density-case-control-studies-and-risk-set-sampling" class="nav-link" data-scroll-target="#density-case-control-studies-and-risk-set-sampling"><span class="header-section-number">11.1.2</span> Density case-control studies and risk-set sampling</a></li>
+  </ul></li>
+  <li><a href="#case-cohort-studies" id="toc-case-cohort-studies" class="nav-link" data-scroll-target="#case-cohort-studies"><span class="header-section-number">11.2</span> Case-cohort studies</a>
+  <ul class="collapse">
+  <li><a href="#rare-diseases-with-rare-exposures" id="toc-rare-diseases-with-rare-exposures" class="nav-link" data-scroll-target="#rare-diseases-with-rare-exposures"><span class="header-section-number">11.2.1</span> Rare diseases with rare exposures</a></li>
+  <li><a href="#estimation-without-the-rare-disease-assumption" id="toc-estimation-without-the-rare-disease-assumption" class="nav-link" data-scroll-target="#estimation-without-the-rare-disease-assumption"><span class="header-section-number">11.2.2</span> Estimation without the rare disease assumption*</a></li>
+  </ul></li>
+  <li><a href="#nested-case-control-studies" id="toc-nested-case-control-studies" class="nav-link" data-scroll-target="#nested-case-control-studies"><span class="header-section-number">11.3</span> Nested case-control studies</a>
+  <ul class="collapse">
+  <li><a href="#conditional-logistic-regression" id="toc-conditional-logistic-regression" class="nav-link" data-scroll-target="#conditional-logistic-regression"><span class="header-section-number">11.3.1</span> Conditional logistic regression</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -357,13 +442,403 @@ div.csl-indent {
 <blockquote class="blockquote">
 <p>An investigation that involves selecting representative groups of those having and not having a characteristic is expensive and time consuming, however, and is rarely if ever used. Actual practice in the field is to take two groups presumed to be representative of persons who do and do not have the disease and determine the percentage in each group who have the characteristic. Thus rather than determine the percentage of smokers and nonsmokers who have cancer of the lung, one determines the percentage of persons with and without cancer of the lung who are smokers. <span class="citation" data-cites="cornfield1951method">(<a href="references.html#ref-cornfield1951method" role="doc-biblioref">Cornfield 1951</a>)</span></p>
 </blockquote>
+<p>In a cohort study, we select participants based on exposure <span class="math inline">\(X\)</span> and follow them over time to ascertain the occurrence of disease <span class="math inline">\(D\)</span>. When the disease is rare or when the time to disease onset is long, estimating a measure of association might take a large cohort or a long follow-up period. Because we have selected based on exposure, the study is powered to estimate the association between <span class="math inline">\(X\)</span> and any disease outcome. However, it may not be better than a random sample from the population for looking the association between a different exposure <span class="math inline">\(X'\)</span> and disease outcomes. When there is no clear hypothesis about the cause of a disease, it can be difficult to select a useful cohort based on exposure.</p>
+<p>The case-control study was one of the great innovations in epidemiology in the 20th century <span class="citation" data-cites="paneth2002origins1 paneth2002origins2">(<a href="references.html#ref-paneth2002origins1" role="doc-biblioref">Nigel Paneth, Susser, and Susser 2002</a>; <a href="references.html#ref-paneth2002origins2" role="doc-biblioref">Nigl Paneth, Susser, and Susser 2002</a>)</span>. In a case-control study, we select participants based on disease outcome <span class="math inline">\(D\)</span> and then measure their exposure <span class="math inline">\(X\)</span>. This study design is powered to estimate the association between <span class="math inline">\(D\)</span> and any exposure, which makes it useful for rare diseases and common exposures or for a disease for which there is no clear hypothesis about its causes. It was the study design that was used to establish that smoking causes lung cancer <span class="citation" data-cites="doll1950smoking">(<a href="references.html#ref-doll1950smoking" role="doc-biblioref">Doll and Hill 1950</a>)</span>, aspirin causes Reyes syndrome <span class="citation" data-cites="hurwitz1987public">(<a href="references.html#ref-hurwitz1987public" role="doc-biblioref">Hurwitz et al. 1987</a>)</span>, and that prenatal exposure to diethylstilbestrol causes vaginal clear-cell adenocarcinoma <span class="citation" data-cites="herbst1971adenocarcinoma">(<a href="references.html#ref-herbst1971adenocarcinoma" role="doc-biblioref">Herbst, Ulfelder, and Poskanzer 1971</a>)</span>. In each case, there was a rare or slowly-developing disease and no clear hypothesis about its causes.</p>
+<p>While case control studies are more efficient than cohort studies with the same total number of participants for rare diseases and common exposures (see <a href="studydesign.html#sec-design-choice" class="quarto-xref"><span>Section 7.5</span></a>), they have less flexibility in the choice of a measure of association. The odds ratio in a case-control study approximates the risk ratio or hazard ratio from a hypothetical cohort study in the same population <span class="citation" data-cites="pearce1993does">(<a href="references.html#ref-pearce1993does" role="doc-biblioref">Pearce 1993</a>)</span> However, data from a case-control study can be used to estimate absolute risks or rates if there is additional information such as the sampling fraction of cases, the total size of the population giving rise to the cases and controls, or the overall incidence of disease <span class="citation" data-cites="miettinen1976estimability">(<a href="references.html#ref-miettinen1976estimability" role="doc-biblioref">Miettinen 1976</a>)</span>. Case-control studies are often retrospective, and retrospective studies can be more susceptible to differential misclassification (e.g., recall bias) and selection bias than prospective studies (see <a href="validity.html#sec-prospective-retrospective" class="quarto-xref"><span>Section 8.2.3</span></a>).</p>
+<section id="case-control-studies-for-rare-diseases" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="case-control-studies-for-rare-diseases"><span class="header-section-number">11.1</span> Case-control studies for rare diseases</h2>
+<p>In case-control studies, the odds raito for exposure comparing cases to controls approximates the risk ratio or the incidence rate ratio that would be calculated from a large cohort study in the population from which the cases and control are sampled.</p>
+<section id="sec-cumulative-casecontrol" class="level3" data-number="11.1.1">
+<h3 data-number="11.1.1" class="anchored" data-anchor-id="sec-cumulative-casecontrol"><span class="header-section-number">11.1.1</span> Cumulative case-control studies and the odds ratio</h3>
+<p>In a <strong>cumulative case-control study</strong>, controls are sampled from the people in the population who do not have disease. Using the notation from <a href="condprob.html#tbl-2x2" class="quarto-xref">Table&nbsp;<span>2.1</span></a>, the risk ratio comparing the exposed to the unexposed is <span id="eq-RR-OR"><span class="math display">\[
+  \RR
+  = \frac{a / r_1}{c / r_0}
+  = \frac{a / c}{r_1 / r_0}.
+\tag{11.1}\]</span></span> The final expression is an odds ratio because the numerator is the odds of exposure among the cases and the denominator is the odds of exposure in the entire cohort. This use of the odds ratio to approximate the risk ratio was first proposed by <span class="citation" data-cites="cornfield1951method">Cornfield (<a href="references.html#ref-cornfield1951method" role="doc-biblioref">1951</a>)</span>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> When the disease is rare in both exposure groups in a cohort study, <span class="math inline">\(a \ll r_1\)</span> and <span class="math inline">\(c \ll r_0\)</span> so <span class="math display">\[
+  \frac{r_1}{r_0}
+  \approx \frac{r_1 - a}{r_0 - c}
+  = \frac{b}{d}.
+\]</span> Therefore, <span class="math display">\[
+  \RR
+  = \frac{a / r_1}{c / r_0}
+  \approx \frac{a / c}{b / d}
+  = \OR_X
+\]</span> so the odds ratio for exposure comparing those with <span class="math inline">\(D = 1\)</span> (cases) to those with <span class="math inline">\(D = 0\)</span> (controls) approximates the risk ratio for disease comparing the exposed to the unexposed.</p>
+<p>The odds ratio comparing cases to controls can be calculated in a case-control study, where we select participants based on disease status. From <a href="cohort.html#sec-RR" class="quarto-xref"><span>Section 9.1.2</span></a>, the variance of the log risk ratio is <span id="eq-cohort"><span class="math display">\[
+  \Var\bigl(\ln \RR\bigr)
+  = \frac{1}{a} - \frac{1}{r_1} + \frac{1}{c} - \frac{1}{r_0}
+  \approx \frac{1}{a} + \frac{1}{c}
+\tag{11.2}\]</span></span> when the risks of disease <span class="math inline">\(p_1\)</span> and <span class="math inline">\(p_0\)</span> are both small. Thus, the precision of the risk ratio estimate in a large cohort study with a rare disease is determined almost entirely by the number of cases in each exposure group. Instead of recruiting a large population and waiting for cases to occur, it is more efficient to recruit cases directly, measure their exposure, and compare their exposure odds to those of a sample of controls.</p>
+<p>The variance of the log odds ratio is <span id="eq-varlnOR"><span class="math display">\[
+  \Var\bigl(\ln \OR\bigr)
+  = \frac{1}{a} + \frac{1}{b} + \frac{1}{c} + \frac{1}{d}.
+\tag{11.3}\]</span></span> If we recruit <span class="math inline">\(k\)</span> controls per case, then <span id="eq-casecontrol"><span class="math display">\[
+  \Var\bigl(\ln \OR\bigr)
+  = \frac{1}{a} + \frac{1}{k a} + \frac{1}{c} + \frac{1}{k c}
+  = \bigg(1 + \frac{1}{k}\bigg) \bigg(\frac{1}{a} + \frac{1}{c}\bigg).
+\tag{11.4}\]</span></span> Let <span class="math inline">\(\sigma_{\text{cc}}\)</span> be the standard error the <span class="math inline">\(\ln \RR\)</span> estimated via the <span class="math inline">\(\ln \OR\)</span> from a case-control study with <span class="math inline">\(k\)</span> controls per case, and let <span class="math inline">\(\sigma_{\text{cohort}}\)</span> be the standard error of the estimated <span class="math inline">\(\ln \RR\)</span> from a large cohort study with a rare disease. Comparing <a href="#eq-cohort" class="quarto-xref">Equation&nbsp;<span>11.2</span></a> and <a href="#eq-casecontrol" class="quarto-xref">Equation&nbsp;<span>11.4</span></a>, we get <span id="eq-sigma-ratio"><span class="math display">\[
+  \sigma_\text{cc}
+  \approx \sigma_\text{cohort} \sqrt{1 + \frac{1}{k}}.
+\tag{11.5}\]</span></span> <a href="#fig-casecontrol" class="quarto-xref">Figure&nbsp;<span>11.1</span></a> plots this function. A case-control study with <span class="math inline">\(k = 5\)</span> has about 10% higher standard error than a full cohort study, and a case-control study with <span class="math inline">\(k = 10\)</span> has about 5% higher standard error. In practice, most case-control studies recruit 3–5 controls per case.</p>
+<div class="cell">
+<div class="code-with-filename">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-with-filename-file">
+<pre><strong>casecontrol.R</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Ratio of case-control and cohort standard errors</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>cpc <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>    <span class="co"># controls per case</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cpc, <span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span> <span class="sc">/</span> cpc), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Controls per case"</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="fu">expression</span>(sigma[<span class="fu">plain</span>(cc)] <span class="sc">/</span> sigma[<span class="fu">plain</span>(cohort)]))</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">"darkgray"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output-display">
+<div id="fig-casecontrol" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-casecontrol-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="casecontrol_files/figure-html/fig-casecontrol-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;11.1: The standard error of the estimated \ln \RR from a cumulative case-control study or the estimated \ln \IRR from a density case-control study divided by the standard error of corresponding estimator from a large cohort study with the same number of cases."><img src="casecontrol_files/figure-html/fig-casecontrol-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-casecontrol-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.1: The standard error of the estimated <span class="math inline">\(\ln \RR\)</span> from a cumulative case-control study or the estimated <span class="math inline">\(\ln \IRR\)</span> from a density case-control study divided by the standard error of corresponding estimator from a large cohort study with the same number of cases.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="density-case-control-studies-and-risk-set-sampling" class="level3" data-number="11.1.2">
+<h3 data-number="11.1.2" class="anchored" data-anchor-id="density-case-control-studies-and-risk-set-sampling"><span class="header-section-number">11.1.2</span> Density case-control studies and risk-set sampling</h3>
+<p>The cumulative case-control design implicitly assumes complete follow-up (so that it is possible to sample from the entire non-diseased population at the end of follow-up). In a <strong>density case-control study</strong>, the odds ratio for exposure is meant to approximate the incidence rate ratio <span class="math inline">\(\IRR\)</span>. The name comes from the use of <em>incidence density</em> to refer to an incidence rate. If we have <span class="math inline">\(a\)</span> cases from <span class="math inline">\(T_1\)</span> units of person-time among the exposed and <span class="math inline">\(c\)</span> cases from <span class="math inline">\(T_0\)</span> units of person-time among the unexposed, the incidence rate ratio is <span id="eq-IRR-cc"><span class="math display">\[
+  \IRR
+  = \frac{a / T_1}{c / T_0}
+  = \frac{a / c}{T_1 / T_0}.
+\tag{11.6}\]</span></span> The numerator is the odds ratio for exposure among the cases, and the denominator is the odds ratio for exposure among units of person-time.</p>
+<p>In <strong>risk set sampling</strong> (sometimes called <em>incidence density sampling</em>), controls are sampled from the risk set at each failure time. As described in <a href="survival.html#sec-risksets" class="quarto-xref"><span>Section 6.2.1</span></a>, the risk set <span class="math inline">\(\mathcal{R}(t)\)</span> consists of all participants at risk of an observed event at time <span class="math inline">\(t\)</span>. This produces a set of controls with an exposure odds <span class="math inline">\(b / d\)</span> approximately equal to <span class="math inline">\(T_1 / T_0\)</span> when each group has exponential times to events (as assumed by the use of incidence rates—see <a href="longitudinal.html#sec-incrate" class="quarto-xref"><span>Section 5.3.2</span></a>) and the prevalence of exposure does not change over time <span class="citation" data-cites="miettinen1976estimability">(<a href="references.html#ref-miettinen1976estimability" role="doc-biblioref">Miettinen 1976</a>)</span>. When these assumptions are approximately correct, <span class="math display">\[
+  \IRR
+  \approx \frac{a / c}{b / d}
+  = \OR_X
+\]</span> so the odds ratio for exposure comparing cases to controls approximates the incidence rate ratio for disease comparing the exposed to the unexposed. From <a href="cohort.html#sec-IRR" class="quarto-xref"><span>Section 9.1.4</span></a>, <span class="math display">\[
+  \Var\bigl(\ln \IRR\bigr)
+  = \frac{1}{a} + \frac{1}{c}.
+\]</span> In a density case-control study, the same control can be selected for multiple cases, and a person who is selected as a control can later become a case. If the disease is rare, there will be little or no overlap between cases and controls, so the variance of the estimated <span class="math inline">\(\ln \OR\)</span> when we recruit <span class="math inline">\(k\)</span> controls per case is given by <a href="#eq-casecontrol" class="quarto-xref">Equation&nbsp;<span>11.4</span></a>. Then relationship in <a href="#eq-sigma-ratio" class="quarto-xref">Equation&nbsp;<span>11.5</span></a> and <a href="#fig-casecontrol" class="quarto-xref">Figure&nbsp;<span>11.1</span></a> holds if <span class="math inline">\(\sigma_{\text{cc}}\)</span> is the standard error the estimated <span class="math inline">\(\ln \IRR\)</span> from a density case-control study and <span class="math inline">\(\sigma_{\text{cohort}}\)</span> is the standard error of the estimated <span class="math inline">\(\ln \RR\)</span> from a large cohort study.</p>
+<p>In a closed cohort, the prevalence of exposure will stay approximately constant only under the null hypothesis of no exposure-disease association or when the risk of disease over the follow-up period is small in both exposure groups. For rare diseases with exponential times to events, <span class="math display">\[
+  \RR = \frac{1 - e^{-\lambda_1 t}}{1 - e^{-\lambda_0 t}}
+  \approx \frac{\lambda_1}{\lambda_0}
+  = \IRR
+\]</span> where <span class="math inline">\(\lambda_1\)</span> is the incidence rate in the exposed and <span class="math inline">\(\lambda_0\)</span> is the incidence rate in the unexposed. Thus, the incidence rate ratio estimated by a density case-control study of a rare disease is also an approximation to the risk ratio from a large cohort study. The approximation to the risk ratio from a density case-control study is generally more accurate than that of a cumulative case-control study <span class="citation" data-cites="greenland1982need">(<a href="references.html#ref-greenland1982need" role="doc-biblioref">Greenland and Thomas 1982</a>)</span>. The reason for this can be seen in <a href="#fig-RRapprox" class="quarto-xref">Figure&nbsp;<span>11.2</span></a>, where the contours for the incidence rate ratio (which is a special case of the hazard ratio) are closer to the risk ratio contours than the odds ratio contours are. These are the same contour lines shown in <a href="cohort.html#fig-contours" class="quarto-xref">Figure&nbsp;<span>9.3</span></a>, but they are plotted together and we have zoomed in to the bottom left corner.</p>
+<div class="cell">
+<div class="code-with-filename">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-with-filename-file">
+<pre><strong>RRapprox.R</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Approximation to the risk ratio in case-control studies</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># contour labels</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(plotrix, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># odds, logistic, and cumulative hazard functions</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>odds <span class="ot">&lt;-</span> <span class="cf">function</span>(p) p <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>invodds <span class="ot">&lt;-</span> <span class="cf">function</span>(odds) odds <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> odds)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>cumhaz <span class="ot">&lt;-</span> <span class="cf">function</span>(p) <span class="sc">-</span><span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Rothman diagram with RR, OR, and HR contours</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>riskratios <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="dv">2</span>, <span class="dv">5</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>p0 <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.0001</span>, <span class="fl">0.11</span>, <span class="at">by =</span> <span class="fl">0.001</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(p0, p0, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">col =</span> <span class="st">"darkgray"</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.1</span>),</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Risk in the unexposed"</span>, <span class="at">ylab =</span> <span class="st">"Risk in the exposed"</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (riskratio <span class="cf">in</span> riskratios) {</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  p1 <span class="ot">&lt;-</span> riskratio <span class="sc">*</span> p0</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># risk ratio contours</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(p0, riskratio <span class="sc">*</span> p0, <span class="at">lty =</span> <span class="st">"solid"</span>)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># odds ratio contours</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(p0, <span class="fu">invodds</span>(riskratio <span class="sc">*</span> <span class="fu">odds</span>(p0)), <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="co"># cumulative hazard ratio contours</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(p0, <span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> p0)<span class="sc">^</span>riskratio, <span class="at">lty =</span> <span class="st">"dotted"</span>)</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># labels</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">boxed.labels</span>(<span class="fl">0.1</span> <span class="sc">/</span> (riskratio <span class="sc">+</span> <span class="dv">1</span>), <span class="fl">0.1</span> <span class="sc">*</span> riskratio <span class="sc">/</span> (riskratio <span class="sc">+</span> <span class="dv">1</span>),</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>               <span class="fu">as.character</span>(riskratio),</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>               <span class="at">xpad =</span> <span class="fl">1.62</span>, <span class="at">ypad =</span> <span class="fl">1.62</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">bg =</span> <span class="st">"white"</span>, <span class="at">lty =</span> <span class="fu">c</span>(<span class="st">"solid"</span>, <span class="st">"dotted"</span>, <span class="st">"dashed"</span>),</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Risk ratio"</span>, <span class="st">"Hazard ratio"</span>, <span class="st">"Odds ratio"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output-display">
+<div id="fig-RRapprox" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-RRapprox-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="casecontrol_files/figure-html/fig-RRapprox-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;11.2: Rothman diagram [@rothman1975pictorial; @kenah2024rothman] with contour lines for the risk ratio, incidence rate ratio, and odds ratio for rare diseases. Each group of contours is labeled with their common value."><img src="casecontrol_files/figure-html/fig-RRapprox-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-RRapprox-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.2: Rothman diagram <span class="citation" data-cites="rothman1975pictorial kenah2024rothman">(<a href="references.html#ref-rothman1975pictorial" role="doc-biblioref">Rothman 1975</a>; <a href="references.html#ref-kenah2024rothman" role="doc-biblioref">Kenah 2024</a>)</span> with contour lines for the risk ratio, incidence rate ratio, and odds ratio for rare diseases. Each group of contours is labeled with their common value.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="case-cohort-studies" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="case-cohort-studies"><span class="header-section-number">11.2</span> Case-cohort studies</h2>
+<p>From <a href="#eq-RR-OR" class="quarto-xref">Equation&nbsp;<span>11.1</span></a>, the risk ratio for disease comparing the exposed to the unexposed is equal to the odds ratio for exposure comparing the cases to the entire cohort. In a <strong>case-cohort study</strong>, the odds ratio for exposure in the cohort is approximated using the odds ratio for exposure in a random sample of the cohort <span class="citation" data-cites="kupper1975hybrid">(<a href="references.html#ref-kupper1975hybrid" role="doc-biblioref">Kupper, McMichael, and Spirtas 1975</a>)</span>. This random sample is called the <strong>subcohort</strong>. Members of the subcohort are allowed to become cases, but all cases must come from within the original cohort.</p>
+<p>Let <span class="math inline">\(a_\text{s}\)</span> denote the number of exposed cases that come from the subcohort, and let <span class="math inline">\(a_\text{x}\)</span> denote the number of exposed cases that come from outside the subcohort. Similarly define <span class="math inline">\(c_\text{s}\)</span> and <span class="math inline">\(c_\text{x}\)</span> be the number of unexposed cases from inside and outside the subcohort, respectively. Then <span class="math inline">\(a = a_\text{s} + a_\text{x}\)</span> is the total number of exposed cases and <span class="math inline">\(c = c_\text{s} + c_\text{x}\)</span> is the total number of unexposed cases. The total number of cases from the subcohort is <span class="math display">\[
+  k_{1 \text{s}} = a_\text{s} + c_\text{s},
+\]</span> and the total number of cases outside the subcohort is <span class="math display">\[
+  k_{1 \text{x}} = a_\text{x} + c_\text{x}.
+\]</span> The total number of cases is <span class="math display">\[
+  k_1 = a + c = k_{1 \text{s}} + k_{1 \text{x}}.
+\]</span> The <span class="math inline">\(b\)</span> exposed controls and <span class="math inline">\(d\)</span> unexposed controls are all within the subcohort, and the total number of controls is still <span class="math inline">\(k_0 = b + d\)</span>. <a href="#tbl-2x2casecohort-observed" class="quarto-xref">Table&nbsp;<span>11.1</span></a> shows a 2x2 table adapted to the case-cohort design.</p>
+<div id="tbl-2x2casecohort-observed" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-2x2casecohort-observed-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;11.1: “2x2 table” of exposure, cases, noncases, subcohort, and study sample in a case-cohort study.
+</figcaption>
+<div aria-describedby="tbl-2x2casecohort-observed-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: center;">Cases</th>
+<th style="text-align: center;">Noncases</th>
+<th style="text-align: center;">Subcohort</th>
+<th style="text-align: center;">Study Sample</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(X = 1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(a = a_\text{x} + a_\text{s}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(b\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(r_{1\text{s}} = a_\text{s} + b\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(r_1 = a + b\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(X = 0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(c = c_\text{x} + c_\text{s}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(d\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(r_{0\text{s}} = c_\text{s} + d\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(r_0 = c + d\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Total</td>
+<td style="text-align: center;"><span class="math inline">\(k_1 = k_{1\text{x}} + k_{1\text{s}}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(k_0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n_\text{s}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>In the notation of <a href="#tbl-2x2casecohort-observed" class="quarto-xref">Table&nbsp;<span>11.1</span></a>, <span id="eq-casecohort"><span class="math display">\[
+  \RR_D
+  \approx \frac{a / c}{r_{1\text{s}} / r_{0\text{s}}}
+\tag{11.7}\]</span></span> where the last expression is the odds ratio for exposure comparing the cases to the entire subcohort. The variance calculation for the <span class="math inline">\(\ln \OR\)</span> from a case-cohort study must account for overlap between the cases and the subcohort. When there is no overlap, <span class="math inline">\(r_{1\text{s}} = b\)</span> and <span class="math inline">\(r_{0\text{s}} = d\)</span> so the variance of the <span class="math inline">\(\ln \OR\)</span> in <a href="#eq-varlnOR" class="quarto-xref">Equation&nbsp;<span>11.3</span></a> is correct.</p>
+<section id="rare-diseases-with-rare-exposures" class="level3" data-number="11.2.1">
+<h3 data-number="11.2.1" class="anchored" data-anchor-id="rare-diseases-with-rare-exposures"><span class="header-section-number">11.2.1</span> Rare diseases with rare exposures</h3>
+<p><a href="studydesign.html#sec-design-choice" class="quarto-xref"><span>Section 7.5</span></a> showed that a cohort study is the most powerful design for detecting a lack of independence between a rare exposure and a common disease, where <span class="math inline">\(\pi (1 - \pi) &lt; p (1 - p)\)</span> where <span class="math inline">\(\pi\)</span> is the marginal prevalence of exposure and <span class="math inline">\(p\)</span> is the marginal prevalence of disease. For a common exposure and a rare disease, where <span class="math inline">\(\pi (1 - \pi) &gt; p (1 - p)\)</span>, a case-control study is the most powerful design for detecting a lack of independence. The case-cohort design can be efficient when you have a rare exposure and a rare disease: You can sample a cohort by exposure to ensure adequate sample sizes in both exposure groups, and you can sample by disease within the cohort to ensure there are enough cases without following the entire cohort. Sampling by both exposure and disease seems to invite selection bias, but this is prevented by taking cases only within the cohort and by using the odds ratio to approximate the risk ratio as in <a href="#eq-casecohort" class="quarto-xref">Equation&nbsp;<span>11.7</span></a>.</p>
+</section>
+<section id="estimation-without-the-rare-disease-assumption" class="level3" data-number="11.2.2">
+<h3 data-number="11.2.2" class="anchored" data-anchor-id="estimation-without-the-rare-disease-assumption"><span class="header-section-number">11.2.2</span> Estimation without the rare disease assumption*</h3>
+<p>When there is overlap between the cases and the subcohort, it is possible to get a more efficient estimator of the risk ratio than the estimator in <a href="#eq-casecohort" class="quarto-xref">Equation&nbsp;<span>11.7</span></a>. To avoid selection bias, the selection of cases within the cohort must be independent of exposure status, so <span class="math display">\[
+  \Pr\bigl(\text{in subcohort} \,\big|\, \text{case}, X = x\bigr)
+  = \Pr(\text{in subcohort} \given{} \text{case}).
+\]</span> The maximum likelihood estimate of the common probability of being in the subcohort given becoming a case is <span class="math display">\[
+  \hat{\Pr}\bigl(\text{in subcohort} \,\big|\, \text{case}\bigr)
+  = \frac{a_\text{s} + c_\text{s}}{a + c}.
+\]</span> Using this common probability gives us <span class="math display">\[
+  \tilde{a}_\text{s}
+  = a \times \hat{\Pr}\bigl(\text{in subcohort} \,\big|\, \text{case}\bigr)
+  = \frac{a (a_\text{s} + c_\text{s})}{a + c}
+\]</span> expected exposed cases in the subcohort and <span class="math display">\[
+  \tilde{a}_\text{x}
+  = a \times \hat{\Pr}\bigl(\text{outside subcohort} \,\big|\, \text{case}\bigr)
+  = \frac{a (a_\text{x} + c_\text{x})}{a + c}
+\]</span> expected exposed cases outside the subcohort. The total number of exposed cases inside and outside of the subcohort is unchanged because <span class="math display">\[
+  \tilde{a}_\text{s} + \tilde{a}_\text{x}
+  = \frac{a \big((a_\text{s} + c_\text{s}) + (a_\text{x} + c_\text{x})\big)}{a + c}
+  = a,
+\]</span> but the corresponding number of exposed controls is <span class="math display">\[
+  \tilde{r}_1 = \tilde{a}_\text{s} + b.
+\]</span> The expected number of unexposed cases inside and outside the subcohort is calculated in the same way, leaving the total number of unexposed cases unchanged but altering the number of unexposed members of the subcohort. <a href="#tbl-2x2casecohort-adjusted" class="quarto-xref">Table&nbsp;<span>11.2</span></a> shows the adjusted case-cohort 2x2 table.</p>
+<div id="tbl-2x2casecohort-adjusted" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-2x2casecohort-adjusted-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;11.2: Adjusted “2x2 table” of exposure, noncases, subcohort, and study sample in a case-cohort study.
+</figcaption>
+<div aria-describedby="tbl-2x2casecohort-adjusted-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: center;">Cases</th>
+<th style="text-align: center;">Noncases</th>
+<th style="text-align: center;">Subcohort</th>
+<th style="text-align: center;">Study Sample</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(X = 1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(a = \tilde{a}_\text{x} + \tilde{a}_\text{s}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(b\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\tilde{r}_{1\text{s}} = \tilde{a}_\text{s} + b\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(r_1 = a + b\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(X = 0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(c = \tilde{c}_\text{x} + \tilde{c}_\text{s}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(d\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\tilde{r}_{0\text{s}} = \tilde{c}_\text{s} + d\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(r_0 = c + d\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Total</td>
+<td style="text-align: center;"><span class="math inline">\(k_1 = \tilde{k}_{1\text{x}} + \tilde{k}_{1\text{s}}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(k_0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\tilde{n}_\text{s}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>The estimated risk ratio comparing the exposed to the unexposed is approximated by the odds ratio for exposure comparing cases to the adjusted subcohort: <span id="eq-Sato-point"><span class="math display">\[
+  \hat{\RR}_\text{Sato}
+  = \frac{a / c}{\tilde{r}_{1\text{s}} / \tilde{r}_{0\text{s}}}.
+\tag{11.8}\]</span></span> The variance for Wald hypothesis tests and confidence intervals is calculated on the log scale: <span id="eq-Sato-var"><span class="math display">\[
+  \Var\bigl(\ln \hat{\RR}_\text{Sato}\bigr)
+  = \frac{1}{a} + \frac{1}{c}
+    + \frac{k_{1\text{x}} - k_{1\text{s}}}{k_1}
+        \bigg(\frac{1}{\tilde{r}_{1\text{s}}} + \frac{1}{\tilde{r}_{0\text{s}}}\bigg)
+    - \frac{n^2 k_{1\text{x}} k_{1\text{s}} a c}{k_1^3 \tilde{r}_{1\text{s}}^2 \tilde{r}_{0\text{s}}^2}
+\tag{11.9}\]</span></span> This analysis of a case-cohort study spans the range from a cumulative case-control study (when all cases occur outside the subcohort) to a cohort study (when the subcohort is the entire cohort).</p>
+<section id="all-cases-outside-the-subcohort-cumulative-case-control-study" class="level4" data-number="11.2.2.1">
+<h4 data-number="11.2.2.1" class="anchored" data-anchor-id="all-cases-outside-the-subcohort-cumulative-case-control-study"><span class="header-section-number">11.2.2.1</span> All cases outside the subcohort: cumulative case-control study</h4>
+<p>When the disease is sufficiently rare that all cases occur outside the subcohort, we have <span class="math inline">\(k_{1\text{s}} = 0\)</span> and <span class="math inline">\(k_{1\text{x}} = k_1\)</span>. Thus, <span class="math inline">\(\tilde{a}_s = \tilde{c}_\text{s}  = 0\)</span>. Plugging these into <a href="#eq-Sato-point" class="quarto-xref">Equation&nbsp;<span>11.8</span></a>, we get the estimated risk ratio <span class="math display">\[
+  \hat{\RR}_\text{Sato}
+  = \frac{a / c}{\tilde{r}_{1\text{s}} / \tilde{r}_{0\text{s}}}
+  = \frac{a / c}{b / d},
+\]</span> which is the odds ratio from a cumulative case-control study. Plugging these into <a href="#eq-Sato-var" class="quarto-xref">Equation&nbsp;<span>11.9</span></a>, we get <span class="math display">\[
+  \Var\bigl(\ln \hat{\RR}_\text{Sato}\bigr)
+  = \frac{1}{a} + \frac{1}{c} + \frac{1}{\tilde{r}_{1\text{s}}} + \frac{1}{\tilde{r}_{0\text{s}}}
+  = \frac{1}{a} + \frac{1}{c} + \frac{1}{b} + \frac{1}{d},
+\]</span> which the large-sample variance of the log odds ratio from <a href="#eq-varlnOR" class="quarto-xref">Equation&nbsp;<span>11.3</span></a>. Thus, the case-cohort point and interval estimates of the risk ratio match those of the cumulative case-control study in <a href="#sec-cumulative-casecontrol" class="quarto-xref"><span>Section 11.1.1</span></a>.</p>
+</section>
+<section id="all-cases-in-the-subcohort-cohort-study" class="level4" data-number="11.2.2.2">
+<h4 data-number="11.2.2.2" class="anchored" data-anchor-id="all-cases-in-the-subcohort-cohort-study"><span class="header-section-number">11.2.2.2</span> All cases in the subcohort: cohort study</h4>
+<p>When the subcohort includes the entire cohort, we have <span class="math inline">\(k_{1 \text{x}} = 0\)</span> and <span class="math inline">\(k_{1 \text{s}} = k_1\)</span>, so <span class="math inline">\(\tilde{a}_\text{s} = a\)</span> and <span class="math inline">\(\tilde{c}_\text{s} = c\)</span>. It follows that <span class="math inline">\(\tilde{r}_{1\text{s}} = r_1\)</span> and <span class="math inline">\(\tilde{r}_{0\text{s}} = r_0\)</span>. Plugging these into <a href="#eq-Sato-point" class="quarto-xref">Equation&nbsp;<span>11.8</span></a>, we get the estimated risk ratio <span class="math display">\[
+  \hat{\RR}_\text{Sato}
+  = \frac{a / c}{\tilde{r}_{1\text{s}} / \tilde{r}_{0\text{s}}}
+  = \frac{a / r_1}{c / r_0},
+\]</span> which is the estimated risk ratio from a cohort study. Plugging these into <a href="#eq-Sato-var" class="quarto-xref">Equation&nbsp;<span>11.9</span></a>, we get <span class="math display">\[
+  \Var\bigl(\ln \hat{\RR}_\text{Sato}\bigr)
+  = \frac{1}{a} + \frac{1}{c} - \frac{1}{\tilde{r}_{1\text{s}}} - \frac{1}{\tilde{r}_{0\text{s}}}
+  = \frac{1}{a} - \frac{1}{r_1} + \frac{1}{c} - \frac{1}{r_0},
+\]</span> which the large-sample variance of the log risk ratio from <a href="cohort.html#sec-RR" class="quarto-xref"><span>Section 9.1.2</span></a>. Thus, the case-cohort point and interval estimates of the risk ratio match those of a cohort study.</p>
+</section>
+</section>
+</section>
+<section id="nested-case-control-studies" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="nested-case-control-studies"><span class="header-section-number">11.3</span> Nested case-control studies</h2>
+<p>The nested case-control study is a generalization of the density case-control study that relaxes the assumption of constant hazards of failure. It was first used to study lung cancer among asbestos miners in Quebec <span class="citation" data-cites="liddell1977methods thomas1977addendum">(<a href="references.html#ref-liddell1977methods" role="doc-biblioref">Liddell, McDonald, and Thomas 1977</a>; <a href="references.html#ref-thomas1977addendum" role="doc-biblioref">Thomas 1977</a>)</span>. Let <span class="math inline">\(X_j\)</span> denote the exposure status of person <span class="math inline">\(j\)</span>. The Cox partial likelihood for the log hazard ratio <span class="math inline">\(\beta\)</span> is <span class="math display">\[
+  L(\beta) = \prod_{i = 1}^m \frac{e^{\beta X_i})}{\sum_{j \in \mathcal{R}(t_i)} e^{\beta X_j}},
+\]</span> where <span class="math inline">\(t_1 &lt; t_2 &lt; \ldots &lt; t_m\)</span> are the distinct failure times, person <span class="math inline">\(i\)</span> is the person who fails at time <span class="math inline">\(t_i\)</span>, and <span class="math inline">\(\mathcal{R}(t)\)</span> is the risk set at time <span class="math inline">\(t\)</span> as in <a href="survival2.html#sec-Cox-model" class="quarto-xref"><span>Section 10.4</span></a>. In a nested case-control study, each risk set <span class="math inline">\(\mathcal{R}(t_i)\)</span> is replaced by a sample <span class="math inline">\(R^*(t_i)\)</span> that includes the individual who had an event and a random sample of other members of <span class="math inline">\(R(t_i)\)</span>. The Cox partial likelihood becomes <span id="eq-Cox-nested"><span class="math display">\[
+  L(\beta)
+  = \prod_{i = 1}^m \frac{\exp(\beta X_i)}{\sum_{j \in \mathcal{R}^*(t_i)} \exp(\beta X_j)}.
+\tag{11.10}\]</span></span> By the same logic that led to the Cox partial likelihood for a cohort study, the likelihood contribution at each event time <span class="math inline">\(t_i\)</span> is the conditional probability that an event occurred in individual <span class="math inline">\(i\)</span> given that an event occurred in the matched case-control set <span class="math inline">\(\mathcal{R}^*(t_i)\)</span> <span class="citation" data-cites="oakes1981survival">(<a href="references.html#ref-oakes1981survival" role="doc-biblioref">Oakes 1981</a>)</span>. Maximum likelihood estimation yields consistent and asymptotically normal point and interval estimates for <span class="math inline">\(\hat{\beta}\)</span> <span class="citation" data-cites="borgan1995methods">(<a href="references.html#ref-borgan1995methods" role="doc-biblioref">Borgan, Goldstein, and Langholz 1995</a>)</span>.</p>
+<p>Let <span class="math inline">\(\hat{\beta}_\text{cc}\)</span> be the maximum partial likelihood estimate from a nested case-control study and <span class="math inline">\(\hat{\beta}_\text{cohort}\)</span> be the maximum partial likelihood estimate from the full cohort. When <span class="math inline">\(\beta = 0\)</span> and there are <span class="math inline">\(k\)</span> controls sampled per case, <span class="math display">\[
+  \Var(\hat{\beta}_\text{cc})
+  \approx \bigg(1 + \frac{1}{k}\bigg) \Var(\hat{\beta}_\text{cohort})
+\]</span> which is the same relationship that held for the cumulative case-control study versus a full cohort study in <a href="#fig-casecontrol" class="quarto-xref">Figure&nbsp;<span>11.1</span></a>. When <span class="math inline">\(\beta \neq 0\)</span>, the relative efficiency of a nested case-control study can be somewhat lower than this. However, this efficiency can be improved using more sophisticated strategies of sampling from the risk sets.</p>
+<section id="conditional-logistic-regression" class="level3" data-number="11.3.1">
+<h3 data-number="11.3.1" class="anchored" data-anchor-id="conditional-logistic-regression"><span class="header-section-number">11.3.1</span> Conditional logistic regression</h3>
+<p>A nested case-control study can be analyzed using <strong>conditional logistic regression</strong>, which produces the partial likelihood in <a href="#eq-Cox-nested" class="quarto-xref">Equation&nbsp;<span>11.10</span></a> using the matched case-control sets <span class="citation" data-cites="breslow1978estimation">(<a href="references.html#ref-breslow1978estimation" role="doc-biblioref">Breslow et al. 1978</a>)</span>. To see the connection with the logistic regression model (i.e., a binomial generalized linear model with a logit link), consider a matched set with one case and <span class="math inline">\(k\)</span> controls and let <span class="math inline">\(p_j\)</span> the risk of disease in person <span class="math inline">\(j\)</span>. Then the probability that there is one failure and no other failures is <span class="math display">\[
+  \sum_{i = 1}^{k + 1} \bigg(p_i \prod_{j \neq i} (1 - p_j) \bigg)
+  = \sum_{i = 1}^{k + 1} \frac{p_i}{1 - p_i} \prod_{j = 1}^{k + 1} (1 - p_j).
+\]</span> Without loss of generality, we can number the group members to that person one is the case. The probability that person one is the case given that there is one failure in the group is <span id="eq-clogit"><span class="math display">\[
+  \frac{\frac{p_1}{1 - p_1} \prod_{j = 1}^k (1 - p_j)}{\sum_{i = 1}^k \frac{p_i}{1 - p_i} \prod_{j = 1}^{k + 1} (1 - p_j)} = \frac{\frac{p_1}{1 - p_1}}{\sum_{i = 1}^{k + 1} \frac{p_j}{1 - p_j}} = \frac{\omega_1}{\sum_{j = 1}^{k + 1} \omega_j},
+\tag{11.11}\]</span></span> where <span class="math inline">\(\omega_j = \sfrac{p_j}{1 - p_j}\)</span> is the odds corresponding to <span class="math inline">\(p_j\)</span>. Let <span class="math inline">\(\omega_{si}\)</span> be the odds of disease for person <span class="math inline">\(i\)</span> in the matched case-control set <span class="math inline">\(s\)</span>. Then the conditional logistic regression model assumes <span class="math display">\[
+  \ln \omega_{si} = \beta_{s0} + \beta x_{si},
+\]</span> where <span class="math inline">\(\beta_{0s}\)</span> is an unspecified stratum-specific intercept and <span class="math inline">\(x_{si}\)</span> is the covariate for person <span class="math inline">\(i\)</span> in stratum <span class="math inline">\(s\)</span>. The likelihood for <span class="math inline">\(\beta\)</span> is the product of the stratum-specific likelihood contributions from equation <a href="#eq-clogit" class="quarto-xref">Equation&nbsp;<span>11.11</span></a>. Exactly the same regression software can be used to fit both models—only the interpretation of the results is different. Therefore, conditional logistic regression can be used to analyze both nested case-control studies and matched case-control studies.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-borgan1995methods" class="csl-entry" role="listitem">
+Borgan, Ørnulf, Larry Goldstein, and Bryan Langholz. 1995. <span>“Methods for the Analysis of Sampled Cohort Data in the Cox Proportional Hazards Model.”</span> <em>The Annals of Statistics</em>, 1749–78.
+</div>
+<div id="ref-breslow1978estimation" class="csl-entry" role="listitem">
+Breslow, NE, NE Day, KT Halvorsen, RL Prentice, and C Sabai. 1978. <span>“Estimation of Multiple Relative Risk Functions in Matched Case-Control Studies.”</span> <em>American Journal of Epidemiology</em> 108 (4): 299–307.
+</div>
 <div id="ref-cornfield1951method" class="csl-entry" role="listitem">
 Cornfield, Jerome. 1951. <span>“A Method of Estimating Comparative Rates from Clinical Data; Applications to Cancer of the Lung, Breast, and Cervix.”</span> <em>Journal of the National Cancer Institute</em> 11: 1269–75.
 </div>
+<div id="ref-doll1950smoking" class="csl-entry" role="listitem">
+Doll, Richard, and Austin Bradford Hill. 1950. <span>“Smoking and Carcinoma of the Lung.”</span> <em>British Medical Journal</em> 2 (4682): 739.
 </div>
+<div id="ref-greenland1982need" class="csl-entry" role="listitem">
+Greenland, Sander, and Duncan C Thomas. 1982. <span>“On the Need for the Rare Disease Assumption in Case-Control Studies.”</span> <em>American Journal of Epidemiology</em> 116 (3): 547–53.
+</div>
+<div id="ref-herbst1971adenocarcinoma" class="csl-entry" role="listitem">
+Herbst, Arthur L, Howard Ulfelder, and David C Poskanzer. 1971. <span>“Adenocarcinoma of the Vagina: Association of Maternal Stilbestrol Therapy with Tumor Appearance in Young Women.”</span> <em>New England Journal of Medicine</em> 284 (16): 878–81.
+</div>
+<div id="ref-hurwitz1987public" class="csl-entry" role="listitem">
+Hurwitz, Eugene S, Michael J Barrett, Dennis Bregman, Walter J Gunn, Paul Pinsky, Lawrence B Schonberger, Joseph S Drage, et al. 1987. <span>“Public Health Service Study of <span class="nocase">Reye’s</span> Syndrome and Medications: Report of the Main Study.”</span> <em>JAMA</em> 257 (14): 1905–11.
+</div>
+<div id="ref-kenah2024rothman" class="csl-entry" role="listitem">
+Kenah, Eben. 2024. <span>“Rothman Diagrams: The Geometry of Confounding and Standardization.”</span> <em>International Journal of Epidemiology</em> 53 (6): dyae139.
+</div>
+<div id="ref-kupper1975hybrid" class="csl-entry" role="listitem">
+Kupper, LL, AJ McMichael, and R Spirtas. 1975. <span>“A Hybrid Epidemiologic Study Design Useful in Estimating Relative Risk.”</span> <em>Journal of the American Statistical Association</em> 70 (351a): 524–28.
+</div>
+<div id="ref-liddell1977methods" class="csl-entry" role="listitem">
+Liddell, FDK, JC McDonald, and DC Thomas. 1977. <span>“Methods of Cohort Analysis: Appraisal by Application to Asbestos Mining.”</span> <em>Journal of the Royal Statistical Society: Series A (General)</em> 140 (4): 469–83.
+</div>
+<div id="ref-miettinen1976estimability" class="csl-entry" role="listitem">
+Miettinen, Olli. 1976. <span>“Estimability and Estimation in Case-Referent Studies.”</span> <em>American Journal of Epidemiology</em> 103 (2): 226–35.
+</div>
+<div id="ref-oakes1981survival" class="csl-entry" role="listitem">
+Oakes, David. 1981. <span>“Survival Times: Aspects of Partial Likelihood.”</span> <em>International Statistical Review</em>, 235–52.
+</div>
+<div id="ref-paneth2002origins1" class="csl-entry" role="listitem">
+Paneth, Nigel, Ezra Susser, and Mervyn Susser. 2002. <span>“Origins and Early Development of the Case-Control Study: Part 1, Early Evolution.”</span> <em>Sozial-Und Pr<span>ä</span>ventivmedizin</em> 47 (5): 282–88.
+</div>
+<div id="ref-paneth2002origins2" class="csl-entry" role="listitem">
+Paneth, Nigl, Ezra Susser, and Mervyn Susser. 2002. <span>“Origins and Early Development of the Case-Control Study: Part 2, the Case-Control Study from Lane-Claypon to 1950.”</span> <em>Sozial-Und Pr<span>ä</span>ventivmedizin</em> 47 (6): 359–65.
+</div>
+<div id="ref-pearce1993does" class="csl-entry" role="listitem">
+Pearce, Neil. 1993. <span>“What Does the Odds Ratio Estimate in a Case-Control Study?”</span> <em>International Journal of Epidemiology</em> 22 (6): 1189–92.
+</div>
+<div id="ref-rothman1975pictorial" class="csl-entry" role="listitem">
+Rothman, Kenneth J. 1975. <span>“A Pictorial Representation of Confounding in Epidemiologic Studies.”</span> <em>Journal of Chronic Diseases</em> 28 (2): 101–8.
+</div>
+<div id="ref-thomas1977addendum" class="csl-entry" role="listitem">
+Thomas, DC. 1977. <span>“Appendum to <span>‘Methods of Cohort Analysis: Appraisal by Application to Asbestos Mining,’</span> by Liddell, FDK, McDonald, JC and Thomas, DC.”</span> <em>Journal of the Royal Statistical Society: Series A (General)</em> 140: 469–90.
+</div>
+</div>
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p> <a href="https://en.wikipedia.org/wiki/Jerome_Cornfield">Jerome Cornfield</a> (1912–1979) was an American statistician who spent most of his career at the National Cancer Institute. He joined the US Bureau of Labor Statistics during the Great Depression and took math and statistics courses at the US Department of Agriculture. He combined the case control data of <span class="citation" data-cites="doll1950smoking">Doll and Hill (<a href="references.html#ref-doll1950smoking" role="doc-biblioref">1950</a>)</span> and National Institutes of Health data to calculate the risk of lung cancer among smokers, and he showed that this strong association could not plausibly be explained by any known source of bias. He also helped design the <a href="https://en.wikipedia.org/wiki/Framingham_Heart_Study">Framingham Heart Study</a>, a large cohort study of risk factors for heart disease that begain in 1948.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -801,6 +1276,38 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 

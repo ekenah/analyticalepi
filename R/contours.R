@@ -30,7 +30,7 @@ riskratio_contours <- function() {
   boxed.labels(.5, .5, "1", xpad = 1.5, ypad = 1.5, border = FALSE)
   for (riskratio in c(0.2, 0.5, 2, 5)) {
     y <- riskratio * x
-    yrange <- y <= 1
+    yrange <- (y <= 1)
     lines(x[yrange], y[yrange], lty = "dashed")
     boxed.labels(1 / (riskratio + 1), riskratio / (riskratio + 1),
                  as.character(riskratio),
