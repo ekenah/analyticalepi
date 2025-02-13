@@ -485,7 +485,7 @@ window.Quarto = {
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-with-filename-file">
-<pre><strong>casecontrol.R</strong></pre>
+<pre><strong>casecontrol-SE.R</strong></pre>
 </div>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Ratio of case-control and cohort standard errors</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -508,6 +508,60 @@ window.Quarto = {
 Figure&nbsp;11.1: The standard error of the estimated <span class="math inline">\(\ln \RR\)</span> from a cumulative case-control study or the estimated <span class="math inline">\(\ln \IRR\)</span> from a density case-control study divided by the standard error of corresponding estimator from a large cohort study with the same number of cases.
 </figcaption>
 </figure>
+</div>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>casecontrol-cumulative.R</strong></pre>
+</div>
+<div class="sourceCode" id="cb2" data-filename="casecontrol-cumulative.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Cumulative case-control study</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The rats data is from:</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Mantel, Bohidar, and Ciminera (1977). Cancer Research 37: 3863-3868.</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)               <span class="co"># rats data</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate rsk ratio from cohort study with log-binomial regression</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Risk calculations are valid because follow-up is complete over 104 weeks.</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>cohort_RR <span class="ot">&lt;-</span> <span class="fu">glm</span>(status <span class="sc">~</span> rx, <span class="at">data =</span> rats, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"log"</span>))</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(cohort_RR))               <span class="co"># estimated risk ratio = 2</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">confint</span>(cohort_RR))            <span class="co"># 95% confidence interval (1.14, 3.51)</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># sample controls from rats who did not have incidence tumors</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># We will use 4 controls per case and sample without replacement.</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>ncase <span class="ot">&lt;-</span> <span class="fu">sum</span>(rats<span class="sc">$</span>status)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>rat_id <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(rats)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>controls <span class="ot">&lt;-</span> <span class="fu">sample</span>(rat_id[rats<span class="sc">$</span>status <span class="sc">==</span> <span class="dv">0</span>], <span class="dv">4</span> <span class="sc">*</span> ncase)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co"># combine case and control data</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>casedat <span class="ot">&lt;-</span> <span class="fu">subset</span>(rats, status <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>controldat <span class="ot">&lt;-</span> rats[controls, ]</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>ccrats <span class="ot">&lt;-</span> <span class="fu">rbind</span>(casedat, controldat)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co"># logistic regression model for exposure in cases and controls</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="co"># The exposure odds ratio comparing cases and controls approximates the RR.</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="co"># In the case-controls data, status = 1 for cases and status = 0 for controls.</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>ccx <span class="ot">&lt;-</span> <span class="fu">glm</span>(rx <span class="sc">~</span> status, <span class="at">data =</span> ccrats, <span class="at">family =</span> <span class="fu">binomial</span>())</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(ccx))</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">confint</span>(ccx))</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="co"># logistic regression model for case/control status in exposed and unexposed</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="co"># By symmetry of the odds ratio, we can switch exposure and outcome.</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="co"># The estimated odds ratio is the same, but the intercepts are different.</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>ccd <span class="ot">&lt;-</span> <span class="fu">glm</span>(status <span class="sc">~</span> rx, <span class="at">data =</span> ccrats, <span class="at">family =</span> <span class="fu">binomial</span>())</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(ccd))</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">confint</span>(ccd))</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="co"># case-control / cohort coefficient standard error ratio</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="co"># With 4 controls per case, it is approximately sqrt(1 + 1 / 4) = 1.12.</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">vcov</span>(cohort_RR)[<span class="dv">2</span>, <span class="dv">2</span>])     <span class="co"># log risk ratio SE in cohort study</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">vcov</span>(ccd)[<span class="dv">2</span>, <span class="dv">2</span>])           <span class="co"># log odds ratio SE in case-control study</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">vcov</span>(ccd)[<span class="dv">2</span>, <span class="dv">2</span>] <span class="sc">/</span> <span class="fu">vcov</span>(cohort_RR)[<span class="dv">2</span>, <span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </div>
 </div>
 </div>
@@ -539,41 +593,41 @@ Figure&nbsp;11.1: The standard error of the estimated <span class="math inline">
 <div class="code-with-filename-file">
 <pre><strong>RRapprox.R</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Approximation to the risk ratio in case-control studies</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># contour labels</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(plotrix, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># odds, logistic, and cumulative hazard functions</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>odds <span class="ot">&lt;-</span> <span class="cf">function</span>(p) p <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> p)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>invodds <span class="ot">&lt;-</span> <span class="cf">function</span>(odds) odds <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> odds)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>cumhaz <span class="ot">&lt;-</span> <span class="cf">function</span>(p) <span class="sc">-</span><span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> p)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Rothman diagram with RR, OR, and HR contours</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>riskratios <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="dv">2</span>, <span class="dv">5</span>)</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>p0 <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.0001</span>, <span class="fl">0.11</span>, <span class="at">by =</span> <span class="fl">0.001</span>)</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(p0, p0, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">col =</span> <span class="st">"darkgray"</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.1</span>),</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Risk in the unexposed"</span>, <span class="at">ylab =</span> <span class="st">"Risk in the exposed"</span>)</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (riskratio <span class="cf">in</span> riskratios) {</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  p1 <span class="ot">&lt;-</span> riskratio <span class="sc">*</span> p0</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># risk ratio contours</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(p0, riskratio <span class="sc">*</span> p0, <span class="at">lty =</span> <span class="st">"solid"</span>)</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># odds ratio contours</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(p0, <span class="fu">invodds</span>(riskratio <span class="sc">*</span> <span class="fu">odds</span>(p0)), <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="co"># cumulative hazard ratio contours</span></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(p0, <span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> p0)<span class="sc">^</span>riskratio, <span class="at">lty =</span> <span class="st">"dotted"</span>)</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># labels</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">boxed.labels</span>(<span class="fl">0.1</span> <span class="sc">/</span> (riskratio <span class="sc">+</span> <span class="dv">1</span>), <span class="fl">0.1</span> <span class="sc">*</span> riskratio <span class="sc">/</span> (riskratio <span class="sc">+</span> <span class="dv">1</span>),</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>               <span class="fu">as.character</span>(riskratio),</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>               <span class="at">xpad =</span> <span class="fl">1.62</span>, <span class="at">ypad =</span> <span class="fl">1.62</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">bg =</span> <span class="st">"white"</span>, <span class="at">lty =</span> <span class="fu">c</span>(<span class="st">"solid"</span>, <span class="st">"dotted"</span>, <span class="st">"dashed"</span>),</span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Risk ratio"</span>, <span class="st">"Hazard ratio"</span>, <span class="st">"Odds ratio"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Approximation to the risk ratio in case-control studies</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># contour labels</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(plotrix, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># odds, logistic, and cumulative hazard functions</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>odds <span class="ot">&lt;-</span> <span class="cf">function</span>(p) p <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>invodds <span class="ot">&lt;-</span> <span class="cf">function</span>(odds) odds <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> odds)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>cumhaz <span class="ot">&lt;-</span> <span class="cf">function</span>(p) <span class="sc">-</span><span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Rothman diagram with RR, OR, and HR contours</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>riskratios <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="dv">2</span>, <span class="dv">5</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>p0 <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.0001</span>, <span class="fl">0.11</span>, <span class="at">by =</span> <span class="fl">0.001</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(p0, p0, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">col =</span> <span class="st">"darkgray"</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.1</span>),</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Risk in the unexposed"</span>, <span class="at">ylab =</span> <span class="st">"Risk in the exposed"</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (riskratio <span class="cf">in</span> riskratios) {</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  p1 <span class="ot">&lt;-</span> riskratio <span class="sc">*</span> p0</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># risk ratio contours</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(p0, riskratio <span class="sc">*</span> p0, <span class="at">lty =</span> <span class="st">"solid"</span>)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># odds ratio contours</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(p0, <span class="fu">invodds</span>(riskratio <span class="sc">*</span> <span class="fu">odds</span>(p0)), <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  <span class="co"># cumulative hazard ratio contours</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(p0, <span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> p0)<span class="sc">^</span>riskratio, <span class="at">lty =</span> <span class="st">"dotted"</span>)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># labels</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">boxed.labels</span>(<span class="fl">0.1</span> <span class="sc">/</span> (riskratio <span class="sc">+</span> <span class="dv">1</span>), <span class="fl">0.1</span> <span class="sc">*</span> riskratio <span class="sc">/</span> (riskratio <span class="sc">+</span> <span class="dv">1</span>),</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>               <span class="fu">as.character</span>(riskratio),</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>               <span class="at">xpad =</span> <span class="fl">1.62</span>, <span class="at">ypad =</span> <span class="fl">1.62</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">bg =</span> <span class="st">"white"</span>, <span class="at">lty =</span> <span class="fu">c</span>(<span class="st">"solid"</span>, <span class="st">"dotted"</span>, <span class="st">"dashed"</span>),</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Risk ratio"</span>, <span class="st">"Hazard ratio"</span>, <span class="st">"Odds ratio"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell-output-display">
@@ -586,6 +640,93 @@ Figure&nbsp;11.1: The standard error of the estimated <span class="math inline">
 Figure&nbsp;11.2: Rothman diagram <span class="citation" data-cites="rothman1975pictorial kenah2024rothman">(<a href="references.html#ref-rothman1975pictorial" role="doc-biblioref">Rothman 1975</a>; <a href="references.html#ref-kenah2024rothman" role="doc-biblioref">Kenah 2024</a>)</span> with contour lines for the risk ratio, incidence rate ratio, and odds ratio for rare diseases. Each group of contours is labeled with their common value.
 </figcaption>
 </figure>
+</div>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>casecontrol-density.R</strong></pre>
+</div>
+<div class="sourceCode" id="cb4" data-filename="casecontrol-density.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Density case-control study</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The rats data is from:</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Mantel, Bohidar, and Ciminera (1977). Cancer Research 37: 3863-3868.</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)               <span class="co"># rats data and survreg()</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate incidence rate ratio from cohort study with exponential AFT model</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># The estimated incidence rate ratio is exp(-beta_rx).</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>cohort_IRR <span class="ot">&lt;-</span> <span class="fu">survreg</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> rx, <span class="at">data =</span> rats,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>                      <span class="at">dist =</span> <span class="st">"exponential"</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="sc">-</span><span class="fu">coef</span>(cohort_IRR))</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="sc">-</span><span class="fu">confint</span>(cohort_IRR))</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># function to sample controls for each case</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>control_sample <span class="ot">&lt;-</span> <span class="cf">function</span>(id, k) {</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># id should be a rat who has an event</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (rats<span class="sc">$</span>status[id] <span class="sc">==</span> <span class="dv">0</span>) <span class="fu">stop</span>(<span class="st">"Rat "</span>, id, <span class="st">" did not have a tumor."</span>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  t <span class="ot">&lt;-</span> rats<span class="sc">$</span>time[id]</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># possible controls are riskset minus individuals with events at time t</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  rat_id <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(rats)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  controlset <span class="ot">&lt;-</span> rat_id[<span class="fu">with</span>(rats, (time <span class="sc">&gt;</span> t) <span class="sc">|</span> (time <span class="sc">==</span> t <span class="sc">&amp;</span> status <span class="sc">==</span> <span class="dv">0</span>))]</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># sample up to k controls</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(controlset) <span class="sc">&gt;</span> <span class="dv">1</span>) {</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    ksamp <span class="ot">&lt;-</span> <span class="fu">min</span>(<span class="fu">length</span>(controlset), k)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    controls <span class="ot">&lt;-</span> <span class="fu">sample</span>(controlset, ksamp)</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    controls <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>  controls</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="fu">control_sample</span>(<span class="dv">1</span>, <span class="dv">4</span>)            <span class="co"># no tumor</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="fu">control_sample</span>(<span class="dv">2</span>, <span class="dv">4</span>)            <span class="co"># returns sampled control ids</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="co"># generate case-control data for one case</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>cc_set <span class="ot">&lt;-</span> <span class="cf">function</span>(id, k) {</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>  controls <span class="ot">&lt;-</span> rats[<span class="fu">control_sample</span>(id, k), ]</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>  controls<span class="sc">$</span>status <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>  ccdat <span class="ot">&lt;-</span> <span class="fu">rbind</span>(rats[id, ], controls)</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use case id to identify case-control set</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>  ccdat<span class="sc">$</span>case <span class="ot">&lt;-</span> id</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>  <span class="co"># return data for case-control set</span></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>  ccdat</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a><span class="fu">cc_set</span>(<span class="dv">1</span>, <span class="dv">4</span>)</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="fu">cc_set</span>(<span class="dv">2</span>, <span class="dv">4</span>)</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="co"># generate density case-control data</span></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a><span class="co"># We are recruiting k = 4 controls per case in each risk set.</span></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a><span class="co"># The same control could be chosen more than once, and</span></span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a><span class="co"># a control could later become a case.</span></span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>cases <span class="ot">&lt;-</span> rat_id[rats<span class="sc">$</span>status <span class="sc">==</span> <span class="dv">1</span>]   <span class="co"># rats with incident tumors</span></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>ccrats <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(cases, cc_set, <span class="at">k =</span> <span class="dv">4</span>))</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate the incidence rate ratio with logistic regression</span></span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a><span class="co"># The exposure odds ratio comparing cases and controls approximates the IRR.</span></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>ccx <span class="ot">&lt;-</span> <span class="fu">glm</span>(rx <span class="sc">~</span> status, <span class="at">data =</span> ccrats, <span class="at">family =</span> <span class="fu">binomial</span>())</span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(ccx))</span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">confint</span>(ccx))</span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a><span class="co"># logistic regression model for case/control status in exposed and unexposed</span></span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a><span class="co"># By symmetry of the odds ratio, we can switch exposure and outcome.</span></span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a><span class="co"># The estimated odds ratio is the same, but the intercepts are different.</span></span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>ccd <span class="ot">&lt;-</span> <span class="fu">glm</span>(status <span class="sc">~</span> rx, <span class="at">data =</span> ccrats, <span class="at">family =</span> <span class="fu">binomial</span>())</span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(ccd))</span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">confint</span>(ccd))</span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a><span class="co"># case-control / cohort coefficient standard error ratio</span></span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a><span class="co"># With 4 controls per case, it is approximately sqrt(1 + 1 / 4) = 1.12.</span></span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">vcov</span>(cohort_IRR)[<span class="dv">2</span>, <span class="dv">2</span>])    <span class="co"># log incidence rate ratio SE in cohort study</span></span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">vcov</span>(ccd)[<span class="dv">2</span>, <span class="dv">2</span>])           <span class="co"># log odds ratio SE in case-control study</span></span>
+<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">vcov</span>(ccd)[<span class="dv">2</span>, <span class="dv">2</span>] <span class="sc">/</span> <span class="fu">vcov</span>(cohort_IRR)[<span class="dv">2</span>, <span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </div>
 </div>
 </div>
@@ -771,85 +912,97 @@ Table&nbsp;11.2: Adjusted “2x2 table” of exposure, noncases, subcohort, and 
 <p>A nested case-control study can be analyzed using <strong>conditional logistic regression</strong>, which produces the partial likelihood in <a href="#eq-Cox-nested" class="quarto-xref">Equation&nbsp;<span>11.10</span></a> using the matched case-control sets <span class="citation" data-cites="breslow1978estimation">(<a href="references.html#ref-breslow1978estimation" role="doc-biblioref">Breslow et al. 1978</a>)</span>. To see the connection with the logistic regression model (i.e., a binomial generalized linear model with a logit link), consider a matched set with one case and <span class="math inline">\(k\)</span> controls and let <span class="math inline">\(p_j\)</span> the risk of disease in person <span class="math inline">\(j\)</span>. Then the probability that there is one failure and no other failures is <span class="math display">\[
   \sum_{i = 1}^{k + 1} \bigg(p_i \prod_{j \neq i} (1 - p_j) \bigg)
   = \sum_{i = 1}^{k + 1} \frac{p_i}{1 - p_i} \prod_{j = 1}^{k + 1} (1 - p_j).
-\]</span> Without loss of generality, we can number the group members to that person one is the case. The probability that person one is the case given that there is one failure in the group is <span id="eq-clogit"><span class="math display">\[
+\]</span> Without loss of generality, we can number the group members so that person one is the case. The probability that person one is the case given that there is one failure in the group is <span id="eq-clogit"><span class="math display">\[
   \frac{\frac{p_1}{1 - p_1} \prod_{j = 1}^{k + 1} (1 - p_j)}{\sum_{i = 1}^k \frac{p_i}{1 - p_i} \prod_{j = 1}^{k + 1} (1 - p_j)}
   = \frac{\odds(p_1)}{\sum_{i = 1}^{k + 1} \odds(p_j)}
 \tag{11.11}\]</span></span> where <span class="math inline">\(\odds(p_j) = p_j / (1 - p_j)\)</span> is the odds corresponding to <span class="math inline">\(p_j\)</span>. Let <span class="math inline">\(\odds(p_{ij})\)</span> be the odds of disease for person <span class="math inline">\(j\)</span> in the matched case-control set <span class="math inline">\(\mathcal{R}^*_i\)</span> where person <span class="math inline">\(i\)</span> is the case. Then the conditional logistic regression model assumes <span class="math display">\[
   \logit(p_{ij})
   = \ln \odds(p_{ij})
   = \beta_{0i} + \beta x_j,
-\]</span> where <span class="math inline">\(\beta_{i0}\)</span> is an intercept specific to <span class="math inline">\(\mathcal{R}^*_i\)</span> and <span class="math inline">\(x_j\)</span> is the covariate for person <span class="math inline">\(j\)</span>. When there are <span class="math inline">\(m\)</span> distinct event times, the likelihood for <span class="math inline">\(\beta\)</span> in the conditional logistic regression model is <span class="math display">\[
+\]</span> where <span class="math inline">\(\beta_{i0}\)</span> is an intercept specific to <span class="math inline">\(\mathcal{R}^*_i\)</span> and <span class="math inline">\(x_j\)</span> is the covariate for person <span class="math inline">\(j\)</span>. When there are <span class="math inline">\(m\)</span> distinct event times, the likelihood for <span class="math inline">\(\beta\)</span> in the conditional logistic regression model is <span id="eq-clogit"><span class="math display">\[
   L(\beta)
   = \prod_{i = 1}^m \frac{e^{\beta_{0i} + \beta x_i}}{\sum_{j \in \mathcal{R}^*(t_i)} e^{\beta_{0i} + \beta x_j}}
   = \prod_{i = 1}^m \frac{e^{\beta x_i}}{\sum_{j \in \mathcal{R}^*(t_i)} e^{\beta x_j}},
-\]</span> which is exactly the same as the Cox partial likelihood for the nested case-control study in <a href="#eq-Cox-nested" class="quarto-xref">Equation&nbsp;<span>11.10</span></a>. The intercept cancels out just like the unspecified baseline hazard. Point and interval estimates of <span class="math inline">\(\beta_\true\)</span> can be calculated using maximum likelihood estimation or Bayesian methods. The estimated hazard ratio comparing the exposed to the unexposed is <span class="math inline">\(e^{\hat{\beta}}\)</span>, and confidence limits or credible limits for the hazard ratio can be obtained by exponentiating the confidence limits or credible limits for <span class="math inline">\(\beta_\true\)</span>.</p>
+\tag{11.12}\]</span></span> which is exactly the same as the Cox partial likelihood for the nested case-control study in <a href="#eq-Cox-nested" class="quarto-xref">Equation&nbsp;<span>11.10</span></a>. The intercept cancels out just like the unspecified baseline hazard. Point and interval estimates of <span class="math inline">\(\beta_\true\)</span> can be calculated using maximum likelihood estimation or Bayesian methods. The estimated hazard ratio comparing the exposed to the unexposed is <span class="math inline">\(e^{\hat{\beta}}\)</span>, and confidence limits or credible limits for the hazard ratio can be obtained by exponentiating the confidence limits or credible limits for <span class="math inline">\(\beta_\true\)</span>.</p>
+<!-- By symmetry of the odds ratio, the odds ratio for disease comparing the exposed to the unexposed equals the odds ratio for exposure comparing cases to controls.
+Thus, the odds ratios in the numerator and denominator of @eq-clogit can be interpreted odds ratios for exposure comparing individual $i$ (in the numerator) or each individual $j$ (in the denominator) to a person with  -->
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">R</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">R</a></li></ul>
 <div class="tab-content">
-<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
-<pre><strong>clogit.R</strong></pre>
+<pre><strong>casecontrol-nested.R</strong></pre>
 </div>
-<div class="sourceCode" id="cb3" data-filename="clogit.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Nested case-control study and conditional logistic regression</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The rats data is from:</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Mantel, Bohidar, and Ciminera (1977). Cancer Research 37: 3863-3868.</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)               <span class="co"># rats data and clogit() function</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Cox model with rat cohort data</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>cohort <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> rx, <span class="at">data =</span> rats)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(cohort))</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">confint</span>(cohort))</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># function to sample controls for each case</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>control_sample <span class="ot">&lt;-</span> <span class="cf">function</span>(id, k) {</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># id should be a rat who has an event</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (rats<span class="sc">$</span>status[id] <span class="sc">==</span> <span class="dv">0</span>) <span class="fu">stop</span>(<span class="st">"Rat "</span>, id, <span class="st">" did not have a tumor."</span>)</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  t <span class="ot">&lt;-</span> rats<span class="sc">$</span>time[id]</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># possible controls are riskset minus individuals with events at time t</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  rat_id <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(rats)</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  controlset <span class="ot">&lt;-</span> rat_id[<span class="fu">with</span>(rats, (time <span class="sc">&gt;</span> t) <span class="sc">|</span> (time <span class="sc">==</span> t <span class="sc">&amp;</span> status <span class="sc">==</span> <span class="dv">0</span>))]</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># sample up to k controls</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(controlset) <span class="sc">&gt;</span> <span class="dv">1</span>) {</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    ksamp <span class="ot">&lt;-</span> <span class="fu">min</span>(<span class="fu">length</span>(controlset), k)</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    controls <span class="ot">&lt;-</span> <span class="fu">sample</span>(controlset, ksamp)</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    controls <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  controls</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="fu">control_sample</span>(<span class="dv">1</span>, <span class="dv">4</span>)            <span class="co"># no tumor</span></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="fu">control_sample</span>(<span class="dv">2</span>, <span class="dv">4</span>)            <span class="co"># returns sampled control ids</span></span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="co"># generate case-control data</span></span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>cc_set <span class="ot">&lt;-</span> <span class="cf">function</span>(id, k) {</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>  controls <span class="ot">&lt;-</span> rats[<span class="fu">control_sample</span>(id, k), ]</span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>  controls<span class="sc">$</span>status <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>  ccdat <span class="ot">&lt;-</span> <span class="fu">rbind</span>(rats[id, ], controls)</span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use case id to identify case-control set</span></span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>  ccdat<span class="sc">$</span>case <span class="ot">&lt;-</span> id</span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>  <span class="co"># return data for case-control set</span></span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>  ccdat</span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a><span class="fu">cc_set</span>(<span class="dv">1</span>, <span class="dv">4</span>)</span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a><span class="fu">cc_set</span>(<span class="dv">2</span>, <span class="dv">4</span>)</span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate hazard ratio with conditional logistic regression</span></span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a><span class="co"># We are recruiting k = 4 controls per case.</span></span>
-<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>cases <span class="ot">&lt;-</span> rat_id[rats<span class="sc">$</span>status <span class="sc">==</span> <span class="dv">1</span>]   <span class="co"># rats with incidence tumors</span></span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>ccdat <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(cases, cc_set, <span class="at">k =</span> <span class="dv">4</span>))</span>
-<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>nested_cc <span class="ot">&lt;-</span> <span class="fu">clogit</span>(status <span class="sc">~</span> rx <span class="sc">+</span> <span class="fu">strata</span>(case), <span class="at">data =</span> ccdat)</span>
-<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(nested_cc))</span>
-<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">confint</span>(nested_cc))</span>
-<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a><span class="co"># The ratio of standard errors is close to sqrt(1 + 1 / 4).</span></span>
-<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">vcov</span>(nested_cc) <span class="sc">/</span> <span class="fu">vcov</span>(cohort))</span>
-<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span> <span class="sc">/</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5" data-filename="casecontrol-nested.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Nested case-control study and conditional logistic regression</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The rats data is from:</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Mantel, Bohidar, and Ciminera (1977). Cancer Research 37: 3863-3868.</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)               <span class="co"># rats data and clogit() function</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate hazard ratio from cohort study using Cox model</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>cohort_HR <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> rx, <span class="at">data =</span> rats)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(cohort_HR))</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">confint</span>(cohort_HR))</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># function to sample controls for each case</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>control_sample <span class="ot">&lt;-</span> <span class="cf">function</span>(id, k) {</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># id should be a rat who has an event</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (rats<span class="sc">$</span>status[id] <span class="sc">==</span> <span class="dv">0</span>) <span class="fu">stop</span>(<span class="st">"Rat "</span>, id, <span class="st">" did not have a tumor."</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  t <span class="ot">&lt;-</span> rats<span class="sc">$</span>time[id]</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># possible controls are riskset minus individuals with events at time t</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  rat_id <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(rats)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  controlset <span class="ot">&lt;-</span> rat_id[<span class="fu">with</span>(rats, (time <span class="sc">&gt;</span> t) <span class="sc">|</span> (time <span class="sc">==</span> t <span class="sc">&amp;</span> status <span class="sc">==</span> <span class="dv">0</span>))]</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># sample up to k controls</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(controlset) <span class="sc">&gt;</span> <span class="dv">1</span>) {</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    ksamp <span class="ot">&lt;-</span> <span class="fu">min</span>(<span class="fu">length</span>(controlset), k)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    controls <span class="ot">&lt;-</span> <span class="fu">sample</span>(controlset, ksamp)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    controls <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>  controls</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="fu">control_sample</span>(<span class="dv">1</span>, <span class="dv">4</span>)            <span class="co"># no tumor</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="fu">control_sample</span>(<span class="dv">2</span>, <span class="dv">4</span>)            <span class="co"># returns sampled control ids</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="co"># generate case-control data for one case</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>cc_set <span class="ot">&lt;-</span> <span class="cf">function</span>(id, k) {</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>  controls <span class="ot">&lt;-</span> rats[<span class="fu">control_sample</span>(id, k), ]</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>  controls<span class="sc">$</span>status <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>  ccdat <span class="ot">&lt;-</span> <span class="fu">rbind</span>(rats[id, ], controls)</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>  <span class="co"># use case id to identify case-control set</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>  ccdat<span class="sc">$</span>case <span class="ot">&lt;-</span> id</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>  <span class="co"># return data for case-control set</span></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>  ccdat</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a><span class="fu">cc_set</span>(<span class="dv">1</span>, <span class="dv">4</span>)</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a><span class="fu">cc_set</span>(<span class="dv">2</span>, <span class="dv">4</span>)</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a><span class="co"># generate nested case-control data</span></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a><span class="co"># We are recruiting k = 4 controls per case.</span></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>cases <span class="ot">&lt;-</span> rat_id[rats<span class="sc">$</span>status <span class="sc">==</span> <span class="dv">1</span>]   <span class="co"># rats with incident tumors</span></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>ccrats <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(cases, cc_set, <span class="at">k =</span> <span class="dv">4</span>))</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate hazard ratio with conditional logistic regression</span></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>nested_ccd <span class="ot">&lt;-</span> <span class="fu">clogit</span>(status <span class="sc">~</span> rx <span class="sc">+</span> <span class="fu">strata</span>(case), <span class="at">data =</span> ccrats)</span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(nested_ccd))</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">confint</span>(nested_ccd))</span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate hazard ratio with conditional logistic regression</span></span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a><span class="co"># As in standard logistic regression, exposure and disease can be switched.</span></span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>nested_ccx <span class="ot">&lt;-</span> <span class="fu">clogit</span>(rx <span class="sc">~</span> status <span class="sc">+</span> <span class="fu">strata</span>(case), <span class="at">data =</span> ccrats)</span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(nested_ccx))</span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">confint</span>(nested_ccx))</span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a><span class="co"># case-control / cohort coefficient standard error ratio</span></span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a><span class="co"># With 4 controls per case, it is approximately sqrt(1 + 1 / 4) = 1.12.</span></span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">vcov</span>(cohort_HR)[<span class="dv">2</span>, <span class="dv">2</span>])     <span class="co"># log hazard ratio SE in cohort study</span></span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">vcov</span>(nested_ccd)[<span class="dv">2</span>, <span class="dv">2</span>])    <span class="co"># log odds ratio SE in case-control study</span></span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">vcov</span>(nested_ccd)[<span class="dv">2</span>, <span class="dv">2</span>] <span class="sc">/</span> <span class="fu">vcov</span>(cohort_IRR)[<span class="dv">2</span>, <span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>

@@ -1,4 +1,4 @@
-## Log-logistic hazard function plot
+## Log-logistic hazard functions
 
 # hazard function
 hllog <- function(t, shape=1, rate=1) {
