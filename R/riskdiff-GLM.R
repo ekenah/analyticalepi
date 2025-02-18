@@ -4,7 +4,8 @@
 ?glm
 ?family
 
-# rats data is in the survival package
+# load packages
+# The rats data is from:
 # Mantel, Bohidar, and Ciminera (1977). Cancer Research 37: 3863-3868.
 library(survival)     # rats data
 library(sandwich)     # sandwich() for robust variance

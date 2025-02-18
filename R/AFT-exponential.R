@@ -13,7 +13,7 @@ exp(-coef(aft_exp))             # estimated rate (x = 0) and rate ratio
 exp(-confint(aft_exp))          # log-transformed 95% Wald confidence intervals
 
 # estimated rate in the exposed
-lnrate1hat <- exp(-sum(coef(aft_exp)))
+lnrate1hat <- -sum(coef(aft_exp))
 lnrate1var <- as.numeric(c(1, 1) %*% vcov(aft_exp) %*% c(1, 1))
 lnrate1ci <- lnrate1hat + c(-1, 1) * qnorm(0.975) * sqrt(lnrate1var)
 exp(lnrate1hat)                 # point estimate

@@ -899,54 +899,55 @@ Figure&nbsp;9.1: The gray triangle shows possible combinations of the intercept 
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>?glm</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>?family</span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># rats data is in the survival package</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Mantel, Bohidar, and Ciminera (1977). Cancer Research 37: 3863-3868.</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)     <span class="co"># rats data</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sandwich)     <span class="co"># sandwich() for robust variance</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)       <span class="co"># coefci() for Wald confidence intervals</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># traditional RD point estimate and Wald 95% confidence interval</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Because follow-up of the rats was complete, risk calculations are valid.</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>r1 <span class="ot">&lt;-</span> <span class="fu">sum</span>(rats<span class="sc">$</span>rx <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">with</span>(rats, <span class="fu">sum</span>(status[rx <span class="sc">==</span> <span class="dv">1</span>]))</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>r0 <span class="ot">&lt;-</span> <span class="fu">sum</span>(rats<span class="sc">$</span>rx <span class="sc">==</span> <span class="dv">0</span>)</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">with</span>(rats, <span class="fu">sum</span>(status[rx <span class="sc">==</span> <span class="dv">0</span>]))</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>risk1 <span class="ot">&lt;-</span> a <span class="sc">/</span> r1</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>risk0 <span class="ot">&lt;-</span> c <span class="sc">/</span> r0</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>RDhat <span class="ot">&lt;-</span> risk1 <span class="sc">-</span> risk0</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>RDvar <span class="ot">&lt;-</span> risk1 <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> risk1) <span class="sc">/</span> r1 <span class="sc">+</span> risk0 <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> risk0) <span class="sc">/</span> r0</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co"># point and interval estimates of the RD</span></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>RDhat</span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>RDhat <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">qnorm</span>(<span class="fl">0.975</span>) <span class="sc">*</span> <span class="fu">sqrt</span>(RDvar)</span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Binomial GLM with identity link for the RD</span></span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Default binomial link = "logit", so we must specify link = "identity".</span></span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>RDglm <span class="ot">&lt;-</span> <span class="fu">glm</span>(status <span class="sc">~</span> rx, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"identity"</span>), <span class="at">data =</span> rats)</span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(RDglm)                  <span class="co"># point estimates, p-values, CIs, global tests</span></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(RDglm)                    <span class="co"># parts of the fitted model</span></span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(RDglm)                     <span class="co"># estimated risk (x = 0) and RD</span></span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(RDglm)                  <span class="co"># likelihood ratio CIs (better)</span></span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="fu">coefci</span>(RDglm)                   <span class="co"># Wald CI for RD matches calculation above</span></span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Gaussian (normal) GLM with identity link and robust variance for the RD</span></span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>RDglm2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(status <span class="sc">~</span> rx, <span class="at">data =</span> rats)</span>
-<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(RDglm2)                    <span class="co"># point estimates match binomial GLM above</span></span>
-<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(RDglm2)                 <span class="co"># likelihood ratio CI too narrow</span></span>
-<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="fu">coefci</span>(RDglm2)                  <span class="co"># Wald CI also too narrow</span></span>
-<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="fu">coefci</span>(RDglm2, <span class="at">vcov =</span> sandwich) <span class="co"># robust Wald CIs match binomial GLM above</span></span>
-<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a><span class="co"># point and interval estimates for risk in the exposed</span></span>
-<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a><span class="co"># The vector c(1, 1) represents 1 * beta0 + 1 * beta1,</span></span>
-<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a><span class="co"># and as.numeric() is used to return a number instead of a matrix.</span></span>
-<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>p1hat <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">coef</span>(RDglm))</span>
-<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>p1var <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">%*%</span> <span class="fu">vcov</span>(RDglm) <span class="sc">%*%</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>p1hat</span>
-<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>p1hat <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">qnorm</span>(<span class="fl">0.975</span>) <span class="sc">*</span> <span class="fu">sqrt</span>(p1var)</span>
-<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a><span class="co"># Gaussian GLM with robust variance</span></span>
-<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">coef</span>(RDglm2))                         <span class="co"># matches p1hat above</span></span>
-<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">%*%</span> <span class="fu">sandwich</span>(RDglm2) <span class="sc">%*%</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>)  <span class="co"># matches p1var above</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># load packages</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># The rats data is from:</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Mantel, Bohidar, and Ciminera (1977). Cancer Research 37: 3863-3868.</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)     <span class="co"># rats data</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sandwich)     <span class="co"># sandwich() for robust variance</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)       <span class="co"># coefci() for Wald confidence intervals</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co"># traditional RD point estimate and Wald 95% confidence interval</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Because follow-up of the rats was complete, risk calculations are valid.</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>r1 <span class="ot">&lt;-</span> <span class="fu">sum</span>(rats<span class="sc">$</span>rx <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">with</span>(rats, <span class="fu">sum</span>(status[rx <span class="sc">==</span> <span class="dv">1</span>]))</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>r0 <span class="ot">&lt;-</span> <span class="fu">sum</span>(rats<span class="sc">$</span>rx <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">with</span>(rats, <span class="fu">sum</span>(status[rx <span class="sc">==</span> <span class="dv">0</span>]))</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>risk1 <span class="ot">&lt;-</span> a <span class="sc">/</span> r1</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>risk0 <span class="ot">&lt;-</span> c <span class="sc">/</span> r0</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>RDhat <span class="ot">&lt;-</span> risk1 <span class="sc">-</span> risk0</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>RDvar <span class="ot">&lt;-</span> risk1 <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> risk1) <span class="sc">/</span> r1 <span class="sc">+</span> risk0 <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> risk0) <span class="sc">/</span> r0</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co"># point and interval estimates of the RD</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>RDhat</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>RDhat <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">qnorm</span>(<span class="fl">0.975</span>) <span class="sc">*</span> <span class="fu">sqrt</span>(RDvar)</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Binomial GLM with identity link for the RD</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Default binomial link = "logit", so we must specify link = "identity".</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>RDglm <span class="ot">&lt;-</span> <span class="fu">glm</span>(status <span class="sc">~</span> rx, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"identity"</span>), <span class="at">data =</span> rats)</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(RDglm)                  <span class="co"># point estimates, p-values, CIs, global tests</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(RDglm)                    <span class="co"># parts of the fitted model</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(RDglm)                     <span class="co"># estimated risk (x = 0) and RD</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(RDglm)                  <span class="co"># likelihood ratio CIs (better)</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="fu">coefci</span>(RDglm)                   <span class="co"># Wald CI for RD matches calculation above</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Gaussian (normal) GLM with identity link and robust variance for the RD</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>RDglm2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(status <span class="sc">~</span> rx, <span class="at">data =</span> rats)</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(RDglm2)                    <span class="co"># point estimates match binomial GLM above</span></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(RDglm2)                 <span class="co"># likelihood ratio CI too narrow</span></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="fu">coefci</span>(RDglm2)                  <span class="co"># Wald CI also too narrow</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="fu">coefci</span>(RDglm2, <span class="at">vcov =</span> sandwich) <span class="co"># robust Wald CIs match binomial GLM above</span></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a><span class="co"># point and interval estimates for risk in the exposed</span></span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a><span class="co"># The vector c(1, 1) represents 1 * beta0 + 1 * beta1,</span></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a><span class="co"># and as.numeric() is used to return a number instead of a matrix.</span></span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>p1hat <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">coef</span>(RDglm))</span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>p1var <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">%*%</span> <span class="fu">vcov</span>(RDglm) <span class="sc">%*%</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>p1hat</span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>p1hat <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">qnorm</span>(<span class="fl">0.975</span>) <span class="sc">*</span> <span class="fu">sqrt</span>(p1var)</span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a><span class="co"># Gaussian GLM with robust variance</span></span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">coef</span>(RDglm2))                         <span class="co"># matches p1hat above</span></span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">%*%</span> <span class="fu">sandwich</span>(RDglm2) <span class="sc">%*%</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>)  <span class="co"># matches p1var above</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
