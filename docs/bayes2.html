@@ -84,7 +84,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="next">
+<link href="./causality.html" rel="next">
 <link href="./casecontrol.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -357,8 +357,21 @@ window.Quarto = {
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">Principles of Causal Inference</span></span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Principles of Causal Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./causality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Causality in Public Health</span></span></a>
+  </div>
+</li>
+      </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
@@ -422,7 +435,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./studydesign.html">Study Design and Measures of Association</a></li><li class="breadcrumb-item"><a href="./bayes2.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Bayesian analysis of cohort and case-control studies</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Bayesian analysis of cohort and case-control studies</span></h1>
+<h1 class="title"><span id="sec-Bayes2" class="quarto-section-identifier"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Bayesian analysis of cohort and case-control studies</span></span></h1>
 </div>
 
 
@@ -542,12 +555,12 @@ window.Quarto = {
 <span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="co"># This allows you to calculate posterior means and functions of coefficients.</span></span>
 <span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Use double quotes for variable names with non-letters, like (Intercept).</span></span>
 <span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>post_non <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(RRbayes_non)</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(RRbayes_non)</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(post_non<span class="sc">$</span><span class="st">"(Intercept)"</span>)  <span class="co"># equals intercept from coef()</span></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(post_non<span class="sc">$</span>rx)             <span class="co"># equals rx coefficient from coef()</span></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(post_non<span class="sc">$</span>rx)               <span class="co"># posterior mean log RR</span></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(post_non<span class="sc">$</span>rx, <span class="fl">0.025</span>)    <span class="co"># lower 95% credible interval for log RR</span></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(post_non<span class="sc">$</span>rx, <span class="fl">0.975</span>)    <span class="co"># upper 95% credible interval for log RR</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(post_non<span class="sc">$</span><span class="st">"(Intercept)"</span>)  <span class="co"># equals intercept from coef()</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(post_non<span class="sc">$</span>rx)             <span class="co"># equals rx coefficient from coef()</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(post_non<span class="sc">$</span>rx)               <span class="co"># posterior mean log RR</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(post_non<span class="sc">$</span>rx, <span class="fl">0.025</span>)    <span class="co"># lower 95% credible interval for log RR</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(post_non<span class="sc">$</span>rx, <span class="fl">0.975</span>)    <span class="co"># upper 95% credible interval for log RR</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(post_non<span class="sc">$</span>rx, <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span>
 <span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="co"># point estimates and credible intervals for risk in the treated</span></span>
 <span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>post_non<span class="sc">$</span>lnrisk1 <span class="ot">&lt;-</span> post_non<span class="sc">$</span><span class="st">"(Intercept)"</span> <span class="sc">+</span> post_non<span class="sc">$</span>rx</span>
@@ -1180,8 +1193,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link" aria-label="References">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./causality.html" class="pagination-link" aria-label="Causality in Public Health">
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Causality in Public Health</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

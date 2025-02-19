@@ -33,12 +33,12 @@ exp(posterior_interval(RRbayes_non, prob = 0.95)) # 95% credible intervals
 # This allows you to calculate posterior means and functions of coefficients.
 # Use double quotes for variable names with non-letters, like (Intercept).
 post_non <- as.data.frame(RRbayes_non)
-coef(RRbayes_non)
 median(post_non$"(Intercept)")  # equals intercept from coef()
 median(post_non$rx)             # equals rx coefficient from coef()
 mean(post_non$rx)               # posterior mean log RR
 quantile(post_non$rx, 0.025)    # lower 95% credible interval for log RR
 quantile(post_non$rx, 0.975)    # upper 95% credible interval for log RR
+quantile(post_non$rx, c(0.025, 0.975))
 
 # point estimates and credible intervals for risk in the treated
 post_non$lnrisk1 <- post_non$"(Intercept)" + post_non$rx

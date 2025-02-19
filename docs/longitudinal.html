@@ -360,8 +360,21 @@ window.Quarto = {
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">Principles of Causal Inference</span></span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Principles of Causal Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./causality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Causality in Public Health</span></span></a>
+  </div>
+</li>
+      </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
@@ -470,7 +483,7 @@ window.Quarto = {
     0 &amp; \text{otherwise}.
   \end{cases}
 \]</span> and <span class="math inline">\(\tonset\)</span> denotes the onset time of the disease. In practice, the population <span class="math inline">\(\Omega\)</span> is often defined to consist only of individuals who are at risk of disease at time <span class="math inline">\(t_a\)</span>. If we have complete follow-up of the entire population <span class="math inline">\(\Omega\)</span> over the entire interval <span class="math inline">\((t_a, t_b]\)</span>, then we know the cumulative incidence exactly.</p>
-<p>More often, we follow a sample of individuals from the population. If selection into the sample is independent of disease onset during <span class="math inline">\((t_a, t_b]\)</span> and we have complete follow-up over the entire interval, then we can get point and interval estimates of the true cumulative incidence using methods for a binomial proportion from <a href="mlestimation.html" class="quarto-xref"><span>Chapter 3</span></a> or <span class="quarto-unresolved-ref">?sec-bayes</span>. In practice, almost all longitudinal studies have individuals entering or leaving the study during the follow-up period. When this occurs, methods for binomial proportions can produce inefficient or biased estimates of risk.</p>
+<p>More often, we follow a sample of individuals from the population. If selection into the sample is independent of disease onset during <span class="math inline">\((t_a, t_b]\)</span> and we have complete follow-up over the entire interval, then we can get point and interval estimates of the true cumulative incidence using methods for a binomial proportion from <a href="mlestimation.html" class="quarto-xref"><span>Chapter 3</span></a> or <a href="bayes.html" class="quarto-xref"><span>Chapter 4</span></a>. In practice, almost all longitudinal studies have individuals entering or leaving the study during the follow-up period. When this occurs, methods for binomial proportions can produce inefficient or biased estimates of risk.</p>
 <p>The analysis of incomplete longitudinal data is called <strong>survival analysis</strong>, and it is the theoretical foundation for many epidemiologic methods. To analyze survival data, it is important to have clear definitions of the following that can be applied equally to all study participants:</p>
 <ul>
 <li><p>The <strong>time origin</strong>: This is the beginning of the time-to-event, and it defines the time scale used in the analysis. It could be a particular calendar time, a particular age, or the occurrence of a particular event (see <a href="#tbl-origin" class="quarto-xref">Table&nbsp;<span>5.1</span></a>).</p></li>
