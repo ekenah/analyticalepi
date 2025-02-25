@@ -25,7 +25,7 @@ exp(-log(aft_weib$scale) + c(-1, 1) * qnorm(.975) *
     sqrt(vcov(aft_weib)["Log(scale)", "Log(scale)"]))
 
 # estimated rate in the exposed
-lnrate1hat <- exp(-sum(coef(aft_weib)))
+lnrate1hat <- -sum(coef(aft_weib))
 lnrate1var <- as.numeric(c(1, 1, 0) %*% vcov(aft_weib) %*% c(1, 1, 0))
 lnrate1ci <- lnrate1hat + c(-1, 1) * qnorm(0.975) * sqrt(lnrate1var)
 exp(lnrate1hat)                 # point estimate

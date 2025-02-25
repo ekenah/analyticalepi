@@ -50,7 +50,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./calculus.html" rel="next">
-<link href="./causality.html" rel="prev">
+<link href="./counterfactuals.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -94,6 +94,7 @@ div.csl-indent {
       macros: {
         A: "\\mathcal\{A\}",
         approxsim: "\\stackrel\{\\text\{approx\}\}\{\\sim\}",
+        AR: "\\text\{AR\}",
         B: "\\mathcal\{B\}",
         Bernoulli: ["\\operatorname\{Bernoulli\}"],
         binomial: ["\\operatorname\{binomial\}"],
@@ -124,6 +125,7 @@ div.csl-indent {
         obs: "\\text\{obs\}",
         odds: ["\\operatorname\{odds\}"],
         OR: "\\text\{OR\}",
+        PAR: "\\text\{PAR\}",
         ptrue: "p_\{\\text\{true\}\}",
         R: "\\mathcal\{R\}",
         RD: "\\text\{RD\}",
@@ -305,6 +307,12 @@ div.csl-indent {
   <div class="sidebar-item-container"> 
   <a href="./causality.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Causality in Public Health</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./counterfactuals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Potential Outcomes and Attributable Risk</span></span></a>
   </div>
 </li>
       </ul>
@@ -583,6 +591,11 @@ Intervals for the <span>Poisson</span> Expectation.”</span>
 Cohen, I Bernard. 1984. <span>“Florence Nightingale.”</span>
 <em>Scientific American</em> 250 (3): 128–37.
 </div>
+<div id="ref-cole1971attributable" class="csl-entry" role="listitem">
+Cole, Philip, and Brian MacMahon. 1971. <span>“Attributable Risk Percent
+in Case-Control Studies.”</span> <em>British Journal of Preventive &amp;
+Social Medicine</em> 25 (4): 242.
+</div>
 <div id="ref-copeland1977bias" class="csl-entry" role="listitem">
 Copeland, Karen T, Harvey Checkoway, Anthony J McMichael, and Robert H
 Holbrook. 1977. <span>“Bias Due to Misclassification in the Estimation
@@ -650,6 +663,11 @@ and Statistical Verdicts: Probable Grounds for Appeal.”</span>
 Doll, Richard, and Austin Bradford Hill. 1950. <span>“Smoking and
 Carcinoma of the Lung.”</span> <em>British Medical Journal</em> 2
 (4682): 739.
+</div>
+<div id="ref-dorn1959tobacco" class="csl-entry" role="listitem">
+Dorn, Harold F. 1959. <span>“Tobacco Consumption and Mortality from
+Cancer and Other Diseases.”</span> <em>Public Health Reports</em> 74
+(7): 581.
 </div>
 <div id="ref-dosemeci1990does" class="csl-entry" role="listitem">
 Dosemeci, Mustafa, Sholom Wacholder, and Jay H Lubin. 1990. <span>“Does
@@ -813,6 +831,16 @@ Greenland, Sander, and Charles Poole. 2013. <span>“Living with p Values:
 Resurrecting a Bayesian Perspective on Frequentisi Statistics.”</span>
 <em>Epidemiology</em> 24 (1): 62–68.
 </div>
+<div id="ref-greenland1986identifiability" class="csl-entry" role="listitem">
+Greenland, Sander, and James M Robins. 1986. <span>“Identifiability,
+Exchangeability, and Epidemiological Confounding.”</span>
+<em>International Journal of Epidemiology</em> 15 (3): 413–19.
+</div>
+<div id="ref-greenland1988conceptual" class="csl-entry" role="listitem">
+———. 1988. <span>“Conceptual Problems in the Definition and
+Interpretation of Attributable Fractions.”</span> <em>American Journal
+of Epidemiology</em> 128 (6): 1185–97.
+</div>
 <div id="ref-greenland2016statistical" class="csl-entry" role="listitem">
 Greenland, Sander, Stephen J Senn, Kenneth J Rothman, John B Carlin,
 Charles Poole, Steven N Goodman, and Douglas G Altman. 2016.
@@ -956,6 +984,10 @@ Likelihood Estimates and Related Bayes’ Estimates.”</span>
 <em>University of California Publications in Statistics</em> 1 (11):
 277–330.
 </div>
+<div id="ref-levin1953occurrence" class="csl-entry" role="listitem">
+Levin, M L. 1953. <span>“The Occurrence of Lung Cancer in Man.”</span>
+<em>Acta-Unio Internationalis Contra Cancrum</em> 9 (3): 531–41.
+</div>
 <div id="ref-liddell1977methods" class="csl-entry" role="listitem">
 Liddell, FDK, JC McDonald, and DC Thomas. 1977. <span>“Methods of Cohort
 Analysis: Appraisal by Application to Asbestos Mining.”</span>
@@ -1025,6 +1057,11 @@ Case-Referent Studies.”</span> <em>American Journal of Epidemiology</em>
 Miettinen, Olli S. 1969. <span>“Individual Matching with Multiple
 Controls in the Case of All-or-None Responses.”</span>
 <em>Biometrics</em> 25 (2): 339–55.
+</div>
+<div id="ref-miettinen1974proportion" class="csl-entry" role="listitem">
+———. 1974. <span>“Proportion of Disease Caused or Prevented by a Given
+Exposure, Trait or Intervention.”</span> <em>American Journal of
+Epidemiology</em> 99 (5): 325–32.
 </div>
 <div id="ref-miettinen1981confounding" class="csl-entry" role="listitem">
 Miettinen, Olli S, and E Francis Cook. 1981. <span>“Confounding: Essence
@@ -1126,6 +1163,15 @@ Pearce, Neil. 1993. <span>“What Does the Odds Ratio Estimate in a
 Case-Control Study?”</span> <em>International Journal of
 Epidemiology</em> 22 (6): 1189–92.
 </div>
+<div id="ref-pearl1993bayesian" class="csl-entry" role="listitem">
+Pearl, Judea. 1993. <span>“[Bayesian Analysis in Expert Systems]:
+Comment: Graphical Models, Causality and Intervention.”</span>
+<em>Statistical Science</em> 8 (3): 266–69.
+</div>
+<div id="ref-pearl1995causal" class="csl-entry" role="listitem">
+———. 1995. <span>“Causal Diagrams for Empirical Research.”</span>
+<em>Biometrika</em> 82 (4): 669–88.
+</div>
 <div id="ref-pearson1900x" class="csl-entry" role="listitem">
 Pearson, Karl. 1900. <span>“On the Criterion That a Given System of
 Deviations from the Probable in the Case of a Correlated System of
@@ -1208,6 +1254,11 @@ Association</em> 112 (519): 1121–30.
 Robert, Christian P, and George Casella. 2004. <em>Monte Carlo
 Statistical Methods</em>. Second edition. Springer.
 </div>
+<div id="ref-robins1989estimability" class="csl-entry" role="listitem">
+Robins, James M, and Sander Greenland. 1989. <span>“Estimability and
+Estimation of Excess and Etiologic Fractions.”</span> <em>Statistics in
+Medicine</em> 8 (7): 845–59.
+</div>
 <div id="ref-rogot1961note" class="csl-entry" role="listitem">
 Rogot, Eugene. 1961. <span>“A Note on Measurement Errors and Detecting
 Real Differences.”</span> <em>Journal of the American Statistical
@@ -1224,6 +1275,10 @@ Rothman, Kenneth J. 1975. <span>“A Pictorial Representation of
 Confounding in Epidemiologic Studies.”</span> <em>Journal of Chronic
 Diseases</em> 28 (2): 101–8.
 </div>
+<div id="ref-rothman1976causes" class="csl-entry" role="listitem">
+———. 1976. <span>“Causes.”</span> <em>American Journal of
+Epidemiology</em> 104 (6): 587–92.
+</div>
 <div id="ref-rothman1978show" class="csl-entry" role="listitem">
 ———. 1978. <span>“A Show of Confidence.”</span> <em>New England Journal
 of Medicine</em> 299 (24): 1362–63.
@@ -1239,6 +1294,11 @@ Rothman, Kenneth J, Sander Greenland, and Timothy L Lash. 2008.
 <div id="ref-routledge1992resolving" class="csl-entry" role="listitem">
 Routledge, RD. 1992. <span>“Resolving the Conflict over Fisher’s Exact
 Test.”</span> <em>Canadian Journal of Statistics</em> 20 (2): 201–9.
+</div>
+<div id="ref-rubin1974estimating" class="csl-entry" role="listitem">
+Rubin, Donald B. 1974. <span>“Estimating Causal Effects of Treatments in
+Randomized and Nonrandomized Studies.”</span> <em>Journal of Educational
+Psychology</em> 66 (5): 688.
 </div>
 <div id="ref-rubin1956use" class="csl-entry" role="listitem">
 Rubin, Theodore, Joseph Rosenbaum, and Sidney Cobb. 1956. <span>“The Use
@@ -1871,8 +1931,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./causality.html" class="pagination-link" aria-label="Causality in Public Health">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Causality in Public Health</span></span>
+      <a href="./counterfactuals.html" class="pagination-link" aria-label="Potential Outcomes and Attributable Risk">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Potential Outcomes and Attributable Risk</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

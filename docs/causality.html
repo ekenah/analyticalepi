@@ -50,7 +50,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="next">
+<link href="./counterfactuals.html" rel="next">
 <link href="./bayes2.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -337,6 +337,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Causality in Public Health</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./counterfactuals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Potential Outcomes and Attributable Risk</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -436,7 +442,7 @@ window.Quarto = {
 <section id="lack-of-sufficiency-cholera" class="level3" data-number="13.1.1">
 <h3 data-number="13.1.1" class="anchored" data-anchor-id="lack-of-sufficiency-cholera"><span class="header-section-number">13.1.1</span> Lack of sufficiency: cholera</h3>
 <p>These criteria were never meant to be used as a rigid definition of causation. Even in the late 19th century, it was clear that necessary and sufficient causes would not be found for many diseases. In 1855, Max von Pettenkofer tried to replicate John Snow’s observations from the 1854 cholera epidemic in London by analyzing the spread of cholera in an 1854 outbreak in Munich.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> His map of cases and his analysis of areas supplied by two water companies did not show a correlation between drinking water source and the risk of cholera. To explain these results, he argued that cholera was not caused by a pathogen alone. He believed that four conditions were necessary to have an epidemic: a specific pathogen, the right local conditions, the right seasonal conditions, and the right individual conditions. In the case of cholera, he believed that soil played a key role in facilitating transmission of the then-unidentified pathogen: the cholera pathogen could not cause disease before it acquired virulence in moist, porous soil that contained decaying organic matter <span class="citation" data-cites="evans1973pettenkofer">(<a href="references.html#ref-evans1973pettenkofer" role="doc-biblioref">Evans 1973</a>)</span>.</p>
-<p>He retained this belief long after the German Cholera Commission headed by Koch identified the bacteria <em>Vibrio cholerae</em> as the cause of cholera in Egypt and India in 1884 <span class="citation" data-cites="howard1973gelsenkirchen">(<a href="references.html#ref-howard1973gelsenkirchen" role="doc-biblioref">Howard-Jones 1973</a>)</span> On 7 October 1892, the 74-year-old Pettenkofer experimented on himself to prove his point. He neutralized his stomach acid with baking soda and swallowed a milliliter of fresh broth culture from a dying cholera patient. He wrote later: &gt; Even if I had deceived myself and the experiment endangered my life, I would have looked Death quietly in the eye for mine would have been no foolish or cowardly suicide; I would have died in the service of science like a soldier on the field of honor.</p>
+<p>He retained this belief long after the German Cholera Commission headed by Koch identified the bacteria <em>Vibrio cholerae</em> as the cause of cholera in Egypt and India in 1884 <span class="citation" data-cites="howard1973gelsenkirchen">(<a href="references.html#ref-howard1973gelsenkirchen" role="doc-biblioref">Howard-Jones 1973</a>)</span> On 7 October 1892, the 74-year-old Pettenkofer experimented on himself to prove his point. He neutralized his stomach acid with baking soda and swallowed a milliliter of fresh broth culture from a dying cholera patient. He wrote later: “Even if I had deceived myself and the experiment endangered my life, I would have looked Death quietly in the eye for mine would have been no foolish or cowardly suicide; I would have died in the service of science like a soldier on the field of honor.”</p>
 <p>It turned out that he developed only a light diarrhea (which contained profuse <em>Vibrio cholerae</em>). Pettenkofer had probably had cholera in an 1830 epidemic, so he may have been partially protected by lingering immunity. Several of his students developed severe diarrhea trying the same experiment, but fortunately none died <span class="citation" data-cites="evans1973pettenkofer howard1973gelsenkirchen">(<a href="references.html#ref-evans1973pettenkofer" role="doc-biblioref">Evans 1973</a>; <a href="references.html#ref-howard1973gelsenkirchen" role="doc-biblioref">Howard-Jones 1973</a>)</span>.</p>
 <p>Pettenkofer considered his experiment a success because he did not develop the classic symptoms of cholera, but a more nuanced interpretation is that infection with <em>Vibrio cholerae</em> has a wide range of clinical manifestations, ranging from no clinical illness to severe dehydration and death. Koch discovered asymptomatic carriers of cholera in 1893 [<span class="citation" data-cites="evans1976causation">Evans (<a href="references.html#ref-evans1976causation" role="doc-biblioref">1976</a>)</span>. In the 1960s, epidemiologic investigations of cholera outbreaks in Hong Kong <span class="citation" data-cites="van1965observations">(<a href="references.html#ref-van1965observations" role="doc-biblioref">Van de Linde and Forbes 1965</a>)</span> and Dhaka, Bangladesh <span class="citation" data-cites="mccormack1969community">(<a href="references.html#ref-mccormack1969community" role="doc-biblioref">McCormack, Islam, and Fahimuddin 1969</a>)</span> suggested that the ratio of cholera infections to clinical cases could be as high as 100 to 1. This finding was confirmed by a mathematical modeling study of historical cholera data from Bengal <span class="citation" data-cites="king2008inapparent">(<a href="references.html#ref-king2008inapparent" role="doc-biblioref">King et al. 2008</a>)</span>. Unless we allow for this range of clinical manifestations in our definition of cases and non-cases, infection with <em>Vibrio cholerae</em> is not a sufficient cause of cholera.</p>
 <p>Once the relationship between a pathogen and a disease is established (e.g., tuberculosis and <em>Mycobacterium tuberculosis</em>), the presence of the pathogen can become part of the definition of the disease. This can be a useful way of identifying a group of clinical illnesses that have a common method of treatment or control. However, it is logically circular from the point of view of Koch’s postulates:</p>
@@ -1153,8 +1159,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link" aria-label="References">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./counterfactuals.html" class="pagination-link" aria-label="Potential Outcomes and Attributable Risk">
+        <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Potential Outcomes and Attributable Risk</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
