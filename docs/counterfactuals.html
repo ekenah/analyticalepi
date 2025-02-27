@@ -386,15 +386,17 @@ window.Quarto = {
   <ul>
   <li><a href="#potential-outcomes" id="toc-potential-outcomes" class="nav-link active" data-scroll-target="#potential-outcomes"><span class="header-section-number">14.1</span> Potential outcomes</a>
   <ul class="collapse">
-  <li><a href="#bias-in-causal-inference" id="toc-bias-in-causal-inference" class="nav-link" data-scroll-target="#bias-in-causal-inference"><span class="header-section-number">14.1.1</span> Bias in causal inference</a></li>
-  <li><a href="#sufficient-component-cause-model-causal-pies" id="toc-sufficient-component-cause-model-causal-pies" class="nav-link" data-scroll-target="#sufficient-component-cause-model-causal-pies"><span class="header-section-number">14.1.2</span> Sufficient-component cause model (causal pies)</a></li>
+  <li><a href="#sec-causal-effect" id="toc-sec-causal-effect" class="nav-link" data-scroll-target="#sec-causal-effect"><span class="header-section-number">14.1.1</span> Measures of causal effect</a></li>
+  <li><a href="#confounding-and-exchangeability" id="toc-confounding-and-exchangeability" class="nav-link" data-scroll-target="#confounding-and-exchangeability"><span class="header-section-number">14.1.2</span> Confounding and exchangeability</a></li>
+  <li><a href="#selection-bias-and-the-analytic-cohort-condition" id="toc-selection-bias-and-the-analytic-cohort-condition" class="nav-link" data-scroll-target="#selection-bias-and-the-analytic-cohort-condition"><span class="header-section-number">14.1.3</span> Selection bias and the analytic cohort condition</a></li>
   </ul></li>
   <li><a href="#attributable-risk" id="toc-attributable-risk" class="nav-link" data-scroll-target="#attributable-risk"><span class="header-section-number">14.2</span> Attributable risk</a>
   <ul class="collapse">
-  <li><a href="#attributable-risk-among-the-exposed" id="toc-attributable-risk-among-the-exposed" class="nav-link" data-scroll-target="#attributable-risk-among-the-exposed"><span class="header-section-number">14.2.1</span> Attributable risk among the exposed</a></li>
-  <li><a href="#population-attributable-risk" id="toc-population-attributable-risk" class="nav-link" data-scroll-target="#population-attributable-risk"><span class="header-section-number">14.2.2</span> Population attributable risk</a></li>
-  <li><a href="#dependence-on-time-interval" id="toc-dependence-on-time-interval" class="nav-link" data-scroll-target="#dependence-on-time-interval"><span class="header-section-number">14.2.3</span> Dependence on time interval</a></li>
-  <li><a href="#adding-up-attributable-risks" id="toc-adding-up-attributable-risks" class="nav-link" data-scroll-target="#adding-up-attributable-risks"><span class="header-section-number">14.2.4</span> Adding up attributable risks</a></li>
+  <li><a href="#sufficient-component-cause-model-causal-pies" id="toc-sufficient-component-cause-model-causal-pies" class="nav-link" data-scroll-target="#sufficient-component-cause-model-causal-pies"><span class="header-section-number">14.2.1</span> Sufficient-component cause model (causal pies)</a></li>
+  <li><a href="#attributable-risk-among-the-exposed" id="toc-attributable-risk-among-the-exposed" class="nav-link" data-scroll-target="#attributable-risk-among-the-exposed"><span class="header-section-number">14.2.2</span> Attributable risk among the exposed</a></li>
+  <li><a href="#population-attributable-risk" id="toc-population-attributable-risk" class="nav-link" data-scroll-target="#population-attributable-risk"><span class="header-section-number">14.2.3</span> Population attributable risk</a></li>
+  <li><a href="#dependence-on-time-interval" id="toc-dependence-on-time-interval" class="nav-link" data-scroll-target="#dependence-on-time-interval"><span class="header-section-number">14.2.4</span> Dependence on time interval</a></li>
+  <li><a href="#adding-up-attributable-risks" id="toc-adding-up-attributable-risks" class="nav-link" data-scroll-target="#adding-up-attributable-risks"><span class="header-section-number">14.2.5</span> Adding up attributable risks</a></li>
   </ul></li>
   <li><a href="#excess-and-etiologic-cases" id="toc-excess-and-etiologic-cases" class="nav-link" data-scroll-target="#excess-and-etiologic-cases"><span class="header-section-number">14.3</span> Excess and etiologic cases</a>
   <ul class="collapse">
@@ -432,61 +434,122 @@ window.Quarto = {
 
 
 <blockquote class="blockquote">
-<div class="line-block">Two roads diverged in a yellow wood,<br>
-And sorry I could not travel both<br>
-And be one traveler, long I stood<br>
-And looked down one as far as I could<br>
-To where it bent in the undergrowth;<br>
-…<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The Road Not Taken<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Robert Frost (<em>The Atlantic Monthly</em>, August 1915)</div>
+<p>Epidemiology is often defined in terms of study of the determinants of the distribution of the disease; but we should not forget that the more widespread is a particular cause, the less it explains the distribution of cases. The hardest cause to identify is the one that is universally present, for then it has no influence on the distribution of disease. <span class="citation" data-cites="rose1985sick">(<a href="references.html#ref-rose1985sick" role="doc-biblioref">Rose 1985</a>)</span></p>
 </blockquote>
 <section id="potential-outcomes" class="level2" data-number="14.1">
 <h2 data-number="14.1" class="anchored" data-anchor-id="potential-outcomes"><span class="header-section-number">14.1</span> Potential outcomes</h2>
-<p>Association is not causation. But why not? To understand the distinction, it is crucial to consider the difference between observation and intervention. Let <span class="math inline">\(X\)</span> be an indicator of exposure, with <span class="math inline">\(X = 1\)</span> in the exposed and <span class="math inline">\(X = 0\)</span> in the unexposed. Imagine each participant in our study having two <em>potential outcomes</em>~<span class="citation" data-cites="rubin1974estimating">(<a href="references.html#ref-rubin1974estimating" role="doc-biblioref">Rubin 1974</a>)</span>: Let <span class="math inline">\(D^1_j\)</span> be the indicator for disease in person <span class="math inline">\(j\)</span> if we set <span class="math inline">\(X = 1\)</span> and <span class="math inline">\(D^0_j\)</span> be the indicator for disease in person <span class="math inline">\(j\)</span> if we set <span class="math inline">\(X = 0\)</span>. <a href="#tbl-poutcomes" class="quarto-xref">Table&nbsp;<span>14.1</span></a> shows the four possible combinations of potential outcomes for an individual <span class="citation" data-cites="greenland1986identifiability">(<a href="references.html#ref-greenland1986identifiability" role="doc-biblioref">Greenland and Robins 1986</a>)</span>.</p>
+<p>Association is not causation. But why not? To understand the distinction, it is crucial to consider the difference between observation and intervention. Let <span class="math inline">\(X\)</span> be an indicator of a binary exposure, with <span class="math inline">\(X = 1\)</span> in the exposed and <span class="math inline">\(X = 0\)</span> in the unexposed. Suppose we define a time scale and time interval <span class="math inline">\((0, t]\)</span> during which we measure the occurrence of disease. Each study participant would have two <strong>potential outcomes</strong> <span class="citation" data-cites="rubin1974estimating">(<a href="references.html#ref-rubin1974estimating" role="doc-biblioref">Rubin 1974</a>)</span>: The potential outcome <span class="math inline">\(D^1\)</span> is their outcome under exposure (<span class="math inline">\(X = 1\)</span>) and the potential outcome <span class="math inline">\(D^0\)</span> is their outcome under no exposure (<span class="math inline">\(X = 0\)</span>). These potential outcomes are random variables <span class="math inline">\(D^1(\omega)\)</span> and <span class="math inline">\(D^0(\omega)\)</span> defined for each individual <span class="math inline">\(\omega\)</span> in our population <span class="math inline">\(\Omega\)</span>. <a href="#tbl-poutcomes" class="quarto-xref">Table&nbsp;<span>14.1</span></a> shows the four possible combinations of potential outcomes for an individual <span class="math inline">\(\omega\)</span>, which are often called <strong>causal types</strong></p>
 <div id="tbl-poutcomes" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-poutcomes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;14.1: Potential outcomes for an individual with and without exposure
+Table&nbsp;14.1: Causal types from <span class="citation" data-cites="greenland1986identifiability">Greenland and Robins (<a href="references.html#ref-greenland1986identifiability" role="doc-biblioref">1986</a>)</span>.
 </figcaption>
 <div aria-describedby="tbl-poutcomes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
 <thead>
 <tr class="header">
 <th style="text-align: center;"></th>
-<th style="text-align: center;"><span class="math inline">\(D^1 = 0\)</span></th>
 <th style="text-align: center;"><span class="math inline">\(D^1 = 1\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(D^1 = 0\)</span></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(D^0 = 0\)</span></td>
-<td style="text-align: center;">No effect</td>
-<td style="text-align: center;">Harmful</td>
+<td style="text-align: center;"><span class="math inline">\(D^0 = 1\)</span></td>
+<td style="text-align: center;">No effect (doomed)</td>
+<td style="text-align: center;">Exposure preventive</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;"><span class="math inline">\(D^0 = 1\)</span></td>
-<td style="text-align: center;">Protective</td>
-<td style="text-align: center;">No effect</td>
+<td style="text-align: center;"><span class="math inline">\(D^0 = 0\)</span></td>
+<td style="text-align: center;">Exposure causative</td>
+<td style="text-align: center;">No effect (immune)</td>
 </tr>
 </tbody>
 </table>
 </div>
 </figure>
 </div>
-<p>If we could see both <span class="math inline">\(D^0_j\)</span> and <span class="math inline">\(D^1_j\)</span>, we would know whether treatment was harmful, neutral, or beneficial for person <span class="math inline">\(j\)</span>. However, we can see at most one of these outcomes. If <span class="math inline">\(j\)</span> is exposed, we see <span class="math inline">\(D^1_j\)</span> but not <span class="math inline">\(D^0_j\)</span>. If <span class="math inline">\(j\)</span> is unexposed, we see <span class="math inline">\(D^0_j\)</span> but not <span class="math inline">\(D^1_j\)</span>. A hypothetical comparison to a condition that did not occur, such as comparing <span class="math inline">\(D^1_j\)</span> and <span class="math inline">\(D^0_j\)</span>, is called a <em>counterfactual</em> comparison.</p>
-<p>A perfect epidemiological study would require a time machine: We would first measure the risk of disease in the study population when everyone is exposed. Then we would go back in time, prevent exposure for them all, and measure the risk of disease over the same time interval. Any measure of the difference in disease occurrence between these two parallel timelines would represent a causal effect of exposure. Bound by the laws of physics and ethics, we must approximate this using counterfactual comparison using observable data.</p>
-<section id="bias-in-causal-inference" class="level3" data-number="14.1.1">
-<h3 data-number="14.1.1" class="anchored" data-anchor-id="bias-in-causal-inference"><span class="header-section-number">14.1.1</span> Bias in causal inference</h3>
-<p>In causal inference, bias occurs when an observed association between an exposure <span class="math inline">\(X\)</span> and a disease <span class="math inline">\(D\)</span> does not match the effect of an intervention that changes the value of <span class="math inline">\(X\)</span> in a similar population. There are two fundamental types of bias in causal inference:</p>
-<ul>
-<li><p><strong>Confounding</strong> occurs when there is an unobserved common cause of <span class="math inline">\(X\)</span> and <span class="math inline">\(D\)</span>, which results in an association between <span class="math inline">\(X\)</span> and <span class="math inline">\(D\)</span> that differs from the causal effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(D\)</span> <span class="citation" data-cites="pearl1993bayesian pearl1995causal">(<a href="references.html#ref-pearl1993bayesian" role="doc-biblioref">Pearl 1993</a>, <a href="references.html#ref-pearl1995causal" role="doc-biblioref">1995</a>)</span>. Usually, this is something that exists in the world around us, not something that is created by the design or conduct of the study.</p></li>
-<li><p><strong>Selection bias</strong> occurs when selection into the study distorts the true association between <span class="math inline">\(X\)</span> and <span class="math inline">\(D\)</span> in the population elegible for the study <span class="citation" data-cites="berkson1946limitations hernan2004structural">(<a href="references.html#ref-berkson1946limitations" role="doc-biblioref">Berkson 1946</a>; <a href="references.html#ref-hernan2004structural" role="doc-biblioref">Hernán, Hernández-Dı́az, and Robins 2004</a>)</span>.</p></li>
-</ul>
-<p>Confounding is specific to causal inference, but selection bias can affect both causal inference and prediction (i.e., both analytic and descriptive epidemiology). To understand and control these sources of bias, our most important tools will be potential outcomes and causal graphs.</p>
+<p>If we could see both <span class="math inline">\(D^0\)</span> and <span class="math inline">\(D^1\)</span> for a single individual, we would know whether treatment was harmful, neutral, or beneficial for them. However, we can usually see at most one of these outcomes. If <span class="math inline">\(\omega\)</span> is exposed, we see <span class="math inline">\(D^1(\omega)\)</span> but not <span class="math inline">\(D^0(\omega)\)</span>. If <span class="math inline">\(\omega\)</span> is unexposed, we see <span class="math inline">\(D^0(\omega)\)</span> but not <span class="math inline">\(D^1(\omega)\)</span>. A perfect epidemiological study would require a time machine: We would first measure the risk of disease in the study population when everyone is exposed. Then we would go back in time, prevent exposure for them all, and measure the risk of disease over the same time interval. Any measure of the difference in disease occurrence between these two parallel timelines would represent a causal effect of exposure. <!-- Bound by the laws of physics and ethics, we must approximate this using counterfactual comparison using observable data. --> <!-- The assumption that the potential outcome $D^x$ equals the observed outcome when the exposure $X = x$ is called **consistency** --> <!-- A hypothetical comparison to a condition that did not occur, such as comparing $D^1_j$ and $D^0_j$, is called a \emph{counterfactual} comparison. --></p>
+<section id="sec-causal-effect" class="level3" data-number="14.1.1">
+<h3 data-number="14.1.1" class="anchored" data-anchor-id="sec-causal-effect"><span class="header-section-number">14.1.1</span> Measures of causal effect</h3>
+<p>The <strong>counterfactual risk</strong> under exposure in the population <span class="math inline">\(\Omega\)</span> is <span class="math display">\[
+  \Pr(D^1 = 1),
+\]</span> and the counterfactual risk under no exposure is <span class="math display">\[
+  \Pr(D^0 = 1).
+\]</span> Using these counterfactual risks, we can express a causal effect in terms of any of our measures of association from <a href="cohort.html" class="quarto-xref"><span>Chapter 9</span></a>. The causal risk difference is <span class="math display">\[
+  \RD = \Pr(D^1 = 1) - \Pr(D^0 = 0),
+\]</span> the causal risk ratio is <span class="math display">\[
+  \RR = \frac{\Pr(D^1 = 1)}{\Pr(D^0 = 1)},
+\]</span> and the causal odds ratio is <span class="math display">\[
+  \OR = \frac{\odds\bigl(\Pr(D^1 = 1)\bigr)}{\odds\bigl(\Pr(D^0 = 1)\bigr)},
+\]</span> where <span class="math inline">\(\odds(p) = p / (1 - p)\)</span>. When an exposure <span class="math inline">\(X\)</span> is not binary, these measures can be calculated for any two distinct levels of <span class="math inline">\(X\)</span>.</p>
 </section>
-<section id="sufficient-component-cause-model-causal-pies" class="level3" data-number="14.1.2">
-<h3 data-number="14.1.2" class="anchored" data-anchor-id="sufficient-component-cause-model-causal-pies"><span class="header-section-number">14.1.2</span> Sufficient-component cause model (causal pies)</h3>
+<section id="confounding-and-exchangeability" class="level3" data-number="14.1.2">
+<h3 data-number="14.1.2" class="anchored" data-anchor-id="confounding-and-exchangeability"><span class="header-section-number">14.1.2</span> Confounding and exchangeability</h3>
+<p>When we cannot see our population under both exposure and no exposure, we cannot calculate <span class="math inline">\(\Pr(D^1 = 1)\)</span> or <span class="math inline">\(\Pr(D^0 = 1)\)</span> directly. If our population contains both exposed and unexposed individuals, we can estimate <span class="math display">\[
+  \Pr(D = 1 \given{} X = 1)
+\]</span> and <span class="math display">\[
+  \Pr(D = 1 \given{} X = 0).
+\]</span> We have <strong>confounding</strong> when <span class="math display">\[
+  \Pr(D = 1 \given{} X = x) \neq \Pr(D^x = 1)
+\]</span> for <span class="math inline">\(x = 1\)</span> or <span class="math inline">\(x = 0\)</span>. When we have confounding, we cannot use the conditional risks of disease given exposure to calculate the measures of causal effect from <a href="#sec-causal-effect" class="quarto-xref"><span>Section 14.1.1</span></a>. Confounding can occur when there is an unobserved common cause of <span class="math inline">\(X\)</span> and <span class="math inline">\(D\)</span>, which results in an association between <span class="math inline">\(X\)</span> and <span class="math inline">\(D\)</span> in the population that differs from the causal effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(D\)</span> <span class="citation" data-cites="pearl1993bayesian pearl1995causal">(<a href="references.html#ref-pearl1993bayesian" role="doc-biblioref">Pearl 1993</a>, <a href="references.html#ref-pearl1995causal" role="doc-biblioref">1995</a>)</span>.</p>
+<p>To avoid confounding, we need <strong>exchangeability</strong> of the potential disease outcomes given exposure, which means that <span class="math display">\[
+  D^x \indep X
+\]</span> for all possible values <span class="math inline">\(x\)</span> of <span class="math inline">\(X\)</span> <span class="citation" data-cites="rosenbaum1983central">(<a href="references.html#ref-rosenbaum1983central" role="doc-biblioref">Rosenbaum and Rubin 1983</a>)</span>. In other words, the <em>potential outcomes</em> are independent of the <em>realized exposure</em>. If exposure causes disease, the realized disease outcomes will not be independent of exposure. To see why, imagine that <span class="math inline">\(D^1(\omega) = 1\)</span> and <span class="math inline">\(D^0(\omega) = 0\)</span> for all individuals <span class="math inline">\(\omega\)</span> in our population <span class="math inline">\(\Omega\)</span>. Then the realized disease outcome <span class="math inline">\(D = X\)</span>, but we have exchangeability because all <span class="math inline">\(\omega \in \Omega\)</span> have the same potential outcomes.</p>
+<p>Under exchangeability, we get <span class="math display">\[
+  \begin{aligned}
+    \Pr(D^x = 1)
+    &amp;= \Pr(D^x = 1 \given{} X = x)  &amp;&amp;\text{ by exchangeability} \\
+    &amp;= \Pr(D = 1 \given{} X = x)    &amp;&amp;\text{ by consistency}.
+  \end{aligned}
+\]</span> Therefore, we can estimate the counterfactual risks by calculating the conditional risks of disease given <span class="math inline">\(X\)</span>. We can then use these to estimate the measures of causal effect from <a href="#sec-causal-effect" class="quarto-xref"><span>Section 14.1.1</span></a>.</p>
+<p>When exchangeability fails, we might still have <strong>conditional exchangeability</strong> given a set of covariates <span class="math inline">\(C\)</span> that are not causally affected by <span class="math inline">\(X\)</span>. This can be written <span class="math display">\[
+  D^x \indep X \given{} C.
+\]</span> If we measure <span class="math inline">\(C\)</span>, then <span class="math display">\[
+  \begin{aligned}
+    \Pr(D^x = 1 \given{} C)
+    &amp;= \Pr(D^x = 1 \given{} C, X = x)  &amp;&amp;\text{ by conditional exchangeability} \\
+    &amp;= \Pr(D = 1 \given{} C, X = x)    &amp;&amp;\text{ by consistency}.
+  \end{aligned}
+\]</span> Thus, we can estimate conditional counterfactual risks given <span class="math inline">\(C\)</span> by calculating conditional risks of disease given <span class="math inline">\(X\)</span> and <span class="math inline">\(C\)</span>. These can be used to calculate conditional measures of causal effect given <span class="math inline">\(C\)</span>, or we can calculate marginal measures of causal effect through standardization to any given distribution of <span class="math inline">\(C\)</span> (as long as the distribution of <span class="math inline">\(C\)</span> contains only values present in our population).</p>
+</section>
+<section id="selection-bias-and-the-analytic-cohort-condition" class="level3" data-number="14.1.3">
+<h3 data-number="14.1.3" class="anchored" data-anchor-id="selection-bias-and-the-analytic-cohort-condition"><span class="header-section-number">14.1.3</span> Selection bias and the analytic cohort condition</h3>
+<p>Under exchangeability, we have <span class="math inline">\(\Pr(D^x = 1) = \Pr(D = 1 \given{} X = x)\)</span> in our population. However, we typically do not observe the entire population. Instead, we observe a sample of the population. This could be a random sample of the population or a sample selected by exposure (in a cohort study) or by disease (in a case-control study). Let <span class="math inline">\(S\)</span> indicate selection into the study, so <span class="math inline">\(S = 1\)</span> for members of our study sample and <span class="math inline">\(S = 0\)</span> for everyone else. <strong>Selection bias</strong> occurs when selection into the study distorts the true association between <span class="math inline">\(X\)</span> and <span class="math inline">\(D\)</span> in the population elegible for the study <span class="citation" data-cites="berkson1946limitations hernan2004structural">(<a href="references.html#ref-berkson1946limitations" role="doc-biblioref">Berkson 1946</a>; <a href="references.html#ref-hernan2004structural" role="doc-biblioref">Hernán, Hernández-Dı́az, and Robins 2004</a>)</span>. Confounding is specific to causal inference, but selection bias can affect both causal inference and prediction (i.e., both analytic and descriptive epidemiology).</p>
+<p>Using the data from our study, we cannot calculate <span class="math inline">\(\Pr(D = 1 \given{} X = x)\)</span> directly. Instead, we can calculate <span class="math display">\[
+  \Pr(D = 1 \given{} X = x, S = 1).
+\]</span> We would like to have <span class="math display">\[
+  \Pr(D^x = 1)
+  = \Pr(D = 1 \given{} X = x)
+  = \Pr(D = 1 \given{} X = x, S = 1).
+\]</span> However, exchangeability in the population implies only the first equality. To guarantee the second equality, we need to have the <strong>analytic cohort condition</strong> <span class="citation" data-cites="kenah2023potential">(<a href="references.html#ref-kenah2023potential" role="doc-biblioref">Kenah 2023</a>)</span> where <span class="math display">\[
+  S^x \indep D^x \given{} X.
+\]</span> In other words, if we intervene to set <span class="math inline">\(X = x\)</span>, the potential disease outcome <span class="math inline">\(D^x\)</span> and potential selection <span class="math inline">\(S^x\)</span> are independent of each other. To estimate a risk of disease accurately, selection into the study must be independent of disease outcome.</p>
+<p>With both exchangeability and the analytic cohort condition, we get <span class="math display">\[
+  \begin{aligned}
+    \Pr(D^x = 1)
+    &amp;= \Pr(D^x = 1 \given{} X = x)            &amp;&amp;\text{by exchangeability} \\
+    &amp;= \Pr(D^x = 1 \given{} X = x, S^x = 1)   &amp;&amp;\text{by the analytic cohort condition} \\
+    &amp;= \Pr(D = 1 \given{} X = x, S = 1)       &amp;&amp;\text{by consistency.}
+  \end{aligned}
+\]</span> Therefore, we can estimate causal measures of the effect of <span class="math inline">\(X\)</span> using data from our cohort study.</p>
+<p>When the analytic cohort condition fails, we might still have a conditional analytic cohort condition <span class="citation" data-cites="kenah2023potential">(<a href="references.html#ref-kenah2023potential" role="doc-biblioref">Kenah 2023</a>)</span> where <span class="math display">\[
+  S^x \indep D^x \given{} (X, C)
+\]</span> for a set <span class="math inline">\(C\)</span> of measured covariates that are not causally affected by <span class="math inline">\(X\)</span>. If the analytic cohort condition holds given <span class="math inline">\(C\)</span>, then <span class="math display">\[
+  \begin{aligned}
+    \Pr(D^x = 1 \given{} C)
+    &amp;= \Pr(D^x = 1 \given{} C, X = x)            &amp;&amp;\text{by exchangeability} \\
+    &amp;= \Pr(D^x = 1 \given{} C, X = x, S^x = 1)   &amp;&amp;\text{by the analytic cohort condition} \\
+    &amp;= \Pr(D = 1 \given{} C, X = x, S = 1)       &amp;&amp;\text{by consistency.}
+  \end{aligned}
+\]</span> Therefore, we can estimate conditional counterfactual risks given <span class="math inline">\(C\)</span> by calculating conditional risks of disease given <span class="math inline">\(X\)</span> and <span class="math inline">\(C\)</span> in our cohort study. These can be used to calculate conditional measures of causal effect given <span class="math inline">\(C\)</span>, or we can calculate marginal measures of causal effect through standardization to any given distribution of <span class="math inline">\(C\)</span> (as long as the distribution of <span class="math inline">\(C\)</span> contains only values present in our study sample).</p>
+</section>
+</section>
+<section id="attributable-risk" class="level2" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="attributable-risk"><span class="header-section-number">14.2</span> Attributable risk</h2>
+<p>Measures of attributable risk attempt to measure the proportion of a given disease that could be prevented by preventing a given exposure, either among the exposed or in the entire population. These measures implicitly assume that the observed difference in the occurrence of disease between the exposed and the unexposed represents a causal effect. In other words, they assume that the disease occurrence among the unexposed represents what would have happened among the exposed if exposure had been prevented.</p>
+<section id="sufficient-component-cause-model-causal-pies" class="level3" data-number="14.2.1">
+<h3 data-number="14.2.1" class="anchored" data-anchor-id="sufficient-component-cause-model-causal-pies"><span class="header-section-number">14.2.1</span> Sufficient-component cause model (causal pies)</h3>
 <p><span class="citation" data-cites="rothman1976causes">Rothman (<a href="references.html#ref-rothman1976causes" role="doc-biblioref">1976</a>)</span> proposed a model of causation now known as the <strong>sufficient-component cause model</strong>. A <strong>sufficient cause</strong> of disease is one that will inevitably lead to the disease, possibly after a period of time called the <em>induction period</em> <span class="citation" data-cites="rothman2008modern">(<a href="references.html#ref-rothman2008modern" role="doc-biblioref">Rothman, Greenland, and Lash 2008</a>)</span>. Each sufficient cause is called a <strong>causal pie</strong>, and it is made up of one or more component causes. The loss of any one of these component causes will destroy the sufficient cause. A given disease can have more than one sufficient cause, so the removal of one sufficient cause may not prevent the disease. However, the removal of a sufficient cause can delay the onset of disease if the disarmed sufficient cause would have been the one that first caused disease (after being completed and going through its induction period).</p>
 <p>A component cause is a <strong>necessary cause</strong> of a disease if it is a component of all possible sufficient causes of the disease. A component cause is a <strong>sufficient cause</strong> of a disease if it constitutes a sufficient cause all by itself. Removing a necessary cause will prevent all cases of a disease (e.g., smallpox eradication), but removing a sufficient cause leaves open the possibility that some other sufficient cause will induce the disease. However, most exposures of interest in public health are neither necessary nor sufficient to produce a given disease:</p>
 <blockquote class="blockquote">
@@ -497,18 +560,14 @@ Table&nbsp;14.1: Potential outcomes for an individual with and without exposure
 <p>…&nbsp;in a society where most people eat high phenylananine diets, the inheritance of the (rare) gene for PKU would appear to be a “strong” risk factor for phenylketonuric [intellectual disability], and phenylananine in the diet would appear to be a weak risk factor. In another society, however, in which the gene for PKU is very common and few people eat high phenylalanine diets, inheritance of the gene would be a weak risk factor and phenylalanine in the diet would be a strong risk factor.</p>
 </blockquote>
 </section>
-</section>
-<section id="attributable-risk" class="level2" data-number="14.2">
-<h2 data-number="14.2" class="anchored" data-anchor-id="attributable-risk"><span class="header-section-number">14.2</span> Attributable risk</h2>
-<p>Measures of attributable risk attempt to measure the proportion of a given disease that could be prevented by preventing a given exposure, either among the exposed or in the entire population. These measures implicitly assume that the observed difference in the occurrence of disease between the exposed and the unexposed represents a causal effect. In other words, they assume that the disease occurrence among the unexposed represents what would have happened among the exposed if exposure had been prevented.</p>
-<section id="attributable-risk-among-the-exposed" class="level3" data-number="14.2.1">
-<h3 data-number="14.2.1" class="anchored" data-anchor-id="attributable-risk-among-the-exposed"><span class="header-section-number">14.2.1</span> Attributable risk among the exposed</h3>
+<section id="attributable-risk-among-the-exposed" class="level3" data-number="14.2.2">
+<h3 data-number="14.2.2" class="anchored" data-anchor-id="attributable-risk-among-the-exposed"><span class="header-section-number">14.2.2</span> Attributable risk among the exposed</h3>
 <p>The <strong>attributable risk among the exposed</strong> is the proportion of risk among the exposed that is due to exposure. For simplicity, we assume that exposure is defined so that the exposed have higher or equal risk of disease. Let <span class="math inline">\(p_1\)</span> denote the cumulative incidence (risk) among the exposed in a given time interval, and let <span class="math inline">\(p_0\)</span> denote the cumulative incidence among the unexposed in the same interval. Then <span id="eq-attrisk"><span class="math display">\[
   \AR = \frac{p_1 - p_0}{p_1} = \frac{\RR - 1}{\RR}
 \tag{14.1}\]</span></span> where <span class="math inline">\(\RR = p_1 / p_0\)</span> is the risk ratio <span class="citation" data-cites="levin1953occurrence cole1971attributable">(<a href="references.html#ref-levin1953occurrence" role="doc-biblioref">Levin 1953</a>; <a href="references.html#ref-cole1971attributable" role="doc-biblioref">Cole and MacMahon 1971</a>)</span>. The second equality holds only when <span class="math inline">\(p_0 &gt; 0\)</span>, but the first equality holds even when <span class="math inline">\(p_0 = 0\)</span>. This is meant to measure the decrease in the risk among the exposed that would occur if exposure could be prevented.</p>
 </section>
-<section id="population-attributable-risk" class="level3" data-number="14.2.2">
-<h3 data-number="14.2.2" class="anchored" data-anchor-id="population-attributable-risk"><span class="header-section-number">14.2.2</span> Population attributable risk</h3>
+<section id="population-attributable-risk" class="level3" data-number="14.2.3">
+<h3 data-number="14.2.3" class="anchored" data-anchor-id="population-attributable-risk"><span class="header-section-number">14.2.3</span> Population attributable risk</h3>
 <p>The <strong>population attributable risk</strong> is the proportion of risk in the population that is due to exposure. If the prevalence of exposure is <span class="math inline">\(\pi\)</span>, then the total risk in the population is <span class="math display">\[
   (1 - \pi) p_0 + \pi p_1 = p_0 + \pi (p_1 - p_0).
 \]</span> The excess risk in the population due to exposure is <span class="math inline">\(\pi (r_1 - r_0)\)</span>, so the population attributable risk <span class="citation" data-cites="levin1953occurrence cole1971attributable">(<a href="references.html#ref-levin1953occurrence" role="doc-biblioref">Levin 1953</a>; <a href="references.html#ref-cole1971attributable" role="doc-biblioref">Cole and MacMahon 1971</a>)</span> is <span class="math display">\[
@@ -516,16 +575,16 @@ Table&nbsp;14.1: Potential outcomes for an individual with and without exposure
 \]</span> When <span class="math inline">\(\pi = 1\)</span>, this is equal to the attributable risk among the exposed. This is meant to measure the decrease in risk in the population that would occur if exposure could be prevented.</p>
 <p>When the odds ratio from a case control study approximates the risk ratio (as in a cumulative case-control study with a rare disease or a case-cohort study), the <span class="math inline">\(\AR\)</span> can be estimated using case-control data and the <span class="math inline">\(\PAR\)</span> can be estimated using case-control data and the prevalence of exposure. These measures can be adjusted for confounding and effect measure modification, and they can be redefined to estimate the proportion of cases prevented by an exposure or treatment associated with reduced risk <span class="citation" data-cites="miettinen1974proportion">(<a href="references.html#ref-miettinen1974proportion" role="doc-biblioref">Miettinen 1974</a>)</span>.</p>
 </section>
-<section id="dependence-on-time-interval" class="level3" data-number="14.2.3">
-<h3 data-number="14.2.3" class="anchored" data-anchor-id="dependence-on-time-interval"><span class="header-section-number">14.2.3</span> Dependence on time interval</h3>
+<section id="dependence-on-time-interval" class="level3" data-number="14.2.4">
+<h3 data-number="14.2.4" class="anchored" data-anchor-id="dependence-on-time-interval"><span class="header-section-number">14.2.4</span> Dependence on time interval</h3>
 <p>Both measures of attributable risk depend on the time interval considered. For example, suppose individuals in our population have exponential(<span class="math inline">\(\lambda = 1\)</span>) lifetimes when unexposed and exponential(<span class="math inline">\(\lambda = 2\)</span>) lifetimes when exposed. In the time interval <span class="math inline">\((0, t]\)</span>, the attibutable risk among the exposed is <span class="math display">\[
   \AR(t)
   = \frac{\big(1 - e^{-2 t}\big) - (1 - e^{-t})}{1 - e^{-2 t}}
   = \frac{e^{-t} - e^{-2 t}}{1 - e^{-2 t}}.
 \]</span> As <span class="math inline">\(t\)</span> approaches zero from above (i.e., <span class="math inline">\(t \downarrow 0\)</span>), <span class="math inline">\(\AR(t) \rightarrow 1 / 2\)</span> (which can be shown using l’H^{o}pital’s rule). As <span class="math inline">\(t \rightarrow \infty\)</span>, <span class="math inline">\(\AR(t) \rightarrow 0\)</span>.</p>
 </section>
-<section id="adding-up-attributable-risks" class="level3" data-number="14.2.4">
-<h3 data-number="14.2.4" class="anchored" data-anchor-id="adding-up-attributable-risks"><span class="header-section-number">14.2.4</span> Adding up attributable risks</h3>
+<section id="adding-up-attributable-risks" class="level3" data-number="14.2.5">
+<h3 data-number="14.2.5" class="anchored" data-anchor-id="adding-up-attributable-risks"><span class="header-section-number">14.2.5</span> Adding up attributable risks</h3>
 <p>If we have several different causes of disease, the attributable risk among the exposed for all of them can add up to more than one. For example, imagine that disease can only occur if a person has both exposure <span class="math inline">\(X\)</span> and exposure <span class="math inline">\(Y\)</span>. The attributable risk among the exposed for <span class="math inline">\(X\)</span> would be <span class="math display">\[
   \AR_X = \frac{p_1 - 0}{p_1} = 1,
 \]</span> where <span class="math inline">\(p_1\)</span> is the risk among individuals who have <span class="math inline">\(X = 1\)</span>. Similarly, the attributable risk among the exposed for <span class="math inline">\(Y\)</span> would be <span class="math inline">\(\AR_Y = 1\)</span>. Thus, we would have <span class="math inline">\(\AR_X + \AR_Y = 2\)</span>. The sufficient-component cause model is useful for understanding why attributable risks for all possible causes could add up to more than one.</p>
@@ -647,6 +706,9 @@ Greenland, Sander, and James M Robins. 1986. <span>“Identifiability, Exchangea
 <div id="ref-hernan2004structural" class="csl-entry" role="listitem">
 Hernán, Miguel Á, Sonia Hernández-Dı́az, and James M Robins. 2004. <span>“A Structural Approach to Selection Bias.”</span> <em>Epidemiology</em> 15 (5): 615–25.
 </div>
+<div id="ref-kenah2023potential" class="csl-entry" role="listitem">
+Kenah, Eben. 2023. <span>“A Potential Outcomes Approach to Selection Bias.”</span> <em>Epidemiology</em> 34 (6): 865–72.
+</div>
 <div id="ref-levin1953occurrence" class="csl-entry" role="listitem">
 Levin, M L. 1953. <span>“The Occurrence of Lung Cancer in Man.”</span> <em>Acta-Unio Internationalis Contra Cancrum</em> 9 (3): 531–41.
 </div>
@@ -661,6 +723,12 @@ Pearl, Judea. 1993. <span>“[Bayesian Analysis in Expert Systems]: Comment: Gra
 </div>
 <div id="ref-robins1989estimability" class="csl-entry" role="listitem">
 Robins, James M, and Sander Greenland. 1989. <span>“Estimability and Estimation of Excess and Etiologic Fractions.”</span> <em>Statistics in Medicine</em> 8 (7): 845–59.
+</div>
+<div id="ref-rose1985sick" class="csl-entry" role="listitem">
+Rose, Geoffrey. 1985. <span>“Sick Individuals and Sick Populations.”</span> <em>International Journal of Epidemiology</em> 14: 32–38.
+</div>
+<div id="ref-rosenbaum1983central" class="csl-entry" role="listitem">
+Rosenbaum, Paul R, and Donald B Rubin. 1983. <span>“The Central Role of the Propensity Score in Observational Studies for Causal Effects.”</span> <em>Biometrika</em> 70 (1): 41–55.
 </div>
 <div id="ref-rothman1976causes" class="csl-entry" role="listitem">
 Rothman, Kenneth J. 1976. <span>“Causes.”</span> <em>American Journal of Epidemiology</em> 104 (6): 587–92.

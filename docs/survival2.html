@@ -132,6 +132,7 @@ div.csl-indent {
       macros: {
         A: "\\mathcal\{A\}",
         approxsim: "\\stackrel\{\\text\{approx\}\}\{\\sim\}",
+        AR: "\\text\{AR\}",
         B: "\\mathcal\{B\}",
         Bernoulli: ["\\operatorname\{Bernoulli\}"],
         binomial: ["\\operatorname\{binomial\}"],
@@ -162,6 +163,7 @@ div.csl-indent {
         obs: "\\text\{obs\}",
         odds: ["\\operatorname\{odds\}"],
         OR: "\\text\{OR\}",
+        PAR: "\\text\{PAR\}",
         ptrue: "p_\{\\text\{true\}\}",
         R: "\\mathcal\{R\}",
         RD: "\\text\{RD\}",
@@ -372,6 +374,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./causality.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Causality in Public Health</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./counterfactuals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Potential Outcomes and Attributable Risk</span></span></a>
   </div>
 </li>
       </ul>
@@ -771,7 +779,7 @@ Figure&nbsp;10.2: Odds (top) and odds ratio (bottom) for Weibull distributions w
 <span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sqrt</span>(<span class="fu">vcov</span>(aft_weib)[<span class="st">"Log(scale)"</span>, <span class="st">"Log(scale)"</span>]))</span>
 <span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="co"># estimated rate in the exposed</span></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>lnrate1hat <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="fu">sum</span>(<span class="fu">coef</span>(aft_weib)))</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>lnrate1hat <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">sum</span>(<span class="fu">coef</span>(aft_weib))</span>
 <span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>lnrate1var <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>) <span class="sc">%*%</span> <span class="fu">vcov</span>(aft_weib) <span class="sc">%*%</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
 <span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>lnrate1ci <span class="ot">&lt;-</span> lnrate1hat <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">qnorm</span>(<span class="fl">0.975</span>) <span class="sc">*</span> <span class="fu">sqrt</span>(lnrate1var)</span>
 <span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(lnrate1hat)                 <span class="co"># point estimate</span></span>
