@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>15&nbsp; Confounding and Selection Bias on DAGs – Analytical Epidemiology</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./swigs.html" rel="next">
+<link href="./counterfactuals.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-747bc48f972f7c4036e4d8e8c6d9e55a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script>
+  window.MathJax = {
+    loader: {load: ['[tex]/centernot']},
+    tex: {
+      macros: {
+        A: "\\mathcal\{A\}",
+        approxsim: "\\stackrel\{\\text\{approx\}\}\{\\sim\}",
+        AR: "\\text\{AR\}",
+        B: "\\mathcal\{B\}",
+        Bernoulli: ["\\operatorname\{Bernoulli\}"],
+        binomial: ["\\operatorname\{binomial\}"],
+        C: "\\mathcal\{C\}",
+        chisqH: "\\chi^2_\\text\{H\}",
+        chisqP: "\\chi^2_\\text\{P\}",
+        chisqPobs: "\\chi^2_\\text\{Pobs\}",
+        cHR: "\\text\{cHR\}",
+        cloglog: ["\\operatorname\{cloglog\}"],
+        comp: "\\mathsf\{C\}",
+        Cov: ["\\operatorname\{Cov\}"],
+        D: "\\mathcal\{D\}",
+        data: "\\text\{data\}",
+        dif: "\\text\{d\}",
+        Dminus: "\\text\{D\}^-",
+        Dplus: "\\text\{D\}^+",
+        E: ["\\operatorname\{\\mathbb\{E\}\}"],
+        ESSR: "\\text\{ESSR\}",
+        expit: ["\\operatorname\{expit\}"],
+        given: ["\\, #1| \\, ", 1],
+        HR: "\\text\{HR\}",
+        indep: "\\perp\\!\\!\\!\\perp",
+        indicator: "\\mathbb\{1\}",
+        IRR: "\\text\{IRR\}",
+        K: "\\mathcal\{K\}",
+        logit: ["\\operatorname\{logit\}"],
+        margins: "\\text\{margins\}",
+        obs: "\\text\{obs\}",
+        odds: ["\\operatorname\{odds\}"],
+        OR: "\\text\{OR\}",
+        pa: "\\text\{pa\}",
+        PAR: "\\text\{PAR\}",
+        ptrue: "p_\{\\text\{true\}\}",
+        R: "\\mathcal\{R\}",
+        RD: "\\text\{RD\}",
+        RR: "\\text\{RR\}",
+        sens: "\\text\{sens\}",
+        spec: "\\text\{spec\}",
+        supp: ["\\operatorname\{supp\}"],
+        tcens: "t^\\text\{cens\}",
+        tentry: "t^\\text\{entry\}",
+        tevent: "t^\\text\{event\}",
+        texit: "t^\\text\{exit\}",
+        Tminus: "\\text\{T\}^-",
+        tonset: "t^\\text\{onset\}",
+        Tplus: "\\text\{T\}^+",
+        transpose: "\\mathsf{T}",
+        trec: "t^\\text\{rec\}",
+        true: "\\text\{true\}",
+        twobytwo: "2 \\times 2",
+        vand: "\\text\{ and \}",
+        Var: ["\\operatorname\{Var\}"],
+        Xminus: "\\text\{X\}^-",
+        Xobs: "\\text\{X\}^\\text\{obs\}",
+        Xplus: "\\text\{X\}^+"
+      }
+    }
+  };
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./causality.html">Principles of Causal Inference</a></li><li class="breadcrumb-item"><a href="./dags.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Confounding and Selection Bias on DAGs</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Analytical Epidemiology</a> 
+        <div class="sidebar-tools-main">
+    <a href="./Analytical-Epidemiology.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Defining and Measuring Disease Occurrence</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./probability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Probability, Random Variables, and Disease Occurrence</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./condprob.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Conditional Probability and Diagnostic Tests</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mlestimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Maximum Likelihood Estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bayes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Bayesian Estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./longitudinal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Longitudinal Data, Rates, and Counts</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./survival.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">One-Sample Survival Analysis</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Study Design and Measures of Association</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./studydesign.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Cohort and Case-Control Studies</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./validity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Internal and External Validity</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cohort.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Measures of Association in Cohort Studies</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./survival2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-Sample Survival Analysis and the Cox Model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./casecontrol.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Design and Analysis of Case-Control and Case-Cohort studies</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bayes2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Bayesian analysis of cohort and case-control studies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Principles of Causal Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./causality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Causality in Public Health</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./counterfactuals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Potential Outcomes and Attributable Risk</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dags.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Confounding and Selection Bias on DAGs</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./swigs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Confounding and Selection Bias on SWIGs</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Epidemologic and Statistical Methods for Causal Inference</span></span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./calculus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Calculus</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="2">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#simpsons-paradox" id="toc-simpsons-paradox" class="nav-link active" data-scroll-target="#simpsons-paradox"><span class="header-section-number">15.1</span> Simpson’s paradox</a></li>
+  <li><a href="#directed-acyclic-graphs" id="toc-directed-acyclic-graphs" class="nav-link" data-scroll-target="#directed-acyclic-graphs"><span class="header-section-number">15.2</span> Directed acyclic graphs</a>
+  <ul class="collapse">
+  <li><a href="#adding-variables-and-arrows" id="toc-adding-variables-and-arrows" class="nav-link" data-scroll-target="#adding-variables-and-arrows"><span class="header-section-number">15.2.1</span> Adding variables and arrows</a></li>
+  <li><a href="#paths-and-causal-paths" id="toc-paths-and-causal-paths" class="nav-link" data-scroll-target="#paths-and-causal-paths"><span class="header-section-number">15.2.2</span> Paths and causal paths</a></li>
+  <li><a href="#ancestors-and-descendants" id="toc-ancestors-and-descendants" class="nav-link" data-scroll-target="#ancestors-and-descendants"><span class="header-section-number">15.2.3</span> Ancestors and descendants</a></li>
+  <li><a href="#joint-distributions-consistent-with-a-dag" id="toc-joint-distributions-consistent-with-a-dag" class="nav-link" data-scroll-target="#joint-distributions-consistent-with-a-dag"><span class="header-section-number">15.2.4</span> Joint distributions consistent with a DAG*</a></li>
+  <li><a href="#open-paths-and-associations" id="toc-open-paths-and-associations" class="nav-link" data-scroll-target="#open-paths-and-associations"><span class="header-section-number">15.2.5</span> Open paths and associations</a></li>
+  <li><a href="#conditional-associations" id="toc-conditional-associations" class="nav-link" data-scroll-target="#conditional-associations"><span class="header-section-number">15.2.6</span> Conditional associations</a></li>
+  </ul></li>
+  <li><a href="#confounding-and-selection-bias" id="toc-confounding-and-selection-bias" class="nav-link" data-scroll-target="#confounding-and-selection-bias"><span class="header-section-number">15.3</span> Confounding and selection bias</a>
+  <ul class="collapse">
+  <li><a href="#confounding-and-open-backdoor-paths" id="toc-confounding-and-open-backdoor-paths" class="nav-link" data-scroll-target="#confounding-and-open-backdoor-paths"><span class="header-section-number">15.3.1</span> Confounding and open backdoor paths</a></li>
+  <li><a href="#selection-bias-and-colliders" id="toc-selection-bias-and-colliders" class="nav-link" data-scroll-target="#selection-bias-and-colliders"><span class="header-section-number">15.3.2</span> Selection bias and colliders</a></li>
+  <li><a href="#simpsons-paradox-revisited" id="toc-simpsons-paradox-revisited" class="nav-link" data-scroll-target="#simpsons-paradox-revisited"><span class="header-section-number">15.3.3</span> Simpson’s paradox revisited</a></li>
+  <li><a href="#berksons-bias" id="toc-berksons-bias" class="nav-link" data-scroll-target="#berksons-bias"><span class="header-section-number">15.3.4</span> Berkson’s bias</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./causality.html">Principles of Causal Inference</a></li><li class="breadcrumb-item"><a href="./dags.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Confounding and Selection Bias on DAGs</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Confounding and Selection Bias on DAGs</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p>A recent study in Buffalo, for example, indicates that smokers differ significantly from nonsmokers in a number of characteristics: they are more neurotic, are more frequently hospitalized, and they change jobs and spouses more often than nonsmokers. Had the two groups been compared for other characteristics, it is quite possible that they would have been found to differ in these also. It is conceivable that some of these other characteristics, rather than smoking, are responsible in whole or in part for the increase in lung cancer among smokers. <span class="citation" data-cites="yerushalmy1959methodology">(<a href="references.html#ref-yerushalmy1959methodology" role="doc-biblioref">Yerushalmy and Palmer 1959</a>)</span></p>
+</blockquote>
+<section id="simpsons-paradox" class="level2" data-number="15.1">
+<h2 data-number="15.1" class="anchored" data-anchor-id="simpsons-paradox"><span class="header-section-number">15.1</span> Simpson’s paradox</h2>
+<p>The modern discussion of confounding began with <span class="citation" data-cites="simpson1951interpretation">Simpson (<a href="references.html#ref-simpson1951interpretation" role="doc-biblioref">1951</a>)</span>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> <a href="#tbl-Simpson" class="quarto-xref">Table&nbsp;<span>15.1</span></a> shows the example from this paper. Among males and females, treatment is protective. The odds ratio for death comparing the treated and untreated is <span class="math display">\[
+\begin{aligned}
+    \frac{5 / 8}{3 / 4}
+    &amp;= \frac{20}{24} = \frac{5}{6} \approx 0.83 \text{ among men,} \\
+    \frac{15 / 12}{3 / 2}
+    &amp;= \frac{30}{36} = \frac{5}{6} \approx 0.83 \text{ among women.}
+\end{aligned}
+\]</span> If we ignore biological sex and calculate the crude odds ratio, we get <span class="math display">\[
+    \frac{20 / 20}{6 / 6} = 1.
+\]</span> This apparent contradiction has come to be known as <strong>Simpson’s paradox</strong>. Simpson concluded: “The treatment can hardly be rejected as valueless to the race when it is beneficial to males and females.”</p>
+<div id="tbl-Simpson" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-Simpson-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;15.1: Epidemiologic data stratified by sex (left) and unstratified (right) from <span class="citation" data-cites="simpson1951interpretation">Simpson (<a href="references.html#ref-simpson1951interpretation" role="doc-biblioref">1951</a>)</span>
+</figcaption>
+<div aria-describedby="tbl-Simpson-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td colspan="2" style="text-align: center;"><strong>Male</strong></td>
+<td colspan="2" style="text-align: center;"><strong>Female</strong></td>
+<td colspan="2" style="text-align: center;"><strong>Crude</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td style="text-align: center;">Treated</td>
+<td style="text-align: center;">Untreated</td>
+<td style="text-align: center;">Treated</td>
+<td style="text-align: center;">Untreated</td>
+<td style="text-align: center;">Treated</td>
+<td style="text-align: center;">Untreated</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Dead</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Alive</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">6</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>This paradox can be resolved using <strong>causal directed acyclic graphs</strong> (causal DAGs), where nodes represent variables and directed paths from one variable to another represent causal effects. A causal DAG can be used to represent our knowledge or hypotheses about causal relationships among variables <span class="citation" data-cites="pearl1995causal greenland1999causal">(<a href="references.html#ref-pearl1995causal" role="doc-biblioref">Pearl 1995</a>; <a href="references.html#ref-greenland1999causal" role="doc-biblioref">Greenland, Pearl, and Robins 1999</a>)</span>. In epidemiology, causal DAGs give us useful new insights about how confounding and selection bias occur and how to control them. They also allow us to clearly express the causal assumptions underlying the design and analysis of an epidemiologic study.</p>
+</section>
+<section id="directed-acyclic-graphs" class="level2" data-number="15.2">
+<h2 data-number="15.2" class="anchored" data-anchor-id="directed-acyclic-graphs"><span class="header-section-number">15.2</span> Directed acyclic graphs</h2>
+<p>In a causal DAG, a series of arrows pointing from a variable <span class="math inline">\(X\)</span> to a variable <span class="math inline">\(Y\)</span> is used to show that changing a variable <span class="math inline">\(X\)</span> (e.g., flipping a switch) will cause a change in <span class="math inline">\(Y\)</span> (e.g., whether the light is on). A simple example is shown in <a href="#fig-dag-lightswitch" class="quarto-xref">Figure&nbsp;<span>15.1</span></a>. The direction of the arrows captures the asymmetry of causal relationships across time: The past affects the future but the future does not affect the past. In this example, the flipping the light switch can turn on the light but unscrewing the light bulb will not flip the switch. It is good practice to write a DAG so that all arrows point in a consistent direction (e.g., left to right) that represents the passage of time.</p>
+<div class="cell">
+<div class="code-with-filename">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-with-filename-file">
+<pre><strong>dag-lightswitch.R</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="do">## Directed acyclic graph for a light switch</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="co"># daggity can be installed from github.com/jtextor/dagitty</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="co"># ggdag and ggplot2 can be installed using install.packages()</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="fu">library</span>(dagitty)</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="fu">library</span>(ggdag, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-8"><a href="#cb1-8"></a></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="co"># define the DAG</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a>light <span class="ot">&lt;-</span> <span class="fu">dagitty</span>(<span class="st">'dag{</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="st">  "Light switch" -&gt; "Light on"</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="st">}'</span>)</span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="fu">coordinates</span>(light) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="st">"Light switch"</span> <span class="ot">=</span> <span class="dv">0</span>, <span class="st">"Light on"</span> <span class="ot">=</span> <span class="dv">1</span>),</span>
+<span id="cb1-14"><a href="#cb1-14"></a>                           <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"Light switch"</span> <span class="ot">=</span> <span class="dv">0</span>, <span class="st">"Light on"</span> <span class="ot">=</span> <span class="dv">0</span>))</span>
+<span id="cb1-15"><a href="#cb1-15"></a></span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="co"># plot the DAG</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a>(<span class="fu">ggdag_classic</span>(light)</span>
+<span id="cb1-18"><a href="#cb1-18"></a>  <span class="sc">+</span> <span class="fu">theme_dag_gray_grid</span>()</span>
+<span id="cb1-19"><a href="#cb1-19"></a>  <span class="sc">+</span> <span class="fu">xlim</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="fl">1.5</span>)</span>
+<span id="cb1-20"><a href="#cb1-20"></a>  <span class="sc">+</span> <span class="fu">ylim</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span>)</span>
+<span id="cb1-21"><a href="#cb1-21"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output-display">
+<div id="fig-dag-lightswitch" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dag-lightswitch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="dags_files/figure-html/fig-dag-lightswitch-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;15.1: Directed acyclic graph (DAG) showing the causal effect of a light switch on a light."><img src="dags_files/figure-html/fig-dag-lightswitch-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dag-lightswitch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.1: Directed acyclic graph (DAG) showing the causal effect of a light switch on a light.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<section id="adding-variables-and-arrows" class="level3" data-number="15.2.1">
+<h3 data-number="15.2.1" class="anchored" data-anchor-id="adding-variables-and-arrows"><span class="header-section-number">15.2.1</span> Adding variables and arrows</h3>
+<p>When building a causal DAG, we cannot arbitrarily choose which variables to include. Let <span class="math inline">\(X\)</span> be an exposure or treatment, <span class="math inline">\(D\)</span> be a disease outcome. To make a causal DAG that represents the causal effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(D\)</span>, we start with <span class="math inline">\(X\)</span> and <span class="math inline">\(D\)</span>. Given a set of variables on the DAG, we must add any variable that has a causal effect on two or more of these variables. We continue doing so until there is no common cause of any two variables on the DAG (or, in reality, until any remaining causal relationships are negligible).</p>
+<p>The presence or absence of arrows between variables on a DAG are defined in terms of the effects of interventions. Let <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> be variables on a DAG and let <span class="math inline">\(V = (V_1, \ldots, V_k)\)</span> denote all of the other variables on the DAG. Let <span class="math display">\[
+  B^{(a, v)}(\omega)
+\]</span> be the potential outcome for <span class="math inline">\(B\)</span> in person <span class="math inline">\(\omega\)</span> in our population <span class="math inline">\(\Omega\)</span> when we intervene to set <span class="math inline">\(A(\omega) = a\)</span> and <span class="math inline">\(V(\omega) = v = (v_1, \ldots, v_k)\)</span>. There is an arrow from <span class="math inline">\(A\)</span> to <span class="math inline">\(B\)</span> if and only if there are two values <span class="math inline">\(a_0\)</span> and <span class="math inline">\(a_1\)</span> and a vector of values <span class="math inline">\(v\)</span> such that <span class="math display">\[
+  B^{(a_1, v)}(\omega)
+  \neq B^{(a_0, v)}(\omega)
+\]</span> for at least one <span class="math inline">\(\omega \in \Omega\)</span>. Intuitively, this means that changing <span class="math inline">\(A\)</span> alters the value of <span class="math inline">\(B\)</span> for at least one <span class="math inline">\(\omega \in \Omega\)</span> even when we intervene to hold all other variables fixed.</p>
+<p>The arrow from <span class="math inline">\(A\)</span> to <span class="math inline">\(B\)</span> tells us that, for at least one individual, <span class="math inline">\(A\)</span> has a causal effect on <span class="math inline">\(B\)</span> that is not mediated through any other variable in the DAG. However, the arrow is either there or not there. It does not tell us anything about how large this effect is, how much of the population experiences it, or anything else quantitative. Some arrows might represent large causal effects for a large proportion of the population while others represent a small causal effect for a small proportion of the population. Still others could represent a large causal effect for a small proportion of the population or a small effect for a large proportion. The DAG abstracts away all of these differences, leaving only what we need to think clearly about the structure of the causal relationships.</p>
+</section>
+<section id="paths-and-causal-paths" class="level3" data-number="15.2.2">
+<h3 data-number="15.2.2" class="anchored" data-anchor-id="paths-and-causal-paths"><span class="header-section-number">15.2.2</span> Paths and causal paths</h3>
+<p>The arrows between variables on a DAG are often called <strong>edges</strong>, which can help us distinguish between situations where we must pay attention to the direction of the arrow and situations where we can safely ignore it. The <em>endpoints</em> of an edge are the head and tail of the arrow. Two edges are <strong>adjacent</strong> when they have endpoints at the same node.</p>
+<p>On a DAG, a <strong>path</strong> from <span class="math inline">\(A\)</span> to <span class="math inline">\(B\)</span> is any sequence of distinct adjacent edges that lead from <span class="math inline">\(A\)</span> to <span class="math inline">\(B\)</span> where we can ignore the direction of the arrows. The length of the path is the number of edges it contains. A path might consist of only one arrow. A path from <span class="math inline">\(A\)</span> to <span class="math inline">\(B\)</span> where we follow the direction of the arrows is called a <strong>directed path</strong> or a <strong>causal path</strong>. The DAG in <a href="#fig-dag-family" class="quarto-xref">Figure&nbsp;<span>15.2</span></a> includes the following paths:</p>
+<ul>
+<li><p>The path <span class="math inline">\(B \rightarrow D\)</span> is causal but the path <span class="math inline">\(D \leftarrow B\)</span> is noncausal.</p></li>
+<li><p>There are two paths from <span class="math inline">\(A\)</span> to <span class="math inline">\(C\)</span>: <span class="math inline">\(A \rightarrow C\)</span> and <span class="math inline">\(A \rightarrow B \rightarrow C\)</span>. Both paths are causal.</p></li>
+<li><p>There are two paths from <span class="math inline">\(B\)</span> to <span class="math inline">\(C\)</span>: <span class="math inline">\(B \rightarrow C\)</span> and <span class="math inline">\(B \leftarrow A \rightarrow C\)</span>. Only the first path is causal.</p></li>
+<li><p>There are two paths from <span class="math inline">\(C\)</span> to <span class="math inline">\(D\)</span>: <span class="math inline">\(C \leftarrow A \rightarrow B \rightarrow D\)</span> and <span class="math inline">\(C \leftarrow B \rightarrow D\)</span>. Neither path is causal.</p></li>
+</ul>
+<div class="cell">
+<div class="code-with-filename">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-with-filename-file">
+<pre><strong>dag-family.R</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="do">## Paths, ancestors, and descendants on a DAG</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co"># load packages</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="co"># I set "warn.conflicts = FALSE" to suppress an unnecessary error message.</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="fu">library</span>(dagitty)</span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="fu">library</span>(ggdag, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-8"><a href="#cb2-8"></a></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="co"># define the DAG</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a>fam <span class="ot">&lt;-</span> <span class="fu">dagitty</span>(<span class="st">'dag{</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a><span class="st">  A -&gt; B -&gt; C</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a><span class="st">  A -&gt; C</span></span>
+<span id="cb2-13"><a href="#cb2-13"></a><span class="st">  B -&gt; D</span></span>
+<span id="cb2-14"><a href="#cb2-14"></a><span class="st">}'</span>)</span>
+<span id="cb2-15"><a href="#cb2-15"></a></span>
+<span id="cb2-16"><a href="#cb2-16"></a><span class="co"># plot the DAG</span></span>
+<span id="cb2-17"><a href="#cb2-17"></a><span class="co"># Uncomment coord_equal() to get a better-looking DAG in an R plot window.</span></span>
+<span id="cb2-18"><a href="#cb2-18"></a><span class="fu">coordinates</span>(fam) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="at">A =</span> <span class="dv">0</span>, <span class="at">B =</span> <span class="dv">1</span>, <span class="at">C =</span> <span class="dv">2</span>, <span class="at">D =</span> <span class="dv">2</span>),</span>
+<span id="cb2-19"><a href="#cb2-19"></a>                         <span class="at">y =</span> <span class="fu">c</span>(<span class="at">A =</span> <span class="dv">0</span>, <span class="at">B =</span> <span class="dv">0</span>, <span class="at">C =</span> <span class="fl">0.5</span>, <span class="at">D =</span> <span class="sc">-</span><span class="fl">0.5</span>))</span>
+<span id="cb2-20"><a href="#cb2-20"></a>(<span class="fu">ggdag_classic</span>(fam)</span>
+<span id="cb2-21"><a href="#cb2-21"></a>  <span class="sc">+</span> <span class="fu">theme_dag_gray_grid</span>()</span>
+<span id="cb2-22"><a href="#cb2-22"></a>  <span class="sc">+</span> <span class="fu">xlim</span>(<span class="sc">-</span><span class="fl">0.2</span>, <span class="fl">2.2</span>)</span>
+<span id="cb2-23"><a href="#cb2-23"></a>  <span class="co"># + coord_equal()</span></span>
+<span id="cb2-24"><a href="#cb2-24"></a>  <span class="co"># node A</span></span>
+<span id="cb2-25"><a href="#cb2-25"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="sc">-</span><span class="fl">0.1</span>, <span class="at">label =</span> <span class="st">"Parent of B and C"</span>)</span>
+<span id="cb2-26"><a href="#cb2-26"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="sc">-</span><span class="fl">0.2</span>, <span class="at">label =</span> <span class="st">"Ancestor of B, C, and D"</span>)</span>
+<span id="cb2-27"><a href="#cb2-27"></a>  <span class="co"># node B</span></span>
+<span id="cb2-28"><a href="#cb2-28"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="sc">-</span><span class="fl">0.1</span>, <span class="at">label =</span> <span class="st">"Child of A"</span>)</span>
+<span id="cb2-29"><a href="#cb2-29"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="sc">-</span><span class="fl">0.2</span>, <span class="at">label =</span> <span class="st">"Parent of C and D"</span>)</span>
+<span id="cb2-30"><a href="#cb2-30"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="sc">-</span><span class="fl">0.3</span>, <span class="at">label =</span> <span class="st">"Ancestor of C and D"</span>)</span>
+<span id="cb2-31"><a href="#cb2-31"></a>  <span class="co"># node C</span></span>
+<span id="cb2-32"><a href="#cb2-32"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">2</span>, <span class="at">y =</span> <span class="fl">0.35</span>, <span class="at">label =</span> <span class="st">"Child of A and B"</span>)</span>
+<span id="cb2-33"><a href="#cb2-33"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">2</span>, <span class="at">y =</span> <span class="fl">0.25</span>, <span class="at">label =</span> <span class="st">"Descendant of A and B"</span>)</span>
+<span id="cb2-34"><a href="#cb2-34"></a>  <span class="co"># node D</span></span>
+<span id="cb2-35"><a href="#cb2-35"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">2</span>, <span class="at">y =</span> <span class="sc">-</span><span class="fl">0.25</span>, <span class="at">label =</span> <span class="st">"Descendant of A and B"</span>)</span>
+<span id="cb2-36"><a href="#cb2-36"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">2</span>, <span class="at">y =</span> <span class="sc">-</span><span class="fl">0.35</span>, <span class="at">label =</span> <span class="st">"Child of B"</span>)</span>
+<span id="cb2-37"><a href="#cb2-37"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output-display">
+<div id="fig-dag-family" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dag-family-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="dags_files/figure-html/fig-dag-family-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;15.2: Directed acyclic graph (DAG) showing ancestors, parents, children, and descendants."><img src="dags_files/figure-html/fig-dag-family-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dag-family-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.2: Directed acyclic graph (DAG) showing ancestors, parents, children, and descendants.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>dag-family-paths.R</strong></pre>
+</div>
+<div class="sourceCode" id="cb3" data-filename="dag-family-paths.R"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="do">## Paths and causal (directed) paths on a DAG</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="co"># load packages</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="fu">library</span>(dagitty)</span>
+<span id="cb3-5"><a href="#cb3-5"></a></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="co"># define the DAG</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a>fam <span class="ot">&lt;-</span> <span class="fu">dagitty</span>(<span class="st">'dag{</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="st">  A -&gt; B -&gt; C</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="st">  A -&gt; C</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="st">  B -&gt; D</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="st">}'</span>)</span>
+<span id="cb3-12"><a href="#cb3-12"></a></span>
+<span id="cb3-13"><a href="#cb3-13"></a><span class="co"># paths from B to D</span></span>
+<span id="cb3-14"><a href="#cb3-14"></a><span class="co"># Setting "directed = TRUE" returns causal paths.</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a><span class="fu">paths</span>(fam, <span class="st">"B"</span>, <span class="st">"D"</span>)</span>
+<span id="cb3-16"><a href="#cb3-16"></a><span class="fu">paths</span>(fam, <span class="st">"B"</span>, <span class="st">"D"</span>, <span class="at">directed =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-17"><a href="#cb3-17"></a><span class="fu">paths</span>(fam, <span class="st">"D"</span>, <span class="st">"B"</span>)</span>
+<span id="cb3-18"><a href="#cb3-18"></a><span class="fu">paths</span>(fam, <span class="st">"D"</span>, <span class="st">"B"</span>, <span class="at">directed =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-19"><a href="#cb3-19"></a></span>
+<span id="cb3-20"><a href="#cb3-20"></a><span class="co"># paths from A to C</span></span>
+<span id="cb3-21"><a href="#cb3-21"></a><span class="fu">paths</span>(fam, <span class="st">"A"</span>, <span class="st">"C"</span>)</span>
+<span id="cb3-22"><a href="#cb3-22"></a><span class="fu">paths</span>(fam, <span class="st">"A"</span>, <span class="st">"C"</span>, <span class="at">directed =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-23"><a href="#cb3-23"></a></span>
+<span id="cb3-24"><a href="#cb3-24"></a><span class="co"># paths from B to C</span></span>
+<span id="cb3-25"><a href="#cb3-25"></a><span class="fu">paths</span>(fam, <span class="st">"B"</span>, <span class="st">"C"</span>)</span>
+<span id="cb3-26"><a href="#cb3-26"></a><span class="fu">paths</span>(fam, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="at">directed =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-27"><a href="#cb3-27"></a></span>
+<span id="cb3-28"><a href="#cb3-28"></a><span class="co"># paths from C to D</span></span>
+<span id="cb3-29"><a href="#cb3-29"></a><span class="fu">paths</span>(fam, <span class="st">"C"</span>, <span class="st">"D"</span>)</span>
+<span id="cb3-30"><a href="#cb3-30"></a><span class="fu">paths</span>(fam, <span class="st">"C"</span>, <span class="st">"D"</span>, <span class="at">directed =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="ancestors-and-descendants" class="level3" data-number="15.2.3">
+<h3 data-number="15.2.3" class="anchored" data-anchor-id="ancestors-and-descendants"><span class="header-section-number">15.2.3</span> Ancestors and descendants</h3>
+<p>If we can reach node <span class="math inline">\(B\)</span> along a directed path starting at node <span class="math inline">\(A\)</span>, then <span class="math inline">\(A\)</span> is an <strong>ancestor</strong> of <span class="math inline">\(B\)</span> and <span class="math inline">\(B\)</span> is a <strong>descendant</strong> of <span class="math inline">\(A\)</span>. If there is an arrow from <span class="math inline">\(A\)</span> to <span class="math inline">\(B\)</span>, then <span class="math inline">\(A\)</span> is a <strong>parent</strong> of <span class="math inline">\(B\)</span> and <span class="math inline">\(B\)</span> is a <strong>child</strong> of <span class="math inline">\(A\)</span>. Parents are ancestors, and children are descendants.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> These relationships are labelled in <a href="#fig-dag-family" class="quarto-xref">Figure&nbsp;<span>15.2</span></a>. If we intervene to set the value of the variable <span class="math inline">\(A\)</span>, this affects descendants of <span class="math inline">\(A\)</span> on the DAG. The ancestors of <span class="math inline">\(A\)</span> are unaffected.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>dag-family-apcd.R</strong></pre>
+</div>
+<div class="sourceCode" id="cb4" data-filename="dag-family-apcd.R"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="do">## Ancestors, parents, children, and descendants on a DAG</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="co"># load packages</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="fu">library</span>(dagitty)</span>
+<span id="cb4-5"><a href="#cb4-5"></a></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="co"># define the DAG</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a>fam <span class="ot">&lt;-</span> <span class="fu">dagitty</span>(<span class="st">'dag{</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="st">  A -&gt; B -&gt; C</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="st">  A -&gt; C</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="st">  B -&gt; D</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="st">}'</span>)</span>
+<span id="cb4-12"><a href="#cb4-12"></a></span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="co"># node A</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="co"># Proper ancestors and descendants do not include the node itself.</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="fu">ancestors</span>(fam, <span class="st">"A"</span>)</span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="fu">ancestors</span>(fam, <span class="st">"A"</span>, <span class="at">proper =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="fu">parents</span>(fam, <span class="st">"A"</span>)</span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="fu">children</span>(fam, <span class="st">"A"</span>)</span>
+<span id="cb4-19"><a href="#cb4-19"></a><span class="fu">descendants</span>(fam, <span class="st">"A"</span>)</span>
+<span id="cb4-20"><a href="#cb4-20"></a><span class="fu">descendants</span>(fam, <span class="st">"A"</span>, <span class="at">proper =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-21"><a href="#cb4-21"></a></span>
+<span id="cb4-22"><a href="#cb4-22"></a><span class="co"># node B</span></span>
+<span id="cb4-23"><a href="#cb4-23"></a><span class="fu">ancestors</span>(fam, <span class="st">"B"</span>, <span class="at">proper =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-24"><a href="#cb4-24"></a><span class="fu">parents</span>(fam, <span class="st">"B"</span>)</span>
+<span id="cb4-25"><a href="#cb4-25"></a><span class="fu">children</span>(fam, <span class="st">"B"</span>)</span>
+<span id="cb4-26"><a href="#cb4-26"></a><span class="fu">descendants</span>(fam, <span class="st">"B"</span>, <span class="at">proper =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-27"><a href="#cb4-27"></a></span>
+<span id="cb4-28"><a href="#cb4-28"></a><span class="co"># node C</span></span>
+<span id="cb4-29"><a href="#cb4-29"></a><span class="fu">ancestors</span>(fam, <span class="st">"C"</span>, <span class="at">proper =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-30"><a href="#cb4-30"></a><span class="fu">parents</span>(fam, <span class="st">"C"</span>)</span>
+<span id="cb4-31"><a href="#cb4-31"></a><span class="fu">children</span>(fam, <span class="st">"C"</span>)</span>
+<span id="cb4-32"><a href="#cb4-32"></a><span class="fu">descendants</span>(fam, <span class="st">"C"</span>, <span class="at">proper =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-33"><a href="#cb4-33"></a></span>
+<span id="cb4-34"><a href="#cb4-34"></a><span class="co"># node D</span></span>
+<span id="cb4-35"><a href="#cb4-35"></a><span class="fu">ancestors</span>(fam, <span class="st">"D"</span>, <span class="at">proper =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-36"><a href="#cb4-36"></a><span class="fu">parents</span>(fam, <span class="st">"D"</span>)</span>
+<span id="cb4-37"><a href="#cb4-37"></a><span class="fu">children</span>(fam, <span class="st">"D"</span>)</span>
+<span id="cb4-38"><a href="#cb4-38"></a><span class="fu">descendants</span>(fam, <span class="st">"D"</span>, <span class="at">proper =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p>A <strong>cycle</strong> is a directed path from a variable <span class="math inline">\(A\)</span> back to itself. A DAG is <em>acyclic</em> because a cycle would require at least one arrow representing a causal effect that moves backward in time. Thus, a variable on a DAG cannot be its own ancestor or descendant. To show a feedback loop between variables <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> on a DAG, we represent each variable at multiple time points. <a href="#fig-dag-feedback" class="quarto-xref">Figure&nbsp;<span>15.3</span></a> shows a feedback loop between <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> over two time points. The links from <span class="math inline">\(A_1\)</span> to <span class="math inline">\(A_2\)</span> and <span class="math inline">\(B_1\)</span> to <span class="math inline">\(B_2\)</span> show the causal effect of each variable’s value at <span class="math inline">\(t = 1\)</span> on its value at <span class="math inline">\(t = 2\)</span>. Unfortunately, time in the world of DAGs is stubbornly discrete.</p>
+<div class="cell">
+<div class="code-with-filename">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-with-filename-file">
+<pre><strong>dag-feedback.R</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Feedback loop on a DAG</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="fu">library</span>(dagitty)</span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="fu">library</span>(ggdag)</span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb5-6"><a href="#cb5-6"></a></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="co"># define the DAG</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a>loop <span class="ot">&lt;-</span> <span class="fu">dagitty</span>(<span class="st">'dag{</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="st">  A1 -&gt; B1 -&gt; A2 -&gt; B2</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="st">  A1 -&gt; A2</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="st">  B1 -&gt; B2</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="st">}'</span>)</span>
+<span id="cb5-13"><a href="#cb5-13"></a></span>
+<span id="cb5-14"><a href="#cb5-14"></a><span class="co"># plot DAG using ggplot() directly to allow curved arrows</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="co"># Uncomment coord_equal() to get a better-looking DAG in an R plot window.</span></span>
+<span id="cb5-16"><a href="#cb5-16"></a><span class="fu">coordinates</span>(loop) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="at">A1 =</span> <span class="dv">0</span>, <span class="at">B1 =</span> <span class="dv">1</span>, <span class="at">A2 =</span> <span class="dv">2</span>, <span class="at">B2 =</span> <span class="dv">3</span>),</span>
+<span id="cb5-17"><a href="#cb5-17"></a>                          <span class="at">y =</span> <span class="fu">c</span>(<span class="at">A1 =</span> <span class="dv">0</span>, <span class="at">B1 =</span> <span class="dv">0</span>, <span class="at">A2 =</span> <span class="dv">0</span>, <span class="at">B2 =</span> <span class="dv">0</span>))</span>
+<span id="cb5-18"><a href="#cb5-18"></a>loop_dat <span class="ot">&lt;-</span> <span class="fu">tidy_dagitty</span>(loop)</span>
+<span id="cb5-19"><a href="#cb5-19"></a>(<span class="fu">ggplot</span>(loop_dat, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend))</span>
+<span id="cb5-20"><a href="#cb5-20"></a>  <span class="sc">+</span> <span class="fu">theme_dag_gray_grid</span>()</span>
+<span id="cb5-21"><a href="#cb5-21"></a>  <span class="co"># + coord_equal()</span></span>
+<span id="cb5-22"><a href="#cb5-22"></a>  <span class="sc">+</span> <span class="fu">geom_dag_text</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">8</span>, <span class="at">parse =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb5-23"><a href="#cb5-23"></a>                  <span class="at">label =</span> <span class="fu">c</span>(<span class="fu">expression</span>(A[<span class="dv">1</span>]), <span class="fu">expression</span>(A[<span class="dv">2</span>]),</span>
+<span id="cb5-24"><a href="#cb5-24"></a>                            <span class="fu">expression</span>(B[<span class="dv">1</span>]), <span class="fu">expression</span>(B[<span class="dv">2</span>])))</span>
+<span id="cb5-25"><a href="#cb5-25"></a>  <span class="sc">+</span> <span class="fu">geom_dag_edges_arc</span>(<span class="at">curvature =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="fl">0.5</span>))</span>
+<span id="cb5-26"><a href="#cb5-26"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output-display">
+<div id="fig-dag-feedback" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dag-feedback-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="dags_files/figure-html/fig-dag-feedback-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;15.3: Directed acyclic graph (DAG) showing a feedback loop between A and B."><img src="dags_files/figure-html/fig-dag-feedback-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dag-feedback-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.3: Directed acyclic graph (DAG) showing a feedback loop between <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="joint-distributions-consistent-with-a-dag" class="level3" data-number="15.2.4">
+<h3 data-number="15.2.4" class="anchored" data-anchor-id="joint-distributions-consistent-with-a-dag"><span class="header-section-number">15.2.4</span> Joint distributions consistent with a DAG*</h3>
+<p>The joint probability density (or mass) function of the variables on a causal DAG can be factored using the conditional distribution of each variable given its parents. If <span class="math inline">\(V_1, \ldots, V_n\)</span> are variables on a DAG (where the subscript does not necessarily represent time), then the joint probability density is <span class="math display">\[
+  \Pr(V_1 = v_1, \ldots, V_n = v_n)
+  = \prod_{i = 1}^n \Pr(V_i = v_i \given{} \pa_i)
+\]</span> where <span class="math inline">\(\pa_i\)</span> represents the values of the parents of <span class="math inline">\(V_i\)</span> and we let <span class="math inline">\(\Pr()\)</span> represent probability density functions or probability mass functions as needed. A joint distribution of <span class="math inline">\(V_1, \ldots, V_n\)</span> is consistent with the DAG if and only if it can be factored in this way. A given DAG is consistent with many possible joint distributions, but the conditional independence relations on it hold for all of them. Some of these distributions may have additional conditional independencies that are not implied by the DAG.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+</section>
+<section id="open-paths-and-associations" class="level3" data-number="15.2.5">
+<h3 data-number="15.2.5" class="anchored" data-anchor-id="open-paths-and-associations"><span class="header-section-number">15.2.5</span> Open paths and associations</h3>
+<p>A path from a variable <span class="math inline">\(A\)</span> to a variable <span class="math inline">\(B\)</span> can be <strong>open</strong> or <strong>closed</strong>. Each variable along the path (except <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>) acts like a valve, and the path is open only if all of these valves are open. A variable’s state depends on the path: A variable can be open for some paths and closed for other paths. If all paths between <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are closed, then <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are independent. If there is at least one open path from <span class="math inline">\(A\)</span> to <span class="math inline">\(B\)</span>, then are distributions consistent with the DAG where <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are not independent.</p>
+<p>Whether a variable <span class="math inline">\(C\)</span> is open or closed along a given path is determined by the rules of <strong>d-separation</strong> (or <em>directional separation</em>). The first two of these are:</p>
+<ul>
+<li><p>A variable <span class="math inline">\(C\)</span> on the path is a <strong>collider</strong> if both arrows adjacent to it along the path point toward <span class="math inline">\(C\)</span>. A collider is closed.</p></li>
+<li><p>Any variable that is not a collider is open. A variable <span class="math inline">\(V\)</span> can be a collider on one path and a non-collider on another path.</p></li>
+</ul>
+<p>Two variables on a DAG are <strong>d-separated</strong> when all paths between them are closed. When there is at least one open path between them, they are <strong>d-connected</strong>. Thus, two variables that are d-separated are independent. If two variables are d-connected, they are dependent in most (but not necessarily all) joint distributions consistent with the DAG. The DAG in <a href="#fig-dag-valves" class="quarto-xref">Figure&nbsp;<span>15.4</span></a> has the following open and closed paths:</p>
+<ul>
+<li><p>The path <span class="math inline">\(A \rightarrow C \leftarrow B\)</span> is closed by the collider at <span class="math inline">\(C\)</span>. There are no other paths between <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, so <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are d-separated and <span class="math inline">\(A \indep B\)</span> (i.e., <span class="math inline">\(A\)</span> is independent of <span class="math inline">\(B\)</span>).</p></li>
+<li><p>The path <span class="math inline">\(B \rightarrow C \rightarrow D\)</span> is open, so <span class="math inline">\(B\)</span> and <span class="math inline">\(D\)</span> are d-connected and it is possible that <span class="math inline">\(B \centernot\indep D\)</span> (i.e., <span class="math inline">\(B\)</span> is not independent of <span class="math inline">\(D\)</span>). On this path, <span class="math inline">\(C\)</span> is not a collider.</p></li>
+</ul>
+<div class="cell">
+<div class="code-with-filename">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-with-filename-file">
+<pre><strong>dag-valves.R</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="do">## Open and closed paths on a DAG</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="co"># load R packages</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="fu">library</span>(dagitty)</span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="fu">library</span>(ggdag)</span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb6-7"><a href="#cb6-7"></a></span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="co"># define DAG</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a>valves <span class="ot">&lt;-</span> <span class="fu">dagitty</span>(<span class="st">'dag{</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="st">  A -&gt; C</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="st">  B -&gt; C -&gt; D</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a><span class="st">}'</span>)</span>
+<span id="cb6-13"><a href="#cb6-13"></a></span>
+<span id="cb6-14"><a href="#cb6-14"></a><span class="co"># plot DAG using ggplot() directly to allow for curved arrows</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a><span class="co"># Uncomment coord_equal() to get a better-looking DAG in an R plot window.</span></span>
+<span id="cb6-16"><a href="#cb6-16"></a><span class="fu">coordinates</span>(valves) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="at">A =</span> <span class="dv">0</span>, <span class="at">B =</span> <span class="dv">1</span>, <span class="at">C =</span> <span class="dv">2</span>, <span class="at">D =</span> <span class="dv">3</span>),</span>
+<span id="cb6-17"><a href="#cb6-17"></a>                            <span class="at">y =</span> <span class="fu">c</span>(<span class="at">A =</span> <span class="dv">0</span>, <span class="at">B =</span> <span class="dv">0</span>, <span class="at">C =</span> <span class="dv">0</span>, <span class="at">D =</span> <span class="dv">0</span>))</span>
+<span id="cb6-18"><a href="#cb6-18"></a>valves_dat <span class="ot">&lt;-</span> <span class="fu">tidy_dagitty</span>(valves)</span>
+<span id="cb6-19"><a href="#cb6-19"></a>(<span class="fu">ggplot</span>(valves_dat, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend))</span>
+<span id="cb6-20"><a href="#cb6-20"></a>  <span class="sc">+</span> <span class="fu">theme_dag_gray_grid</span>()</span>
+<span id="cb6-21"><a href="#cb6-21"></a>  <span class="sc">+</span> <span class="fu">coord_equal</span>()</span>
+<span id="cb6-22"><a href="#cb6-22"></a>  <span class="sc">+</span> <span class="fu">ylim</span>(<span class="sc">-</span><span class="fl">0.1</span>, <span class="fl">0.6</span>)</span>
+<span id="cb6-23"><a href="#cb6-23"></a>  <span class="sc">+</span> <span class="fu">geom_dag_text</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">8</span>, <span class="at">parse =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-24"><a href="#cb6-24"></a>  <span class="sc">+</span> <span class="fu">geom_dag_edges_arc</span>(<span class="at">curvature =</span> <span class="fu">c</span>(<span class="fl">0.4</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb6-25"><a href="#cb6-25"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output-display">
+<div id="fig-dag-valves" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dag-valves-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="dags_files/figure-html/fig-dag-valves-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;15.4: Directed acyclic graph (DAG) to illustrate open and closed paths."><img src="dags_files/figure-html/fig-dag-valves-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dag-valves-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.4: Directed acyclic graph (DAG) to illustrate open and closed paths.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>dag-valves-paths.R</strong></pre>
+</div>
+<div class="sourceCode" id="cb7" data-filename="dag-valves-paths.R"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="do">## Open and closed paths on a DAG</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="co"># load R packages</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="fu">library</span>(dagitty)</span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="fu">library</span>(ggdag)</span>
+<span id="cb7-6"><a href="#cb7-6"></a></span>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="co"># define DAG</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a>valves <span class="ot">&lt;-</span> <span class="fu">dagitty</span>(<span class="st">'dag{</span></span>
+<span id="cb7-9"><a href="#cb7-9"></a><span class="st">  A -&gt; C</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a><span class="st">  B -&gt; C -&gt; D</span></span>
+<span id="cb7-11"><a href="#cb7-11"></a><span class="st">}'</span>)</span>
+<span id="cb7-12"><a href="#cb7-12"></a></span>
+<span id="cb7-13"><a href="#cb7-13"></a><span class="co"># path from A to B is blocked by the collider at C</span></span>
+<span id="cb7-14"><a href="#cb7-14"></a><span class="fu">paths</span>(valves, <span class="st">"A"</span>, <span class="st">"B"</span>)</span>
+<span id="cb7-15"><a href="#cb7-15"></a><span class="fu">dconnected</span>(valves, <span class="st">"A"</span>, <span class="st">"B"</span>)</span>
+<span id="cb7-16"><a href="#cb7-16"></a><span class="fu">dseparated</span>(valves, <span class="st">"A"</span>, <span class="st">"B"</span>)</span>
+<span id="cb7-17"><a href="#cb7-17"></a><span class="fu">isCollider</span>(valves, <span class="st">"A"</span>, <span class="st">"C"</span>, <span class="st">"B"</span>)</span>
+<span id="cb7-18"><a href="#cb7-18"></a></span>
+<span id="cb7-19"><a href="#cb7-19"></a><span class="co"># path from B to D is open because C is not a collider on it</span></span>
+<span id="cb7-20"><a href="#cb7-20"></a><span class="fu">paths</span>(valves, <span class="st">"B"</span>, <span class="st">"D"</span>)</span>
+<span id="cb7-21"><a href="#cb7-21"></a><span class="fu">dconnected</span>(valves, <span class="st">"B"</span>, <span class="st">"D"</span>)</span>
+<span id="cb7-22"><a href="#cb7-22"></a><span class="fu">dseparated</span>(valves, <span class="st">"B"</span>, <span class="st">"D"</span>)</span>
+<span id="cb7-23"><a href="#cb7-23"></a><span class="fu">isCollider</span>(valves, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>)</span>
+<span id="cb7-24"><a href="#cb7-24"></a></span>
+<span id="cb7-25"><a href="#cb7-25"></a><span class="co"># conditional independence relations implied by the DAG</span></span>
+<span id="cb7-26"><a href="#cb7-26"></a><span class="fu">impliedConditionalIndependencies</span>(valves)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="conditional-associations" class="level3" data-number="15.2.6">
+<h3 data-number="15.2.6" class="anchored" data-anchor-id="conditional-associations"><span class="header-section-number">15.2.6</span> Conditional associations</h3>
+<p>A DAG can also be used to evaluate conditional associations. Conditioning on a variable <span class="math inline">\(V\)</span> means that we look at the joint distribution of the other variables in the subset of our population <span class="math inline">\(\Omega\)</span> with <span class="math inline">\(V(\omega) = v\)</span> for some possible value <span class="math inline">\(v\)</span>. In a DAG, conditioning on a variable is represented by putting a square around it. The effects of conditioning on a variable are determined by two more rules of d-separation:</p>
+<ul>
+<li><p>Conditioning on a collider or a descendant of a collider opens the path through the collider. Conditioning on an ancestor of a collider does not open the path.</p></li>
+<li><p>Conditioning on a non-collider closes the path through it. Conditioning on an ancestor or descendant of a non-collider does not close the path.</p></li>
+</ul>
+<p>Conditioning on a variable switches its state along any path that goes through it. If the variable was open, it becomes closed. If the variable was closed, it becomes open. Conditioning on a descendant of a collider is the only way that conditioning on a variable not on a path can change whether the path is open or closed. The DAG in <a href="#fig-dag-cvalves" class="quarto-xref">Figure&nbsp;<span>15.5</span></a> has the following open and closed paths:</p>
+<ul>
+<li><p>The path <span class="math inline">\(A \rightarrow C \leftarrow B\)</span> is opened by conditioning on the collider at <span class="math inline">\(C\)</span>. Because <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are d-connected given <span class="math inline">\(C\)</span>, it is possible that <span class="math inline">\(A \centernot\indep B \given{} C\)</span> (i.e., <span class="math inline">\(A\)</span> is not conditionally independent of <span class="math inline">\(B\)</span> given <span class="math inline">\(C\)</span>) in a joint distribution consistent with the DAG.</p></li>
+<li><p>Because <span class="math inline">\(D\)</span> is a descendant of the collider <span class="math inline">\(C\)</span> on the path from <span class="math inline">\(A\)</span> to <span class="math inline">\(B\)</span>, conditioning on it opens the path. Thus, <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are d-connected given <span class="math inline">\(D\)</span> and it is possible that <span class="math inline">\(A \centernot\indep B \given{} D\)</span>.</p></li>
+<li><p>The path <span class="math inline">\(B \rightarrow C \rightarrow D\)</span> is closed by conditioning on the non-collider at <span class="math inline">\(C\)</span>, and there are no other paths from <span class="math inline">\(B\)</span> to <span class="math inline">\(D\)</span>. Because <span class="math inline">\(B\)</span> and <span class="math inline">\(D\)</span> are d-separated given <span class="math inline">\(C\)</span>, the DAG implies that <span class="math inline">\(B \indep D \given{} C\)</span> (i.e., <span class="math inline">\(B\)</span> is conditionally independent of <span class="math inline">\(D\)</span> given <span class="math inline">\(C\)</span>).</p></li>
+</ul>
+<div class="cell">
+<div class="code-with-filename">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-with-filename-file">
+<pre><strong>dag-cvalves.R</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="do">## Open and closed paths on a DAG</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="co"># load R packages</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="fu">library</span>(dagitty)</span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="fu">library</span>(ggdag)</span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb8-7"><a href="#cb8-7"></a></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="co"># define DAG</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a>valves <span class="ot">&lt;-</span> <span class="fu">dagitty</span>(<span class="st">'dag{</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a><span class="st">  A -&gt; C</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a><span class="st">  B -&gt; C -&gt; D</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a><span class="st">}'</span>)</span>
+<span id="cb8-13"><a href="#cb8-13"></a></span>
+<span id="cb8-14"><a href="#cb8-14"></a><span class="co"># generate data for plotting DAG using ggplot()</span></span>
+<span id="cb8-15"><a href="#cb8-15"></a><span class="co"># Use geom_dag_label() for adjusted variables to get a box around them.</span></span>
+<span id="cb8-16"><a href="#cb8-16"></a><span class="fu">coordinates</span>(valves) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="at">A =</span> <span class="dv">0</span>, <span class="at">B =</span> <span class="dv">1</span>, <span class="at">C =</span> <span class="dv">2</span>, <span class="at">D =</span> <span class="dv">3</span>),</span>
+<span id="cb8-17"><a href="#cb8-17"></a>                            <span class="at">y =</span> <span class="fu">c</span>(<span class="at">A =</span> <span class="dv">0</span>, <span class="at">B =</span> <span class="dv">0</span>, <span class="at">C =</span> <span class="dv">0</span>, <span class="at">D =</span> <span class="dv">0</span>))</span>
+<span id="cb8-18"><a href="#cb8-18"></a>cvalves_dat <span class="ot">&lt;-</span> <span class="fu">control_for</span>(valves, <span class="st">"C"</span>, <span class="at">activate_colliders =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb8-19"><a href="#cb8-19"></a>cvalves_adj <span class="ot">&lt;-</span> <span class="fu">filter</span>(cvalves_dat, adjusted <span class="sc">==</span> <span class="st">"adjusted"</span>)</span>
+<span id="cb8-20"><a href="#cb8-20"></a>cvalves_unadj <span class="ot">&lt;-</span> <span class="fu">filter</span>(cvalves_dat, adjusted <span class="sc">==</span> <span class="st">"unadjusted"</span>)</span>
+<span id="cb8-21"><a href="#cb8-21"></a></span>
+<span id="cb8-22"><a href="#cb8-22"></a><span class="co"># plot DAG with ggplot() to allow for boxes and curved arrows</span></span>
+<span id="cb8-23"><a href="#cb8-23"></a><span class="co"># Uncomment coord_equal() to get a better-looking DAG in an R plot window.</span></span>
+<span id="cb8-24"><a href="#cb8-24"></a>(<span class="fu">ggplot</span>(cvalves_dat, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend))</span>
+<span id="cb8-25"><a href="#cb8-25"></a>  <span class="sc">+</span> <span class="fu">theme_dag_gray_grid</span>()</span>
+<span id="cb8-26"><a href="#cb8-26"></a>  <span class="co"># + coord_equal()</span></span>
+<span id="cb8-27"><a href="#cb8-27"></a>  <span class="sc">+</span> <span class="fu">ylim</span>(<span class="sc">-</span><span class="fl">0.1</span>, <span class="fl">0.6</span>)</span>
+<span id="cb8-28"><a href="#cb8-28"></a>  <span class="sc">+</span> <span class="fu">geom_dag_label</span>(<span class="at">data =</span> cvalves_adj, <span class="at">parse =</span> <span class="cn">TRUE</span>, <span class="at">size =</span> <span class="dv">8</span>, <span class="at">fill =</span> <span class="cn">NA</span>,</span>
+<span id="cb8-29"><a href="#cb8-29"></a>                   <span class="at">label.padding =</span> <span class="fu">unit</span>(<span class="fl">0.15</span>, <span class="st">"lines"</span>))</span>
+<span id="cb8-30"><a href="#cb8-30"></a>  <span class="sc">+</span> <span class="fu">geom_dag_text</span>(<span class="at">data =</span> cvalves_unadj, <span class="at">parse =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb8-31"><a href="#cb8-31"></a>                  <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">8</span>)</span>
+<span id="cb8-32"><a href="#cb8-32"></a>  <span class="sc">+</span> <span class="fu">geom_dag_edges_arc</span>(<span class="at">curvature =</span> <span class="fu">c</span>(<span class="fl">0.4</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb8-33"><a href="#cb8-33"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output-display">
+<div id="fig-dag-cvalves" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dag-cvalves-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="dags_files/figure-html/fig-dag-cvalves-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;15.5: Directed acyclic graph (DAG) to illustrate conditionally open and closed paths. The box around the variable C indicates conditioning on C."><img src="dags_files/figure-html/fig-dag-cvalves-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dag-cvalves-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.5: Directed acyclic graph (DAG) to illustrate conditionally open and closed paths. The box around the variable <span class="math inline">\(C\)</span> indicates conditioning on <span class="math inline">\(C\)</span>.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>dag-cvalves-paths.R</strong></pre>
+</div>
+<div class="sourceCode" id="cb9" data-filename="dag-cvalves-paths.R"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="do">## Conditionally open and closed paths on a DAG</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="co"># load R packages</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="fu">library</span>(dagitty)</span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="fu">library</span>(ggdag)</span>
+<span id="cb9-6"><a href="#cb9-6"></a></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="co"># define DAG</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a>valves <span class="ot">&lt;-</span> <span class="fu">dagitty</span>(<span class="st">'dag{</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a><span class="st">  A -&gt; C</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a><span class="st">  B -&gt; C -&gt; D</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a><span class="st">}'</span>)</span>
+<span id="cb9-12"><a href="#cb9-12"></a></span>
+<span id="cb9-13"><a href="#cb9-13"></a><span class="co"># path from A to B opened by conditioning on the collider at C</span></span>
+<span id="cb9-14"><a href="#cb9-14"></a><span class="co"># The third argument Z is a variable or vector of variables to condition on.</span></span>
+<span id="cb9-15"><a href="#cb9-15"></a><span class="fu">isCollider</span>(valves, <span class="st">"A"</span>, <span class="st">"C"</span>, <span class="st">"B"</span>)</span>
+<span id="cb9-16"><a href="#cb9-16"></a><span class="fu">paths</span>(valves, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="at">Z =</span> <span class="st">"C"</span>)</span>
+<span id="cb9-17"><a href="#cb9-17"></a><span class="fu">dconnected</span>(valves, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>)</span>
+<span id="cb9-18"><a href="#cb9-18"></a><span class="fu">dseparated</span>(valves, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>)</span>
+<span id="cb9-19"><a href="#cb9-19"></a></span>
+<span id="cb9-20"><a href="#cb9-20"></a><span class="co"># path from A to B opened by conditioning on D (descendant of collider C)</span></span>
+<span id="cb9-21"><a href="#cb9-21"></a><span class="fu">isCollider</span>(valves, <span class="st">"A"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>)</span>
+<span id="cb9-22"><a href="#cb9-22"></a><span class="fu">paths</span>(valves, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"D"</span>)</span>
+<span id="cb9-23"><a href="#cb9-23"></a><span class="fu">dconnected</span>(valves, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"D"</span>)</span>
+<span id="cb9-24"><a href="#cb9-24"></a><span class="fu">dseparated</span>(valves, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"D"</span>)</span>
+<span id="cb9-25"><a href="#cb9-25"></a></span>
+<span id="cb9-26"><a href="#cb9-26"></a><span class="co"># path from B to D closed by conditioning on non-collider at C</span></span>
+<span id="cb9-27"><a href="#cb9-27"></a><span class="fu">isCollider</span>(valves, <span class="st">"B"</span>, <span class="st">"D"</span>, <span class="st">"C"</span>)</span>
+<span id="cb9-28"><a href="#cb9-28"></a><span class="fu">paths</span>(valves, <span class="st">"B"</span>, <span class="st">"D"</span>, <span class="st">"C"</span>)</span>
+<span id="cb9-29"><a href="#cb9-29"></a><span class="fu">dconnected</span>(valves, <span class="st">"B"</span>, <span class="st">"D"</span>, <span class="st">"C"</span>)</span>
+<span id="cb9-30"><a href="#cb9-30"></a><span class="fu">dseparated</span>(valves, <span class="st">"B"</span>, <span class="st">"D"</span>, <span class="st">"C"</span>)</span>
+<span id="cb9-31"><a href="#cb9-31"></a></span>
+<span id="cb9-32"><a href="#cb9-32"></a><span class="co"># conditional independence relations implied by the DAG</span></span>
+<span id="cb9-33"><a href="#cb9-33"></a><span class="fu">impliedConditionalIndependencies</span>(valves)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p>The same rules apply if we condition on multiple variables simultaneously. Conditioning on <span class="math inline">\(V_1, \ldots, V_k\)</span> means that we look at the joint distribution of the other variables in the subset of our population <span class="math inline">\(\Omega\)</span> with <span class="math inline">\(V_1(\omega) = v_1, \ldots, V_k(\omega) = v_k\)</span>. Variables that are d-separated when we condition on a variable or set of variables <span class="math inline">\(V\)</span> are conditionally independent given <span class="math inline">\(V\)</span>.</p>
+<!-- 
+\paragraph{Cycles} On a DAG, it is good practice to write variables so that time increases from left to right. 
+Under this convention, arrows should point only to the right because the future cannot affect the past. 
+A \emph{cycle} is a sequence of arrows that starts and ends at the same variable.
+A graph representing causal relationships is acyclic (i.e., contains no cycles) because at least one of these would have to point backward in time. 
+
+\paragraph{Paths and associations} A \emph{path} from $X$ to $D$ on a DAG is any sequence of edges that begins at $X$ and ends at $D$, where we ignore the direction of the arrows. 
+A path is \emph{blocked} if it contains a \emph{collider}: $\rightarrow Z \leftarrow$ where $Z$ is a variable on the path. 
+Typically, two variables in a DAG will be associated with each other if there is any open path between them.
+When two variables connected by an open path are statistically independent, the DAG is called \emph{unfaithful}.
+
+\paragraph{Blocking a path with stratification or restriction} 
+An open path on a DAG can be blocked by stratifying on a variable on the path or by restricting the study population to one value of that variable. 
+This is represented by putting a square around the variable. 
+In Figure~\ref{fig:DAGs}(a), we can block the backdoor path from $X$ to $D$ by stratifying on $C$. 
+If all backdoor paths from $X$ to $D$ pass through $C$, then $X$ and $D$ will be independent within each stratum when there is no causal effect of $X$ on $D$.
+When there are no open paths between two variables on a DAG, they are said to be \emph{d-separated}~\citep{pearl1995causal}.
+
+\paragraph{Causal paths and mediation} 
+A \emph{causal path} from $X$ to $D$ is a path starting at $X$ and ending at $D$ that follows the directions of the arrows.
+If there is an open causal path from $X$ to $D$, then changing $X$ will change the value of $D$ even if there is not an arrow directly from $X$ to $D$.
+There can be multiple causal paths from one variable to another.
+In Figure~\ref{fig:DAGs}(a), there are two causal paths from $C$ to $D$ if the arrow from $X$ to $D$ is present.
+If there is a causal path from $X$ to $D$ that has more than two arrows, the intermediate variables are called \emph{mediators}.
+In Figure~\ref{fig:DAGs}(a), part of the causal effect of $C$ on $D$ is mediated through $X$ if the arrow from $X$ to $D$ is present.
+In Figure~\ref{fig:DAGs}(c), there is no causal path from $C$ to $D$ if the arrow from $C$ to $D$ is not present.
+If the arrow from $C$ to $D$ is present, then all of the causal effect of $C$ on $D$ is mediated through $X$. -->
+</section>
+</section>
+<section id="confounding-and-selection-bias" class="level2" data-number="15.3">
+<h2 data-number="15.3" class="anchored" data-anchor-id="confounding-and-selection-bias"><span class="header-section-number">15.3</span> Confounding and selection bias</h2>
+<p>The fact that association does not imply causation can be explained very simply using DAGs. An association between variables <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> (where we assume that <span class="math inline">\(A\)</span> comes before <span class="math inline">\(B\)</span>) means that there is at least open path between them on any causal DAG that includes both variables. If all of the open paths from <span class="math inline">\(A\)</span> to <span class="math inline">\(B\)</span> are causal, then this association represents a causal effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(B\)</span> in the population where the association was observed. If some of these open paths are noncausal, the association does not accurately represent a causal effect in the population.</p>
+<p>In the design and analysis of an epidemiologic study, our goal is to close all non-causal pathways from exposure <span class="math inline">\(X\)</span> to disease outcome <span class="math inline">\(D\)</span> while keeping all causal pathways open. This almost always require measuring variables other than <span class="math inline">\(X\)</span> and <span class="math inline">\(D\)</span>.</p>
+<section id="confounding-and-open-backdoor-paths" class="level3" data-number="15.3.1">
+<h3 data-number="15.3.1" class="anchored" data-anchor-id="confounding-and-open-backdoor-paths"><span class="header-section-number">15.3.1</span> Confounding and open backdoor paths</h3>
+</section>
+<section id="selection-bias-and-colliders" class="level3" data-number="15.3.2">
+<h3 data-number="15.3.2" class="anchored" data-anchor-id="selection-bias-and-colliders"><span class="header-section-number">15.3.2</span> Selection bias and colliders</h3>
+</section>
+<section id="simpsons-paradox-revisited" class="level3" data-number="15.3.3">
+<h3 data-number="15.3.3" class="anchored" data-anchor-id="simpsons-paradox-revisited"><span class="header-section-number">15.3.3</span> Simpson’s paradox revisited</h3>
+</section>
+<section id="berksons-bias" class="level3" data-number="15.3.4">
+<h3 data-number="15.3.4" class="anchored" data-anchor-id="berksons-bias"><span class="header-section-number">15.3.4</span> Berkson’s bias</h3>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-greenland1999causal" class="csl-entry" role="listitem">
+Greenland, Sander, Judea Pearl, and James M Robins. 1999. <span>“Causal Diagrams for Epidemiologic Research.”</span> <em>Epidemiology</em> 10 (1): 37–48.
+</div>
+<div id="ref-pearl1995causal" class="csl-entry" role="listitem">
+Pearl, Judea. 1995. <span>“Causal Diagrams for Empirical Research.”</span> <em>Biometrika</em> 82 (4): 669–88.
+</div>
+<div id="ref-simpson1951interpretation" class="csl-entry" role="listitem">
+Simpson, Edward H. 1951. <span>“The Interpretation of Interaction in Contingency Tables.”</span> <em>Journal of the Royal Statistical Society: Series B (Methodological)</em> 13 (2): 238–41.
+</div>
+<div id="ref-yerushalmy1959methodology" class="csl-entry" role="listitem">
+Yerushalmy, Jacob, and Carroll E Palmer. 1959. <span>“On the Methodology of Investigations of Etiologic Factors in Chronic Diseases.”</span> <em>Journal of Chronic Diseases</em> 10 (1): 27–40.
+</div>
+</div>
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p> Edward H. Simpson (1922–2019) was a British civil servant who grew up in Northern Ireland and became interested in statistics while working as a codebreaker at Bletchley Park in World War II. He went on to earn a PhD in mathematical statistics at the University of Cambridge in 1946 before joining the UK Ministry of Education.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p> Sometimes the ancestors and descendants of a variable <span class="math inline">\(V\)</span> are defined to include <span class="math inline">\(V\)</span> itself. The <em>proper ancestors</em> and <em>proper descendants</em> of <span class="math inline">\(V\)</span> do not include <span class="math inline">\(V\)</span>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p> Generating an independence between two variables that is not implied by the DAG requires us to find combinations of parameters that solve a system of equations. When the set of solutions has Lebesgue measure zero in the space of possible parameters, the dependencies implied by the DAG occur in almost all joint distributions consistent with the DAG.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./counterfactuals.html" class="pagination-link" aria-label="Potential Outcomes and Attributable Risk">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Potential Outcomes and Attributable Risk</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./swigs.html" class="pagination-link" aria-label="Confounding and Selection Bias on SWIGs">
+        <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Confounding and Selection Bias on SWIGs</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

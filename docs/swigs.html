@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Eben Kenah">
-<meta name="dcterms.date" content="2025-03-14">
 
-<title>Analytical Epidemiology</title>
+<title>16&nbsp; Confounding and Selection Bias on SWIGs – Analytical Epidemiology</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -52,7 +50,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./probability.html" rel="next">
+<link href="./references.html" rel="next">
+<link href="./dags.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -62,9 +61,6 @@ div.csl-indent {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-747bc48f972f7c4036e4d8e8c6d9e55a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
-<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -173,7 +169,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Preface</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./causality.html">Principles of Causal Inference</a></li><li class="breadcrumb-item"><a href="./swigs.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Confounding and Selection Bias on SWIGs</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -203,7 +199,7 @@ div.csl-indent {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
@@ -330,7 +326,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./swigs.html" class="sidebar-item-text sidebar-link">
+  <a href="./swigs.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Confounding and Selection Bias on SWIGs</span></span></a>
   </div>
 </li>
@@ -368,46 +364,22 @@ div.csl-indent {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="2">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a>
-  <ul class="collapse">
-  <li><a href="#who-this-book-is-for" id="toc-who-this-book-is-for" class="nav-link" data-scroll-target="#who-this-book-is-for">Who this book is for</a></li>
-  <li><a href="#how-to-use-this-book" id="toc-how-to-use-this-book" class="nav-link" data-scroll-target="#how-to-use-this-book">How to use this book</a></li>
-  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
-  </ul></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./causality.html">Principles of Causal Inference</a></li><li class="breadcrumb-item"><a href="./swigs.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Confounding and Selection Bias on SWIGs</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Analytical Epidemiology</h1>
-<p class="subtitle lead">Statistical and Causal Inference for Public Health</p>
+<h1 class="title"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Confounding and Selection Bias on SWIGs</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Eben Kenah </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">March 14, 2025</p>
-    </div>
-  </div>
   
     
   </div>
@@ -417,48 +389,16 @@ div.csl-indent {
 </header>
 
 
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="JohnSnow-1855-map2.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Areas of London supplied by the Southwark &amp; Vauxhall (blue, now green) and Lambeth (red) water companies during the 1849-1854 cholera epidemic in London [@snow1855mode]. Source: Wellcome Collection via Wikimedia Commons."><img src="JohnSnow-1855-map2.jpg" class="img-fluid figure-img" style="width:90.0%" alt="Areas of London supplied by the Southwark &amp; Vauxhall (blue, now green) and Lambeth (red) water companies during the 1849-1854 cholera epidemic in London (Snow 1855). Source: Wellcome Collection via Wikimedia Commons."></a></p>
-<figcaption>Areas of London supplied by the Southwark &amp; Vauxhall (blue, now green) and Lambeth (red) water companies during the 1849-1854 cholera epidemic in London <span class="citation" data-cites="snow1855mode">(<a href="references.html#ref-snow1855mode" role="doc-biblioref">Snow 1855</a>)</span>. Source: Wellcome Collection via <a href="https://commons.wikimedia.org/wiki/File:Map_showing_the_intimate_mixture_of_the_water_supply..._Wellcome_L0063432.jpg">Wikimedia Commons</a>.</figcaption>
-</figure>
-</div>
-<section id="preface" class="level1 unnumbered">
-<h1 class="unnumbered">Preface</h1>
-<p>One day at lunch at the Harvard School of Public Health, I overheard Professor Murray Mittleman say: “I love epidemiology. It all fits together like a diamond.” As a second-year doctoral student in epidemiology, I was surprised to hear the subject described with such unstrained enthusiasm. It has taken years of study and experience for me to understand what he meant. On the way, I too have fallen in love.</p>
-<section id="who-this-book-is-for" class="level2">
-<h2 class="anchored" data-anchor-id="who-this-book-is-for">Who this book is for</h2>
-<p>This book is intended primarily for two audiences:</p>
-<ul>
-<li><p>Epidemiologists are often protected from the mathematical foundations of their field. The long-term price of this is “dogmatism, that is, a tendency to rigidly protect a partially understood theoretical heritage” <span class="citation" data-cites="morabia2004epidemiology">(<a href="references.html#ref-morabia2004epidemiology" role="doc-biblioref">Morabia 2004</a>)</span>. The mathematics needed for a deeper understanding of epidemiologic methods is within reach of anyone who has come far enough to need it. Whether you master this material or just learn to approach it with more patience than fear, you will be doing a service to epidemiology and to public health.</p></li>
-<li><p>Biostatisticians are familiar with probability and statistical inference, but applying statistics to solve scientific problems in public health requires skills different from those needed to prove that a method works under given assumptions. Epidemiology is a living example of the interplay between theory and applications in statistics, and epidemiologists have shown integrity, courage, and ingenuity in confronting causal questions with statistical tools.</p></li>
-</ul>
-<p>Beyond these audiences, I hope to explain the logic of epidemiology to any interested reader. It is possible that epidemiologic research has already helped save your life.</p>
-</section>
-<section id="how-to-use-this-book" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-use-this-book">How to use this book</h2>
-<p>Difficult chapters, sections, subsections, and exercises are marked with an asterisk (*). These can be skipped without harming the logical flow of the book, but none of them is beyond the reach of a determined reader. The starring is recursive: Starred sections can be skipped within a starred chapter, starred subsections can be skipped within a starred section, and so on. Footnotes offer context or hint at more advanced material, and they can be ignored if they do not seem useful or interesting.</p>
-<p>This is a work in progress. You may find that some parts are unfinished or just bad. Please report errors (including typos) or submit suggestions (especially good examples) at:</p>
-<p><a href="https://github.com/ekenah/analyticalepi/issues">https://github.com/ekenah/analyticalepi/issues</a>.</p>
-</section>
-<section id="acknowledgements" class="level2">
-<h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
-<p>This book is written in <a href="https://www.latex-project.org/">LaTeX</a> and <a href="https://quarto.org/">Quarto</a> with calculations and figures generated in <a href="https://cran.r-project.org/">R</a>, <a href="https://www.python.org/">Python</a>, and <a href="https://inkscape.org/">Inkscape</a>. I have also included many links to <a href="https://en.wikipedia.org">Wikipedia</a>. A good text editor and code editor are important, and I use <a href="https://www.vim.org/">vim</a> and <a href="https://code.visualstudio.com/">VSCode</a>. All of these are free, open-source, and publicly available thanks to the work of many contributors. I am also grateful to <a href="https://scholar.google.com/">Google Scholar</a>, <a href="https://pubmed.ncbi.nlm.nih.gov/">PubMed</a>, and the libraries at <a href="https://library.osu.edu/">Ohio State</a>, the <a href="https://uflib.ufl.edu/">University of Florida</a>, the <a href="https://lib.uw.edu/">University of Washington</a>, and <a href="https://library.harvard.edu/">Harvard University</a> for giving me access to the scientific literature in epidemiology, statistics, public health, and medicine.</p>
-<p>Tony Barry, Devesh Kapur, Paul Farmer, and James H. Maguire guided me to a career in public health when I was an undergraduate. James Robins, Miguel A. Hernán, Marc Lipsitch, and Stephen P. Luby helped me become an epidemiologist, biostatistician, and epidemic modeler in graduate school. My career began under the mentorship of Ira M. Longini, Jr., and M. Elizabeth Halloran as a postdoctoral fellow at the Univerity of Washington and an assistant professor at the University of Florida. My colleagues Yang Yang, Grzegorz Rempała, Forrest Crawford, and Patrick Schnell have all provided useful comments. For their patience with early versions of this material, I am grateful to the students of STA 6177/PHC 6937 (Applied Survival Analysis) at the University of Florida from 2013 to 2016 and PUBHEPI 8430 (Epidemiology 4) at The Ohio State University from 2019 to the present.</p>
-<p>My parents, Chris and Kate Kenah, courageously allowed me to travel to places they had never been to and do things I had been told to avoid. These experiences in the United States, India, South Africa, and especially Bangladesh opened my eyes to the terrible importance of clear thinking in public health. My wife, Asma Aktar, and our sons Rafi, Rayhan, and Rabi remind me every day how important it is to destroy everything that stifles humanity. To that end, I hope this book is useful.</p>
-<p>Any mistakes are my own, and God knows best (الله أعلم).</p>
+<blockquote class="blockquote">
+<p>As discussed in numerous textbooks, the common consequence of selection bias is that the association between exposure and outcome among those selected for analysis differs from the association among those eligible. <span class="citation" data-cites="hernan2004structural">(<a href="references.html#ref-hernan2004structural" role="doc-biblioref">Hernán, Hernández-Dı́az, and Robins 2004</a>)</span></p>
+</blockquote>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
-<div id="ref-morabia2004epidemiology" class="csl-entry" role="listitem">
-Morabia, Alfredo. 2004. <span>“Epidemiology: An Epistemological Perspective.”</span> In <em>A History of Epidemiologic Methods and Concepts</em>, edited by Alfredo Morabia, 3–125. Springer.
-</div>
-<div id="ref-snow1855mode" class="csl-entry" role="listitem">
-Snow, John. 1855. <em>On the Mode of Communication of Cholera</em>. Second edition. John Churchill. <a href="https://wellcomecollection.org/works/uqa27qrt">https://wellcomecollection.org/works/uqa27qrt</a>.
+<div id="ref-hernan2004structural" class="csl-entry" role="listitem">
+Hernán, Miguel Á, Sonia Hernández-Dı́az, and James M Robins. 2004. <span>“A Structural Approach to Selection Bias.”</span> <em>Epidemiology</em> 15 (5): 615–25.
 </div>
 </div>
-</section>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -885,46 +825,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./dags.html" class="pagination-link" aria-label="Confounding and Selection Bias on DAGs">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Confounding and Selection Bias on DAGs</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./probability.html" class="pagination-link" aria-label="Probability, Random Variables, and Disease Occurrence">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Probability, Random Variables, and Disease Occurrence</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
-(function() {
-  let previousOnload = window.onload;
-  window.onload = () => {
-    if (previousOnload) {
-      previousOnload();
-    }
-    lightboxQuarto.on('slide_before_load', (data) => {
-      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-      const href = trigger.getAttribute('href');
-      if (href !== null) {
-        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
-        if (imgEl !== null) {
-          const srcAttr = imgEl.getAttribute("src");
-          if (srcAttr && srcAttr.startsWith("data:")) {
-            slideConfig.href = srcAttr;
-          }
-        }
-      } 
-    });
-  
-    lightboxQuarto.on('slide_after_load', (data) => {
-      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(slideNode);
-      }
-    });
-  
-  };
-  
-})();
-          </script>
 
 
 
