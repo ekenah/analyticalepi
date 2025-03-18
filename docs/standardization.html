@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>17&nbsp; Conditional and Marginal Causal Effects – Analytical Epidemiology</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./geometry.html" rel="next">
+<link href="./swigs.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-747bc48f972f7c4036e4d8e8c6d9e55a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script>
+  window.MathJax = {
+    loader: {load: ['[tex]/centernot']},
+    tex: {
+      macros: {
+        A: "\\mathcal\{A\}",
+        approxsim: "\\stackrel\{\\text\{approx\}\}\{\\sim\}",
+        AR: "\\text\{AR\}",
+        B: "\\mathcal\{B\}",
+        Bernoulli: ["\\operatorname\{Bernoulli\}"],
+        binomial: ["\\operatorname\{binomial\}"],
+        C: "\\mathcal\{C\}",
+        chisqH: "\\chi^2_\\text\{H\}",
+        chisqP: "\\chi^2_\\text\{P\}",
+        chisqPobs: "\\chi^2_\\text\{Pobs\}",
+        cHR: "\\text\{cHR\}",
+        CHR: "\\text\{CHR\}",
+        cloglog: ["\\operatorname\{cloglog\}"],
+        comp: "\\mathsf\{C\}",
+        Cov: ["\\operatorname\{Cov\}"],
+        crude: "\\text\{crude\}",
+        D: "\\mathcal\{D\}",
+        data: "\\text\{data\}",
+        dif: "\\text\{d\}",
+        Dminus: "\\text\{D\}^-",
+        Dplus: "\\text\{D\}^+",
+        E: ["\\operatorname\{\\mathbb\{E\}\}"],
+        ESSR: "\\text\{ESSR\}",
+        expit: ["\\operatorname\{expit\}"],
+        given: ["\\, #1| \\, ", 1],
+        HR: "\\text\{HR\}",
+        indep: "\\perp\\!\\!\\!\\perp",
+        indicator: "\\mathbb\{1\}",
+        IRR: "\\text\{IRR\}",
+        K: "\\mathcal\{K\}",
+        logit: ["\\operatorname\{logit\}"],
+        margins: "\\text\{margins\}",
+        obs: "\\text\{obs\}",
+        odds: ["\\operatorname\{odds\}"],
+        OR: "\\text\{OR\}",
+        pa: "\\text\{pa\}",
+        PAR: "\\text\{PAR\}",
+        Prstd: "\\Pr\\nolimits\_\\text\{std\}",
+        ptrue: "p_\{\\text\{true\}\}",
+        R: "\\mathcal\{R\}",
+        RD: "\\text\{RD\}",
+        RR: "\\text\{RR\}",
+        sens: "\\text\{sens\}",
+        spec: "\\text\{spec\}",
+        std: "\\text\{std\}",
+        supp: ["\\operatorname\{supp\}"],
+        tcens: "t^\\text\{cens\}",
+        tentry: "t^\\text\{entry\}",
+        tevent: "t^\\text\{event\}",
+        texit: "t^\\text\{exit\}",
+        Tminus: "\\text\{T\}^-",
+        tonset: "t^\\text\{onset\}",
+        Tplus: "\\text\{T\}^+",
+        transpose: "\\mathsf{T}",
+        trec: "t^\\text\{rec\}",
+        true: "\\text\{true\}",
+        twobytwo: "2 \\times 2",
+        vand: "\\text\{ and \}",
+        Var: ["\\operatorname\{Var\}"],
+        Xminus: "\\text\{X\}^-",
+        Xobs: "\\text\{X\}^\\text\{obs\}",
+        Xplus: "\\text\{X\}^+"
+      }
+    }
+  };
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./causality.html">Principles of Causal Inference</a></li><li class="breadcrumb-item"><a href="./standardization.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conditional and Marginal Causal Effects</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Analytical Epidemiology</a> 
+        <div class="sidebar-tools-main">
+    <a href="./Analytical-Epidemiology.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Defining and Measuring Disease Occurrence</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./probability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Probability, Random Variables, and Disease Occurrence</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./condprob.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Conditional Probability and Diagnostic Tests</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mlestimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Maximum Likelihood Estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bayes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Bayesian Estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./longitudinal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Longitudinal Data, Rates, and Counts</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./survival.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">One-Sample Survival Analysis</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Study Design and Measures of Association</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./studydesign.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Cohort and Case-Control Studies</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./validity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Internal and External Validity</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cohort.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Measures of Association in Cohort Studies</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./survival2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-Sample Survival Analysis and the Cox Model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./casecontrol.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Design and Analysis of Case-Control and Case-Cohort studies</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bayes2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Bayesian analysis of cohort and case-control studies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Principles of Causal Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./causality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Causality in Public Health</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./counterfactuals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Potential Outcomes and Attributable Risk</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dags.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Confounding and Selection Bias on DAGs</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./swigs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Confounding and Selection Bias on SWIGs</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./standardization.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conditional and Marginal Causal Effects</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./geometry.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Geometry of Causal Inference</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Epidemologic and Statistical Methods for Causal Inference</span></span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./calculus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Calculus</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="2">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#measures-of-association-in-a-cohort-study-with-bias" id="toc-measures-of-association-in-a-cohort-study-with-bias" class="nav-link active" data-scroll-target="#measures-of-association-in-a-cohort-study-with-bias"><span class="header-section-number">17.1</span> Measures of association in a cohort study with bias</a>
+  <ul class="collapse">
+  <li><a href="#confounding-and-selection-bias" id="toc-confounding-and-selection-bias" class="nav-link" data-scroll-target="#confounding-and-selection-bias"><span class="header-section-number">17.1.1</span> Confounding and selection bias</a></li>
+  <li><a href="#crude-measures" id="toc-crude-measures" class="nav-link" data-scroll-target="#crude-measures"><span class="header-section-number">17.1.2</span> Crude measures</a></li>
+  <li><a href="#marginal-causal-effects" id="toc-marginal-causal-effects" class="nav-link" data-scroll-target="#marginal-causal-effects"><span class="header-section-number">17.1.3</span> Marginal causal effects</a></li>
+  <li><a href="#stratum-specific-measures" id="toc-stratum-specific-measures" class="nav-link" data-scroll-target="#stratum-specific-measures"><span class="header-section-number">17.1.4</span> Stratum-specific measures</a></li>
+  <li><a href="#conditional-causal-effects" id="toc-conditional-causal-effects" class="nav-link" data-scroll-target="#conditional-causal-effects"><span class="header-section-number">17.1.5</span> Conditional causal effects</a></li>
+  </ul></li>
+  <li><a href="#standardization" id="toc-standardization" class="nav-link" data-scroll-target="#standardization"><span class="header-section-number">17.2</span> Standardization</a>
+  <ul class="collapse">
+  <li><a href="#reconstructing-marginal-causal-risks" id="toc-reconstructing-marginal-causal-risks" class="nav-link" data-scroll-target="#reconstructing-marginal-causal-risks"><span class="header-section-number">17.2.1</span> Reconstructing marginal causal risks</a></li>
+  <li><a href="#standardized-risks-and-measures-of-association" id="toc-standardized-risks-and-measures-of-association" class="nav-link" data-scroll-target="#standardized-risks-and-measures-of-association"><span class="header-section-number">17.2.2</span> Standardized risks and measures of association</a></li>
+  <li><a href="#treatment-effects" id="toc-treatment-effects" class="nav-link" data-scroll-target="#treatment-effects"><span class="header-section-number">17.2.3</span> Treatment effects</a></li>
+  <li><a href="#variance-calculation" id="toc-variance-calculation" class="nav-link" data-scroll-target="#variance-calculation"><span class="header-section-number">17.2.4</span> Variance calculation</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./causality.html">Principles of Causal Inference</a></li><li class="breadcrumb-item"><a href="./standardization.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conditional and Marginal Causal Effects</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conditional and Marginal Causal Effects</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p>Your father’s lightsaber. This is the weapon of a Jedi knight. Not as clumsy and random as a blaster. An elegant weapon for a more civilized age. (Obi-Wan Kenobi, <em>Star Wars</em>, 1977)<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+</blockquote>
+<p>Potential outcomes (counterfactuals), directed acyclic graphs (DAGs), and single-world intervention graphs (SWIGs) have greatly clarified thinking about causal inference in epidemiology as well as other social and natural sciences. The causal effect of a binary exposure <span class="math inline">\(X\)</span> on a disease outcome <span class="math inline">\(D\)</span> is the change in the risk of <span class="math inline">\(D\)</span> caused by intervening to change exposure from <span class="math inline">\(X = 0\)</span> to <span class="math inline">\(X = 1\)</span>. This definition matches the effect estimated in a randomized trial, which estimates the effect of a change in exposure on the risk of disease in the population eligible for the trial. In a large randomized study, the treatment and control groups are both representative of the eligible population in that the distribution of risk factors for disease is the same in both.</p>
+<p>When there is confounding and selection bias, it is possible that neither exposure group is representative of the eligible population. If we can identify a set <span class="math inline">\(C\)</span> of covariates that can be used to control confounding and selection bias, we can calculate causal effects within strata defined by <span class="math inline">\(C\)</span>. However, we can still calculate marginal causal effects through an elegant process called standardization.</p>
+<section id="measures-of-association-in-a-cohort-study-with-bias" class="level2" data-number="17.1">
+<h2 data-number="17.1" class="anchored" data-anchor-id="measures-of-association-in-a-cohort-study-with-bias"><span class="header-section-number">17.1</span> Measures of association in a cohort study with bias</h2>
+<p>The key idea in causal inference is that there is a fundamental difference between observation and intervention. Let <span class="math inline">\(X\)</span> be a binary exposure, <span class="math inline">\(D\)</span> be a binary disease outcome, <span class="math inline">\(C\)</span> be a discrete confounder, and <span class="math inline">\(S\)</span> denote selection into the study. For simplicity, we assume that <span class="math inline">\(X\)</span> does not change over time. The occurrence of <span class="math inline">\(D\)</span> is measured over a time interval <span class="math inline">\((0, t]\)</span>. Using these data, we can calculate crude measures of association or measures of association conditional on <span class="math inline">\(C\)</span>.</p>
+<section id="confounding-and-selection-bias" class="level3" data-number="17.1.1">
+<h3 data-number="17.1.1" class="anchored" data-anchor-id="confounding-and-selection-bias"><span class="header-section-number">17.1.1</span> Confounding and selection bias</h3>
+<p><a href="#fig-dag-cxsd" class="quarto-xref">Figure&nbsp;<span>17.1</span></a> shows a simple DAG for a cohort study with confounding, selection bias, and a causal effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(D\)</span>. There is confounding because of the open backdoor path <span class="math inline">\(X \leftarrow C \rightarrow D\)</span>. There is selection bias because the noncausal path <span class="math inline">\(X \rightarrow S \leftarrow X \rightarrow D\)</span> is opened by conditioning on the collider at <span class="math inline">\(S\)</span>. The analytic case-control condition automatically fails because of the path <span class="math inline">\(X \rightarrow S\)</span>. The confounding and selection bias occur whether or not there is a causal effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(D\)</span>, which is represented by the causal path <span class="math inline">\(X \rightarrow D\)</span>.</p>
+<div class="cell">
+<div class="code-with-filename">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-with-filename-file">
+<pre><strong>dag-cxsd.R</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># DAG for cohort study with confounding and selection bias</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="co"># load R packages</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">library</span>(dagitty)</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="fu">library</span>(ggdag, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-7"><a href="#cb1-7"></a></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="co"># define the DAG</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a>cohort <span class="ot">&lt;-</span> <span class="fu">dagitty</span>(<span class="st">'dag{</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="st">  C -&gt; D</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="st">  C -&gt; S</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="st">  C -&gt; X</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="st">  X -&gt; D</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="st">  X -&gt; S</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a><span class="st">}'</span>)</span>
+<span id="cb1-16"><a href="#cb1-16"></a></span>
+<span id="cb1-17"><a href="#cb1-17"></a><span class="co"># generate data for plotting DAG using ggplot()</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="co"># Use geom_dag_label() for adjusted variables to get a box around them.</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a><span class="fu">coordinates</span>(cohort) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="at">C =</span> <span class="dv">0</span>, <span class="at">X =</span> <span class="dv">1</span>, <span class="at">S =</span> <span class="fl">1.5</span>, <span class="at">D =</span> <span class="dv">2</span>),</span>
+<span id="cb1-20"><a href="#cb1-20"></a>                            <span class="at">y =</span> <span class="fu">c</span>(<span class="at">C =</span> <span class="dv">0</span>, <span class="at">X =</span> <span class="dv">0</span>, <span class="at">S =</span> <span class="sc">-</span><span class="fl">0.3</span>, <span class="at">D =</span> <span class="dv">0</span>))</span>
+<span id="cb1-21"><a href="#cb1-21"></a>cohort_dat <span class="ot">&lt;-</span> <span class="fu">control_for</span>(cohort, <span class="st">"S"</span>, <span class="at">activate_colliders =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-22"><a href="#cb1-22"></a>cohort_adj <span class="ot">&lt;-</span> <span class="fu">filter</span>(cohort_dat, adjusted <span class="sc">==</span> <span class="st">"adjusted"</span>)</span>
+<span id="cb1-23"><a href="#cb1-23"></a>cohort_unadj <span class="ot">&lt;-</span> <span class="fu">filter</span>(cohort_dat, adjusted <span class="sc">==</span> <span class="st">"unadjusted"</span>)</span>
+<span id="cb1-24"><a href="#cb1-24"></a></span>
+<span id="cb1-25"><a href="#cb1-25"></a><span class="co"># plot DAG with ggplot() to allow for boxes and curved arrows</span></span>
+<span id="cb1-26"><a href="#cb1-26"></a>(<span class="fu">ggplot</span>(cohort_dat, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend))</span>
+<span id="cb1-27"><a href="#cb1-27"></a>  <span class="sc">+</span> <span class="fu">theme_dag_gray_grid</span>()</span>
+<span id="cb1-28"><a href="#cb1-28"></a>  <span class="sc">+</span> <span class="fu">coord_equal</span>()</span>
+<span id="cb1-29"><a href="#cb1-29"></a>  <span class="sc">+</span> <span class="fu">ylim</span>(<span class="sc">-</span><span class="fl">0.4</span>, <span class="fl">0.3</span>)</span>
+<span id="cb1-30"><a href="#cb1-30"></a>  <span class="sc">+</span> <span class="fu">geom_dag_label</span>(<span class="at">data =</span> cohort_adj,</span>
+<span id="cb1-31"><a href="#cb1-31"></a>                   <span class="at">parse =</span> <span class="cn">TRUE</span>, <span class="at">size =</span> <span class="dv">8</span>, <span class="at">fill =</span> <span class="cn">NA</span>,</span>
+<span id="cb1-32"><a href="#cb1-32"></a>                   <span class="at">label.padding =</span> <span class="fu">unit</span>(<span class="fl">0.15</span>, <span class="st">"lines"</span>))</span>
+<span id="cb1-33"><a href="#cb1-33"></a>  <span class="sc">+</span> <span class="fu">geom_dag_text</span>(<span class="at">data =</span> cohort_unadj, <span class="at">parse =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb1-34"><a href="#cb1-34"></a>                  <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">8</span>)</span>
+<span id="cb1-35"><a href="#cb1-35"></a>  <span class="sc">+</span> <span class="fu">geom_dag_edges_arc</span>(<span class="at">curvature =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="sc">-</span><span class="fl">0.13</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb1-36"><a href="#cb1-36"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output-display">
+<div id="fig-dag-cxsd" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dag-cxsd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="standardization_files/figure-html/fig-dag-cxsd-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;17.1: Directed acyclic graph (DAG) showing a cohort study with confounding, selection bias, and a causal effect of X on D."><img src="standardization_files/figure-html/fig-dag-cxsd-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dag-cxsd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;17.1: Directed acyclic graph (DAG) showing a cohort study with confounding, selection bias, and a causal effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(D\)</span>.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>If we condition on <span class="math inline">\(C\)</span> in <a href="#fig-dag-cxsd" class="quarto-xref">Figure&nbsp;<span>17.1</span></a>, this closes both the backdoor path from <span class="math inline">\(X\)</span> to <span class="math inline">\(D\)</span> and the noncausal path from <span class="math inline">\(X\)</span> to <span class="math inline">\(D\)</span> that was opened by conditioning on <span class="math inline">\(S\)</span>. <a href="#fig-swig-cxsd" class="quarto-xref">Figure&nbsp;<span>17.2</span></a> shows the single-world intervention graph (SWIG) corresponding to an intervention that sets <span class="math inline">\(X = x\)</span> and conditioning on <span class="math inline">\(C\)</span>. There is a box around little <span class="math inline">\(x\)</span> to show that the path <span class="math inline">\(S^x \leftarrow x \rightarrow D^x\)</span> is closed. However, <span class="math inline">\(x\)</span> is not a variable that we can measure and condition on when we analyze the data, so it is not included in the set of variables that we condition on to control confounding and selection bias. The SWIG shows that measuring <span class="math inline">\(C\)</span> and conditioning on it is sufficient to control both:</p>
+<ul>
+<li><p>We have exchangeability <span class="math inline">\(D^x \indep X \given{} C\)</span> because <span class="math inline">\(D^x\)</span> and big <span class="math inline">\(X\)</span> (which represents the actual or realized exposure status) are d-separated given <span class="math inline">\(C\)</span> and <span class="math inline">\(C\)</span> is a non-descendant of <span class="math inline">\(X\)</span>.</p></li>
+<li><p>We have the analytic cohort condition <span class="math inline">\(S^x \indep D^x \given{} (X, C)\)</span> because <span class="math inline">\(S^x\)</span> and <span class="math inline">\(D^x\)</span> are d-separated given <span class="math inline">\(C\)</span> and big <span class="math inline">\(X\)</span> and <span class="math inline">\(C\)</span> is a measured non-descendant of <span class="math inline">\(X\)</span> such that exchangeability holds given <span class="math inline">\(C\)</span>. The paths through little <span class="math inline">\(x\)</span> are closed, but we do not include <span class="math inline">\(x\)</span> in the conditional independence statements.</p></li>
+</ul>
+<div class="cell">
+<div class="code-with-filename">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-with-filename-file">
+<pre><strong>swig-cxsd.R</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># DAG for cohort study with confounding and selection bias</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co"># load R packages</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="fu">library</span>(dagitty)</span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="fu">library</span>(ggdag, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-7"><a href="#cb2-7"></a></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="co"># define the DAG</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a>cohort <span class="ot">&lt;-</span> <span class="fu">dagitty</span>(<span class="st">'dag{</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="st">  C -&gt; D</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a><span class="st">  C -&gt; S</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a><span class="st">  C -&gt; X</span></span>
+<span id="cb2-13"><a href="#cb2-13"></a><span class="st">  x -&gt; D</span></span>
+<span id="cb2-14"><a href="#cb2-14"></a><span class="st">  x -&gt; S</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a><span class="st">}'</span>)</span>
+<span id="cb2-16"><a href="#cb2-16"></a></span>
+<span id="cb2-17"><a href="#cb2-17"></a><span class="co"># generate data for plotting DAG using ggplot()</span></span>
+<span id="cb2-18"><a href="#cb2-18"></a><span class="co"># Use geom_dag_label() for adjusted variables to get a box around them.</span></span>
+<span id="cb2-19"><a href="#cb2-19"></a><span class="fu">coordinates</span>(cohort) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="at">C =</span> <span class="dv">0</span>, <span class="at">X =</span> <span class="fl">0.9</span>, <span class="at">x =</span> <span class="fl">1.1</span>, <span class="at">S =</span> <span class="fl">1.5</span>, <span class="at">D =</span> <span class="dv">2</span>),</span>
+<span id="cb2-20"><a href="#cb2-20"></a>                            <span class="at">y =</span> <span class="fu">c</span>(<span class="at">C =</span> <span class="dv">0</span>, <span class="at">X =</span> <span class="dv">0</span>, <span class="at">x =</span> <span class="dv">0</span>, <span class="at">S =</span> <span class="sc">-</span><span class="fl">0.3</span>, <span class="at">D =</span> <span class="dv">0</span>))</span>
+<span id="cb2-21"><a href="#cb2-21"></a>cohort_dat <span class="ot">&lt;-</span> <span class="fu">control_for</span>(cohort, <span class="fu">c</span>(<span class="st">"C"</span>, <span class="st">"x"</span>), <span class="at">activate_colliders =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-22"><a href="#cb2-22"></a><span class="fu">label</span>(cohort_dat) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"C"</span> <span class="ot">=</span> <span class="st">"C"</span>, <span class="st">"X"</span> <span class="ot">=</span> <span class="st">"X"</span>, <span class="st">"x"</span> <span class="ot">=</span> <span class="st">"x"</span>,</span>
+<span id="cb2-23"><a href="#cb2-23"></a>                       <span class="st">"D"</span> <span class="ot">=</span> <span class="st">"D^x"</span>, <span class="st">"S"</span> <span class="ot">=</span> <span class="st">"S^x"</span>)</span>
+<span id="cb2-24"><a href="#cb2-24"></a>cohort_adj <span class="ot">&lt;-</span> <span class="fu">filter</span>(cohort_dat, adjusted <span class="sc">==</span> <span class="st">"adjusted"</span>)</span>
+<span id="cb2-25"><a href="#cb2-25"></a>cohort_unadj <span class="ot">&lt;-</span> <span class="fu">filter</span>(cohort_dat, adjusted <span class="sc">==</span> <span class="st">"unadjusted"</span>)</span>
+<span id="cb2-26"><a href="#cb2-26"></a></span>
+<span id="cb2-27"><a href="#cb2-27"></a><span class="co"># plot DAG with ggplot() to allow for boxes and curved arrows</span></span>
+<span id="cb2-28"><a href="#cb2-28"></a>(<span class="fu">ggplot</span>(cohort_dat, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend))</span>
+<span id="cb2-29"><a href="#cb2-29"></a>  <span class="sc">+</span> <span class="fu">theme_dag_gray_grid</span>()</span>
+<span id="cb2-30"><a href="#cb2-30"></a>  <span class="sc">+</span> <span class="fu">coord_equal</span>()</span>
+<span id="cb2-31"><a href="#cb2-31"></a>  <span class="sc">+</span> <span class="fu">ylim</span>(<span class="sc">-</span><span class="fl">0.4</span>, <span class="fl">0.3</span>)</span>
+<span id="cb2-32"><a href="#cb2-32"></a>  <span class="sc">+</span> <span class="fu">geom_dag_label</span>(<span class="at">data =</span> cohort_adj, <span class="at">parse =</span> <span class="cn">TRUE</span>, <span class="at">size =</span> <span class="dv">8</span>, <span class="at">fill =</span> <span class="cn">NA</span>,</span>
+<span id="cb2-33"><a href="#cb2-33"></a>                   <span class="at">label.padding =</span> <span class="fu">unit</span>(<span class="fl">0.15</span>, <span class="st">"lines"</span>))</span>
+<span id="cb2-34"><a href="#cb2-34"></a>  <span class="sc">+</span> <span class="fu">geom_dag_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> label), <span class="at">data =</span> cohort_unadj, <span class="at">parse =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb2-35"><a href="#cb2-35"></a>                  <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">8</span>)</span>
+<span id="cb2-36"><a href="#cb2-36"></a>  <span class="sc">+</span> <span class="fu">geom_dag_edges_arc</span>(<span class="at">curvature =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="sc">-</span><span class="fl">0.13</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb2-37"><a href="#cb2-37"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="fl">0.01</span>, <span class="at">size =</span> <span class="dv">8</span>, <span class="at">label =</span> <span class="st">"|"</span>)</span>
+<span id="cb2-38"><a href="#cb2-38"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output-display">
+<div id="fig-swig-cxsd" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-swig-cxsd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="standardization_files/figure-html/fig-swig-cxsd-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;17.2: Single-world intervention graph (SWIG) for setting X = x and conditioning on C in the DAG from Figure&nbsp;fig-dag-cxsd. There is a box around little x to show that paths through it are closed."><img src="standardization_files/figure-html/fig-swig-cxsd-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-swig-cxsd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;17.2: Single-world intervention graph (SWIG) for setting <span class="math inline">\(X = x\)</span> and conditioning on <span class="math inline">\(C\)</span> in the DAG from <a href="#fig-dag-cxsd" class="quarto-xref">Figure&nbsp;<span>17.1</span></a>. There is a box around little <span class="math inline">\(x\)</span> to show that paths through it are closed.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="crude-measures" class="level3" data-number="17.1.2">
+<h3 data-number="17.1.2" class="anchored" data-anchor-id="crude-measures"><span class="header-section-number">17.1.2</span> Crude measures</h3>
+<p>A <strong>crude measure of association</strong> is a comparison of the risks of disease in the exposed and unexposed in the study sample. The crude risk difference is <span id="eq-crudeRD"><span class="math display">\[
+  RD_\crude
+  = \Pr(D = 1 \given{} X = 1, S = 1) - \Pr(D = 1 \given{} X = 0, S = 1),
+\tag{17.1}\]</span></span> the crude risk ratio is <span id="eq-crudeRR"><span class="math display">\[
+  RR_\text{crude}
+  = \frac{\Pr(D = 1 \given{} X = 1, S = 1)}{\Pr(D = 1 \given{} X = 0, S = 1)},
+\tag{17.2}\]</span></span> the crude odds ratio is <span id="eq-crudeOR"><span class="math display">\[
+  OR_\text{crude}
+  = \frac{\odds\bigl(\Pr(D = 1 \given{} X = 1, S = 1)\bigr)}
+      {\odds\bigl(\Pr(D = 0 \given{} X = 0, S = 1)\bigr)},
+\tag{17.3}\]</span></span> and the crude cumulative hazard ratio is <span class="math display">\[
+  \CHR_\crude
+  = \frac{-\ln\bigl(1 - \Pr(D = 1 \given{} X = 1, S = 1)\bigr)}
+    {-\ln\bigl(1 - \Pr(D = 1 \given{} X = 0, S = 1)\bigr)}.
+\]</span> These are measures of association, which do not necessarily represent causal effects.</p>
+</section>
+<section id="marginal-causal-effects" class="level3" data-number="17.1.3">
+<h3 data-number="17.1.3" class="anchored" data-anchor-id="marginal-causal-effects"><span class="header-section-number">17.1.3</span> Marginal causal effects</h3>
+<p>When we have no confounding and no selection bias, <span id="eq-crude-causal"><span class="math display">\[
+  \begin{aligned}
+    \Pr(D^x = 1)
+    &amp;= \Pr(D^x = 1 \given{} X = x)          &amp;&amp;\text{by exchangeability} \\
+    &amp;= \Pr(D^x = 1 \given{} X = x, S^x = 1) &amp;&amp;\text{by the analytic cohort condition} \\
+    &amp;= \Pr(D = 1 \given{} X = x, S = 1)     &amp;&amp;\text{by consistency}.
+  \end{aligned}
+\tag{17.4}\]</span></span> Thus, the estimated risk in each exposure group is an unbiased estimate of the <strong>marginal causal risk</strong> under the same exposure in the eligible population. Therefore,each crude measure of association is a consistent estimator of a <strong>marginal causal effect</strong>, which is a measure of association that compares <span class="math inline">\(\Pr(D^1 = 1)\)</span> to <span class="math inline">\(\Pr(D^0 = 1)\)</span>. In a study represented by the DAG in <a href="#fig-dag-cxsd" class="quarto-xref">Figure&nbsp;<span>17.1</span></a>, the first equality in fails because of confounding and the second equality fails because of selection bias.</p>
+</section>
+<section id="stratum-specific-measures" class="level3" data-number="17.1.4">
+<h3 data-number="17.1.4" class="anchored" data-anchor-id="stratum-specific-measures"><span class="header-section-number">17.1.4</span> Stratum-specific measures</h3>
+<p>A <strong>stratum-specific measure of association</strong> is a comparison of the risks of disease in the exposed and unexposed in the subset of the study with tje same value of covariates <span class="math inline">\(C = c\)</span>. A stratum can also be defined by multiple covariates at the same time, in which case we let <span class="math inline">\(C\)</span> represent the set of covariates and <span class="math inline">\(c\)</span> a vector of values of these covariates (e.g., <span class="math inline">\(C_1 = c_1\)</span>, …, <span class="math inline">\(C_k = c_k\)</span>). In both cases, the stratum-specific risk difference given <span class="math inline">\(C = c\)</span> is <span id="eq-crudeRD"><span class="math display">\[
+  RD_{C = c}
+  = \Pr(D = 1 \given{} C = c, X = 1, S = 1) - \Pr(D = 1 \given{} C = c, X = 0, S = 1),
+\tag{17.5}\]</span></span> the crude risk ratio is <span id="eq-crudeRR"><span class="math display">\[
+  RR_\text{C = c}
+  = \frac{\Pr(D = 1 \given{} C = c, X = 1, S = 1)}{\Pr(D = 1 \given{} C = c, X = 0, S = 1)},
+\tag{17.6}\]</span></span> the crude odds ratio is <span id="eq-crudeOR"><span class="math display">\[
+  OR_\text{C = c}
+  = \frac{\odds\bigl(\Pr(D = 1 \given{} C = c, X = 1, S = 1)\bigr)}
+      {\odds\bigl(\Pr(D = 0 \given{} C = c, X = 0, S = 1)\bigr)},
+\tag{17.7}\]</span></span> and the crude cumulative hazard ratio is <span class="math display">\[
+  \CHR_{C = c}
+  = \frac{-\ln\bigl(1 - \Pr(D = 1 \given{} C = c, X = 1, S = 1)\bigr)}
+    {-\ln\bigl(1 - \Pr(D = 1 \given{} C = c, X = 0, S = 1)\bigr)}.
+\]</span> As with crude measures of association, these do not necessarily represent causal effects.</p>
+</section>
+<section id="conditional-causal-effects" class="level3" data-number="17.1.5">
+<h3 data-number="17.1.5" class="anchored" data-anchor-id="conditional-causal-effects"><span class="header-section-number">17.1.5</span> Conditional causal effects</h3>
+<p>When we have no confounding and no selection bias given <span class="math inline">\(C\)</span>, as in a study represented by the DAG in <a href="#fig-dag-cxsd" class="quarto-xref">Figure&nbsp;<span>17.1</span></a>, then <span id="eq-condrisk-causal"><span class="math display">\[
+  \begin{aligned}
+    &amp;\Pr(D^x = 1 \given{} C = c) \\
+    &amp;\qquad = \Pr(D^x = 1 \given{} C = c, X = x)            &amp;&amp;\text{by exchangeability given } C \\
+    &amp;\qquad = \Pr(D^x = 1 \given{} C = c, X = x, S^x = 1)   &amp;&amp;\text{by the analytic cohort condition} \\
+    &amp;\qquad = \Pr(D = 1 \given{} C = c, X = x, S = 1)       &amp;&amp;\text{by consistency.}
+  \end{aligned}
+\tag{17.8}\]</span></span> Thus, the estimated conditional risk given <span class="math inline">\(C = c\)</span> in each exposure group is an unbiased estimate of the causal conditional risk given <span class="math inline">\(C = c\)</span> in the eligible subpopulation if we intervene to set the same exposure. Therefore, each conditional measure of association is a consistent estimator of a <strong>conditional causal effect</strong>, which is a measure of association that compares <span class="math inline">\(\Pr(D^1 = 1 \given{} C = c)\)</span> to <span class="math inline">\(\Pr(D^0 = 1 \given{} C = c)\)</span>.</p>
+</section>
+</section>
+<section id="standardization" class="level2" data-number="17.2">
+<h2 data-number="17.2" class="anchored" data-anchor-id="standardization"><span class="header-section-number">17.2</span> Standardization</h2>
+<p>The basic idea behind <strong>standardization</strong> is to calculate the risk of disease in hypothetical exposed and unexposed population with the same distribution of <span class="math inline">\(C\)</span>. If conditioning on <span class="math inline">\(C\)</span> controls confounding and selection bias, then a measure of association that compares these standardized risks can be interpreted as a measure of a marginal causal effect. The distribution of <span class="math inline">\(C\)</span> used to calculate <span class="math inline">\(\Pr(D^x =  1)\)</span> is less important that the fact that the same distribution is used for both exposure groups.</p>
+<section id="reconstructing-marginal-causal-risks" class="level3" data-number="17.2.1">
+<h3 data-number="17.2.1" class="anchored" data-anchor-id="reconstructing-marginal-causal-risks"><span class="header-section-number">17.2.1</span> Reconstructing marginal causal risks</h3>
+<p>Imagine that we intervene to set <span class="math inline">\(X = x\)</span> for the entire population. Then the risk of disease would be <span id="eq-margrisk-causal"><span class="math display">\[
+  \Pr(D^x = 1) = \sum_c \Pr(D^x \given{} C = c) \Pr(C = c),
+\tag{17.9}\]</span></span> where the sum is over all possible values <span class="math inline">\(c\)</span> of <span class="math inline">\(C\)</span> in the population. When conditioning on <span class="math inline">\(C\)</span> controls confounding and selection bias as in <a href="#eq-condrisk-causal" class="quarto-xref">Equation&nbsp;<span>17.8</span></a>, then <span class="math display">\[
+  \Pr(D^x = 1)
+  = \sum_c \Pr(D = 1 \given{} C = c, X = x, S = 1) \Pr(C = c).
+\]</span> Thus, the we can estimate the <strong>marginal causal risk</strong> <span class="math inline">\(\Pr(D^x = 1)\)</span> using data from our study sample and the distribution of <span class="math inline">\(C\)</span> in the population. A measure of association comparing <span class="math inline">\(\Pr(D^1 = 1)\)</span> to <span class="math inline">\(\Pr(D^0 = 1)\)</span> is a <strong>marginal causal effect</strong>.</p>
+<p>The distribution of <span class="math inline">\(C\)</span> in the population often cannot be recovered from our study sample. In the study represented by the DAG in <a href="#fig-dag-cxsd" class="quarto-xref">Figure&nbsp;<span>17.1</span></a>, the open path <span class="math inline">\(C \rightarrow S\)</span> means that <span class="math display">\[
+  \Pr(C = c) \neq \Pr(C = c \given{} S = 1),
+\]</span> so we cannot get <span class="math inline">\(\Pr(C = c)\)</span> without additional information. This is not selection bias because it does not prevent us from getting an unbiased estimate of <span class="math inline">\(\Pr(D^x = 1 \given{} C = c)\)</span>.</p>
+</section>
+<section id="standardized-risks-and-measures-of-association" class="level3" data-number="17.2.2">
+<h3 data-number="17.2.2" class="anchored" data-anchor-id="standardized-risks-and-measures-of-association"><span class="header-section-number">17.2.2</span> Standardized risks and measures of association</h3>
+<p>To standarize, we choose a distribution of <span class="math inline">\(C\)</span> to use for both the exposed and unexposed in our study sample. Let the probability that <span class="math inline">\(C = c\)</span> in our <strong>standard population</strong> be <span class="math display">\[
+  \Prstd(C = c).
+\]</span> The corresponding <strong>standardized risk</strong> given <span class="math inline">\(X = x\)</span> based on data from our study sample is <span class="math display">\[
+  \Prstd(D = 1 \given{} X = x, S = 1)
+  = \sum_{c} \Pr(D = 1 \given{} C = c, X = x, S = 1) \Prstd(C = c),
+\]</span> where we assume that each possible value of <span class="math inline">\(C\)</span> is represented in the study sample.</p>
+<p>Because the distribution of <span class="math inline">\(C\)</span> is the same in both exposure groups, any measure of association that compares <span class="math inline">\(\Pr_\std(D = 1 \given{} X = 1, S = 1)\)</span> and <span class="math inline">\(\Pr_\std(D = 1 \given{} X = 0, S = 1)\)</span> represents a marginal causal effect in our standard population. The standardized risk difference is <span id="eq-stdRD"><span class="math display">\[
+  RD_\std
+  = \Prstd(D = 1 \given{} X = 1, S = 1) - \Prstd(D = 1 \given{} X = 0, S = 1),
+\tag{17.10}\]</span></span> the standardized risk ratio is <span id="eq-crudeRR"><span class="math display">\[
+  RR_\std
+  = \frac{\Prstd(D = 1 \given{} X = 1, S = 1)}{\Prstd(D = 1 \given{} X = 0, S = 1)},
+\tag{17.11}\]</span></span> the standardized odds ratio is <span id="eq-crudeOR"><span class="math display">\[
+  OR_\std
+  = \frac{\odds\bigl(\Prstd(D = 1 \given{} X = 1, S = 1)\bigr)}
+      {\odds\bigl(\Prstd(D = 0 \given{} X = 0, S = 1)\bigr)},
+\tag{17.12}\]</span></span> and the standardized cumulative hazard ratio is <span class="math display">\[
+  \CHR_\std
+  = \frac{-\ln\bigl(1 - \Prstd(D = 1 \given{} X = 1, S = 1)\bigr)}
+    {-\ln\bigl(1 - \Prstd(D = 1 \given{} X = 0, S = 1)\bigr)}.
+\]</span> When conditioning on <span class="math inline">\(C\)</span> controls confounding and selection bias, these represent marginal causal effects in the standard population. For some distribution of <span class="math inline">\(C\)</span>, they would represent marginal causal effects in the eligible population. We may or may not be able to estimate this distribution of <span class="math inline">\(C\)</span> using our study sample.</p>
+</section>
+<section id="treatment-effects" class="level3" data-number="17.2.3">
+<h3 data-number="17.2.3" class="anchored" data-anchor-id="treatment-effects"><span class="header-section-number">17.2.3</span> Treatment effects</h3>
+<p>Using only data from the study sample, we have three standard choices for a standard population: the entire study sample, the exposed or treated, and the unexposed or controls.</p>
+<ul>
+<li><p>If <span class="math inline">\(S\)</span> is independent of <span class="math inline">\(C\)</span>, then the distribution of <span class="math inline">\(C\)</span> in our study sample is a random sample from the distribution of <span class="math inline">\(C\)</span> in the eligible population. In a cohort study where selection depends on exposure <span class="math inline">\(X\)</span> and <span class="math inline">\(C\)</span> is a confounder, there will almost always be an open path from <span class="math inline">\(C\)</span> to <span class="math inline">\(S\)</span> in a causal DAG representing the study. In <a href="#fig-dag-cxsd" class="quarto-xref">Figure&nbsp;<span>17.1</span></a>, we have the open path <span class="math inline">\(C \rightarrow X \rightarrow S\)</span> even if we remove the path <span class="math inline">\(C \rightarrow S\)</span> that causes selection bias.</p></li>
+<li><p>If <span class="math inline">\(S\)</span> is independent of <span class="math inline">\(C\)</span> given <span class="math inline">\(X\)</span>, then the distribution of <span class="math inline">\(C\)</span> given <span class="math inline">\(X = x\)</span> in the study sample is a random sample from the distribution of <span class="math inline">\(C\)</span> in the eligible subpopulation with <span class="math inline">\(X = x\)</span>. In a cohort study where selection depends on <span class="math inline">\(X\)</span> and there is selection bias through <span class="math inline">\(C\)</span>, then there will almost always be an open path from <span class="math inline">\(C\)</span> to <span class="math inline">\(S\)</span> even when we condition on <span class="math inline">\(X\)</span>. In <a href="#fig-dag-cxsd" class="quarto-xref">Figure&nbsp;<span>17.1</span></a>, we have the open path <span class="math inline">\(C \rightarrow S\)</span>.</p></li>
+</ul>
+<p>When our study sample is a random sample from the eligible population, we can use our study sample to estimate the distribution of <span class="math inline">\(C\)</span> or the conditional distribution of <span class="math inline">\(C\)</span> given <span class="math inline">\(X\)</span> in the eligible population. This is rarely the case. In a cohort study where selection is determined by <span class="math inline">\(X\)</span>, we can get the marginal distribution of <span class="math inline">\(C\)</span> when there is no association between <span class="math inline">\(C\)</span> and <span class="math inline">\(S\)</span> and we can get the conditional distribution of <span class="math inline">\(C\)</span> given <span class="math inline">\(X\)</span> when there is no association between <span class="math inline">\(C\)</span> and <span class="math inline">\(S\)</span> given <span class="math inline">\(X\)</span>.</p>
+<ul>
+<li><p>When there is confounding by <span class="math inline">\(C\)</span>, the marginal distribution of <span class="math inline">\(C\)</span> differs systematically between the study sample and the eligible population because of an open path from <span class="math inline">\(C\)</span> to <span class="math inline">\(S\)</span> through <span class="math inline">\(X\)</span>. When there is no selection bias, <span class="math inline">\(C\)</span> and <span class="math inline">\(S\)</span> are d-separated by conditioning on <span class="math inline">\(X\)</span>, we can use the study sample to estimate the conditional distribution of <span class="math inline">\(C\)</span> given <span class="math inline">\(X\)</span> in the eligible population. You can see this by removing the path <span class="math inline">\(C \rightarrow S\)</span> from the DAG in <a href="#fig-dag-cxsd" class="quarto-xref">Figure&nbsp;<span>17.1</span></a>.</p></li>
+<li><p>When there is selection bias by <span class="math inline">\(C\)</span>, both the marginal distribution of <span class="math inline">\(C\)</span> and the conditional distribution of <span class="math inline">\(C\)</span> given <span class="math inline">\(X\)</span> differs systematically between the study sample and the eligible population because there is open path from <span class="math inline">\(C\)</span> to <span class="math inline">\(S\)</span> that is not closed by conditioning on <span class="math inline">\(X\)</span>.</p></li>
+</ul>
+<p>For the risk difference, calculating standardized risks and then taking the difference is the same as taking the same weighted average of the stratum-specific risk differences. The standardized risk difference <span class="math inline">\(\RR_\std\)</span> equals <span class="math display">\[
+  \begin{aligned}
+    &amp;\sum_c \Pr(D = 1 \given{} C = c, X = 1, S = 1) \Prstd(C = c) \\
+    &amp;\qquad - \sum_c(\Pr(D = 1 \given{} C = c, X = 0, S = 1)) \Prstd(C = c) \\
+    &amp;= \sum_c \Big(\Pr(D = 1 \given{} C = c, X = 1, S = 1) - \Pr(D = 1 \given{} C = c, X = 0, S = 1)\Big) \Prstd(C = c).
+  \end{aligned}
+\]</span> The standardized risk difference using the entire population is called the <strong>average treatment effect</strong> (ATE). This can be estimated using data from a cohort study if there is no confounding or selection bias by <span class="math inline">\(C\)</span>. The standardized risk difference using the exposed or treated population is the <strong>average treatment effect among the treated</strong> (ATET), and the standardized risk difference using the unexposed or control population is the <strong>average treatment effect among controls</strong> (ATEC). These can be estimated using data from a cohort study when there is no selection bias by <span class="math inline">\(C\)</span>.</p>
+</section>
+<section id="variance-calculation" class="level3" data-number="17.2.4">
+<h3 data-number="17.2.4" class="anchored" data-anchor-id="variance-calculation"><span class="header-section-number">17.2.4</span> Variance calculation</h3>
+<p>For a fixed standard distribution of <span class="math inline">\(C\)</span> and independent estimation of the risks in different strata of <span class="math inline">\(C\)</span>, the variance of a standardized risk can be calculated using <a href="probability.html#eq-lincomV" class="quarto-xref">Equation&nbsp;<span>1.12</span></a> and using the fact that the estimated risks are independent: <span class="math display">\[
+  \Var\bigl(\Prstd(D = 1 \given{} X = x, S = 1)\bigr)
+  = \sum_c \Pr(D = 1 \given{} C = c, X = x, S = 1) \Prstd(C = c)^2
+\]</span> The variance of a standardized measure of association can then be obtained using the delta method. For the risk difference, no transformation is needed. For the risk ratio, we use a log transformation. For the odds ratio, we use a logit transformation. For the cumulative hazard ratio, we use a complementary log-log transformation.</p>
+<p>When the estimated risks in different strata of <span class="math inline">\(C\)</span> are not independent (e.g., they are estimated using <span class="math inline">\(C\)</span> as a predictor in a regression model), then we must account for the covariances of the estimated risks in different strata. When the distribution of <span class="math inline">\(C\)</span> is estimated (e.g., we are using the distribution of <span class="math inline">\(C\)</span> in the study sample), then we must account for the uncertainty in the distribution of <span class="math inline">\(C\)</span>. Bootstrapping can account for all of these sources of variation.</p>
+
+
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p> <a href="https://en.wikipedia.org/wiki/Star_Wars_(film)">Star Wars</a> is a space opera film written and directed by George Lucas, produced by Gary Kurtz, and distributed by 20th Century Fox. It was released on May 25, 1977. <a href="https://en.wikipedia.org/wiki/Obi-Wan_Kenobi">Obi-Wan Kenobi</a> was played by Alec Guinness. The events depicted took place a long time ago in a galaxy far, far away …<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./swigs.html" class="pagination-link" aria-label="Confounding and Selection Bias on SWIGs">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Confounding and Selection Bias on SWIGs</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./geometry.html" class="pagination-link" aria-label="Geometry of Causal Inference">
+        <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Geometry of Causal Inference</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

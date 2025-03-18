@@ -105,9 +105,11 @@ div.csl-indent {
         chisqP: "\\chi^2_\\text\{P\}",
         chisqPobs: "\\chi^2_\\text\{Pobs\}",
         cHR: "\\text\{cHR\}",
+        CHR: "\\text\{CHR\}",
         cloglog: ["\\operatorname\{cloglog\}"],
         comp: "\\mathsf\{C\}",
         Cov: ["\\operatorname\{Cov\}"],
+        crude: "\\text\{crude\}",
         D: "\\mathcal\{D\}",
         data: "\\text\{data\}",
         dif: "\\text\{d\}",
@@ -129,12 +131,14 @@ div.csl-indent {
         OR: "\\text\{OR\}",
         pa: "\\text\{pa\}",
         PAR: "\\text\{PAR\}",
+        Prstd: "\\Pr\\nolimits\_\\text\{std\}",
         ptrue: "p_\{\\text\{true\}\}",
         R: "\\mathcal\{R\}",
         RD: "\\text\{RD\}",
         RR: "\\text\{RR\}",
         sens: "\\text\{sens\}",
         spec: "\\text\{spec\}",
+        std: "\\text\{std\}",
         supp: ["\\operatorname\{supp\}"],
         tcens: "t^\\text\{cens\}",
         tentry: "t^\\text\{entry\}",
@@ -359,6 +363,18 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Confounding and Selection Bias on SWIGs</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./standardization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conditional and Marginal Causal Effects</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./geometry.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Geometry of Causal Inference</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -401,8 +417,8 @@ window.Quarto = {
   <li><a href="#potential-outcomes" id="toc-potential-outcomes" class="nav-link active" data-scroll-target="#potential-outcomes"><span class="header-section-number">14.1</span> Potential outcomes</a>
   <ul class="collapse">
   <li><a href="#sec-causal-effect" id="toc-sec-causal-effect" class="nav-link" data-scroll-target="#sec-causal-effect"><span class="header-section-number">14.1.1</span> Measures of causal effect</a></li>
-  <li><a href="#confounding-and-exchangeability" id="toc-confounding-and-exchangeability" class="nav-link" data-scroll-target="#confounding-and-exchangeability"><span class="header-section-number">14.1.2</span> Confounding and exchangeability</a></li>
-  <li><a href="#selection-bias-and-the-analytic-cohort-condition" id="toc-selection-bias-and-the-analytic-cohort-condition" class="nav-link" data-scroll-target="#selection-bias-and-the-analytic-cohort-condition"><span class="header-section-number">14.1.3</span> Selection bias and the analytic cohort condition</a></li>
+  <li><a href="#sec-exchangeability-intro" id="toc-sec-exchangeability-intro" class="nav-link" data-scroll-target="#sec-exchangeability-intro"><span class="header-section-number">14.1.2</span> Confounding and exchangeability</a></li>
+  <li><a href="#sec-selectionbias-intro" id="toc-sec-selectionbias-intro" class="nav-link" data-scroll-target="#sec-selectionbias-intro"><span class="header-section-number">14.1.3</span> Selection bias and the analytic cohort condition</a></li>
   </ul></li>
   <li><a href="#attributable-risk" id="toc-attributable-risk" class="nav-link" data-scroll-target="#attributable-risk"><span class="header-section-number">14.2</span> Attributable risk</a>
   <ul class="collapse">
@@ -498,8 +514,8 @@ Table&nbsp;14.1: Causal types from <span class="citation" data-cites="greenland1
   \OR = \frac{\odds\bigl(\Pr(D^1 = 1)\bigr)}{\odds\bigl(\Pr(D^0 = 1)\bigr)},
 \]</span> where <span class="math inline">\(\odds(p) = p / (1 - p)\)</span>. When an exposure <span class="math inline">\(X\)</span> is not binary, these measures can be calculated for any two distinct levels of <span class="math inline">\(X\)</span>.</p>
 </section>
-<section id="confounding-and-exchangeability" class="level3" data-number="14.1.2">
-<h3 data-number="14.1.2" class="anchored" data-anchor-id="confounding-and-exchangeability"><span class="header-section-number">14.1.2</span> Confounding and exchangeability</h3>
+<section id="sec-exchangeability-intro" class="level3" data-number="14.1.2">
+<h3 data-number="14.1.2" class="anchored" data-anchor-id="sec-exchangeability-intro"><span class="header-section-number">14.1.2</span> Confounding and exchangeability</h3>
 <p>When we cannot see our population under both exposure and no exposure, we cannot calculate <span class="math inline">\(\Pr(D^1 = 1)\)</span> or <span class="math inline">\(\Pr(D^0 = 1)\)</span> directly. If our population contains both exposed and unexposed individuals, we can estimate <span class="math display">\[
   \Pr(D = 1 \given{} X = 1)
 \]</span> and <span class="math display">\[
@@ -513,8 +529,8 @@ Table&nbsp;14.1: Causal types from <span class="citation" data-cites="greenland1
 <p>Under exchangeability, we get <span class="math display">\[
   \begin{aligned}
     \Pr(D^x = 1)
-    &amp;= \Pr(D^x = 1 \given{} X = x)  &amp;&amp;\text{ by exchangeability} \\
-    &amp;= \Pr(D = 1 \given{} X = x)    &amp;&amp;\text{ by consistency}.
+    &amp;= \Pr(D^x = 1 \given{} X = x)  &amp;&amp;\text{by exchangeability} \\
+    &amp;= \Pr(D = 1 \given{} X = x)    &amp;&amp;\text{by consistency}.
   \end{aligned}
 \]</span> Therefore, we can estimate the counterfactual risks by calculating the conditional risks of disease given <span class="math inline">\(X\)</span>. We can then use these to estimate the measures of causal effect from <a href="#sec-causal-effect" class="quarto-xref"><span>Section 14.1.1</span></a>.</p>
 <p>When exchangeability fails, we might still have <strong>conditional exchangeability</strong> given a set of covariates <span class="math inline">\(C\)</span> that are not causally affected by <span class="math inline">\(X\)</span>. This can be written <span class="math display">\[
@@ -522,13 +538,13 @@ Table&nbsp;14.1: Causal types from <span class="citation" data-cites="greenland1
 \]</span> If we measure <span class="math inline">\(C\)</span>, then <span class="math display">\[
   \begin{aligned}
     \Pr(D^x = 1 \given{} C)
-    &amp;= \Pr(D^x = 1 \given{} C, X = x)  &amp;&amp;\text{ by conditional exchangeability} \\
-    &amp;= \Pr(D = 1 \given{} C, X = x)    &amp;&amp;\text{ by consistency}.
+    &amp;= \Pr(D^x = 1 \given{} C, X = x)  &amp;&amp;\text{by conditional exchangeability} \\
+    &amp;= \Pr(D = 1 \given{} C, X = x)    &amp;&amp;\text{by consistency}.
   \end{aligned}
 \]</span> Thus, we can estimate conditional counterfactual risks given <span class="math inline">\(C\)</span> by calculating conditional risks of disease given <span class="math inline">\(X\)</span> and <span class="math inline">\(C\)</span>. These can be used to calculate conditional measures of causal effect given <span class="math inline">\(C\)</span>, or we can calculate marginal measures of causal effect through standardization to any given distribution of <span class="math inline">\(C\)</span> (as long as the distribution of <span class="math inline">\(C\)</span> contains only values present in our population).</p>
 </section>
-<section id="selection-bias-and-the-analytic-cohort-condition" class="level3" data-number="14.1.3">
-<h3 data-number="14.1.3" class="anchored" data-anchor-id="selection-bias-and-the-analytic-cohort-condition"><span class="header-section-number">14.1.3</span> Selection bias and the analytic cohort condition</h3>
+<section id="sec-selectionbias-intro" class="level3" data-number="14.1.3">
+<h3 data-number="14.1.3" class="anchored" data-anchor-id="sec-selectionbias-intro"><span class="header-section-number">14.1.3</span> Selection bias and the analytic cohort condition</h3>
 <p>Under exchangeability, we have <span class="math inline">\(\Pr(D^x = 1) = \Pr(D = 1 \given{} X = x)\)</span> in our population. However, we typically do not observe the entire population. Instead, we observe a sample of the population. This could be a random sample of the population or a sample selected by exposure (in a cohort study) or by disease (in a case-control study). Let <span class="math inline">\(S\)</span> indicate selection into the study, so <span class="math inline">\(S = 1\)</span> for members of our study sample and <span class="math inline">\(S = 0\)</span> for everyone else. <strong>Selection bias</strong> occurs when selection into the study distorts the true association between <span class="math inline">\(X\)</span> and <span class="math inline">\(D\)</span> in the population elegible for the study <span class="citation" data-cites="berkson1946limitations hernan2004structural">(<a href="references.html#ref-berkson1946limitations" role="doc-biblioref">Berkson 1946</a>; <a href="references.html#ref-hernan2004structural" role="doc-biblioref">Hernán, Hernández-Dı́az, and Robins 2004</a>)</span>. Confounding is specific to causal inference, but selection bias can affect both causal inference and prediction (i.e., both analytic and descriptive epidemiology).</p>
 <p>Using the data from our study, we cannot calculate <span class="math inline">\(\Pr(D = 1 \given{} X = x)\)</span> directly. Instead, we can calculate <span class="math display">\[
   \Pr(D = 1 \given{} X = x, S = 1).
