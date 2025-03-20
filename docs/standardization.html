@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>17&nbsp; Conditional and Marginal Causal Effects – Analytical Epidemiology</title>
+<title>17&nbsp; Causal Effects and Standardization – Analytical Epidemiology</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -54,7 +54,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -148,6 +168,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         OR: "\\text\{OR\}",
         pa: "\\text\{pa\}",
         PAR: "\\text\{PAR\}",
+        pcrude: "p^*\_\\text\{crude\}",
+        pmarg: "p\_\\text\{marg\}",
         Prstd: "\\Pr\\nolimits\_\\text\{std\}",
         ptrue: "p_\{\\text\{true\}\}",
         R: "\\mathcal\{R\}",
@@ -219,7 +241,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./causality.html">Principles of Causal Inference</a></li><li class="breadcrumb-item"><a href="./standardization.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conditional and Marginal Causal Effects</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./causality.html">Principles of Causal Inference</a></li><li class="breadcrumb-item"><a href="./standardization.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Causal Effects and Standardization</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -383,7 +405,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./standardization.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conditional and Marginal Causal Effects</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Causal Effects and Standardization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -444,7 +466,12 @@ window.Quarto = {
   <li><a href="#reconstructing-marginal-causal-risks" id="toc-reconstructing-marginal-causal-risks" class="nav-link" data-scroll-target="#reconstructing-marginal-causal-risks"><span class="header-section-number">17.2.1</span> Reconstructing marginal causal risks</a></li>
   <li><a href="#standardized-risks-and-measures-of-association" id="toc-standardized-risks-and-measures-of-association" class="nav-link" data-scroll-target="#standardized-risks-and-measures-of-association"><span class="header-section-number">17.2.2</span> Standardized risks and measures of association</a></li>
   <li><a href="#treatment-effects" id="toc-treatment-effects" class="nav-link" data-scroll-target="#treatment-effects"><span class="header-section-number">17.2.3</span> Treatment effects</a></li>
-  <li><a href="#variance-calculation" id="toc-variance-calculation" class="nav-link" data-scroll-target="#variance-calculation"><span class="header-section-number">17.2.4</span> Variance calculation</a></li>
+  <li><a href="#confidence-limits" id="toc-confidence-limits" class="nav-link" data-scroll-target="#confidence-limits"><span class="header-section-number">17.2.4</span> Confidence limits</a></li>
+  </ul></li>
+  <li><a href="#simpsons-paradox-standardized" id="toc-simpsons-paradox-standardized" class="nav-link" data-scroll-target="#simpsons-paradox-standardized"><span class="header-section-number">17.3</span> Simpson’s paradox standardized</a>
+  <ul class="collapse">
+  <li><a href="#crude-risks-and-measures-of-association" id="toc-crude-risks-and-measures-of-association" class="nav-link" data-scroll-target="#crude-risks-and-measures-of-association"><span class="header-section-number">17.3.1</span> Crude risks and measures of association</a></li>
+  <li><a href="#conditional-risks-and-measures-of-association-given-sex" id="toc-conditional-risks-and-measures-of-association-given-sex" class="nav-link" data-scroll-target="#conditional-risks-and-measures-of-association-given-sex"><span class="header-section-number">17.3.2</span> Conditional risks and measures of association given sex</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -452,9 +479,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./causality.html">Principles of Causal Inference</a></li><li class="breadcrumb-item"><a href="./standardization.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conditional and Marginal Causal Effects</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./causality.html">Principles of Causal Inference</a></li><li class="breadcrumb-item"><a href="./standardization.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Causal Effects and Standardization</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Conditional and Marginal Causal Effects</span></h1>
+<h1 class="title"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Causal Effects and Standardization</span></h1>
 </div>
 
 
@@ -474,14 +501,14 @@ window.Quarto = {
 <blockquote class="blockquote">
 <p>Your father’s lightsaber. This is the weapon of a Jedi knight. Not as clumsy and random as a blaster. An elegant weapon for a more civilized age. (Obi-Wan Kenobi, <em>Star Wars</em>, 1977)<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 </blockquote>
-<p>Potential outcomes (counterfactuals), directed acyclic graphs (DAGs), and single-world intervention graphs (SWIGs) have greatly clarified thinking about causal inference in epidemiology as well as other social and natural sciences. The causal effect of a binary exposure <span class="math inline">\(X\)</span> on a disease outcome <span class="math inline">\(D\)</span> is the change in the risk of <span class="math inline">\(D\)</span> caused by intervening to change exposure from <span class="math inline">\(X = 0\)</span> to <span class="math inline">\(X = 1\)</span>. This definition matches the effect estimated in a randomized trial, which estimates the effect of a change in exposure on the risk of disease in the population eligible for the trial. In a large randomized study, the treatment and control groups are both representative of the eligible population in that the distribution of risk factors for disease is the same in both.</p>
-<p>When there is confounding and selection bias, it is possible that neither exposure group is representative of the eligible population. If we can identify a set <span class="math inline">\(C\)</span> of covariates that can be used to control confounding and selection bias, we can calculate causal effects within strata defined by <span class="math inline">\(C\)</span>. However, we can still calculate marginal causal effects through an elegant process called standardization.</p>
+<p>Potential outcomes, directed acyclic graphs (DAGs), and single-world intervention graphs (SWIGs) have greatly clarified thinking about causal inference in epidemiology as well as other social and natural sciences. The causal effect of a binary exposure <span class="math inline">\(X\)</span> on a disease outcome <span class="math inline">\(D\)</span> is the change in the risk of <span class="math inline">\(D\)</span> caused by intervening to change exposure from <span class="math inline">\(X = 0\)</span> to <span class="math inline">\(X = 1\)</span>. This definition matches the effect estimated in a randomized trial, which estimates the effect of a change in exposure on the risk of disease in the population eligible for the trial. In a large randomized study, the treatment and control groups are both representative of the eligible population.</p>
+<p>When there is confounding and selection bias, it is possible that neither exposure group is representative of the eligible population. If we can identify a set <span class="math inline">\(C\)</span> of covariates that can be used to control confounding and selection bias, we can calculate causal effects within strata defined by <span class="math inline">\(C\)</span>. However, we can combine these conditional causal effects into marginal causal effects through an elegant process called standardization, which is the lightsaber of causal inference (where regression models are blasters).</p>
 <section id="measures-of-association-in-a-cohort-study-with-bias" class="level2" data-number="17.1">
 <h2 data-number="17.1" class="anchored" data-anchor-id="measures-of-association-in-a-cohort-study-with-bias"><span class="header-section-number">17.1</span> Measures of association in a cohort study with bias</h2>
 <p>The key idea in causal inference is that there is a fundamental difference between observation and intervention. Let <span class="math inline">\(X\)</span> be a binary exposure, <span class="math inline">\(D\)</span> be a binary disease outcome, <span class="math inline">\(C\)</span> be a discrete confounder, and <span class="math inline">\(S\)</span> denote selection into the study. For simplicity, we assume that <span class="math inline">\(X\)</span> does not change over time. The occurrence of <span class="math inline">\(D\)</span> is measured over a time interval <span class="math inline">\((0, t]\)</span>. Using these data, we can calculate crude measures of association or measures of association conditional on <span class="math inline">\(C\)</span>.</p>
 <section id="confounding-and-selection-bias" class="level3" data-number="17.1.1">
 <h3 data-number="17.1.1" class="anchored" data-anchor-id="confounding-and-selection-bias"><span class="header-section-number">17.1.1</span> Confounding and selection bias</h3>
-<p><a href="#fig-dag-cxsd" class="quarto-xref">Figure&nbsp;<span>17.1</span></a> shows a simple DAG for a cohort study with confounding, selection bias, and a causal effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(D\)</span>. There is confounding because of the open backdoor path <span class="math inline">\(X \leftarrow C \rightarrow D\)</span>. There is selection bias because the noncausal path <span class="math inline">\(X \rightarrow S \leftarrow X \rightarrow D\)</span> is opened by conditioning on the collider at <span class="math inline">\(S\)</span>. The analytic case-control condition automatically fails because of the path <span class="math inline">\(X \rightarrow S\)</span>. The confounding and selection bias occur whether or not there is a causal effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(D\)</span>, which is represented by the causal path <span class="math inline">\(X \rightarrow D\)</span>.</p>
+<p><a href="#fig-dag-cxsd" class="quarto-xref">Figure&nbsp;<span>17.1</span></a> shows a simple DAG for a cohort study with confounding, selection bias, and a causal effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(D\)</span>. There is confounding because of the open backdoor path <span class="math inline">\(X \leftarrow C \rightarrow D\)</span>. There is selection bias because the noncausal path <span class="math inline">\(X \rightarrow S \leftarrow X \rightarrow D\)</span> is opened by conditioning on the collider at <span class="math inline">\(S\)</span>. The analytic case-control condition fails because of the path <span class="math inline">\(X \rightarrow S\)</span>, and there is no way to close this. The confounding and selection bias occur whether or not there is a causal effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(D\)</span>, which is represented by the path <span class="math inline">\(X \rightarrow D\)</span>.</p>
 <div class="cell">
 <div class="code-with-filename">
 <details class="code-fold">
@@ -540,10 +567,10 @@ Figure&nbsp;17.1: Directed acyclic graph (DAG) showing a cohort study with confo
 </div>
 </div>
 </div>
-<p>If we condition on <span class="math inline">\(C\)</span> in <a href="#fig-dag-cxsd" class="quarto-xref">Figure&nbsp;<span>17.1</span></a>, this closes both the backdoor path from <span class="math inline">\(X\)</span> to <span class="math inline">\(D\)</span> and the noncausal path from <span class="math inline">\(X\)</span> to <span class="math inline">\(D\)</span> that was opened by conditioning on <span class="math inline">\(S\)</span>. <a href="#fig-swig-cxsd" class="quarto-xref">Figure&nbsp;<span>17.2</span></a> shows the single-world intervention graph (SWIG) corresponding to an intervention that sets <span class="math inline">\(X = x\)</span> and conditioning on <span class="math inline">\(C\)</span>. There is a box around little <span class="math inline">\(x\)</span> to show that the path <span class="math inline">\(S^x \leftarrow x \rightarrow D^x\)</span> is closed. However, <span class="math inline">\(x\)</span> is not a variable that we can measure and condition on when we analyze the data, so it is not included in the set of variables that we condition on to control confounding and selection bias. The SWIG shows that measuring <span class="math inline">\(C\)</span> and conditioning on it is sufficient to control both:</p>
+<p>If we condition on <span class="math inline">\(C\)</span> in <a href="#fig-dag-cxsd" class="quarto-xref">Figure&nbsp;<span>17.1</span></a>, this closes both the backdoor path from <span class="math inline">\(X\)</span> to <span class="math inline">\(D\)</span> as well as the noncausal path from <span class="math inline">\(X\)</span> to <span class="math inline">\(D\)</span> that was opened by conditioning on <span class="math inline">\(S\)</span>. <a href="#fig-swig-cxsd" class="quarto-xref">Figure&nbsp;<span>17.2</span></a> shows the single-world intervention graph (SWIG) corresponding to an intervention that sets <span class="math inline">\(X = x\)</span>, which has a box around <span class="math inline">\(C\)</span> to represent conditioning on it. There is also a box around little <span class="math inline">\(x\)</span> to show that the path <span class="math inline">\(S^x \leftarrow x \rightarrow D^x\)</span> is closed because it <span class="math inline">\(x\)</span> represents a fixed hypothetical value of <span class="math inline">\(X\)</span>. However, <span class="math inline">\(x\)</span> is not a variable that we can measure and condition on when we analyze the data. The SWIG shows that measuring <span class="math inline">\(C\)</span> and conditioning on it is sufficient to control both:</p>
 <ul>
-<li><p>We have exchangeability <span class="math inline">\(D^x \indep X \given{} C\)</span> because <span class="math inline">\(D^x\)</span> and big <span class="math inline">\(X\)</span> (which represents the actual or realized exposure status) are d-separated given <span class="math inline">\(C\)</span> and <span class="math inline">\(C\)</span> is a non-descendant of <span class="math inline">\(X\)</span>.</p></li>
-<li><p>We have the analytic cohort condition <span class="math inline">\(S^x \indep D^x \given{} (X, C)\)</span> because <span class="math inline">\(S^x\)</span> and <span class="math inline">\(D^x\)</span> are d-separated given <span class="math inline">\(C\)</span> and big <span class="math inline">\(X\)</span> and <span class="math inline">\(C\)</span> is a measured non-descendant of <span class="math inline">\(X\)</span> such that exchangeability holds given <span class="math inline">\(C\)</span>. The paths through little <span class="math inline">\(x\)</span> are closed, but we do not include <span class="math inline">\(x\)</span> in the conditional independence statements.</p></li>
+<li><p>We have exchangeability <span class="math inline">\(D^x \indep X \given{} C\)</span> because <span class="math inline">\(D^x\)</span> and big <span class="math inline">\(X\)</span> (which represents the actual or realized exposure status) are d-separated given <span class="math inline">\(C\)</span>, which is a non-descendant of <span class="math inline">\(X\)</span>.</p></li>
+<li><p>We have the analytic cohort condition <span class="math inline">\(S^x \indep D^x \given{} (X, C)\)</span> because <span class="math inline">\(S^x\)</span> and <span class="math inline">\(D^x\)</span> are d-separated given big <span class="math inline">\(X\)</span> and <span class="math inline">\(C\)</span>, which is a nondescendant of <span class="math inline">\(X\)</span>. The paths through little <span class="math inline">\(x\)</span> are closed, but we do not include <span class="math inline">\(x\)</span> in the conditional independence statements.</p></li>
 </ul>
 <div class="cell">
 <div class="code-with-filename">
@@ -596,10 +623,10 @@ Figure&nbsp;17.1: Directed acyclic graph (DAG) showing a cohort study with confo
 <div id="fig-swig-cxsd" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-swig-cxsd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="standardization_files/figure-html/fig-swig-cxsd-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;17.2: Single-world intervention graph (SWIG) for setting X = x and conditioning on C in the DAG from Figure&nbsp;fig-dag-cxsd. There is a box around little x to show that paths through it are closed."><img src="standardization_files/figure-html/fig-swig-cxsd-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="standardization_files/figure-html/fig-swig-cxsd-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;17.2: Single-world intervention graph (SWIG) for setting X = x in the DAG from Figure&nbsp;fig-dag-cxsd. The box around C indicates conditioning on C, and the box around little x shows that paths through it are closed."><img src="standardization_files/figure-html/fig-swig-cxsd-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-swig-cxsd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;17.2: Single-world intervention graph (SWIG) for setting <span class="math inline">\(X = x\)</span> and conditioning on <span class="math inline">\(C\)</span> in the DAG from <a href="#fig-dag-cxsd" class="quarto-xref">Figure&nbsp;<span>17.1</span></a>. There is a box around little <span class="math inline">\(x\)</span> to show that paths through it are closed.
+Figure&nbsp;17.2: Single-world intervention graph (SWIG) for setting <span class="math inline">\(X = x\)</span> in the DAG from <a href="#fig-dag-cxsd" class="quarto-xref">Figure&nbsp;<span>17.1</span></a>. The box around <span class="math inline">\(C\)</span> indicates conditioning on <span class="math inline">\(C\)</span>, and the box around little <span class="math inline">\(x\)</span> shows that paths through it are closed.
 </figcaption>
 </figure>
 </div>
@@ -609,13 +636,13 @@ Figure&nbsp;17.2: Single-world intervention graph (SWIG) for setting <span class
 <section id="crude-measures" class="level3" data-number="17.1.2">
 <h3 data-number="17.1.2" class="anchored" data-anchor-id="crude-measures"><span class="header-section-number">17.1.2</span> Crude measures</h3>
 <p>A <strong>crude measure of association</strong> is a comparison of the risks of disease in the exposed and unexposed in the study sample. The crude risk difference is <span id="eq-crudeRD"><span class="math display">\[
-  RD_\crude
+  \RD_\crude
   = \Pr(D = 1 \given{} X = 1, S = 1) - \Pr(D = 1 \given{} X = 0, S = 1),
 \tag{17.1}\]</span></span> the crude risk ratio is <span id="eq-crudeRR"><span class="math display">\[
-  RR_\text{crude}
+  \RR_\text{crude}
   = \frac{\Pr(D = 1 \given{} X = 1, S = 1)}{\Pr(D = 1 \given{} X = 0, S = 1)},
 \tag{17.2}\]</span></span> the crude odds ratio is <span id="eq-crudeOR"><span class="math display">\[
-  OR_\text{crude}
+  \OR_\text{crude}
   = \frac{\odds\bigl(\Pr(D = 1 \given{} X = 1, S = 1)\bigr)}
       {\odds\bigl(\Pr(D = 0 \given{} X = 0, S = 1)\bigr)},
 \tag{17.3}\]</span></span> and the crude cumulative hazard ratio is <span class="math display">\[
@@ -626,14 +653,19 @@ Figure&nbsp;17.2: Single-world intervention graph (SWIG) for setting <span class
 </section>
 <section id="marginal-causal-effects" class="level3" data-number="17.1.3">
 <h3 data-number="17.1.3" class="anchored" data-anchor-id="marginal-causal-effects"><span class="header-section-number">17.1.3</span> Marginal causal effects</h3>
-<p>When we have no confounding and no selection bias, <span id="eq-crude-causal"><span class="math display">\[
+<p>When we have no confounding and no selection bias, <span id="eq-marginal-causal"><span class="math display">\[
   \begin{aligned}
     \Pr(D^x = 1)
     &amp;= \Pr(D^x = 1 \given{} X = x)          &amp;&amp;\text{by exchangeability} \\
     &amp;= \Pr(D^x = 1 \given{} X = x, S^x = 1) &amp;&amp;\text{by the analytic cohort condition} \\
     &amp;= \Pr(D = 1 \given{} X = x, S = 1)     &amp;&amp;\text{by consistency}.
   \end{aligned}
-\tag{17.4}\]</span></span> Thus, the estimated risk in each exposure group is an unbiased estimate of the <strong>marginal causal risk</strong> under the same exposure in the eligible population. Therefore,each crude measure of association is a consistent estimator of a <strong>marginal causal effect</strong>, which is a measure of association that compares <span class="math inline">\(\Pr(D^1 = 1)\)</span> to <span class="math inline">\(\Pr(D^0 = 1)\)</span>. In a study represented by the DAG in <a href="#fig-dag-cxsd" class="quarto-xref">Figure&nbsp;<span>17.1</span></a>, the first equality in fails because of confounding and the second equality fails because of selection bias.</p>
+\tag{17.4}\]</span></span> Thus, the estimated risk in each exposure group is an unbiased estimate of the <strong>marginal causal risk</strong> under the same exposure in the eligible population. Therefore,each crude measure of association is a consistent estimator of a <strong>marginal causal effect</strong>, which is a measure of association that compares <span class="math inline">\(\Pr(D^1 = 1)\)</span> to <span class="math inline">\(\Pr(D^0 = 1)\)</span>. In terms of a hypothetical experiment, this is the causal effect we would see if we compared the entire eligible population under an intervention that set <span class="math inline">\(X = 1\)</span> to itself under an intervention that set <span class="math inline">\(X = 0\)</span>.</p>
+<p>In a study represented by the DAG in <a href="#fig-dag-cxsd" class="quarto-xref">Figure&nbsp;<span>17.1</span></a>, the first equality in <a href="#eq-marginal-causal" class="quarto-xref">Equation&nbsp;<span>17.4</span></a> fails because of confounding and the second equality fails because of selection bias. If there is confounding or selection bias, the crude measures of association do not represent marginal causal effects.</p>
+<p>When there is confounding, part of the difference in risk captured by the crude measures of association is due to different distributions of <span class="math inline">\(C\)</span> in the exposed and unexposed. In the DAG in <a href="#fig-dag-cxsd" class="quarto-xref">Figure&nbsp;<span>17.1</span></a>, the open path between <span class="math inline">\(C\)</span> and <span class="math inline">\(X\)</span> means that we can have <span class="math display">\[
+  \Pr(C = c \given{} X = 1)
+  \neq \Pr(C = c \given{} X = 0),
+\]</span> so the distribution of <span class="math inline">\(C\)</span> is different in the exposed and unexposed groups. Because of the open path between <span class="math inline">\(C\)</span> and <span class="math inline">\(D\)</span>, the risk of disease can depend on <span class="math inline">\(C\)</span>. Thus, the different distributions of <span class="math inline">\(C\)</span> would cause a difference in risk even if <span class="math inline">\(X\)</span> had no causal effect on <span class="math inline">\(D\)</span>. When we add selection bias, the situation deteriorates further.</p>
 </section>
 <section id="stratum-specific-measures" class="level3" data-number="17.1.4">
 <h3 data-number="17.1.4" class="anchored" data-anchor-id="stratum-specific-measures"><span class="header-section-number">17.1.4</span> Stratum-specific measures</h3>
@@ -641,10 +673,10 @@ Figure&nbsp;17.2: Single-world intervention graph (SWIG) for setting <span class
   RD_{C = c}
   = \Pr(D = 1 \given{} C = c, X = 1, S = 1) - \Pr(D = 1 \given{} C = c, X = 0, S = 1),
 \tag{17.5}\]</span></span> the crude risk ratio is <span id="eq-crudeRR"><span class="math display">\[
-  RR_\text{C = c}
+  \RR_\text{C = c}
   = \frac{\Pr(D = 1 \given{} C = c, X = 1, S = 1)}{\Pr(D = 1 \given{} C = c, X = 0, S = 1)},
 \tag{17.6}\]</span></span> the crude odds ratio is <span id="eq-crudeOR"><span class="math display">\[
-  OR_\text{C = c}
+  \OR_\text{C = c}
   = \frac{\odds\bigl(\Pr(D = 1 \given{} C = c, X = 1, S = 1)\bigr)}
       {\odds\bigl(\Pr(D = 0 \given{} C = c, X = 0, S = 1)\bigr)},
 \tag{17.7}\]</span></span> and the crude cumulative hazard ratio is <span class="math display">\[
@@ -655,14 +687,15 @@ Figure&nbsp;17.2: Single-world intervention graph (SWIG) for setting <span class
 </section>
 <section id="conditional-causal-effects" class="level3" data-number="17.1.5">
 <h3 data-number="17.1.5" class="anchored" data-anchor-id="conditional-causal-effects"><span class="header-section-number">17.1.5</span> Conditional causal effects</h3>
-<p>When we have no confounding and no selection bias given <span class="math inline">\(C\)</span>, as in a study represented by the DAG in <a href="#fig-dag-cxsd" class="quarto-xref">Figure&nbsp;<span>17.1</span></a>, then <span id="eq-condrisk-causal"><span class="math display">\[
+<p>When we have no confounding and no selection bias given <span class="math inline">\(C\)</span>, as in a study represented by the DAG in <a href="#fig-dag-cxsd" class="quarto-xref">Figure&nbsp;<span>17.1</span></a>, then <span id="eq-cond-causal"><span class="math display">\[
   \begin{aligned}
     &amp;\Pr(D^x = 1 \given{} C = c) \\
     &amp;\qquad = \Pr(D^x = 1 \given{} C = c, X = x)            &amp;&amp;\text{by exchangeability given } C \\
     &amp;\qquad = \Pr(D^x = 1 \given{} C = c, X = x, S^x = 1)   &amp;&amp;\text{by the analytic cohort condition} \\
     &amp;\qquad = \Pr(D = 1 \given{} C = c, X = x, S = 1)       &amp;&amp;\text{by consistency.}
   \end{aligned}
-\tag{17.8}\]</span></span> Thus, the estimated conditional risk given <span class="math inline">\(C = c\)</span> in each exposure group is an unbiased estimate of the causal conditional risk given <span class="math inline">\(C = c\)</span> in the eligible subpopulation if we intervene to set the same exposure. Therefore, each conditional measure of association is a consistent estimator of a <strong>conditional causal effect</strong>, which is a measure of association that compares <span class="math inline">\(\Pr(D^1 = 1 \given{} C = c)\)</span> to <span class="math inline">\(\Pr(D^0 = 1 \given{} C = c)\)</span>.</p>
+\tag{17.8}\]</span></span> Thus, the estimated conditional risk given <span class="math inline">\(C = c\)</span> in each exposure group is an unbiased estimate of the causal conditional risk given <span class="math inline">\(C = c\)</span> in the eligible subpopulation if we intervene to set the same exposure. Therefore, each conditional measure of association is a consistent estimator of a <strong>conditional causal effect</strong>, which is a measure of association that compares <span class="math inline">\(\Pr(D^1 = 1 \given{} C = c)\)</span> to <span class="math inline">\(\Pr(D^0 = 1 \given{} C = c)\)</span>. In terms of a hypothetical experiment, this is the causal effect we would see if we compared the entire eligible subpopulation with <span class="math inline">\(C = c\)</span> under an intervention that set <span class="math inline">\(X = 1\)</span> to itself under an intervention that set <span class="math inline">\(X = 0\)</span>.</p>
+<p>In a study represented by the DAG in <a href="#fig-dag-cxsd" class="quarto-xref">Figure&nbsp;<span>17.1</span></a>, both equalities in <a href="#eq-cond-causal" class="quarto-xref">Equation&nbsp;<span>17.8</span></a> hold because conditioning on <span class="math inline">\(C\)</span> controls confounding and selection bias. If there is residual confounding or selection bias after conditioning on <span class="math inline">\(C\)</span>, at least one of the stratum-specific measures of association does not represent a conditional causal effect. This could happen, for example, if there are common causes of two or more variables on the DAG that are not included. In practice, there is always residual confounding and selection bias. Our goal in study design and analysis is to reduce these to the point that the resulting bias is small compared to the causal effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(D\)</span> that we are looking for.</p>
 </section>
 </section>
 <section id="standardization" class="level2" data-number="17.2">
@@ -672,33 +705,33 @@ Figure&nbsp;17.2: Single-world intervention graph (SWIG) for setting <span class
 <h3 data-number="17.2.1" class="anchored" data-anchor-id="reconstructing-marginal-causal-risks"><span class="header-section-number">17.2.1</span> Reconstructing marginal causal risks</h3>
 <p>Imagine that we intervene to set <span class="math inline">\(X = x\)</span> for the entire population. Then the risk of disease would be <span id="eq-margrisk-causal"><span class="math display">\[
   \Pr(D^x = 1) = \sum_c \Pr(D^x \given{} C = c) \Pr(C = c),
-\tag{17.9}\]</span></span> where the sum is over all possible values <span class="math inline">\(c\)</span> of <span class="math inline">\(C\)</span> in the population. When conditioning on <span class="math inline">\(C\)</span> controls confounding and selection bias as in <a href="#eq-condrisk-causal" class="quarto-xref">Equation&nbsp;<span>17.8</span></a>, then <span class="math display">\[
+\tag{17.9}\]</span></span> where the sum is over all possible values <span class="math inline">\(c\)</span> of <span class="math inline">\(C\)</span> in the population. When conditioning on <span class="math inline">\(C\)</span> controls confounding and selection bias as in <a href="#eq-cond-causal" class="quarto-xref">Equation&nbsp;<span>17.8</span></a>, then <span class="math display">\[
   \Pr(D^x = 1)
   = \sum_c \Pr(D = 1 \given{} C = c, X = x, S = 1) \Pr(C = c).
-\]</span> Thus, the we can estimate the <strong>marginal causal risk</strong> <span class="math inline">\(\Pr(D^x = 1)\)</span> using data from our study sample and the distribution of <span class="math inline">\(C\)</span> in the population. A measure of association comparing <span class="math inline">\(\Pr(D^1 = 1)\)</span> to <span class="math inline">\(\Pr(D^0 = 1)\)</span> is a <strong>marginal causal effect</strong>.</p>
-<p>The distribution of <span class="math inline">\(C\)</span> in the population often cannot be recovered from our study sample. In the study represented by the DAG in <a href="#fig-dag-cxsd" class="quarto-xref">Figure&nbsp;<span>17.1</span></a>, the open path <span class="math inline">\(C \rightarrow S\)</span> means that <span class="math display">\[
-  \Pr(C = c) \neq \Pr(C = c \given{} S = 1),
-\]</span> so we cannot get <span class="math inline">\(\Pr(C = c)\)</span> without additional information. This is not selection bias because it does not prevent us from getting an unbiased estimate of <span class="math inline">\(\Pr(D^x = 1 \given{} C = c)\)</span>.</p>
+\]</span> Thus, the we can estimate the marginal causal risks <span class="math inline">\(\Pr(D^1 = 1)\)</span> and <span class="math inline">\(\Pr(D^0 = 1)\)</span> using data from our study sample and the distribution of <span class="math inline">\(C\)</span> in the population.</p>
+<p>Unfortunately, the distribution of <span class="math inline">\(C\)</span> in the population often cannot be recovered from our study sample. In the study represented by the DAG in <a href="#fig-dag-cxsd" class="quarto-xref">Figure&nbsp;<span>17.1</span></a>, the open paths <span class="math inline">\(C \rightarrow X \rightarrow S\)</span> and <span class="math inline">\(C \rightarrow S\)</span> mean that <span class="math display">\[
+  \Pr(C = c \given{} S = 1) \neq \Pr(C = c),
+\]</span> so we cannot get <span class="math inline">\(\Pr(C = c)\)</span> without data external to the study. This is not selection bias because it does not prevent us from getting an unbiased estimate of <span class="math inline">\(\Pr(D^x = 1 \given{} C = c)\)</span>.</p>
 </section>
 <section id="standardized-risks-and-measures-of-association" class="level3" data-number="17.2.2">
 <h3 data-number="17.2.2" class="anchored" data-anchor-id="standardized-risks-and-measures-of-association"><span class="header-section-number">17.2.2</span> Standardized risks and measures of association</h3>
-<p>To standarize, we choose a distribution of <span class="math inline">\(C\)</span> to use for both the exposed and unexposed in our study sample. Let the probability that <span class="math inline">\(C = c\)</span> in our <strong>standard population</strong> be <span class="math display">\[
+<p>To standarize, we choose a distribution of <span class="math inline">\(C\)</span> calculate what the marginal risks in the exposed and unexposed would be if they both had this distribution of <span class="math inline">\(C\)</span>. Let the probability that <span class="math inline">\(C = c\)</span> in our <strong>standard population</strong> be <span class="math display">\[
   \Prstd(C = c).
 \]</span> The corresponding <strong>standardized risk</strong> given <span class="math inline">\(X = x\)</span> based on data from our study sample is <span class="math display">\[
   \Prstd(D = 1 \given{} X = x, S = 1)
   = \sum_{c} \Pr(D = 1 \given{} C = c, X = x, S = 1) \Prstd(C = c),
 \]</span> where we assume that each possible value of <span class="math inline">\(C\)</span> is represented in the study sample.</p>
 <p>Because the distribution of <span class="math inline">\(C\)</span> is the same in both exposure groups, any measure of association that compares <span class="math inline">\(\Pr_\std(D = 1 \given{} X = 1, S = 1)\)</span> and <span class="math inline">\(\Pr_\std(D = 1 \given{} X = 0, S = 1)\)</span> represents a marginal causal effect in our standard population. The standardized risk difference is <span id="eq-stdRD"><span class="math display">\[
-  RD_\std
+  \RD_\std
   = \Prstd(D = 1 \given{} X = 1, S = 1) - \Prstd(D = 1 \given{} X = 0, S = 1),
-\tag{17.10}\]</span></span> the standardized risk ratio is <span id="eq-crudeRR"><span class="math display">\[
-  RR_\std
+\tag{17.10}\]</span></span> the standardized risk ratio is <span class="math display">\[
+  \RR_\std
   = \frac{\Prstd(D = 1 \given{} X = 1, S = 1)}{\Prstd(D = 1 \given{} X = 0, S = 1)},
-\tag{17.11}\]</span></span> the standardized odds ratio is <span id="eq-crudeOR"><span class="math display">\[
-  OR_\std
+\]</span> the standardized odds ratio is <span id="eq-crudeOR"><span class="math display">\[
+  \OR_\std
   = \frac{\odds\bigl(\Prstd(D = 1 \given{} X = 1, S = 1)\bigr)}
       {\odds\bigl(\Prstd(D = 0 \given{} X = 0, S = 1)\bigr)},
-\tag{17.12}\]</span></span> and the standardized cumulative hazard ratio is <span class="math display">\[
+\tag{17.11}\]</span></span> and the standardized cumulative hazard ratio is <span class="math display">\[
   \CHR_\std
   = \frac{-\ln\bigl(1 - \Prstd(D = 1 \given{} X = 1, S = 1)\bigr)}
     {-\ln\bigl(1 - \Prstd(D = 1 \given{} X = 0, S = 1)\bigr)}.
@@ -706,7 +739,8 @@ Figure&nbsp;17.2: Single-world intervention graph (SWIG) for setting <span class
 </section>
 <section id="treatment-effects" class="level3" data-number="17.2.3">
 <h3 data-number="17.2.3" class="anchored" data-anchor-id="treatment-effects"><span class="header-section-number">17.2.3</span> Treatment effects</h3>
-<p>Using only data from the study sample, we have three standard choices for a standard population: the entire study sample, the exposed or treated, and the unexposed or controls.</p>
+<p>Using only data from the study sample, we have three standard choices for a standard population: the entire study sample, the exposed or treated, and the unexposed or controls. When there is no confounding or selection bias, we can use our study sample to estimate the marginal distribution of <span class="math inline">\(C\)</span> and the conditional distributions of <span class="math inline">\(C\)</span> given <span class="math inline">\(X = 1\)</span> and given <span class="math inline">\(X = 0\)</span> in the eligible population.</p>
+<p>When there is confounding but no selection bias, we can use our study sample to estimate the distributions of <span class="math inline">\(C\)</span> in the exposed and the unexposed in the eligible population but not the marginal distribution of <span class="math inline">\(C\)</span></p>
 <ul>
 <li><p>If <span class="math inline">\(S\)</span> is independent of <span class="math inline">\(C\)</span>, then the distribution of <span class="math inline">\(C\)</span> in our study sample is a random sample from the distribution of <span class="math inline">\(C\)</span> in the eligible population. In a cohort study where selection depends on exposure <span class="math inline">\(X\)</span> and <span class="math inline">\(C\)</span> is a confounder, there will almost always be an open path from <span class="math inline">\(C\)</span> to <span class="math inline">\(S\)</span> in a causal DAG representing the study. In <a href="#fig-dag-cxsd" class="quarto-xref">Figure&nbsp;<span>17.1</span></a>, we have the open path <span class="math inline">\(C \rightarrow X \rightarrow S\)</span> even if we remove the path <span class="math inline">\(C \rightarrow S\)</span> that causes selection bias.</p></li>
 <li><p>If <span class="math inline">\(S\)</span> is independent of <span class="math inline">\(C\)</span> given <span class="math inline">\(X\)</span>, then the distribution of <span class="math inline">\(C\)</span> given <span class="math inline">\(X = x\)</span> in the study sample is a random sample from the distribution of <span class="math inline">\(C\)</span> in the eligible subpopulation with <span class="math inline">\(X = x\)</span>. In a cohort study where selection depends on <span class="math inline">\(X\)</span> and there is selection bias through <span class="math inline">\(C\)</span>, then there will almost always be an open path from <span class="math inline">\(C\)</span> to <span class="math inline">\(S\)</span> even when we condition on <span class="math inline">\(X\)</span>. In <a href="#fig-dag-cxsd" class="quarto-xref">Figure&nbsp;<span>17.1</span></a>, we have the open path <span class="math inline">\(C \rightarrow S\)</span>.</p></li>
@@ -724,15 +758,108 @@ Figure&nbsp;17.2: Single-world intervention graph (SWIG) for setting <span class
   \end{aligned}
 \]</span> The standardized risk difference using the entire population is called the <strong>average treatment effect</strong> (ATE). This can be estimated using data from a cohort study if there is no confounding or selection bias by <span class="math inline">\(C\)</span>. The standardized risk difference using the exposed or treated population is the <strong>average treatment effect among the treated</strong> (ATET), and the standardized risk difference using the unexposed or control population is the <strong>average treatment effect among controls</strong> (ATEC). These can be estimated using data from a cohort study when there is no selection bias by <span class="math inline">\(C\)</span>.</p>
 </section>
-<section id="variance-calculation" class="level3" data-number="17.2.4">
-<h3 data-number="17.2.4" class="anchored" data-anchor-id="variance-calculation"><span class="header-section-number">17.2.4</span> Variance calculation</h3>
-<p>For a fixed standard distribution of <span class="math inline">\(C\)</span> and independent estimation of the risks in different strata of <span class="math inline">\(C\)</span>, the variance of a standardized risk can be calculated using <a href="probability.html#eq-lincomV" class="quarto-xref">Equation&nbsp;<span>1.12</span></a> and using the fact that the estimated risks are independent: <span class="math display">\[
+<section id="confidence-limits" class="level3" data-number="17.2.4">
+<h3 data-number="17.2.4" class="anchored" data-anchor-id="confidence-limits"><span class="header-section-number">17.2.4</span> Confidence limits</h3>
+<p>For a fixed standard distribution of <span class="math inline">\(C\)</span> and independent estimation of the risks in different strata of <span class="math inline">\(C\)</span>, the variance of a standardized risk can be calculated using <a href="probability.html#eq-lincomV" class="quarto-xref">Equation&nbsp;<span>1.12</span></a>: <span class="math display">\[
   \Var\bigl(\Prstd(D = 1 \given{} X = x, S = 1)\bigr)
   = \sum_c \Pr(D = 1 \given{} C = c, X = x, S = 1) \Prstd(C = c)^2
 \]</span> The variance of a standardized measure of association can then be obtained using the delta method. For the risk difference, no transformation is needed. For the risk ratio, we use a log transformation. For the odds ratio, we use a logit transformation. For the cumulative hazard ratio, we use a complementary log-log transformation.</p>
 <p>When the estimated risks in different strata of <span class="math inline">\(C\)</span> are not independent (e.g., they are estimated using <span class="math inline">\(C\)</span> as a predictor in a regression model), then we must account for the covariances of the estimated risks in different strata. When the distribution of <span class="math inline">\(C\)</span> is estimated (e.g., we are using the distribution of <span class="math inline">\(C\)</span> in the study sample), then we must account for the uncertainty in the distribution of <span class="math inline">\(C\)</span>. Bootstrapping can account for all of these sources of variation.</p>
+</section>
+</section>
+<section id="simpsons-paradox-standardized" class="level2" data-number="17.3">
+<h2 data-number="17.3" class="anchored" data-anchor-id="simpsons-paradox-standardized"><span class="header-section-number">17.3</span> Simpson’s paradox standardized</h2>
+<p>The DAG in <a href="dags.html#fig-simpson-dag" class="quarto-xref">Figure&nbsp;<span>15.6</span></a> shows the causal structure underlying the example given by <span class="citation" data-cites="simpson1951interpretation">Simpson (<a href="references.html#ref-simpson1951interpretation" role="doc-biblioref">1951</a>)</span> that is reproduced in <a href="dags.html#tbl-simpson" class="quarto-xref">Table&nbsp;<span>15.1</span></a>. Using DAGs and SWIGs, we could show that conditioning on biological sex would remove all confounding and selection bias, so the conditional odds ratio is a better estimate of the effect of treatment than the crude odds ratio. The example is constructed so that the conditional odds ratio is the same for males and females, but this is too much to hope for in reality. Standardization gives us a less fragile point of view.</p>
+<section id="crude-risks-and-measures-of-association" class="level3" data-number="17.3.1">
+<h3 data-number="17.3.1" class="anchored" data-anchor-id="crude-risks-and-measures-of-association"><span class="header-section-number">17.3.1</span> Crude risks and measures of association</h3>
+<p>In this example, the crude risk of death under treatment is <span class="math display">\[
+  \Pr(D = 1 \given{} X = 1, S = 1)
+  = \frac{20}{20 + 20}
+  = 0.5
+\]</span> and the crude risk of death under control is <span class="math display">\[
+  \Pr(D = 1 \given{} X = 0, S = 1)
+  = \frac{6}{6 + 6}
+  = 0.5.
+\]</span> The corresponding crude measures of association are <span class="math display">\[
+  \RD_\crude = 0
+\]</span> and <span class="math display">\[
+  \RR_\crude = \OR_\crude = \CHR_\crude = 1.
+\]</span> Thus, all crude measures of association show no apparent effect of treatment on the risk of death.</p>
+<p>Because there is confounding by biological sex, the crude risks are not unbiased estimates the causal risks that would occur if we intervened to make the entire eligible population treated or untreated. The sex distribution differs between the treated and control groups, and sex is a predictor of mortality in the example. There are <span class="math inline">\(5 + 8 = 13\)</span> treated males and <span class="math inline">\(15 + 12 = 27\)</span> treated females, so <span class="math display">\[
+  \Pr(\text{male} \given{} X = 1, S = 1)
+  = \frac{13}{13 + 27}
+  = 0.325.
+\]</span> There are <span class="math inline">\(3 + 4 = 7\)</span> untreated males and <span class="math inline">\(3 + 2 = 5\)</span> untreated females, so <span class="math display">\[
+  \Pr(\text{male} \given X = 0, S = 1)
+  = \frac{7}{7 + 5}
+  \approx 0.583.
+\]</span> The crude risks do not have a causal interpretation in terms of a hypothetical experiment, and the crude measures of association do not represent marginal causal effects.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>simpson-crude.R</strong></pre>
+</div>
+<div class="sourceCode" id="cb3" data-filename="simpson-crude.R"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># Crude measures of association in Simpson's paradox (JRSSB, 1951)</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="co"># data frame</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a>simpson <span class="ot">&lt;-</span>  <span class="fu">data.frame</span>(<span class="at">male =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">each =</span> <span class="dv">4</span>),</span>
+<span id="cb3-5"><a href="#cb3-5"></a>                       <span class="at">treated =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">each =</span> <span class="dv">2</span>),</span>
+<span id="cb3-6"><a href="#cb3-6"></a>                       <span class="at">dead =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">times =</span> <span class="dv">4</span>),</span>
+<span id="cb3-7"><a href="#cb3-7"></a>                       <span class="at">count =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">12</span>, <span class="dv">15</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb3-8"><a href="#cb3-8"></a></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="co"># function to calculate risk</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a>risk <span class="ot">&lt;-</span> <span class="cf">function</span>(rows) {</span>
+<span id="cb3-11"><a href="#cb3-11"></a>  <span class="co"># rows is a vector of TRUE/FALSE that selects rows</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a>  count <span class="ot">&lt;-</span> simpson<span class="sc">$</span>count[rows]</span>
+<span id="cb3-13"><a href="#cb3-13"></a>  dead <span class="ot">&lt;-</span> simpson<span class="sc">$</span>dead[rows]</span>
+<span id="cb3-14"><a href="#cb3-14"></a>  <span class="fu">sum</span>(count <span class="sc">*</span> dead) <span class="sc">/</span> <span class="fu">sum</span>(count)</span>
+<span id="cb3-15"><a href="#cb3-15"></a>}</span>
+<span id="cb3-16"><a href="#cb3-16"></a></span>
+<span id="cb3-17"><a href="#cb3-17"></a><span class="co"># odds and cumulative hazard</span></span>
+<span id="cb3-18"><a href="#cb3-18"></a>odds <span class="ot">&lt;-</span> <span class="cf">function</span>(p) p <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb3-19"><a href="#cb3-19"></a>chaz <span class="ot">&lt;-</span> <span class="cf">function</span>(p) <span class="sc">-</span><span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb3-20"><a href="#cb3-20"></a></span>
+<span id="cb3-21"><a href="#cb3-21"></a><span class="co"># crude risks and measures of association</span></span>
+<span id="cb3-22"><a href="#cb3-22"></a>p1 <span class="ot">&lt;-</span> <span class="fu">risk</span>(simpson<span class="sc">$</span>treated <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb3-23"><a href="#cb3-23"></a>p0 <span class="ot">&lt;-</span> <span class="fu">risk</span>(simpson<span class="sc">$</span>treated <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb3-24"><a href="#cb3-24"></a>RD <span class="ot">&lt;-</span> p1 <span class="sc">-</span> p0</span>
+<span id="cb3-25"><a href="#cb3-25"></a>RR <span class="ot">&lt;-</span> p1 <span class="sc">/</span> p0</span>
+<span id="cb3-26"><a href="#cb3-26"></a>OR <span class="ot">&lt;-</span> <span class="fu">odds</span>(p1) <span class="sc">/</span> <span class="fu">odds</span>(p0)</span>
+<span id="cb3-27"><a href="#cb3-27"></a>CHR <span class="ot">&lt;-</span> <span class="fu">chaz</span>(p1) <span class="sc">/</span> <span class="fu">chaz</span>(p0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="conditional-risks-and-measures-of-association-given-sex" class="level3" data-number="17.3.2">
+<h3 data-number="17.3.2" class="anchored" data-anchor-id="conditional-risks-and-measures-of-association-given-sex"><span class="header-section-number">17.3.2</span> Conditional risks and measures of association given sex</h3>
+<p>According to the DAG in <a href="dags.html#fig-simpson-dag" class="quarto-xref">Figure&nbsp;<span>15.6</span></a>, conditioning on biological sex removes all confounding and selection bias. Among females, the risk of death in the treated is <span class="math display">\[
+  \Pr(D = 1 \given{} \text{female}, X = 1, S = 1)
+  = \frac{15}{15 + 12}
+  \approx 0.56
+\]</span> and the risk of death in the untreated is <span class="math display">\[
+  \Pr(D = 1 \given{} \text{female}, X = 0, S = 1)
+  = \frac{3}{3 + 2}
+  = 0.6.
+\]</span> Among males, the risk of death in the treated is <span class="math display">\[
+  \Pr(D = 1 \given{} \text{male}, X = 1, S = 1)
+  = \frac{5}{5 + 8}
+  \approx 0.385
+\]</span> and the risk of death among among the untreated is <span class="math display">\[
+  \Pr(D = 1 \given{} \text{male}, X = 0, S = 1)
+  = \frac{3}{3 + 4}
+  \approx 0.429.
+\]</span></p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-simpson1951interpretation" class="csl-entry" role="listitem">
+Simpson, Edward H. 1951. <span>“The Interpretation of Interaction in Contingency Tables.”</span> <em>Journal of the Royal Statistical Society: Series B (Methodological)</em> 13 (2): 238–41.
+</div>
+</div>
 </section>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">

@@ -11,11 +11,13 @@ loop <- dagitty('dag{
   B1 -> B2
 }')
 
-# plot DAG using ggplot() directly to allow curved arrows
-# Uncomment coord_equal() to get a better-looking DAG in an R plot window.
+# generate DAG data for plot
 coordinates(loop) <- list(x = c(A1 = 0, B1 = 1, A2 = 2, B2 = 3),
                           y = c(A1 = 0, B1 = 0, A2 = 0, B2 = 0))
 loop_dat <- tidy_dagitty(loop)
+
+# plot DAG using ggplot() to allow curved arrows
+# Uncomment coord_equal() to get a better-looking DAG in an R plot window.
 (ggplot(loop_dat, aes(x = x, y = y, xend = xend, yend = yend))
   + theme_dag_gray_grid()
   # + coord_equal()
