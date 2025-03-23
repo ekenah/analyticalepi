@@ -1,8 +1,8 @@
 ## Binomial GLM analysis of smoking and 20-year mortality
 
 # load R packages
-library(dplyr)    # for case_when()
-library(lmtest)   # for lrtest()
+library(dplyr)      # for case_when()
+library(lmtest)     # for lrtest()
 
 # data from Appleton et al. (The American Statistician, 1996)
 # Using an ordered factor allows the use of <, =, and > for comparison.

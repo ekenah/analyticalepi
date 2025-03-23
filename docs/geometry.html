@@ -468,8 +468,14 @@ window.Quarto = {
   <li><a href="#effect-measure-modification" id="toc-effect-measure-modification" class="nav-link" data-scroll-target="#effect-measure-modification"><span class="header-section-number">18.3</span> Effect measure modification</a>
   <ul class="collapse">
   <li><a href="#contour-lines" id="toc-contour-lines" class="nav-link" data-scroll-target="#contour-lines"><span class="header-section-number">18.3.1</span> Contour lines</a></li>
+  <li><a href="#interaction" id="toc-interaction" class="nav-link" data-scroll-target="#interaction"><span class="header-section-number">18.3.2</span> Interaction</a></li>
   </ul></li>
-  <li><a href="#noncollapsibility" id="toc-noncollapsibility" class="nav-link" data-scroll-target="#noncollapsibility"><span class="header-section-number">18.4</span> Noncollapsibility</a></li>
+  <li><a href="#collapsibility" id="toc-collapsibility" class="nav-link" data-scroll-target="#collapsibility"><span class="header-section-number">18.4</span> Collapsibility</a>
+  <ul class="collapse">
+  <li><a href="#definition-in-terms-of-standardized-measures" id="toc-definition-in-terms-of-standardized-measures" class="nav-link" data-scroll-target="#definition-in-terms-of-standardized-measures"><span class="header-section-number">18.4.1</span> Definition in terms of standardized measures</a></li>
+  <li><a href="#straight-contour-lines" id="toc-straight-contour-lines" class="nav-link" data-scroll-target="#straight-contour-lines"><span class="header-section-number">18.4.2</span> Straight contour lines</a></li>
+  <li><a href="#noncollapsibility-and-changes-upon-adjustment" id="toc-noncollapsibility-and-changes-upon-adjustment" class="nav-link" data-scroll-target="#noncollapsibility-and-changes-upon-adjustment"><span class="header-section-number">18.4.3</span> Noncollapsibility and changes upon adjustment</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -496,9 +502,10 @@ window.Quarto = {
 
 
 <blockquote class="blockquote">
-<p>Let no one ignorant of geometry enter here. (possibly apocryphal inscription above the entrance to Plato’s Academy, circa 387 BC)</p>
+<div class="line-block">Let no one ignorant of geometry enter here.<br>
+(possibly apocryphal inscription above the entrance to Plato’s Academy, circa 387 BC)</div>
 </blockquote>
-<p>While algebra is useful and often definitive, a geometric perspective can be a more useful guide to intuition. A geometrical perspective on causal inference first proposed in <span class="citation" data-cites="rothman1975pictorial">Rothman (<a href="references.html#ref-rothman1975pictorial" role="doc-biblioref">1975</a>)</span> clarifies the relationships between confounding, effect measure modification, and collapsibility <span class="citation" data-cites="kenah2024rothman">(<a href="references.html#ref-kenah2024rothman" role="doc-biblioref">Kenah 2024</a>)</span>. Through the lens of regression models, these concepts blend together almost inextricably. Through the lens of standardization and geometry, the distinctions are as clear as an azure sky of deepest summer.</p>
+<p>While algebra is useful and often definitive, a geometric perspective can be a more useful guide to intuition. A geometrical perspective on causal inference first proposed in <span class="citation" data-cites="rothman1975pictorial">Rothman (<a href="references.html#ref-rothman1975pictorial" role="doc-biblioref">1975</a>)</span> clarifies the relationships between confounding, effect measure modification, and collapsibility <span class="citation" data-cites="kenah2024rothman">(<a href="references.html#ref-kenah2024rothman" role="doc-biblioref">Kenah 2024</a>)</span>. Through the lens of regression models, these concepts blend together almost inextricably. Through the lens of standardization and geometry, the distinctions are clear.</p>
 <section id="rothman-diagrams" class="level2" data-number="18.1">
 <h2 data-number="18.1" class="anchored" data-anchor-id="rothman-diagrams"><span class="header-section-number">18.1</span> Rothman diagrams</h2>
 <p>The <strong>unit square</strong> is the set of all ordered pairs <span class="math inline">\((x, y) \in \mathbb{R}^2\)</span> where both <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are in the interval <span class="math inline">\([0, 1]\)</span> (i.e., the interval including zero, one, and all real numbers in between). To represent the point <span class="math inline">\((x, y)\)</span>, we can plot <span class="math inline">\(x\)</span> on a horizontal axis (the x-axis) and <span class="math inline">\(y\)</span> on a vertical axis (the y-axis). <span class="citation" data-cites="rothman1975pictorial">Rothman (<a href="references.html#ref-rothman1975pictorial" role="doc-biblioref">1975</a>)</span> introduced a geometric perspective on causal inference where <span class="math inline">\(x\)</span> represents the risk of disease in the unexposed or untreated and <span class="math inline">\(y\)</span> represents the risk of disease in the exposed or treated. A similar plot was introduced by <span class="citation" data-cites="labbe1987meta">L’Abbé, Detsky, and O’Rourke (<a href="references.html#ref-labbe1987meta" role="doc-biblioref">1987</a>)</span> for meta-analysis, and these <em>L’Abbé plots</em> were used by <span class="citation" data-cites="richardson2017modeling">Richardson, Robins, and Wang (<a href="references.html#ref-richardson2017modeling" role="doc-biblioref">2017</a>)</span> to discuss the estimation of risk differences and risk ratios.</p>
@@ -671,8 +678,8 @@ Table&nbsp;18.3: Age-stratified 2x2 tables for smoking and 20-year mortality.
 <div class="sourceCode" id="cb1" data-filename="rothman-glm.R"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="do">## Binomial GLM analysis of smoking and 20-year mortality</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a></span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="co"># load R packages</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">library</span>(dplyr)    <span class="co"># for case_when()</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="fu">library</span>(lmtest)   <span class="co"># for lrtest()</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">library</span>(dplyr)      <span class="co"># for case_when()</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="fu">library</span>(lmtest)     <span class="co"># for lrtest()</span></span>
 <span id="cb1-6"><a href="#cb1-6"></a></span>
 <span id="cb1-7"><a href="#cb1-7"></a><span class="co"># data from Appleton et al. (The American Statistician, 1996)</span></span>
 <span id="cb1-8"><a href="#cb1-8"></a><span class="co"># Using an ordered factor allows the use of &lt;, =, and &gt; for comparison.</span></span>
@@ -770,22 +777,25 @@ Table&nbsp;18.3: Age-stratified 2x2 tables for smoking and 20-year mortality.
 </section>
 <section id="association-points" class="level3" data-number="18.1.3">
 <h3 data-number="18.1.3" class="anchored" data-anchor-id="association-points"><span class="header-section-number">18.1.3</span> Association points</h3>
-<p>Unlike causal points, we can plot <strong>association points</strong> based on observed data. The risk of disease among the unexposed is <span class="math inline">\(\Pr(D = 1 \given{} X = 0)\)</span>, and the risk of disease among the exposed is <span class="math inline">\(\Pr(D = 1 \given{} X = 1)\)</span>. The point <span class="math display">\[
+<p>Unlike causal points, we can plot <strong>association points</strong> using data on the eligible population. The risk of disease among the unexposed is <span class="math inline">\(\Pr(D = 1 \given{} X = 0)\)</span>, and the risk of disease among the exposed is <span class="math inline">\(\Pr(D = 1 \given{} X = 1)\)</span>. The point <span class="math display">\[
   \pcrude = \Big(\Pr(D = 1 \given{} X = 0), \Pr(D = 1 \given{} X = 1)\Big)
 \]</span> on the Rothman diagram is the <strong>crude association point</strong> for the population, which is approximated by the crude association point for the study sample. <a href="#fig-rothman-std" class="quarto-xref">Figure&nbsp;<span>18.1</span></a> shows the crude point for the data from <a href="#tbl-crude" class="quarto-xref">Table&nbsp;<span>18.1</span></a>. Its x-coordinate is the risk of death among nonsmokers, which is <span class="math inline">\(230 / 702 \approx 0.314\)</span>. Its y-coordinate is the risk of death among smokers, which is <span class="math inline">\(139 / 582 \approx 0.239\)</span>. The <strong>null line</strong> is the set of all points where the risks of death in the unexposed and the exposed are equal. It is a diagonal line from the point <span class="math inline">\((0, 0)\)</span> to the point <span class="math inline">\((1, 1)\)</span>.</p>
-<p>The conditional risk of disease given <span class="math inline">\(X = x\)</span> and <span class="math inline">\(C = c\)</span> is <span class="math display">\[
+<p>The conditional risk of disease given <span class="math inline">\(X = x\)</span> and <span class="math inline">\(C = c\)</span> in the eligible population is <span class="math display">\[
   \Pr(D = 1 \given{} X = x, C = c) = \frac{\Pr(D = 1, X = x, C = c)}{\Pr(X = x, C = c)}.
 \]</span> The point <span class="math display">\[
   p^*_c = \Big(\Pr(D = 1 \given{} X = 0, C = c), \Pr(D = 1 \given X = 1, C = c)\Big)
-\]</span> is the <strong>stratum-specific association point</strong> for the subpopulation with <span class="math inline">\(C = c\)</span>. There is one stratum-specific association point for each value of <span class="math inline">\(C\)</span>.</p>
-<p><a href="#fig-rothman-std" class="quarto-xref">Figure&nbsp;<span>18.1</span></a> shows the stratum-specific association points for the age groups in <a href="#tbl-strat" class="quarto-xref">Table&nbsp;<span>18.3</span></a>. For both smokers and nonsmokers, the risks of death were much higher in the older age stratum, and these differences in mortality due to age were much larger than the differences due to smoking.</p>
-<p>When there is no unmeasured confounding of the causal effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(D\)</span> given <span class="math inline">\(C\)</span>, exchangeability and consistency guarantee that <span class="math display">\[
+\]</span> is the <strong>stratum-specific association point</strong> for the subpopulation with <span class="math inline">\(C = c\)</span>. There is one stratum-specific association point for each value of <span class="math inline">\(C\)</span>. <a href="#fig-rothman-std" class="quarto-xref">Figure&nbsp;<span>18.1</span></a> shows the stratum-specific association points for the age groups in <a href="#tbl-strat" class="quarto-xref">Table&nbsp;<span>18.3</span></a>. For both smokers and nonsmokers, the risks of death were much higher in the older age stratum, and these differences in mortality due to age were much larger than the differences due to smoking.</p>
+<p>When conditioning on <span class="math inline">\(C\)</span> controls confounding of the causal effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(D\)</span>, exchangeability given <span class="math inline">\(C\)</span> and consistency guarantee that <span id="eq-cond-causal-elig"><span class="math display">\[
   \begin{aligned}
     \Pr(D^x = 1 \given{} C = c)
     &amp;= \Pr(D^x = 1 \given{} X = x, C = c) \\
     &amp;= \Pr(D = 1 \given{} X = x, C = c)
   \end{aligned}
-\]</span> for <span class="math inline">\(x = 0\)</span> and <span class="math inline">\(x = 1\)</span> <span class="citation" data-cites="pearl2009causality">Hernán and Robins (<a href="references.html#ref-hernanrobins2023" role="doc-biblioref">2023</a>)</span>. Thus, the causal and association points are the same for each stratum of <span class="math inline">\(C\)</span>. In our example, the stratum-specific association points represent stratum-specific causal points if stratifying into the 18-64 and 65+ year age groups removes all confounding of the association between smoking and 20-year survival. In reality, there is likely to be residual confounding by age within these groups. Better control of confounding could be achieved with a larger number of age groups or a well-chosen regression model.</p>
+\tag{18.2}\]</span></span> for <span class="math inline">\(x = 0\)</span> and <span class="math inline">\(x = 1\)</span> <span class="citation" data-cites="pearl2009causality hernanrobins2023">(<a href="references.html#ref-pearl2009causality" role="doc-biblioref">Pearl 2009</a>; <a href="references.html#ref-hernanrobins2023" role="doc-biblioref">Hernán and Robins 2023</a>)</span>. Thus, the causal and association points are the same (up to random variation) within each stratum of <span class="math inline">\(C\)</span>. In our example, the stratum-specific association points represent stratum-specific causal points if stratifying into the 18-64 and 65+ year age groups removes all confounding of the association between smoking and 20-year survival. In reality, there is likely to be residual confounding by age within these groups. Better control of confounding could be achieved with a larger number of age groups or a well-chosen regression model.</p>
+<p>Pretending that we can plot association points for the eligible population has allowed us to ignore selection bias. When we have data only from a sample of this population, we need <span class="math display">\[
+  \Pr(D = 1 \given{} C = c, X = x, S = 1)
+  = \Pr(D = 1 \given{} C = c, X = x).
+\]</span> If the analytic cohort condition holds, both sides are equal to <span class="math inline">\(\Pr(D^x = 1 \given{} C = c)\)</span> by equations <a href="standardization.html#eq-cond-causal" class="quarto-xref">Equation&nbsp;<span>17.8</span></a> (for the left-hand side) and <a href="#eq-cond-causal-elig" class="quarto-xref">Equation&nbsp;<span>18.2</span></a> (for the right-hand side). Under the analytic cohort condition, the association points for the study sample match the association points for the eligible population up to sampling variation, which is accounted for in both Bayesian and frequentist inference. Focusing on association points in the eligible population helps us isolate confounding from selection bias.</p>
 </section>
 <section id="standardization-and-line-segments" class="level3" data-number="18.1.4">
 <h3 data-number="18.1.4" class="anchored" data-anchor-id="standardization-and-line-segments"><span class="header-section-number">18.1.4</span> Standardization and line segments</h3>
@@ -798,14 +808,14 @@ Table&nbsp;18.3: Age-stratified 2x2 tables for smoking and 20-year mortality.
   \big\{(x, y) \in \mathbb{R}^2:
   (x, y) = (1 - t) p_0 + t p_1
   \text{ for some } t \in [0, 1]\big\},
-\tag{18.2}\]</span></span> which is the set of all points <span class="math inline">\(p(t)\)</span> that we cross while going from <span class="math inline">\(p_0\)</span> to <span class="math inline">\(p_1\)</span> in a straight line.</p>
+\tag{18.3}\]</span></span> which is the set of all points <span class="math inline">\(p(t)\)</span> that we cross while going from <span class="math inline">\(p_0\)</span> to <span class="math inline">\(p_1\)</span> in a straight line.</p>
 <p>Because <span class="math inline">\(C\)</span> is not causally affected by <span class="math inline">\(X\)</span>, <span class="math inline">\(\Pr(C = 0)\)</span> and <span class="math inline">\(\Pr(C = 1)\)</span> remain the same no matter how we intervene to set <span class="math inline">\(X\)</span>. For any possible value <span class="math inline">\(x\)</span> of <span class="math inline">\(X\)</span>, <span id="eq-mcausal"><span class="math display">\[
   \begin{aligned}
     \Pr(D^x = 1)
     &amp;= \Pr(D^x = 1 \given{} C = 0) \Pr(C = 0) \\
     &amp;\qquad + \Pr(D^x = 1 \given{} C = 1) \Pr(C = 1)
   \end{aligned}
-\tag{18.3}\]</span></span> by the law of total probability. If <span class="math inline">\(p_0\)</span> and <span class="math inline">\(p_1\)</span> are the stratum-specific causal points for <span class="math inline">\(C = 0\)</span> and <span class="math inline">\(C = 1\)</span>, then <span class="math display">\[
+\tag{18.4}\]</span></span> by the law of total probability. If <span class="math inline">\(p_0\)</span> and <span class="math inline">\(p_1\)</span> are the stratum-specific causal points for <span class="math inline">\(C = 0\)</span> and <span class="math inline">\(C = 1\)</span>, then <span class="math display">\[
   \pmarg = p_0 \Pr(C = 0) + p_1 \Pr(C = 1).
 \]</span> Because <span class="math inline">\(\Pr(C = 0) + \Pr(C = 1) = 1\)</span>, the marginal causal point is on the line segment connecting the stratum-specific causal points. Other points on this line segment are marginal causal points for populations with the same stratum-specific causal points but different distributions of <span class="math inline">\(C\)</span>. For example, the point <span class="math inline">\(0.5 p_0 + 0.5 p_1\)</span> halfway between <span class="math inline">\(p_0\)</span> and <span class="math inline">\(p_1\)</span> is the marginal causal point for a population where <span class="math inline">\(\Pr(C = 1) = 0.5\)</span>.</p>
 <p>With association points, line segments correspond to standardized risks of disease <span class="citation" data-cites="rothman1975pictorial">Kenah (<a href="references.html#ref-kenah2024rothman" role="doc-biblioref">2024</a>)</span>. The standardized risk of disease given <span class="math inline">\(X = x\)</span> is the marginal risk of disease in a hypothetical <em>standard population</em> where the prevalence of <span class="math inline">\(C = 1\)</span> equals <span class="math inline">\(\Prstd(C = 1)\)</span>. The standardized risk of disease under <span class="math inline">\(X = x\)</span> is <span id="eq-std"><span class="math display">\[
@@ -814,7 +824,7 @@ Table&nbsp;18.3: Age-stratified 2x2 tables for smoking and 20-year mortality.
     &amp;= \Pr(D = 1 \given{} X = x, C = 0) \Prstd(C = 0) \\
     &amp;\qquad + \Pr(D = 1 \given{} X = x, C = 1) \Prstd(C = 1).
   \end{aligned}
-\tag{18.4}\]</span></span> Standardization allows us to calculate marginal risks of disease using the same distribution of <span class="math inline">\(C\)</span> for both exposure groups, which removes confounding by <span class="math inline">\(C\)</span>. The corresponding <em>standardized association point</em> <span class="math display">\[
+\tag{18.5}\]</span></span> Standardization allows us to calculate marginal risks of disease using the same distribution of <span class="math inline">\(C\)</span> for both exposure groups, which removes confounding by <span class="math inline">\(C\)</span>. The corresponding <em>standardized association point</em> <span class="math display">\[
   \begin{aligned}
     p^*_\std
     &amp;= \big(\Prstd(D = 1 \given{} X = 0), \Prstd(D = 1 \given{} X = 1)\big) \\
@@ -980,14 +990,14 @@ Figure&nbsp;18.1: A Rothman diagram with the crude association point (open circl
 </section>
 <section id="confounding" class="level2" data-number="18.2">
 <h2 data-number="18.2" class="anchored" data-anchor-id="confounding"><span class="header-section-number">18.2</span> Confounding</h2>
-<p>The set in equation~<a href="#eq:linesegment" data-reference-type="eqref" data-reference="eq:linesegment">[eq:linesegment]</a> is a line segment connecting <span class="math inline">\(p_0\)</span> and <span class="math inline">\(p_1\)</span> because we use the same <span class="math inline">\(t\)</span> for both axes. If we allow different values of <span class="math inline">\(t\)</span> for the two axes, we get the set <span id="eq-rectangle"><span class="math display">\[
+<p>The set in <a href="#eq-linesegment" class="quarto-xref">Equation&nbsp;<span>18.3</span></a> is a line segment connecting <span class="math inline">\(p_0\)</span> and <span class="math inline">\(p_1\)</span> because we use the same <span class="math inline">\(t\)</span> for both axes. If we allow different values of <span class="math inline">\(t\)</span> for the two axes, we get the set <span id="eq-rectangle"><span class="math display">\[
   \begin{aligned}
     \big\{(x, y) \in \mathbb{R}^2
     &amp;: x = (1 - t_x) x_0 + t_x x_1
     \text{ and } y = (1 - t_y) y_0 + t_y y_1 \\
     &amp;\quad \text{ for some } t_x, t_y \in [0, 1]\big\},
   \end{aligned}
-\tag{18.5}\]</span></span> which is a rectangle with sides parallel to the axes and corners at <span class="math inline">\(p_0\)</span> and <span class="math inline">\(p_1\)</span>. It is called the <em>circumscribing rectangle</em> because it is the smallest rectangle with sides parallel to the axes that contains these points. The line segment in equation <a href="#eq-linesegment" class="quarto-xref">Equation&nbsp;<span>18.2</span></a> is a diagonal of this rectangle.</p>
+\tag{18.6}\]</span></span> which is a rectangle with sides parallel to the axes and corners at <span class="math inline">\(p_0\)</span> and <span class="math inline">\(p_1\)</span>. It is called the <em>circumscribing rectangle</em> because it is the smallest rectangle with sides parallel to the axes that contains these points. The line segment in <a href="#eq-linesegment" class="quarto-xref">Equation&nbsp;<span>18.3</span></a> is a diagonal of this rectangle.</p>
 <section id="confounding-rectangle" class="level3" data-number="18.2.1">
 <h3 data-number="18.2.1" class="anchored" data-anchor-id="confounding-rectangle"><span class="header-section-number">18.2.1</span> Confounding rectangle</h3>
 <p>The crude association point <span class="math inline">\(\pcrude\)</span> has the same x-coordinate as the standardized point for the unexposed <span class="math display">\[
@@ -1126,24 +1136,24 @@ Figure&nbsp;18.2: A Rothman diagram with the standardized segment (solid) and th
 </section>
 <section id="confounders-with-more-than-two-levels" class="level3" data-number="18.2.2">
 <h3 data-number="18.2.2" class="anchored" data-anchor-id="confounders-with-more-than-two-levels"><span class="header-section-number">18.2.2</span> Confounders with more than two levels*</h3>
-<p>The generalization of the line segment in <a href="#eq-linesegment" class="quarto-xref">Equation&nbsp;<span>18.2</span></a> for <span class="math inline">\(k \geq 1\)</span> points <span class="math inline">\(p_1, \ldots, p_k\)</span> is the <em>convex hull</em> <span id="eq-convexhull"><span class="math display">\[
+<p>The generalization of the line segment in <a href="#eq-linesegment" class="quarto-xref">Equation&nbsp;<span>18.3</span></a> for <span class="math inline">\(k \geq 1\)</span> points <span class="math inline">\(p_1, \ldots, p_k\)</span> is the <em>convex hull</em> <span id="eq-convexhull"><span class="math display">\[
   \begin{aligned}
     \big\{(x, y) \in \mathbb{R}^2
     &amp;: (x, y) = w_1 p_1 + \ldots + w_k p_k
     \text{ for }  w_1, \ldots w_k \geq 0 \\
     &amp; \quad \text{ such that } w_1 + \ldots + w_k = 1\big\}.
   \end{aligned}
-\tag{18.6}\]</span></span> The convex hull is the set of all weighted sums of the points <span class="math inline">\(p_1, \ldots, p_k\)</span> where the weights are nonnegative and add up to one. Geometrically, it is the shape you would get if you stretched a rubber band around all of the points. It is <em>convex</em> because it contains the line segment joining any two of its points. If <span class="math inline">\(k = 1\)</span>, the convex hull is the point <span class="math inline">\(p_1\)</span>. If <span class="math inline">\(k = 2\)</span>, the convex hull is the line segment connecting <span class="math inline">\(p_1\)</span> and <span class="math inline">\(p_2\)</span>.</p>
+\tag{18.7}\]</span></span> The convex hull is the set of all weighted sums of the points <span class="math inline">\(p_1, \ldots, p_k\)</span> where the weights are nonnegative and add up to one. Geometrically, it is the shape you would get if you stretched a rubber band around all the points. It is <em>convex</em> because it contains the line segment joining any two of its points. If <span class="math inline">\(k = 1\)</span>, the convex hull is the point <span class="math inline">\(p_1\)</span>. If <span class="math inline">\(k = 2\)</span>, the convex hull is the line segment connecting <span class="math inline">\(p_1\)</span> and <span class="math inline">\(p_2\)</span>.</p>
 <p>Now suppose that <span class="math inline">\(C\)</span> has <span class="math inline">\(k \geq 1\)</span> possible values <span class="math inline">\(c_1, \ldots c_k\)</span>. Then we have <span class="math inline">\(k\)</span> stratum-specific association points <span class="math inline">\(p_1^*, \ldots p_k^*\)</span>. The standardized segment is the convex hull for <span class="math inline">\(k = 2\)</span> strata. For <span class="math inline">\(k &gt; 2\)</span> strata, we will call the convex hull of the stratum-specific points the <strong>standardized hull</strong>. Stratum-specific points can be in its interior or on its perimeter.</p>
-<p><a href="#fig-rothman-conf6" class="quarto-xref">Figure&nbsp;<span>18.3</span></a> shows the standardized hull for the six age strata adapted from <span class="citation" data-cites="appleton1996ignoring">Appleton, French, and Vanderpump (<a href="references.html#ref-appleton1996ignoring" role="doc-biblioref">1996</a>)</span>. The point for the 45-54 year age group is in its interior, but all other stratum-specific points are on its perimeter. Almost all of the standardized hull is above the null line, where smoking is harmful.</p>
-<p>For any <span class="math inline">\(k \geq 1\)</span>, we get a confounding rectangle. Using different sets of weights for the exposed and unexposed to calculate a possible crude point, we can get any point in the circumscribing rectangle for <span class="math inline">\(p_1^*, \ldots, p_k^*\)</span>. It has sides parallel to x-axis with y-coordinates at the smallest and largest stratum-specific risks in the exposed, and it has sides parallel to the y-axis with x-coordinates equal to the smallest and largest stratum-specific risks in the unexposed. It contains the entire standardized hull. Unlike the <span class="math inline">\(k = 2\)</span> case, the confounding rectangle for <span class="math inline">\(k &gt; 2\)</span> does not necessarily have stratum-specific points at any of its corners. <a href="#fig-rothman-conf6" class="quarto-xref">Figure&nbsp;<span>18.3</span></a> shows the confounding rectangle for the six age strata.</p>
-<p>When there is no confounding of the causal effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(D\)</span> by <span class="math inline">\(C\)</span>, the crude point will always be inside the standardized hull. Each point in the standardized hull is a marginal causal point for some standard population. For <span class="math inline">\(k &gt; 2\)</span>, it is possible to get a crude point inside the standardized hull even when there is confounding, in which case the marginal causal point we calculate is not actually the marginal causal point for our standard population. In the limit of a large sample, there must be confounding if the crude point is outside the standardized hull. Due to sampling variation, this implication is only approximate in practice.</p>
+<p><a href="#fig-rothman-conf7" class="quarto-xref">Figure&nbsp;<span>18.3</span></a> shows the standardized hull for the six age strata adapted from <span class="citation" data-cites="appleton1996ignoring">Appleton, French, and Vanderpump (<a href="references.html#ref-appleton1996ignoring" role="doc-biblioref">1996</a>)</span>. The point for the 45-54 year age group is in its interior, but all other stratum-specific points are on its perimeter. Almost all of the standardized hull is above the null line, where the risk of death for smokers is higher than the risk of death for nonsmokers.</p>
+<p>For any <span class="math inline">\(k \geq 1\)</span>, we get a confounding rectangle. Using different sets of weights for the exposed and unexposed to calculate a possible crude point, we can get any point in the circumscribing rectangle for <span class="math inline">\(p_1^*, \ldots, p_k^*\)</span>. It has sides parallel to x-axis with y-coordinates at the smallest and largest stratum-specific risks in the exposed, and it has sides parallel to the y-axis with x-coordinates equal to the smallest and largest stratum-specific risks in the unexposed. It contains the entire standardized hull. Unlike the <span class="math inline">\(k = 2\)</span> case, the confounding rectangle for <span class="math inline">\(k &gt; 2\)</span> does not necessarily have stratum-specific points at any of its corners. <a href="#fig-rothman-conf7" class="quarto-xref">Figure&nbsp;<span>18.3</span></a> shows the confounding rectangle for the six age strata.</p>
+<p>When there is no confounding of the causal effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(D\)</span> by <span class="math inline">\(C\)</span>, the crude point will always be inside the standardized hull. Each point in the standardized hull is a marginal causal point for some standard population. For <span class="math inline">\(k &gt; 2\)</span>, it is possible to get a crude point inside the standardized hull even when there is confounding, in which case the marginal causal point we calculate is not actually the marginal causal point for our standard population. In the limit of a large sample, there must be confounding if the crude point is outside the standardized hull.</p>
 <div class="cell">
 <div class="code-with-filename">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-with-filename-file">
-<pre><strong>rothman-conf6.R</strong></pre>
+<pre><strong>rothman-conf7.R</strong></pre>
 </div>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="do">## Rothman diagram for smoking and 20-year mortality</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a></span>
@@ -1269,12 +1279,12 @@ Figure&nbsp;18.2: A Rothman diagram with the standardized segment (solid) and th
 </details>
 </div>
 <div class="cell-output-display">
-<div id="fig-rothman-conf6" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-rothman-conf7" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-rothman-conf6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="geometry_files/figure-html/fig-rothman-conf6-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;18.3: The standardized hull (solid) and the confounding rectangle (dashed) for six age strata adapted from @appleton1996ignoring. Only the top right corner of the confounding rectangle is a stratum-specific point."><img src="geometry_files/figure-html/fig-rothman-conf6-1.png" class="img-fluid figure-img" width="672"></a>
+<div aria-describedby="fig-rothman-conf7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="geometry_files/figure-html/fig-rothman-conf7-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;18.3: The standardized hull (solid) and the confounding rectangle (dashed) for six age strata adapted from @appleton1996ignoring. Only the top right corner of the confounding rectangle is a stratum-specific point."><img src="geometry_files/figure-html/fig-rothman-conf7-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rothman-conf6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rothman-conf7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;18.3: The standardized hull (solid) and the confounding rectangle (dashed) for six age strata adapted from <span class="citation" data-cites="appleton1996ignoring">Appleton, French, and Vanderpump (<a href="references.html#ref-appleton1996ignoring" role="doc-biblioref">1996</a>)</span>. Only the top right corner of the confounding rectangle is a stratum-specific point.
 </figcaption>
 </figure>
@@ -1294,16 +1304,846 @@ Figure&nbsp;18.3: The standardized hull (solid) and the confounding rectangle (d
 <p>We can also find contour lines for the risk ratio <span class="math inline">\(\RR(x, y) = y / x\)</span>, the risk difference <span class="math inline">\(\RD(x, y) = y - x\)</span>, and the hazard ratio. To estimate the hazard ratio from binary data, we need to assume that there is a constant hazard ratio for the exposed compared to the unexposed during the time interval over which risk is defined. If so, this hazard ratio is <span class="math display">\[
   \CHR(x, y) = \frac{\log(1 - y)}{\log(1 - x)}.
 \]</span> The incidence rate ratio is a special case of the hazard ratio where we assume an exponential distribution of times to disease onset in each exposure group.</p>
-<p>Figure~<a href="#fig:contours" data-reference-type="ref" data-reference="fig:contours">[fig:contours]</a> shows contour lines for the odds ratio, risk ratio, risk difference, and hazard ratio <span class="citation" data-cites="rothman1975pictorial">Richardson, Robins, and Wang (<a href="references.html#ref-richardson2017modeling" role="doc-biblioref">2017</a>)</span>. The null line is a contour line for all measures of association, corresponding to <span class="math inline">\(\RD(x, y) = 0\)</span> and <span class="math inline">\(\OR(x, y) = \RR(x, y) = \HR(x, y) = 1\)</span>. On a Rothman diagram, <span class="math inline">\(C\)</span> is an effect modifier for a measure of association <span class="math inline">\(M\)</span> when the stratum-specific points are on different contour lines of <span class="math inline">\(M\)</span>. If we randomly choose two points in the unit square, it would be an astonishing coincidence if both were on the same contour line of a given measure of association. Thus, effect modification should be seen as normal, not pathological or unusual.</p>
+<p><a href="#fig-rothman-contours" class="quarto-xref">Figure&nbsp;<span>18.4</span></a> shows contour lines for the odds ratio, risk ratio, risk difference, and hazard ratio <span class="citation" data-cites="rothman1975pictorial">Richardson, Robins, and Wang (<a href="references.html#ref-richardson2017modeling" role="doc-biblioref">2017</a>)</span>. The null line is a contour line for all measures of association, corresponding to <span class="math inline">\(\RD(x, y) = 0\)</span> and <span class="math inline">\(\OR(x, y) = \RR(x, y) = \CHR(x, y) = 1\)</span>. On a Rothman diagram, <span class="math inline">\(C\)</span> is an effect modifier for a measure of association <span class="math inline">\(M\)</span> when the stratum-specific points are on different contour lines of <span class="math inline">\(M\)</span>. If we randomly choose two points in the unit square, it would be an astonishing coincidence if both were on the same contour line for a given measure of association. Thus, effect measure modification should be seen as normal, not pathological or unusual.</p>
+<div class="cell">
+<div class="code-with-filename">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-with-filename-file">
+<pre><strong>rothman-contours.R</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="do">## Contour lines for measures of association</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="co"># load R packages</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="fu">require</span>(plotrix)    <span class="co"># for boxed.labels()</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="co"># odds ratio, cumulative hazard ratio, and inverses</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a>odds <span class="ot">&lt;-</span> <span class="cf">function</span>(p) p <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb5-8"><a href="#cb5-8"></a>invodds <span class="ot">&lt;-</span> <span class="cf">function</span>(odds) odds <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> odds)</span>
+<span id="cb5-9"><a href="#cb5-9"></a>chaz <span class="ot">&lt;-</span> <span class="cf">function</span>(p) <span class="sc">-</span><span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb5-10"><a href="#cb5-10"></a>invchaz <span class="ot">&lt;-</span> <span class="cf">function</span>(chaz) <span class="dv">1</span> <span class="sc">-</span> <span class="fu">exp</span>(<span class="sc">-</span>chaz)</span>
+<span id="cb5-11"><a href="#cb5-11"></a></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="co"># contour lines plot functions</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a><span class="co"># risk differences</span></span>
+<span id="cb5-14"><a href="#cb5-14"></a>riskdiff_contours <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb5-15"><a href="#cb5-15"></a>  <span class="fu">plot</span>(x, x, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">main =</span> <span class="st">"Risk difference contours"</span>,</span>
+<span id="cb5-16"><a href="#cb5-16"></a>       <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">"Risk in the exposed"</span>)</span>
+<span id="cb5-17"><a href="#cb5-17"></a>  <span class="fu">grid</span>()</span>
+<span id="cb5-18"><a href="#cb5-18"></a>  <span class="fu">boxed.labels</span>(.<span class="dv">5</span>, .<span class="dv">5</span>, <span class="st">"0"</span>, <span class="at">xpad =</span> <span class="fl">1.5</span>, <span class="at">ypad =</span> <span class="fl">1.5</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-19"><a href="#cb5-19"></a>  <span class="cf">for</span> (riskdiff <span class="cf">in</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="sc">-</span><span class="fl">0.2</span>, <span class="dv">0</span>, <span class="fl">0.2</span>, <span class="fl">0.5</span>)) {</span>
+<span id="cb5-20"><a href="#cb5-20"></a>    y <span class="ot">&lt;-</span> x <span class="sc">+</span> riskdiff</span>
+<span id="cb5-21"><a href="#cb5-21"></a>    yrange <span class="ot">&lt;-</span> y <span class="sc">&gt;=</span> <span class="dv">0</span> <span class="sc">&amp;</span> y <span class="sc">&lt;=</span> <span class="dv">1</span></span>
+<span id="cb5-22"><a href="#cb5-22"></a>    <span class="fu">lines</span>(x[yrange], y[yrange], <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb5-23"><a href="#cb5-23"></a>    <span class="fu">boxed.labels</span>(<span class="fl">0.5</span> <span class="sc">-</span> riskdiff <span class="sc">/</span> <span class="dv">2</span>, <span class="fl">0.5</span> <span class="sc">+</span> riskdiff <span class="sc">/</span> <span class="dv">2</span>,</span>
+<span id="cb5-24"><a href="#cb5-24"></a>                 <span class="fu">as.character</span>(riskdiff),</span>
+<span id="cb5-25"><a href="#cb5-25"></a>                 <span class="at">xpad =</span> <span class="fl">1.5</span>, <span class="at">ypad =</span> <span class="fl">1.5</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-26"><a href="#cb5-26"></a>  }</span>
+<span id="cb5-27"><a href="#cb5-27"></a>}</span>
+<span id="cb5-28"><a href="#cb5-28"></a><span class="co"># risk ratios</span></span>
+<span id="cb5-29"><a href="#cb5-29"></a>riskratio_contours <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb5-30"><a href="#cb5-30"></a>  <span class="fu">plot</span>(x, x, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">main =</span> <span class="st">"Risk ratio contours"</span>,</span>
+<span id="cb5-31"><a href="#cb5-31"></a>       <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>)</span>
+<span id="cb5-32"><a href="#cb5-32"></a>  <span class="fu">grid</span>()</span>
+<span id="cb5-33"><a href="#cb5-33"></a>  <span class="fu">boxed.labels</span>(.<span class="dv">5</span>, .<span class="dv">5</span>, <span class="st">"1"</span>, <span class="at">xpad =</span> <span class="fl">1.5</span>, <span class="at">ypad =</span> <span class="fl">1.5</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-34"><a href="#cb5-34"></a>  <span class="cf">for</span> (riskratio <span class="cf">in</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="dv">2</span>, <span class="dv">5</span>)) {</span>
+<span id="cb5-35"><a href="#cb5-35"></a>    y <span class="ot">&lt;-</span> riskratio <span class="sc">*</span> x</span>
+<span id="cb5-36"><a href="#cb5-36"></a>    yrange <span class="ot">&lt;-</span> y <span class="sc">&lt;=</span> <span class="dv">1</span></span>
+<span id="cb5-37"><a href="#cb5-37"></a>    <span class="fu">lines</span>(x[yrange], y[yrange], <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb5-38"><a href="#cb5-38"></a>    <span class="fu">boxed.labels</span>(<span class="dv">1</span> <span class="sc">/</span> (riskratio <span class="sc">+</span> <span class="dv">1</span>), riskratio <span class="sc">/</span> (riskratio <span class="sc">+</span> <span class="dv">1</span>),</span>
+<span id="cb5-39"><a href="#cb5-39"></a>                 <span class="fu">as.character</span>(riskratio),</span>
+<span id="cb5-40"><a href="#cb5-40"></a>                 <span class="at">xpad =</span> <span class="fl">1.5</span>, <span class="at">ypad =</span> <span class="fl">1.5</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-41"><a href="#cb5-41"></a>  }</span>
+<span id="cb5-42"><a href="#cb5-42"></a>}</span>
+<span id="cb5-43"><a href="#cb5-43"></a><span class="co"># odds ratios</span></span>
+<span id="cb5-44"><a href="#cb5-44"></a>oddsratio_contours <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb5-45"><a href="#cb5-45"></a>  <span class="fu">plot</span>(x, x, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">main =</span> <span class="st">"Odds ratio contours"</span>,</span>
+<span id="cb5-46"><a href="#cb5-46"></a>       <span class="at">xlab =</span> <span class="st">"Risk in the unexposed"</span>,</span>
+<span id="cb5-47"><a href="#cb5-47"></a>       <span class="at">ylab =</span> <span class="st">"Risk in the exposed"</span>)</span>
+<span id="cb5-48"><a href="#cb5-48"></a>  <span class="fu">grid</span>()</span>
+<span id="cb5-49"><a href="#cb5-49"></a>  <span class="fu">boxed.labels</span>(.<span class="dv">5</span>, .<span class="dv">5</span>, <span class="st">"1"</span>, <span class="at">xpad =</span> <span class="fl">1.5</span>, <span class="at">ypad =</span> <span class="fl">1.5</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-50"><a href="#cb5-50"></a>  <span class="cf">for</span> (oddsratio <span class="cf">in</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="dv">2</span>, <span class="dv">5</span>)) {</span>
+<span id="cb5-51"><a href="#cb5-51"></a>    <span class="fu">lines</span>(x, <span class="fu">invodds</span>(oddsratio <span class="sc">*</span> <span class="fu">odds</span>(x)), <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb5-52"><a href="#cb5-52"></a>    <span class="fu">boxed.labels</span>((<span class="fu">sqrt</span>(oddsratio) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">/</span> (oddsratio <span class="sc">-</span> <span class="dv">1</span>),</span>
+<span id="cb5-53"><a href="#cb5-53"></a>                 (oddsratio <span class="sc">-</span> <span class="fu">sqrt</span>(oddsratio)) <span class="sc">/</span> (oddsratio <span class="sc">-</span> <span class="dv">1</span>),</span>
+<span id="cb5-54"><a href="#cb5-54"></a>                 <span class="fu">as.character</span>(oddsratio),</span>
+<span id="cb5-55"><a href="#cb5-55"></a>                 <span class="at">xpad =</span> <span class="fl">1.5</span>, <span class="at">ypad =</span> <span class="fl">1.5</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-56"><a href="#cb5-56"></a>  }</span>
+<span id="cb5-57"><a href="#cb5-57"></a>}</span>
+<span id="cb5-58"><a href="#cb5-58"></a><span class="co"># cumulative hazard ratios</span></span>
+<span id="cb5-59"><a href="#cb5-59"></a>chazratio_contours <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb5-60"><a href="#cb5-60"></a>  <span class="fu">plot</span>(x, x, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">main =</span> <span class="st">"Cumulative hazard ratio contours"</span>,</span>
+<span id="cb5-61"><a href="#cb5-61"></a>       <span class="at">xlab =</span> <span class="st">"Risk in the unexposed"</span>, <span class="at">ylab =</span> <span class="st">""</span>)</span>
+<span id="cb5-62"><a href="#cb5-62"></a>  <span class="fu">grid</span>()</span>
+<span id="cb5-63"><a href="#cb5-63"></a>  <span class="fu">boxed.labels</span>(.<span class="dv">5</span>, .<span class="dv">5</span>, <span class="st">"1"</span>, <span class="at">xpad =</span> <span class="fl">1.5</span>, <span class="at">ypad =</span> <span class="fl">1.5</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-64"><a href="#cb5-64"></a>  <span class="cf">for</span> (chazratio <span class="cf">in</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="dv">2</span>, <span class="dv">5</span>)) {</span>
+<span id="cb5-65"><a href="#cb5-65"></a>    <span class="fu">lines</span>(<span class="fu">c</span>(x, <span class="dv">1</span>), <span class="fu">c</span>(<span class="fu">invchaz</span>(chazratio <span class="sc">*</span> <span class="fu">chaz</span>(x)), <span class="dv">1</span>), <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb5-66"><a href="#cb5-66"></a>    labelx <span class="ot">&lt;-</span> <span class="fu">uniroot</span>(<span class="cf">function</span>(x) x <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> x)<span class="sc">^</span>chazratio, <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))<span class="sc">$</span>root</span>
+<span id="cb5-67"><a href="#cb5-67"></a>    labely <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> labelx</span>
+<span id="cb5-68"><a href="#cb5-68"></a>    <span class="fu">boxed.labels</span>(labelx, labely, <span class="fu">as.character</span>(chazratio),</span>
+<span id="cb5-69"><a href="#cb5-69"></a>                 <span class="at">xpad =</span> <span class="fl">1.5</span>, <span class="at">ypad =</span> <span class="fl">1.5</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-70"><a href="#cb5-70"></a>  }</span>
+<span id="cb5-71"><a href="#cb5-71"></a>}</span>
+<span id="cb5-72"><a href="#cb5-72"></a></span>
+<span id="cb5-73"><a href="#cb5-73"></a><span class="co"># plot array</span></span>
+<span id="cb5-74"><a href="#cb5-74"></a>oldmar <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="st">"mar"</span>)</span>
+<span id="cb5-75"><a href="#cb5-75"></a>oldmgp <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="st">"mgp"</span>)</span>
+<span id="cb5-76"><a href="#cb5-76"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fl">0.6</span> <span class="sc">*</span> (<span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">1</span>) <span class="sc">+</span> <span class="fl">0.1</span>), <span class="at">mgp =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb5-77"><a href="#cb5-77"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.001</span>, <span class="fl">0.999</span>, <span class="at">by =</span> <span class="fl">0.001</span>)</span>
+<span id="cb5-78"><a href="#cb5-78"></a><span class="fu">riskdiff_contours</span>()</span>
+<span id="cb5-79"><a href="#cb5-79"></a><span class="fu">riskratio_contours</span>()</span>
+<span id="cb5-80"><a href="#cb5-80"></a><span class="fu">oddsratio_contours</span>()</span>
+<span id="cb5-81"><a href="#cb5-81"></a><span class="fu">chazratio_contours</span>()</span>
+<span id="cb5-82"><a href="#cb5-82"></a></span>
+<span id="cb5-83"><a href="#cb5-83"></a><span class="co"># reset graphical parameters</span></span>
+<span id="cb5-84"><a href="#cb5-84"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="at">mar =</span> oldmar, <span class="at">mgp =</span> oldmgp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output-display">
+<div id="fig-rothman-contours" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rothman-contours-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="geometry_files/figure-html/fig-rothman-contours-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;18.4: Contour lines for the odds ratio, risk ratio, risk difference, and hazard ratio. The null line is solid. All other contours lines are dashed. Each contour line is labeled with the corresponding value of the measure of association."><img src="geometry_files/figure-html/fig-rothman-contours-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rothman-contours-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;18.4: Contour lines for the odds ratio, risk ratio, risk difference, and hazard ratio. The null line is solid. All other contours lines are dashed. Each contour line is labeled with the corresponding value of the measure of association.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="interaction" class="level3" data-number="18.3.2">
+<h3 data-number="18.3.2" class="anchored" data-anchor-id="interaction"><span class="header-section-number">18.3.2</span> Interaction</h3>
+<p>In a regression model, an <strong>interaction term</strong> is used to allow a measure of association between exposure and disease to differ between groups defined by third covariate. If <span class="math inline">\(X\)</span> is treatment and <span class="math inline">\(C\)</span> is a stratification variable (possibly but not necessarily to control confounding and selection bias), then a GLM with an interaction term is <span class="math display">\[
+  g\bigl(\Pr(D = 1 \given{} C = c, X = x, S = 1)\bigr)
+  = \beta_0 + \beta_1 x + \beta_2 c + \beta_3 xc.
+\]</span> The change in <span class="math inline">\(g(\Pr(D = 1 \given{} C = c, X = x, S = 1))\)</span> associated with a one-unit change in <span class="math inline">\(X\)</span> given a fixed value <span class="math inline">\(C = c\)</span> is <span class="math display">\[
+  g\bigl(\Pr(D = 1 \given{} C = c, X = x + 1, S = 1)\bigr)
+  - g\bigl(\Pr(D = 1 \given{} C = c, X = x, S = 1)\bigr)
+  = \beta_1 + \beta_3 c.
+\]</span> <a href="#tbl-glm-intx" class="quarto-xref">Table&nbsp;<span>18.4</span></a> shows how the scale on which the interaction term estimates effect measure modification depends on the link function <span class="math inline">\(g()\)</span>.</p>
+<div id="tbl-glm-intx" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-glm-intx-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;18.4: Link functions and effect measure modification (for the conditional association of <span class="math inline">\(X\)</span> and <span class="math inline">\(D\)</span> given <span class="math inline">\(C\)</span>)
+</figcaption>
+<div aria-describedby="tbl-glm-intx-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Link function</th>
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">Measure (given <span class="math inline">\(C\)</span>)</th>
+<th style="text-align: center;">X = 0</th>
+<th style="text-align: center;">X = 1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Identity</td>
+<td style="text-align: left;"><span class="math inline">\(g(y) = y\)</span></td>
+<td style="text-align: left;">Risk difference</td>
+<td style="text-align: center;"><span class="math inline">\(\beta_1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\beta_1 + \beta_3\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Log</td>
+<td style="text-align: left;"><span class="math inline">\(g(y) = \ln y\)</span></td>
+<td style="text-align: left;">Risk ratio</td>
+<td style="text-align: center;"><span class="math inline">\(e^{\beta_1}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(e^{\beta_1 + \beta_3}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Logit</td>
+<td style="text-align: left;"><span class="math inline">\(g(y) = \ln\bigl(\odds(y)\bigr)\)</span></td>
+<td style="text-align: left;">Odds ratio</td>
+<td style="text-align: center;"><span class="math inline">\(e^{\beta_1}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(e^{\beta_1 + \beta_3}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Complementary log-log</td>
+<td style="text-align: left;"><span class="math inline">\(g(y) = \ln\bigr(-\ln(1 - y)\bigl)\)</span></td>
+<td style="text-align: left;">Cumulative hazard ratio</td>
+<td style="text-align: center;"><span class="math inline">\(e^{\beta_1}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(e^{\beta_1 + \beta_3}\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p><a href="#tbl-intx" class="quarto-xref">Table&nbsp;<span>18.5</span></a> shows stratum-specific measures of association estimated using binomial GLMs that include an interaction between smoking and age group with likelihood-ratio p-values for the null hypothesis that the coefficient on the interaction term equals zero. It also shows the unstratified measure of association estimated using the same binomial GLMs without an interaction. According to the point estimates alone, there is effect measure modification on all four scales—with a harmful effect of smoking in the 18-64 year age group and a near-null effect of smoking in the 65+ year age group. However, there is little evidence of effect measure modification on the odds ratio or the risk difference scales. There is weak evidence of effect measure modification on the hazard ratio scale and strong evidence on the risk ratio scale.</p>
+<div id="tbl-intx" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-intx-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;18.5: Stratum-specific measures of association for smoking and 20-year mortality with likelihood ratio p-values for the interaction term and unstratified estimates with likelihood ratio 95% confidence intervals.
+</figcaption>
+<div aria-describedby="tbl-intx-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td colspan="3" style="text-align: left;"><strong>Stratum-specific estimates</strong></td>
+<td colspan="2" style="text-align: left;"><strong>Unstratified estimate</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: right;">18-64 years</td>
+<td style="text-align: right;">65+ years</td>
+<td style="text-align: right;">p-value</td>
+<td style="text-align: right;">Estimate</td>
+<td style="text-align: center;">95% confidence interval</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Risk difference</td>
+<td style="text-align: right;">0.061</td>
+<td style="text-align: right;">0.002</td>
+<td style="text-align: right;">0.300</td>
+<td style="text-align: right;">0.052</td>
+<td style="text-align: center;">(0.013, 0.091)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Risk ratio</td>
+<td style="text-align: right;">1.509</td>
+<td style="text-align: right;">1.003</td>
+<td style="text-align: right;">0.010</td>
+<td style="text-align: right;">1.062</td>
+<td style="text-align: center;">(0.952, 1.166)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Odds ratio</td>
+<td style="text-align: right;">1.622</td>
+<td style="text-align: right;">1.018</td>
+<td style="text-align: right;">0.353</td>
+<td style="text-align: right;">1.537</td>
+<td style="text-align: center;">(1.119, 2.125)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cumulative hazard ratio</td>
+<td style="text-align: right;">1.563</td>
+<td style="text-align: right;">1.008</td>
+<td style="text-align: right;">0.085</td>
+<td style="text-align: right;">1.316</td>
+<td style="text-align: center;">(1.034, 1.676)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>rothman-glm2.R</strong></pre>
+</div>
+<div class="sourceCode" id="cb6" data-filename="rothman-glm2.R"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="do">## Binomial GLM analysis of smoking and 20-year mortality with interactions</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="co"># load R packages</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="fu">library</span>(dplyr)      <span class="co"># for case_when()</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="fu">library</span>(lmtest)     <span class="co"># for lrtest()</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="co"># data from Appleton et al. (The American Statistician, 1996)</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="co"># Using an ordered factor allows the use of &lt;, =, and &gt; for comparison.</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a>agegroups <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"18-24"</span>, <span class="st">"25-34"</span>, <span class="st">"35-44"</span>, <span class="st">"45-54"</span>, <span class="st">"55-64"</span>,</span>
+<span id="cb6-10"><a href="#cb6-10"></a>                      <span class="st">"65-74"</span>, <span class="st">"75+"</span>),</span>
+<span id="cb6-11"><a href="#cb6-11"></a>                    <span class="at">ordered =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-12"><a href="#cb6-12"></a>AFVdat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">smoking =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="at">times =</span> <span class="fu">length</span>(agegroups)),</span>
+<span id="cb6-13"><a href="#cb6-13"></a>                     <span class="at">death =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">times =</span> <span class="fu">length</span>(agegroups)),</span>
+<span id="cb6-14"><a href="#cb6-14"></a>                     <span class="at">age =</span> <span class="fu">rep</span>(agegroups, <span class="at">each =</span> <span class="dv">4</span>))</span>
+<span id="cb6-15"><a href="#cb6-15"></a>AFVrows <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">seq_len</span>(<span class="fu">nrow</span>(AFVdat)),</span>
+<span id="cb6-16"><a href="#cb6-16"></a>               <span class="at">times =</span> <span class="fu">c</span>(<span class="dv">61</span>, <span class="dv">1</span>, <span class="dv">53</span>, <span class="dv">2</span>, <span class="dv">152</span>, <span class="dv">5</span>, <span class="dv">121</span>, <span class="dv">3</span>, <span class="dv">114</span>, <span class="dv">7</span>, <span class="dv">95</span>, <span class="dv">14</span>, <span class="dv">66</span>, <span class="dv">12</span>,</span>
+<span id="cb6-17"><a href="#cb6-17"></a>                         <span class="dv">103</span>, <span class="dv">27</span>, <span class="dv">81</span>, <span class="dv">40</span>, <span class="dv">64</span>, <span class="dv">51</span>, <span class="dv">28</span>, <span class="dv">101</span>, <span class="dv">7</span>, <span class="dv">29</span>, <span class="dv">0</span>, <span class="dv">64</span>, <span class="dv">0</span>, <span class="dv">13</span>))</span>
+<span id="cb6-18"><a href="#cb6-18"></a>AFVdat <span class="ot">&lt;-</span> AFVdat[AFVrows, ]</span>
+<span id="cb6-19"><a href="#cb6-19"></a>AFVdat<span class="sc">$</span>binage <span class="ot">&lt;-</span> <span class="fu">case_when</span>(AFVdat<span class="sc">$</span>age <span class="sc">&lt;</span> <span class="st">"65-74"</span> <span class="sc">~</span> <span class="st">"18-64"</span>,</span>
+<span id="cb6-20"><a href="#cb6-20"></a>                           AFVdat<span class="sc">$</span>age <span class="sc">&gt;=</span> <span class="st">"65-74"</span> <span class="sc">~</span> <span class="st">"65+"</span>)</span>
+<span id="cb6-21"><a href="#cb6-21"></a></span>
+<span id="cb6-22"><a href="#cb6-22"></a><span class="co"># binomial GLMs with identity link for risk difference</span></span>
+<span id="cb6-23"><a href="#cb6-23"></a><span class="co"># Model without interaction requires a starting point for numerical stability.</span></span>
+<span id="cb6-24"><a href="#cb6-24"></a><span class="co"># We get a starting point from a linear regression model.</span></span>
+<span id="cb6-25"><a href="#cb6-25"></a>intx_idbinom <span class="ot">&lt;-</span> <span class="fu">glm</span>(death <span class="sc">~</span> smoking <span class="sc">*</span> binage, <span class="at">data =</span> AFVdat,</span>
+<span id="cb6-26"><a href="#cb6-26"></a>                    <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"identity"</span>))</span>
+<span id="cb6-27"><a href="#cb6-27"></a>nointx_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(death <span class="sc">~</span> smoking <span class="sc">+</span> binage, <span class="at">data =</span> AFVdat)</span>
+<span id="cb6-28"><a href="#cb6-28"></a>nointx_idbinom <span class="ot">&lt;-</span> <span class="fu">glm</span>(death <span class="sc">~</span> smoking <span class="sc">+</span> binage, <span class="at">data =</span> AFVdat,</span>
+<span id="cb6-29"><a href="#cb6-29"></a>                      <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"identity"</span>),</span>
+<span id="cb6-30"><a href="#cb6-30"></a>                      <span class="at">start =</span> <span class="fu">coef</span>(nointx_lm))</span>
+<span id="cb6-31"><a href="#cb6-31"></a></span>
+<span id="cb6-32"><a href="#cb6-32"></a><span class="co"># log-binomial regression for risk ratio</span></span>
+<span id="cb6-33"><a href="#cb6-33"></a><span class="co"># Both models require a starting point due to numerical instability.</span></span>
+<span id="cb6-34"><a href="#cb6-34"></a><span class="co"># We get these from Poisson GLMs with a log link.</span></span>
+<span id="cb6-35"><a href="#cb6-35"></a>intx_poisson <span class="ot">&lt;-</span> <span class="fu">glm</span>(death <span class="sc">~</span> smoking <span class="sc">*</span> binage, <span class="at">data =</span> AFVdat,</span>
+<span id="cb6-36"><a href="#cb6-36"></a>                    <span class="at">family =</span> <span class="fu">poisson</span>())</span>
+<span id="cb6-37"><a href="#cb6-37"></a>intx_logbinom <span class="ot">&lt;-</span> <span class="fu">glm</span>(death <span class="sc">~</span> smoking <span class="sc">*</span> binage, <span class="at">data =</span> AFVdat,</span>
+<span id="cb6-38"><a href="#cb6-38"></a>                     <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"log"</span>),</span>
+<span id="cb6-39"><a href="#cb6-39"></a>                     <span class="at">start =</span> <span class="fu">coef</span>(intx_poisson))</span>
+<span id="cb6-40"><a href="#cb6-40"></a>nointx_poisson <span class="ot">&lt;-</span> <span class="fu">glm</span>(death <span class="sc">~</span> smoking <span class="sc">+</span> binage, <span class="at">data =</span> AFVdat,</span>
+<span id="cb6-41"><a href="#cb6-41"></a>                      <span class="at">family =</span> <span class="fu">poisson</span>())</span>
+<span id="cb6-42"><a href="#cb6-42"></a>nointx_logbinom <span class="ot">&lt;-</span> <span class="fu">glm</span>(death <span class="sc">~</span> smoking <span class="sc">+</span> binage, <span class="at">data =</span> AFVdat,</span>
+<span id="cb6-43"><a href="#cb6-43"></a>                       <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"log"</span>),</span>
+<span id="cb6-44"><a href="#cb6-44"></a>                       <span class="at">start =</span> <span class="fu">coef</span>(nointx_poisson) <span class="sc">-</span> <span class="fl">0.1</span>)</span>
+<span id="cb6-45"><a href="#cb6-45"></a></span>
+<span id="cb6-46"><a href="#cb6-46"></a><span class="co"># logistic regression (binomial GLM with logit link) for odds ratio</span></span>
+<span id="cb6-47"><a href="#cb6-47"></a>intx_logistic <span class="ot">&lt;-</span> <span class="fu">glm</span>(death <span class="sc">~</span> smoking <span class="sc">*</span> binage, <span class="at">data =</span> AFVdat,</span>
+<span id="cb6-48"><a href="#cb6-48"></a>                     <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>))</span>
+<span id="cb6-49"><a href="#cb6-49"></a>nointx_logistic <span class="ot">&lt;-</span> <span class="fu">glm</span>(death <span class="sc">~</span> smoking <span class="sc">+</span> binage, <span class="at">data =</span> AFVdat,</span>
+<span id="cb6-50"><a href="#cb6-50"></a>                       <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>))</span>
+<span id="cb6-51"><a href="#cb6-51"></a></span>
+<span id="cb6-52"><a href="#cb6-52"></a><span class="co"># binomial GLM with complementary log-log link for cumulative hazard ratio</span></span>
+<span id="cb6-53"><a href="#cb6-53"></a>intx_chrbinom <span class="ot">&lt;-</span> <span class="fu">glm</span>(death <span class="sc">~</span> smoking <span class="sc">*</span> binage, <span class="at">data =</span> AFVdat,</span>
+<span id="cb6-54"><a href="#cb6-54"></a>                     <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"cloglog"</span>))</span>
+<span id="cb6-55"><a href="#cb6-55"></a>nointx_chrbinom <span class="ot">&lt;-</span> <span class="fu">glm</span>(death <span class="sc">~</span> smoking <span class="sc">+</span> binage, <span class="at">data =</span> AFVdat,</span>
+<span id="cb6-56"><a href="#cb6-56"></a>                       <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"cloglog"</span>))</span>
+<span id="cb6-57"><a href="#cb6-57"></a></span>
+<span id="cb6-58"><a href="#cb6-58"></a><span class="co"># function to collect estimates from binomial GLMs</span></span>
+<span id="cb6-59"><a href="#cb6-59"></a>intxest <span class="ot">&lt;-</span> <span class="cf">function</span>(model, model0) {</span>
+<span id="cb6-60"><a href="#cb6-60"></a>  <span class="co"># model has interaction term, model0 has no interaction term</span></span>
+<span id="cb6-61"><a href="#cb6-61"></a>  meas <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(<span class="fu">coef</span>(model)[<span class="fu">c</span>(<span class="st">"smoking"</span>, <span class="st">"smoking:binage65+"</span>)])</span>
+<span id="cb6-62"><a href="#cb6-62"></a>  pval <span class="ot">&lt;-</span> <span class="fu">lrtest</span>(model, model0)[<span class="dv">2</span>, <span class="st">"Pr(&gt;Chisq)"</span>]</span>
+<span id="cb6-63"><a href="#cb6-63"></a>  meas0 <span class="ot">&lt;-</span> <span class="fu">coef</span>(model0)[<span class="st">"smoking"</span>]</span>
+<span id="cb6-64"><a href="#cb6-64"></a>  ci0 <span class="ot">&lt;-</span> <span class="fu">confint</span>(model0)[<span class="st">"smoking"</span>, ]</span>
+<span id="cb6-65"><a href="#cb6-65"></a>  <span class="cf">if</span> (model<span class="sc">$</span>family<span class="sc">$</span>link <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"log"</span>, <span class="st">"logit"</span>, <span class="st">"cloglog"</span>)) {</span>
+<span id="cb6-66"><a href="#cb6-66"></a>    meas <span class="ot">&lt;-</span> <span class="fu">exp</span>(meas)</span>
+<span id="cb6-67"><a href="#cb6-67"></a>    meas0 <span class="ot">&lt;-</span> <span class="fu">exp</span>(meas0)</span>
+<span id="cb6-68"><a href="#cb6-68"></a>    ci0 <span class="ot">&lt;-</span> <span class="fu">exp</span>(ci0)</span>
+<span id="cb6-69"><a href="#cb6-69"></a>  }</span>
+<span id="cb6-70"><a href="#cb6-70"></a>  <span class="fu">c</span>(<span class="st">"18-64"</span> <span class="ot">=</span> meas[<span class="dv">1</span>], <span class="st">"65+"</span> <span class="ot">=</span> meas[<span class="dv">2</span>], <span class="st">"pval"</span> <span class="ot">=</span> pval,</span>
+<span id="cb6-71"><a href="#cb6-71"></a>    <span class="st">"unstrat"</span> <span class="ot">=</span> meas0, ci0[<span class="dv">1</span>], ci0[<span class="dv">2</span>])</span>
+<span id="cb6-72"><a href="#cb6-72"></a>}</span>
+<span id="cb6-73"><a href="#cb6-73"></a></span>
+<span id="cb6-74"><a href="#cb6-74"></a><span class="co"># stratum-specific and combined measures of association</span></span>
+<span id="cb6-75"><a href="#cb6-75"></a>intx_meas <span class="ot">&lt;-</span> <span class="fu">mapply</span>(intxest,</span>
+<span id="cb6-76"><a href="#cb6-76"></a>                    <span class="at">model =</span> <span class="fu">list</span>(<span class="at">riskdiff =</span> intx_idbinom,</span>
+<span id="cb6-77"><a href="#cb6-77"></a>                                 <span class="at">riskratio =</span> intx_logbinom,</span>
+<span id="cb6-78"><a href="#cb6-78"></a>                                 <span class="at">oddsratio =</span> intx_logistic,</span>
+<span id="cb6-79"><a href="#cb6-79"></a>                                 <span class="at">chazratio =</span> intx_chrbinom),</span>
+<span id="cb6-80"><a href="#cb6-80"></a>                    <span class="at">model0 =</span> <span class="fu">list</span>(nointx_idbinom,</span>
+<span id="cb6-81"><a href="#cb6-81"></a>                                  nointx_logbinom,</span>
+<span id="cb6-82"><a href="#cb6-82"></a>                                  nointx_logistic,</span>
+<span id="cb6-83"><a href="#cb6-83"></a>                                  nointx_chrbinom))</span>
+<span id="cb6-84"><a href="#cb6-84"></a><span class="co"># exchange rows and columns of intx_meas and rename columns</span></span>
+<span id="cb6-85"><a href="#cb6-85"></a>intx_tbl <span class="ot">&lt;-</span> <span class="fu">t</span>(intx_meas)</span>
+<span id="cb6-86"><a href="#cb6-86"></a><span class="fu">colnames</span>(intx_tbl)[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"18-64"</span>, <span class="st">"65+"</span>, <span class="st">"pval"</span>, <span class="st">"common"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p>The Rothman diagrams in <a href="#fig-rothman-intx" class="quarto-xref">Figure&nbsp;<span>18.5</span></a> show the contour lines for the stratum-specific measures of association and for the common measure of association on the odds ratio, risk ratio, risk difference, and hazard ratio scales. For each measure of association, the points for the 18-64 year age group and the 65+ year age group are on different contour lines, so there is effect measure modification by age group. On the odds ratio and risk difference scales, the contour line for the common estimate passes close to both stratum-specific points. On the risk ratio and hazard ratio scales, the stratum-specific points are farther from the contour line for the common estimate, which partly explains the lower p-values for the interaction term on these scales.</p>
+<div class="cell">
+<div class="code-with-filename">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-with-filename-file">
+<pre><strong>rothman-intx.R</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="do">## Contour lines and interaction</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="co"># load R packages</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="fu">library</span>(dplyr)      <span class="co"># for case_when()</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="fu">library</span>(lmtest)     <span class="co"># for lrtest()</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a></span>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="co"># odds ratio, cumulative hazard ratio, and inverses</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a>odds <span class="ot">&lt;-</span> <span class="cf">function</span>(p) p <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb7-9"><a href="#cb7-9"></a>invodds <span class="ot">&lt;-</span> <span class="cf">function</span>(odds) odds <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> odds)</span>
+<span id="cb7-10"><a href="#cb7-10"></a>chaz <span class="ot">&lt;-</span> <span class="cf">function</span>(p) <span class="sc">-</span><span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb7-11"><a href="#cb7-11"></a>invchaz <span class="ot">&lt;-</span> <span class="cf">function</span>(chaz) <span class="dv">1</span> <span class="sc">-</span> <span class="fu">exp</span>(<span class="sc">-</span>chaz)</span>
+<span id="cb7-12"><a href="#cb7-12"></a></span>
+<span id="cb7-13"><a href="#cb7-13"></a><span class="co"># data from Appleton et al. (The American Statistician, 1996)</span></span>
+<span id="cb7-14"><a href="#cb7-14"></a><span class="co"># Using an ordered factor allows the use of &lt;, =, and &gt; for comparison.</span></span>
+<span id="cb7-15"><a href="#cb7-15"></a>agegroups <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"18-24"</span>, <span class="st">"25-34"</span>, <span class="st">"35-44"</span>, <span class="st">"45-54"</span>, <span class="st">"55-64"</span>,</span>
+<span id="cb7-16"><a href="#cb7-16"></a>                      <span class="st">"65-74"</span>, <span class="st">"75+"</span>),</span>
+<span id="cb7-17"><a href="#cb7-17"></a>                    <span class="at">ordered =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-18"><a href="#cb7-18"></a>AFVdat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">smoking =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="at">times =</span> <span class="fu">length</span>(agegroups)),</span>
+<span id="cb7-19"><a href="#cb7-19"></a>                     <span class="at">death =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">times =</span> <span class="fu">length</span>(agegroups)),</span>
+<span id="cb7-20"><a href="#cb7-20"></a>                     <span class="at">age =</span> <span class="fu">rep</span>(agegroups, <span class="at">each =</span> <span class="dv">4</span>))</span>
+<span id="cb7-21"><a href="#cb7-21"></a>AFVrows <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">seq_len</span>(<span class="fu">nrow</span>(AFVdat)),</span>
+<span id="cb7-22"><a href="#cb7-22"></a>               <span class="at">times =</span> <span class="fu">c</span>(<span class="dv">61</span>, <span class="dv">1</span>, <span class="dv">53</span>, <span class="dv">2</span>, <span class="dv">152</span>, <span class="dv">5</span>, <span class="dv">121</span>, <span class="dv">3</span>, <span class="dv">114</span>, <span class="dv">7</span>, <span class="dv">95</span>, <span class="dv">14</span>, <span class="dv">66</span>, <span class="dv">12</span>,</span>
+<span id="cb7-23"><a href="#cb7-23"></a>                         <span class="dv">103</span>, <span class="dv">27</span>, <span class="dv">81</span>, <span class="dv">40</span>, <span class="dv">64</span>, <span class="dv">51</span>, <span class="dv">28</span>, <span class="dv">101</span>, <span class="dv">7</span>, <span class="dv">29</span>, <span class="dv">0</span>, <span class="dv">64</span>, <span class="dv">0</span>, <span class="dv">13</span>))</span>
+<span id="cb7-24"><a href="#cb7-24"></a>AFVdat <span class="ot">&lt;-</span> AFVdat[AFVrows, ]</span>
+<span id="cb7-25"><a href="#cb7-25"></a>AFVdat<span class="sc">$</span>binage <span class="ot">&lt;-</span> <span class="fu">case_when</span>(AFVdat<span class="sc">$</span>age <span class="sc">&lt;</span> <span class="st">"65-74"</span> <span class="sc">~</span> <span class="st">"18-64"</span>,</span>
+<span id="cb7-26"><a href="#cb7-26"></a>                           AFVdat<span class="sc">$</span>age <span class="sc">&gt;=</span> <span class="st">"65-74"</span> <span class="sc">~</span> <span class="st">"65+"</span>)</span>
+<span id="cb7-27"><a href="#cb7-27"></a></span>
+<span id="cb7-28"><a href="#cb7-28"></a><span class="co"># 2x2 tables</span></span>
+<span id="cb7-29"><a href="#cb7-29"></a>twobytwo <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">covariate =</span> <span class="cn">NULL</span>, <span class="at">dat =</span> AFVdat) {</span>
+<span id="cb7-30"><a href="#cb7-30"></a>  <span class="co"># generate crude or stratified 2x2 tables</span></span>
+<span id="cb7-31"><a href="#cb7-31"></a>  <span class="co"># covariate should be a string naming a variable in dat</span></span>
+<span id="cb7-32"><a href="#cb7-32"></a>  formla <span class="ot">&lt;-</span> <span class="st">"~ smoking + death"</span></span>
+<span id="cb7-33"><a href="#cb7-33"></a>  <span class="co"># update formula if there is a covariate specified</span></span>
+<span id="cb7-34"><a href="#cb7-34"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(covariate)) formla <span class="ot">&lt;-</span> <span class="fu">paste</span>(formla, <span class="st">"+"</span>, covariate)</span>
+<span id="cb7-35"><a href="#cb7-35"></a>  tab22 <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(formla, <span class="at">data =</span> dat, <span class="at">drop.unused.levels =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-36"><a href="#cb7-36"></a>  <span class="co"># format stratified 2x2 tables into a list</span></span>
+<span id="cb7-37"><a href="#cb7-37"></a>  <span class="cf">if</span> (<span class="fu">length</span>(<span class="fu">dim</span>(tab22)) <span class="sc">&gt;</span> <span class="dv">2</span>) {</span>
+<span id="cb7-38"><a href="#cb7-38"></a>    tab22 <span class="ot">&lt;-</span> <span class="fu">unlist</span>(<span class="fu">apply</span>(tab22, <span class="dv">3</span>, list), <span class="at">recursive =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb7-39"><a href="#cb7-39"></a>  } <span class="cf">else</span> {</span>
+<span id="cb7-40"><a href="#cb7-40"></a>    tab22 <span class="ot">&lt;-</span> <span class="fu">list</span>(tab22)</span>
+<span id="cb7-41"><a href="#cb7-41"></a>  }</span>
+<span id="cb7-42"><a href="#cb7-42"></a>  <span class="co"># reorder rows and columns and add margins to 2x2 table(s)</span></span>
+<span id="cb7-43"><a href="#cb7-43"></a>  <span class="fu">lapply</span>(tab22, <span class="cf">function</span>(x) <span class="fu">addmargins</span>(x[<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>), ][, <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>)]))</span>
+<span id="cb7-44"><a href="#cb7-44"></a>}</span>
+<span id="cb7-45"><a href="#cb7-45"></a></span>
+<span id="cb7-46"><a href="#cb7-46"></a><span class="co"># risk calculations</span></span>
+<span id="cb7-47"><a href="#cb7-47"></a>condrisk <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">covariate =</span> <span class="cn">NULL</span>, <span class="at">dat =</span> AFVdat) {</span>
+<span id="cb7-48"><a href="#cb7-48"></a>  <span class="co"># function to calculate crude or stratified risks in smokers and nonsmokers</span></span>
+<span id="cb7-49"><a href="#cb7-49"></a>  <span class="co"># covariate should be a string naming a variable in dat</span></span>
+<span id="cb7-50"><a href="#cb7-50"></a>  strat2 <span class="ot">&lt;-</span> <span class="fu">twobytwo</span>(covariate, dat)</span>
+<span id="cb7-51"><a href="#cb7-51"></a>  risk <span class="ot">&lt;-</span> <span class="cf">function</span>(v) v[, <span class="dv">1</span>] <span class="sc">/</span> v[, <span class="dv">3</span>]   <span class="co"># v = (alive, dead)</span></span>
+<span id="cb7-52"><a href="#cb7-52"></a>  risks <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(strat2, risk))</span>
+<span id="cb7-53"><a href="#cb7-53"></a>  <span class="fu">colnames</span>(risks) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"smokers"</span>, <span class="st">"nonsmokers"</span>, <span class="st">"marginal"</span>)</span>
+<span id="cb7-54"><a href="#cb7-54"></a>  <span class="fu">as.data.frame</span>(risks)</span>
+<span id="cb7-55"><a href="#cb7-55"></a>}</span>
+<span id="cb7-56"><a href="#cb7-56"></a>margrisk <span class="ot">&lt;-</span> <span class="fu">condrisk</span>()</span>
+<span id="cb7-57"><a href="#cb7-57"></a>stratrisk <span class="ot">&lt;-</span> <span class="fu">condrisk</span>(<span class="st">"binage"</span>)</span>
+<span id="cb7-58"><a href="#cb7-58"></a></span>
+<span id="cb7-59"><a href="#cb7-59"></a><span class="co"># binomial GLMs with identity link for risk difference</span></span>
+<span id="cb7-60"><a href="#cb7-60"></a><span class="co"># Model without interaction requires a starting point for numerical stability.</span></span>
+<span id="cb7-61"><a href="#cb7-61"></a><span class="co"># We get a starting point from a linear regression model.</span></span>
+<span id="cb7-62"><a href="#cb7-62"></a>intx_idbinom <span class="ot">&lt;-</span> <span class="fu">glm</span>(death <span class="sc">~</span> smoking <span class="sc">*</span> binage, <span class="at">data =</span> AFVdat,</span>
+<span id="cb7-63"><a href="#cb7-63"></a>                    <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"identity"</span>))</span>
+<span id="cb7-64"><a href="#cb7-64"></a>nointx_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(death <span class="sc">~</span> smoking <span class="sc">+</span> binage, <span class="at">data =</span> AFVdat)</span>
+<span id="cb7-65"><a href="#cb7-65"></a>nointx_idbinom <span class="ot">&lt;-</span> <span class="fu">glm</span>(death <span class="sc">~</span> smoking <span class="sc">+</span> binage, <span class="at">data =</span> AFVdat,</span>
+<span id="cb7-66"><a href="#cb7-66"></a>                      <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"identity"</span>),</span>
+<span id="cb7-67"><a href="#cb7-67"></a>                      <span class="at">start =</span> <span class="fu">coef</span>(nointx_lm))</span>
+<span id="cb7-68"><a href="#cb7-68"></a></span>
+<span id="cb7-69"><a href="#cb7-69"></a><span class="co"># log-binomial regression for risk ratio</span></span>
+<span id="cb7-70"><a href="#cb7-70"></a><span class="co"># Both models require a starting point due to numerical instability.</span></span>
+<span id="cb7-71"><a href="#cb7-71"></a><span class="co"># We get these from Poisson GLMs with a log link.</span></span>
+<span id="cb7-72"><a href="#cb7-72"></a>intx_poisson <span class="ot">&lt;-</span> <span class="fu">glm</span>(death <span class="sc">~</span> smoking <span class="sc">*</span> binage, <span class="at">data =</span> AFVdat,</span>
+<span id="cb7-73"><a href="#cb7-73"></a>                    <span class="at">family =</span> <span class="fu">poisson</span>())</span>
+<span id="cb7-74"><a href="#cb7-74"></a>intx_logbinom <span class="ot">&lt;-</span> <span class="fu">glm</span>(death <span class="sc">~</span> smoking <span class="sc">*</span> binage, <span class="at">data =</span> AFVdat,</span>
+<span id="cb7-75"><a href="#cb7-75"></a>                     <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"log"</span>),</span>
+<span id="cb7-76"><a href="#cb7-76"></a>                     <span class="at">start =</span> <span class="fu">coef</span>(intx_poisson))</span>
+<span id="cb7-77"><a href="#cb7-77"></a>nointx_poisson <span class="ot">&lt;-</span> <span class="fu">glm</span>(death <span class="sc">~</span> smoking <span class="sc">+</span> binage, <span class="at">data =</span> AFVdat,</span>
+<span id="cb7-78"><a href="#cb7-78"></a>                      <span class="at">family =</span> <span class="fu">poisson</span>())</span>
+<span id="cb7-79"><a href="#cb7-79"></a>nointx_logbinom <span class="ot">&lt;-</span> <span class="fu">glm</span>(death <span class="sc">~</span> smoking <span class="sc">+</span> binage, <span class="at">data =</span> AFVdat,</span>
+<span id="cb7-80"><a href="#cb7-80"></a>                       <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"log"</span>),</span>
+<span id="cb7-81"><a href="#cb7-81"></a>                       <span class="at">start =</span> <span class="fu">coef</span>(nointx_poisson) <span class="sc">-</span> <span class="fl">0.1</span>)</span>
+<span id="cb7-82"><a href="#cb7-82"></a></span>
+<span id="cb7-83"><a href="#cb7-83"></a><span class="co"># logistic regression (binomial GLM with logit link) for odds ratio</span></span>
+<span id="cb7-84"><a href="#cb7-84"></a>intx_logistic <span class="ot">&lt;-</span> <span class="fu">glm</span>(death <span class="sc">~</span> smoking <span class="sc">*</span> binage, <span class="at">data =</span> AFVdat,</span>
+<span id="cb7-85"><a href="#cb7-85"></a>                     <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>))</span>
+<span id="cb7-86"><a href="#cb7-86"></a>nointx_logistic <span class="ot">&lt;-</span> <span class="fu">glm</span>(death <span class="sc">~</span> smoking <span class="sc">+</span> binage, <span class="at">data =</span> AFVdat,</span>
+<span id="cb7-87"><a href="#cb7-87"></a>                       <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>))</span>
+<span id="cb7-88"><a href="#cb7-88"></a></span>
+<span id="cb7-89"><a href="#cb7-89"></a><span class="co"># binomial GLM with complementary log-log link for cumulative hazard ratio</span></span>
+<span id="cb7-90"><a href="#cb7-90"></a>intx_chrbinom <span class="ot">&lt;-</span> <span class="fu">glm</span>(death <span class="sc">~</span> smoking <span class="sc">*</span> binage, <span class="at">data =</span> AFVdat,</span>
+<span id="cb7-91"><a href="#cb7-91"></a>                     <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"cloglog"</span>))</span>
+<span id="cb7-92"><a href="#cb7-92"></a>nointx_chrbinom <span class="ot">&lt;-</span> <span class="fu">glm</span>(death <span class="sc">~</span> smoking <span class="sc">+</span> binage, <span class="at">data =</span> AFVdat,</span>
+<span id="cb7-93"><a href="#cb7-93"></a>                       <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"cloglog"</span>))</span>
+<span id="cb7-94"><a href="#cb7-94"></a></span>
+<span id="cb7-95"><a href="#cb7-95"></a><span class="co"># function to collect estimates from binomial GLMs</span></span>
+<span id="cb7-96"><a href="#cb7-96"></a>intxest_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(model, model0) {</span>
+<span id="cb7-97"><a href="#cb7-97"></a>  <span class="co"># model has interaction term, model0 has no interaction term</span></span>
+<span id="cb7-98"><a href="#cb7-98"></a>  meas <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(<span class="fu">coef</span>(model)[<span class="fu">c</span>(<span class="st">"smoking"</span>, <span class="st">"smoking:binage65+"</span>)])</span>
+<span id="cb7-99"><a href="#cb7-99"></a>  meas0 <span class="ot">&lt;-</span> <span class="fu">coef</span>(model0)[<span class="st">"smoking"</span>]</span>
+<span id="cb7-100"><a href="#cb7-100"></a>  ci0 <span class="ot">&lt;-</span> <span class="fu">confint</span>(model0)[<span class="st">"smoking"</span>, ]</span>
+<span id="cb7-101"><a href="#cb7-101"></a>  <span class="cf">if</span> (model<span class="sc">$</span>family<span class="sc">$</span>link <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"log"</span>, <span class="st">"logit"</span>, <span class="st">"cloglog"</span>)) {</span>
+<span id="cb7-102"><a href="#cb7-102"></a>    meas <span class="ot">&lt;-</span> <span class="fu">exp</span>(meas)</span>
+<span id="cb7-103"><a href="#cb7-103"></a>    meas0 <span class="ot">&lt;-</span> <span class="fu">exp</span>(meas0)</span>
+<span id="cb7-104"><a href="#cb7-104"></a>    ci0 <span class="ot">&lt;-</span> <span class="fu">exp</span>(ci0)</span>
+<span id="cb7-105"><a href="#cb7-105"></a>  }</span>
+<span id="cb7-106"><a href="#cb7-106"></a>  <span class="fu">c</span>(<span class="st">"18-64"</span> <span class="ot">=</span> meas[<span class="dv">1</span>], <span class="st">"65+"</span> <span class="ot">=</span> meas[<span class="dv">2</span>], <span class="st">"common"</span> <span class="ot">=</span> meas0)</span>
+<span id="cb7-107"><a href="#cb7-107"></a>}</span>
+<span id="cb7-108"><a href="#cb7-108"></a></span>
+<span id="cb7-109"><a href="#cb7-109"></a><span class="co"># stratum-specific and combined measures of association</span></span>
+<span id="cb7-110"><a href="#cb7-110"></a>intx_meas <span class="ot">&lt;-</span> <span class="fu">mapply</span>(intxest_plot,</span>
+<span id="cb7-111"><a href="#cb7-111"></a>                    <span class="at">model =</span> <span class="fu">list</span>(<span class="at">riskdiff =</span> intx_idbinom,</span>
+<span id="cb7-112"><a href="#cb7-112"></a>                                 <span class="at">riskratio =</span> intx_logbinom,</span>
+<span id="cb7-113"><a href="#cb7-113"></a>                                 <span class="at">oddsratio =</span> intx_logistic,</span>
+<span id="cb7-114"><a href="#cb7-114"></a>                                 <span class="at">chazratio =</span> intx_chrbinom),</span>
+<span id="cb7-115"><a href="#cb7-115"></a>                    <span class="at">model0 =</span> <span class="fu">list</span>(nointx_idbinom,</span>
+<span id="cb7-116"><a href="#cb7-116"></a>                                  nointx_logbinom,</span>
+<span id="cb7-117"><a href="#cb7-117"></a>                                  nointx_logistic,</span>
+<span id="cb7-118"><a href="#cb7-118"></a>                                  nointx_chrbinom))</span>
+<span id="cb7-119"><a href="#cb7-119"></a><span class="co"># exchange rows and columns of intx_meas and rename columns</span></span>
+<span id="cb7-120"><a href="#cb7-120"></a>intx_tbl <span class="ot">&lt;-</span> <span class="fu">t</span>(intx_meas)</span>
+<span id="cb7-121"><a href="#cb7-121"></a><span class="fu">colnames</span>(intx_tbl) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"18-64"</span>, <span class="st">"65+"</span>, <span class="st">"common"</span>)</span>
+<span id="cb7-122"><a href="#cb7-122"></a></span>
+<span id="cb7-123"><a href="#cb7-123"></a><span class="co"># Rothman diagrams with estimated effect measure modification</span></span>
+<span id="cb7-124"><a href="#cb7-124"></a><span class="co"># risk difference interaction</span></span>
+<span id="cb7-125"><a href="#cb7-125"></a>riskdiff_intx <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb7-126"><a href="#cb7-126"></a>  <span class="fu">plot</span>(stratrisk<span class="sc">$</span>nonsmokers, stratrisk<span class="sc">$</span>smokers, <span class="at">pch =</span> <span class="dv">19</span>,</span>
+<span id="cb7-127"><a href="#cb7-127"></a>       <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb7-128"><a href="#cb7-128"></a>       <span class="at">main =</span> <span class="st">"Risk difference estimates"</span>,</span>
+<span id="cb7-129"><a href="#cb7-129"></a>       <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">"Risk in the exposed (smokers)"</span>)</span>
+<span id="cb7-130"><a href="#cb7-130"></a>  y <span class="ot">&lt;-</span> intx_tbl[<span class="st">"riskdiff"</span>, <span class="st">"common"</span>] <span class="sc">+</span> x</span>
+<span id="cb7-131"><a href="#cb7-131"></a>  yrange <span class="ot">&lt;-</span> y <span class="sc">&gt;=</span> <span class="dv">0</span> <span class="sc">&amp;</span> y <span class="sc">&lt;=</span> <span class="dv">1</span></span>
+<span id="cb7-132"><a href="#cb7-132"></a>  <span class="fu">lines</span>(x[yrange], y[yrange])</span>
+<span id="cb7-133"><a href="#cb7-133"></a>  y0 <span class="ot">&lt;-</span> intx_tbl[<span class="st">"riskdiff"</span>, <span class="st">"18-64"</span>] <span class="sc">+</span> x</span>
+<span id="cb7-134"><a href="#cb7-134"></a>  y0range <span class="ot">&lt;-</span> y0 <span class="sc">&gt;=</span> <span class="dv">0</span> <span class="sc">&amp;</span> y0 <span class="sc">&lt;=</span> <span class="dv">1</span></span>
+<span id="cb7-135"><a href="#cb7-135"></a>  <span class="fu">lines</span>(x[y0range], y0[y0range], <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb7-136"><a href="#cb7-136"></a>  y1 <span class="ot">&lt;-</span> intx_tbl[<span class="st">"riskdiff"</span>, <span class="st">"65+"</span>] <span class="sc">+</span> x</span>
+<span id="cb7-137"><a href="#cb7-137"></a>  y1range <span class="ot">&lt;-</span> y1 <span class="sc">&gt;=</span> <span class="dv">0</span> <span class="sc">&amp;</span> y1 <span class="sc">&lt;=</span> <span class="dv">1</span></span>
+<span id="cb7-138"><a href="#cb7-138"></a>  <span class="fu">lines</span>(x[y1range], y1[y1range], <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb7-139"><a href="#cb7-139"></a>  <span class="fu">grid</span>()</span>
+<span id="cb7-140"><a href="#cb7-140"></a>  <span class="fu">text</span>(stratrisk<span class="sc">$</span>nonsmokers[<span class="dv">1</span>] <span class="sc">-</span> <span class="fl">0.02</span>, stratrisk<span class="sc">$</span>smokers[<span class="dv">1</span>] <span class="sc">+</span> <span class="fl">0.02</span>,</span>
+<span id="cb7-141"><a href="#cb7-141"></a>       <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>), <span class="at">labels =</span> <span class="fu">rownames</span>(stratrisk)[<span class="dv">1</span>])</span>
+<span id="cb7-142"><a href="#cb7-142"></a>  <span class="fu">text</span>(stratrisk<span class="sc">$</span>nonsmokers[<span class="dv">2</span>] <span class="sc">+</span> <span class="fl">0.02</span>, stratrisk<span class="sc">$</span>smokers[<span class="dv">2</span>] <span class="sc">-</span> <span class="fl">0.02</span>,</span>
+<span id="cb7-143"><a href="#cb7-143"></a>       <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">labels =</span> <span class="fu">rownames</span>(stratrisk)[<span class="dv">2</span>])</span>
+<span id="cb7-144"><a href="#cb7-144"></a>}</span>
+<span id="cb7-145"><a href="#cb7-145"></a><span class="co"># risk ratio interaction</span></span>
+<span id="cb7-146"><a href="#cb7-146"></a>riskratio_intx <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb7-147"><a href="#cb7-147"></a>  <span class="fu">plot</span>(stratrisk<span class="sc">$</span>nonsmokers, stratrisk<span class="sc">$</span>smokers, <span class="at">pch =</span> <span class="dv">19</span>,</span>
+<span id="cb7-148"><a href="#cb7-148"></a>       <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb7-149"><a href="#cb7-149"></a>       <span class="at">main =</span> <span class="st">"Risk ratio estimates"</span>, <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>)</span>
+<span id="cb7-150"><a href="#cb7-150"></a>  y <span class="ot">&lt;-</span> intx_tbl[<span class="st">"riskratio"</span>, <span class="st">"common"</span>] <span class="sc">*</span> x</span>
+<span id="cb7-151"><a href="#cb7-151"></a>  yrange <span class="ot">&lt;-</span> y <span class="sc">&gt;=</span> <span class="dv">0</span> <span class="sc">&amp;</span> y <span class="sc">&lt;=</span> <span class="dv">1</span></span>
+<span id="cb7-152"><a href="#cb7-152"></a>  <span class="fu">lines</span>(x[yrange], y[yrange])</span>
+<span id="cb7-153"><a href="#cb7-153"></a>  y0 <span class="ot">&lt;-</span> intx_tbl[<span class="st">"riskratio"</span>, <span class="st">"18-64"</span>] <span class="sc">*</span> x</span>
+<span id="cb7-154"><a href="#cb7-154"></a>  y0range <span class="ot">&lt;-</span> y0 <span class="sc">&gt;=</span> <span class="dv">0</span> <span class="sc">&amp;</span> y0 <span class="sc">&lt;=</span> <span class="dv">1</span></span>
+<span id="cb7-155"><a href="#cb7-155"></a>  <span class="fu">lines</span>(x[y0range], y0[y0range], <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb7-156"><a href="#cb7-156"></a>  y1 <span class="ot">&lt;-</span> intx_tbl[<span class="st">"riskratio"</span>, <span class="st">"65+"</span>] <span class="sc">*</span> x</span>
+<span id="cb7-157"><a href="#cb7-157"></a>  y1range <span class="ot">&lt;-</span> y1 <span class="sc">&gt;=</span> <span class="dv">0</span> <span class="sc">&amp;</span> y1 <span class="sc">&lt;=</span> <span class="dv">1</span></span>
+<span id="cb7-158"><a href="#cb7-158"></a>  <span class="fu">lines</span>(x[y1range], y1[y1range], <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb7-159"><a href="#cb7-159"></a>  <span class="fu">grid</span>()</span>
+<span id="cb7-160"><a href="#cb7-160"></a>  <span class="fu">text</span>(stratrisk<span class="sc">$</span>nonsmokers[<span class="dv">1</span>] <span class="sc">-</span> <span class="fl">0.02</span>, stratrisk<span class="sc">$</span>smokers[<span class="dv">1</span>] <span class="sc">+</span> <span class="fl">0.02</span>,</span>
+<span id="cb7-161"><a href="#cb7-161"></a>       <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>), <span class="at">labels =</span> <span class="fu">rownames</span>(stratrisk)[<span class="dv">1</span>])</span>
+<span id="cb7-162"><a href="#cb7-162"></a>  <span class="fu">text</span>(stratrisk<span class="sc">$</span>nonsmokers[<span class="dv">2</span>] <span class="sc">+</span> <span class="fl">0.02</span>, stratrisk<span class="sc">$</span>smokers[<span class="dv">2</span>] <span class="sc">-</span> <span class="fl">0.02</span>,</span>
+<span id="cb7-163"><a href="#cb7-163"></a>       <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">labels =</span> <span class="fu">rownames</span>(stratrisk)[<span class="dv">2</span>])</span>
+<span id="cb7-164"><a href="#cb7-164"></a>}</span>
+<span id="cb7-165"><a href="#cb7-165"></a><span class="co"># odds ratio interaction</span></span>
+<span id="cb7-166"><a href="#cb7-166"></a>oddsratio_intx <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb7-167"><a href="#cb7-167"></a>  <span class="fu">plot</span>(stratrisk<span class="sc">$</span>nonsmokers, stratrisk<span class="sc">$</span>smokers, <span class="at">pch =</span> <span class="dv">19</span>,</span>
+<span id="cb7-168"><a href="#cb7-168"></a>       <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb7-169"><a href="#cb7-169"></a>       <span class="at">main =</span> <span class="st">"Odds ratio estimates"</span>,</span>
+<span id="cb7-170"><a href="#cb7-170"></a>       <span class="at">xlab =</span> <span class="st">"Risk in the unexposed (nonsmokers)"</span>,</span>
+<span id="cb7-171"><a href="#cb7-171"></a>       <span class="at">ylab =</span> <span class="st">"Risk in the exposed (smokers)"</span>)</span>
+<span id="cb7-172"><a href="#cb7-172"></a>  <span class="fu">grid</span>()</span>
+<span id="cb7-173"><a href="#cb7-173"></a>  <span class="fu">text</span>(stratrisk<span class="sc">$</span>nonsmokers[<span class="dv">1</span>] <span class="sc">-</span> <span class="fl">0.02</span>, stratrisk<span class="sc">$</span>smokers[<span class="dv">1</span>] <span class="sc">+</span> <span class="fl">0.02</span>,</span>
+<span id="cb7-174"><a href="#cb7-174"></a>       <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>), <span class="at">labels =</span> <span class="fu">rownames</span>(stratrisk)[<span class="dv">1</span>])</span>
+<span id="cb7-175"><a href="#cb7-175"></a>  <span class="fu">text</span>(stratrisk<span class="sc">$</span>nonsmokers[<span class="dv">2</span>] <span class="sc">+</span> <span class="fl">0.02</span>, stratrisk<span class="sc">$</span>smokers[<span class="dv">2</span>] <span class="sc">-</span> <span class="fl">0.02</span>,</span>
+<span id="cb7-176"><a href="#cb7-176"></a>       <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">labels =</span> <span class="fu">rownames</span>(stratrisk)[<span class="dv">2</span>])</span>
+<span id="cb7-177"><a href="#cb7-177"></a>  <span class="fu">lines</span>(x, <span class="fu">invodds</span>(intx_tbl[<span class="st">"oddsratio"</span>, <span class="st">"common"</span>] <span class="sc">*</span> <span class="fu">odds</span>(x)))</span>
+<span id="cb7-178"><a href="#cb7-178"></a>  <span class="fu">lines</span>(x, <span class="fu">invodds</span>(intx_tbl[<span class="st">"oddsratio"</span>, <span class="st">"18-64"</span>] <span class="sc">*</span> <span class="fu">odds</span>(x)), <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb7-179"><a href="#cb7-179"></a>  <span class="fu">lines</span>(x, <span class="fu">invodds</span>(intx_tbl[<span class="st">"oddsratio"</span>, <span class="st">"65+"</span>] <span class="sc">*</span> <span class="fu">odds</span>(x)), <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb7-180"><a href="#cb7-180"></a>}</span>
+<span id="cb7-181"><a href="#cb7-181"></a><span class="co"># cumulative hazard ratio interaction</span></span>
+<span id="cb7-182"><a href="#cb7-182"></a>chazratio_intx <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb7-183"><a href="#cb7-183"></a>  <span class="fu">plot</span>(stratrisk<span class="sc">$</span>nonsmokers, stratrisk<span class="sc">$</span>smokers, <span class="at">pch =</span> <span class="dv">19</span>,</span>
+<span id="cb7-184"><a href="#cb7-184"></a>       <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb7-185"><a href="#cb7-185"></a>       <span class="at">main =</span> <span class="st">"Cumulative hazard ratio estimates"</span>,</span>
+<span id="cb7-186"><a href="#cb7-186"></a>       <span class="at">xlab =</span> <span class="st">"Risk in the unexposed (nonsmokers)"</span>, <span class="at">ylab =</span> <span class="st">""</span>)</span>
+<span id="cb7-187"><a href="#cb7-187"></a>  <span class="fu">lines</span>(x, <span class="fu">invchaz</span>(intx_tbl[<span class="st">"chazratio"</span>, <span class="st">"common"</span>] <span class="sc">*</span> <span class="fu">chaz</span>(x)))</span>
+<span id="cb7-188"><a href="#cb7-188"></a>  <span class="fu">lines</span>(x, <span class="fu">invchaz</span>(intx_tbl[<span class="st">"chazratio"</span>, <span class="st">"18-64"</span>] <span class="sc">*</span> <span class="fu">chaz</span>(x)), <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb7-189"><a href="#cb7-189"></a>  <span class="fu">lines</span>(x, <span class="fu">invchaz</span>(intx_tbl[<span class="st">"chazratio"</span>, <span class="st">"65+"</span>] <span class="sc">*</span> <span class="fu">chaz</span>(x)), <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb7-190"><a href="#cb7-190"></a>  <span class="co"># lines(x, 1 - (1 - x)^intx_tbl["chazratio", "common"])</span></span>
+<span id="cb7-191"><a href="#cb7-191"></a>  <span class="co"># lines(x, 1 - (1 - x)^intx_tbl["chazratio", "18-64"], lty = "dashed")</span></span>
+<span id="cb7-192"><a href="#cb7-192"></a>  <span class="co"># lines(x, 1 - (1 - x)^intx_tbl["chazratio", "65+"], lty = "dashed")</span></span>
+<span id="cb7-193"><a href="#cb7-193"></a>  <span class="fu">grid</span>()</span>
+<span id="cb7-194"><a href="#cb7-194"></a>  <span class="fu">text</span>(stratrisk<span class="sc">$</span>nonsmokers[<span class="dv">1</span>] <span class="sc">-</span> <span class="fl">0.02</span>, stratrisk<span class="sc">$</span>smokers[<span class="dv">1</span>] <span class="sc">+</span> <span class="fl">0.02</span>,</span>
+<span id="cb7-195"><a href="#cb7-195"></a>       <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>), <span class="at">labels =</span> <span class="fu">rownames</span>(stratrisk)[<span class="dv">1</span>])</span>
+<span id="cb7-196"><a href="#cb7-196"></a>  <span class="fu">text</span>(stratrisk<span class="sc">$</span>nonsmokers[<span class="dv">2</span>] <span class="sc">+</span> <span class="fl">0.02</span>, stratrisk<span class="sc">$</span>smokers[<span class="dv">2</span>] <span class="sc">-</span> <span class="fl">0.02</span>,</span>
+<span id="cb7-197"><a href="#cb7-197"></a>       <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">labels =</span> <span class="fu">rownames</span>(stratrisk)[<span class="dv">2</span>])</span>
+<span id="cb7-198"><a href="#cb7-198"></a>}</span>
+<span id="cb7-199"><a href="#cb7-199"></a></span>
+<span id="cb7-200"><a href="#cb7-200"></a><span class="co"># plot array</span></span>
+<span id="cb7-201"><a href="#cb7-201"></a>oldmar <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="st">"mar"</span>)</span>
+<span id="cb7-202"><a href="#cb7-202"></a>oldmgp <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="st">"mgp"</span>)</span>
+<span id="cb7-203"><a href="#cb7-203"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fl">0.6</span> <span class="sc">*</span> (<span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">1</span>) <span class="sc">+</span> <span class="fl">0.1</span>), <span class="at">mgp =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb7-204"><a href="#cb7-204"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.001</span>, <span class="fl">0.999</span>, <span class="at">by =</span> <span class="fl">0.001</span>)</span>
+<span id="cb7-205"><a href="#cb7-205"></a><span class="fu">riskdiff_intx</span>()</span>
+<span id="cb7-206"><a href="#cb7-206"></a><span class="fu">riskratio_intx</span>()</span>
+<span id="cb7-207"><a href="#cb7-207"></a><span class="fu">oddsratio_intx</span>()</span>
+<span id="cb7-208"><a href="#cb7-208"></a><span class="fu">chazratio_intx</span>()</span>
+<span id="cb7-209"><a href="#cb7-209"></a></span>
+<span id="cb7-210"><a href="#cb7-210"></a><span class="co"># reset graphical parameters</span></span>
+<span id="cb7-211"><a href="#cb7-211"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="at">mar =</span> oldmar, <span class="at">mgp =</span> oldmgp)</span>
+<span id="cb7-212"><a href="#cb7-212"></a></span>
+<span id="cb7-213"><a href="#cb7-213"></a></span>
+<span id="cb7-214"><a href="#cb7-214"></a><span class="co"># ## Collapsibility</span></span>
+<span id="cb7-215"><a href="#cb7-215"></a><span class="co"># pred_newdata &lt;- data.frame(binage = rep(c("18-64", "65+"), each = 2),</span></span>
+<span id="cb7-216"><a href="#cb7-216"></a><span class="co">#                            smoking = rep(c(0, 1), times = 2))</span></span>
+<span id="cb7-217"><a href="#cb7-217"></a><span class="co"># predformat &lt;- function(predrisk) {</span></span>
+<span id="cb7-218"><a href="#cb7-218"></a><span class="co">#   data.frame(matrix(predrisk, ncol = 2, byrow = TRUE,</span></span>
+<span id="cb7-219"><a href="#cb7-219"></a><span class="co">#                     dimnames = list(c("18-64", "65+"),</span></span>
+<span id="cb7-220"><a href="#cb7-220"></a><span class="co">#                                     c("nonsmokers", "smokers"))))</span></span>
+<span id="cb7-221"><a href="#cb7-221"></a><span class="co"># }</span></span>
+<span id="cb7-222"><a href="#cb7-222"></a><span class="co"># predrisk_logistic &lt;- predformat(predict(nointx_logistic, type = "response",</span></span>
+<span id="cb7-223"><a href="#cb7-223"></a><span class="co">#                                         newdata = pred_newdata))</span></span>
+<span id="cb7-224"><a href="#cb7-224"></a><span class="co"># predrisk_idbinom &lt;- predformat(predict(nointx_idbinom, type = "response",</span></span>
+<span id="cb7-225"><a href="#cb7-225"></a><span class="co">#                                        newdata = pred_newdata))</span></span>
+<span id="cb7-226"><a href="#cb7-226"></a><span class="co"># # find minimum odds ratio</span></span>
+<span id="cb7-227"><a href="#cb7-227"></a><span class="co"># std_odds &lt;- function(t) {</span></span>
+<span id="cb7-228"><a href="#cb7-228"></a><span class="co">#   xcoord &lt;- with(predrisk_logistic,</span></span>
+<span id="cb7-229"><a href="#cb7-229"></a><span class="co">#                  (1 - t) * nonsmokers[1] + t * nonsmokers[2])</span></span>
+<span id="cb7-230"><a href="#cb7-230"></a><span class="co">#   ycoord &lt;- with(predrisk_logistic, (1 - t) * smokers[1] + t * smokers[2])</span></span>
+<span id="cb7-231"><a href="#cb7-231"></a><span class="co">#   odds(ycoord) / odds(xcoord)</span></span>
+<span id="cb7-232"><a href="#cb7-232"></a><span class="co"># }</span></span>
+<span id="cb7-233"><a href="#cb7-233"></a><span class="co"># minodds &lt;- optimize(std_odds, c(0, 1))</span></span>
+<span id="cb7-234"><a href="#cb7-234"></a><span class="co"># tmin &lt;- minodds$minimum</span></span>
+<span id="cb7-235"><a href="#cb7-235"></a><span class="co"># xmin &lt;- with(predrisk_logistic,</span></span>
+<span id="cb7-236"><a href="#cb7-236"></a><span class="co">#              (1 - tmin) * nonsmokers[1] + tmin * nonsmokers[2])</span></span>
+<span id="cb7-237"><a href="#cb7-237"></a><span class="co"># ymin &lt;- with(predrisk_logistic, (1 - tmin) * smokers[1] + tmin * smokers[2])</span></span>
+<span id="cb7-238"><a href="#cb7-238"></a><span class="co"># cat("\n", "Minimum standardized odds ratio is ",</span></span>
+<span id="cb7-239"><a href="#cb7-239"></a><span class="co">#     minodds$objective, ".\n", sep = "")</span></span>
+<span id="cb7-240"><a href="#cb7-240"></a><span class="co"># cat("It occurs in a standard population where Pr(65+) =", tmin, "\n")</span></span>
+<span id="cb7-241"><a href="#cb7-241"></a><span class="co"># cat("and Pr(18-64) = ", 1 - tmin, ".\n\n", sep = "")</span></span>
+<span id="cb7-242"><a href="#cb7-242"></a></span>
+<span id="cb7-243"><a href="#cb7-243"></a><span class="co"># # risk difference collapsibility plot (Figure 6)</span></span>
+<span id="cb7-244"><a href="#cb7-244"></a><span class="co"># dev.new()</span></span>
+<span id="cb7-245"><a href="#cb7-245"></a><span class="co"># plot(predrisk_idbinom$nonsmokers, predrisk_idbinom$smokers, pch = 19,</span></span>
+<span id="cb7-246"><a href="#cb7-246"></a><span class="co">#      xlim = c(0, 1), ylim = c(0, 1), asp = 1,</span></span>
+<span id="cb7-247"><a href="#cb7-247"></a><span class="co">#      xlab = "Risk in the unexposed (nonsmokers)",</span></span>
+<span id="cb7-248"><a href="#cb7-248"></a><span class="co">#      ylab = "Risk in the exposed (smokers)")</span></span>
+<span id="cb7-249"><a href="#cb7-249"></a><span class="co"># y &lt;- x + intx_meas["riskdiff", "common"]</span></span>
+<span id="cb7-250"><a href="#cb7-250"></a><span class="co"># yrange &lt;- y &gt;= 0 &amp; y &lt;= 1</span></span>
+<span id="cb7-251"><a href="#cb7-251"></a><span class="co"># lines(x[yrange], y[yrange], lty = "dashed")</span></span>
+<span id="cb7-252"><a href="#cb7-252"></a><span class="co"># segments(0, 0, 1, 1, col = "darkgray")</span></span>
+<span id="cb7-253"><a href="#cb7-253"></a><span class="co"># segments(predrisk_idbinom["18-64", "nonsmokers"],</span></span>
+<span id="cb7-254"><a href="#cb7-254"></a><span class="co">#          predrisk_idbinom["18-64", "smokers"],</span></span>
+<span id="cb7-255"><a href="#cb7-255"></a><span class="co">#          predrisk_idbinom["65+", "nonsmokers"],</span></span>
+<span id="cb7-256"><a href="#cb7-256"></a><span class="co">#          predrisk_idbinom["65+", "smokers"])</span></span>
+<span id="cb7-257"><a href="#cb7-257"></a><span class="co"># grid()</span></span>
+<span id="cb7-258"><a href="#cb7-258"></a><span class="co"># text(0.1, 0.06, srt = 45, col = "darkgray", labels = "Null line")</span></span>
+<span id="cb7-259"><a href="#cb7-259"></a><span class="co"># text(0.46, 0.56, srt = 45, labels = "Common and standardized RD = 0.052")</span></span>
+<span id="cb7-260"><a href="#cb7-260"></a><span class="co"># # dev.copy2pdf(file = "collapsibilityRD.pdf")</span></span>
+<span id="cb7-261"><a href="#cb7-261"></a></span>
+<span id="cb7-262"><a href="#cb7-262"></a><span class="co"># # odds ratio noncollapsibility plot (Figure 7)</span></span>
+<span id="cb7-263"><a href="#cb7-263"></a><span class="co"># dev.new()</span></span>
+<span id="cb7-264"><a href="#cb7-264"></a><span class="co"># plot(predrisk_logistic$nonsmokers, predrisk_logistic$smokers, pch = 19,</span></span>
+<span id="cb7-265"><a href="#cb7-265"></a><span class="co">#      xlim = c(0, 1), ylim = c(0, 1), asp = 1,</span></span>
+<span id="cb7-266"><a href="#cb7-266"></a><span class="co">#      xlab = "Risk in the unexposed (nonsmokers)",</span></span>
+<span id="cb7-267"><a href="#cb7-267"></a><span class="co">#      ylab = "Risk in the exposed (smokers)")</span></span>
+<span id="cb7-268"><a href="#cb7-268"></a><span class="co"># lines(x, invodds(intx_meas["oddsratio", "common"] * odds(x)), lty = "dashed")</span></span>
+<span id="cb7-269"><a href="#cb7-269"></a><span class="co"># segments(0, 0, 1, 1, col = "darkgray")</span></span>
+<span id="cb7-270"><a href="#cb7-270"></a><span class="co"># segments(predrisk_logistic["18-64", "nonsmokers"],</span></span>
+<span id="cb7-271"><a href="#cb7-271"></a><span class="co">#          predrisk_logistic["18-64", "smokers"],</span></span>
+<span id="cb7-272"><a href="#cb7-272"></a><span class="co">#          predrisk_logistic["65+", "nonsmokers"],</span></span>
+<span id="cb7-273"><a href="#cb7-273"></a><span class="co">#          predrisk_logistic["65+", "smokers"])</span></span>
+<span id="cb7-274"><a href="#cb7-274"></a><span class="co"># points(xmin, ymin)</span></span>
+<span id="cb7-275"><a href="#cb7-275"></a><span class="co"># grid()</span></span>
+<span id="cb7-276"><a href="#cb7-276"></a><span class="co"># text(0.1, 0.06, srt = 45, col = "darkgray", labels = "Null line")</span></span>
+<span id="cb7-277"><a href="#cb7-277"></a><span class="co"># text(0.44, 0.58, srt = 42, labels = "Common OR = 1.537")</span></span>
+<span id="cb7-278"><a href="#cb7-278"></a><span class="co"># text(predrisk_logistic$nonsmokers - 0.02,</span></span>
+<span id="cb7-279"><a href="#cb7-279"></a><span class="co">#      predrisk_logistic$smokers + 0.02,</span></span>
+<span id="cb7-280"><a href="#cb7-280"></a><span class="co">#      adj = c(1, 0), labels = rownames(predrisk_logistic))</span></span>
+<span id="cb7-281"><a href="#cb7-281"></a><span class="co"># boxed.labels(xmin + 0.21, ymin - 0.02, labels = "Standardized OR = 1.229",</span></span>
+<span id="cb7-282"><a href="#cb7-282"></a><span class="co">#              xpad = 1, ypad = 1.5, border = FALSE)</span></span>
+<span id="cb7-283"><a href="#cb7-283"></a><span class="co"># text(xmin + 0.02, ymin - 0.04, adj = c(0, 1),</span></span>
+<span id="cb7-284"><a href="#cb7-284"></a><span class="co">#      labels = expression("when Pr"["std"]("18-64") == 0.484))</span></span>
+<span id="cb7-285"><a href="#cb7-285"></a><span class="co"># # dev.copy2pdf(file = "collapsibilityOR.pdf")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output-display">
+<div id="fig-rothman-intx" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rothman-intx-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="geometry_files/figure-html/fig-rothman-intx-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;18.5: Contour lines containing the stratum-specific points (dashed) and the contour line corresponding to the common measure of association (solid) for the risk difference, risk ratio, odds ratio, and cumulative hazard ratio."><img src="geometry_files/figure-html/fig-rothman-intx-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rothman-intx-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;18.5: Contour lines containing the stratum-specific points (dashed) and the contour line corresponding to the common measure of association (solid) for the risk difference, risk ratio, odds ratio, and cumulative hazard ratio.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>We can evaluate effect measure modification whether or not the “effects” are causal. There is effect modification on a given scale when the stratum-specific measures of association are on different contour lines for the measure of association, which can occur whether or not the crude point is on the standardized segment. There is confounding when the crude point is off the standardized segment (or outside the standardized hull), which can occur whether or not the stratum-specific points are on different contour lines for a given measure of association. Confounding and effect modification are logically independent. However, we must control confounding if we want to determine whether a causal effect differs between strata.</p>
 </section>
 </section>
-<section id="noncollapsibility" class="level2" data-number="18.4">
-<h2 data-number="18.4" class="anchored" data-anchor-id="noncollapsibility"><span class="header-section-number">18.4</span> Noncollapsibility</h2>
+<section id="collapsibility" class="level2" data-number="18.4">
+<h2 data-number="18.4" class="anchored" data-anchor-id="collapsibility"><span class="header-section-number">18.4</span> Collapsibility</h2>
+<p>If <span class="math inline">\(C\)</span> is a risk factor for disease but not a confounder, a measure of association <span class="math inline">\(M\)</span> is said to be <strong>collapsible</strong> if <span class="math inline">\(M = m\)</span> in the marginal 2x2 table whenever <span class="math inline">\(M = m\)</span> in all 2x2 tables defined by strata <span class="math inline">\(C\)</span> <span class="citation" data-cites="whittemore1978collapsibility greenland1999confounding">(<a href="references.html#ref-whittemore1978collapsibility" role="doc-biblioref">Whittemore 1978</a>; <a href="references.html#ref-greenland1999confounding" role="doc-biblioref">Greenland, Pearl, and Robins 1999</a>)</span>. Thus, the marginal and stratum-specific values of a collapsible measure <span class="math inline">\(M\)</span> are equal whenever there is no confounding by <span class="math inline">\(C\)</span> and no effect modification of <span class="math inline">\(M\)</span> by <span class="math inline">\(C\)</span>. A measure that is not collapsible is <strong>noncollapsible</strong>. The risk ratio and risk difference are collapsible but the odds ratio and cumulative hazard ratio are not <span class="citation" data-cites="samuels1981matching miettinen1981confounding greenland1996absence">(<a href="references.html#ref-samuels1981matching" role="doc-biblioref">Samuels 1981</a>; <a href="references.html#ref-miettinen1981confounding" role="doc-biblioref">Miettinen and Cook 1981</a>; <a href="references.html#ref-greenland1996absence" role="doc-biblioref">Greenland 1996</a>)</span>.</p>
+<section id="definition-in-terms-of-standardized-measures" class="level3" data-number="18.4.1">
+<h3 data-number="18.4.1" class="anchored" data-anchor-id="definition-in-terms-of-standardized-measures"><span class="header-section-number">18.4.1</span> Definition in terms of standardized measures</h3>
+<p>An equivalent but simpler definition is that <span class="math inline">\(M\)</span> is collapsible if the standardized <span class="math inline">\(M = m\)</span> whenever <span class="math inline">\(M = m\)</span> in each stratum of <span class="math inline">\(C\)</span>. Because standardization removes any confounding by <span class="math inline">\(C\)</span>, this is equivalent to the definition that assumes no confounding by <span class="math inline">\(C\)</span>.</p>
+<p>Leaving confounding out of the definition of collapsibility avoids a common source of confusion in epidemiology and biostatistics, where students are often taught to detect confounding by looking for a change in an estimated measure of association upon adjustment for a covariate. This <em>change-in-estimates</em> method can spuriously detect confounding when it is based on a noncollapsible measure of association <span class="citation" data-cites="miettinen1981confounding greenland1999confounding">(<a href="references.html#ref-miettinen1981confounding" role="doc-biblioref">Miettinen and Cook 1981</a>; <a href="references.html#ref-greenland1999confounding" role="doc-biblioref">Greenland, Pearl, and Robins 1999</a>)</span>.</p>
+</section>
+<section id="straight-contour-lines" class="level3" data-number="18.4.2">
+<h3 data-number="18.4.2" class="anchored" data-anchor-id="straight-contour-lines"><span class="header-section-number">18.4.2</span> Straight contour lines</h3>
+<p>A measure <span class="math inline">\(M\)</span> is collapsible if and only if all of its contour lines are straight. In <a href="#fig-rothman-contours" class="quarto-xref">Figure&nbsp;<span>18.4</span></a>, the collapsible risk ratio and risk difference have straight contours but the noncollapsible odds ratio and hazard ratio have curved contours. Because the null line is a contour for all measures of association and it is straight, all measures of association are collapsible under the null hypothesis.</p>
+<p>If all contours of <span class="math inline">\(M\)</span> are straight and there is no effect measure modification of <span class="math inline">\(M\)</span> by <span class="math inline">\(C\)</span>, then all stratum-specific points for <span class="math inline">\(M\)</span> given <span class="math inline">\(C\)</span> lie on the contour of <span class="math inline">\(M\)</span> corresponding to the common <span class="math inline">\(M = m\)</span>. Because the stratum-specific points given <span class="math inline">\(C\)</span> are all contained in a line segment, this is also the standardized segment (or standardized hull if <span class="math inline">\(C\)</span> has more than two levels). Any standardized point must be on the same contour of <span class="math inline">\(M\)</span>, so the standardized <span class="math inline">\(M = m\)</span> for any standard population. Therefore, <span class="math inline">\(M\)</span> is collapsible if all of its contour lines are straight. This situation is illustrated in <a href="#fig-rothman-collaps" class="quarto-xref">Figure&nbsp;<span>18.6</span></a>, where all standardized risk differences equal the common stratum-specific risk difference of <span class="math inline">\(0.052\)</span>.</p>
+<div class="cell">
+<div class="code-with-filename">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-with-filename-file">
+<pre><strong>rothman-collaps.R</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="do">## Collapsibility and straight contour lines (risk difference)</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="co"># load R packages</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="fu">library</span>(dplyr)      <span class="co"># for case_when()</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="co"># data from Appleton et al. (The American Statistician, 1996)</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="co"># Using an ordered factor allows the use of &lt;, =, and &gt; for comparison.</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a>agegroups <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"18-24"</span>, <span class="st">"25-34"</span>, <span class="st">"35-44"</span>, <span class="st">"45-54"</span>, <span class="st">"55-64"</span>,</span>
+<span id="cb8-9"><a href="#cb8-9"></a>                      <span class="st">"65-74"</span>, <span class="st">"75+"</span>),</span>
+<span id="cb8-10"><a href="#cb8-10"></a>                    <span class="at">ordered =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-11"><a href="#cb8-11"></a>AFVdat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">smoking =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="at">times =</span> <span class="fu">length</span>(agegroups)),</span>
+<span id="cb8-12"><a href="#cb8-12"></a>                     <span class="at">death =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">times =</span> <span class="fu">length</span>(agegroups)),</span>
+<span id="cb8-13"><a href="#cb8-13"></a>                     <span class="at">age =</span> <span class="fu">rep</span>(agegroups, <span class="at">each =</span> <span class="dv">4</span>))</span>
+<span id="cb8-14"><a href="#cb8-14"></a>AFVrows <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">seq_len</span>(<span class="fu">nrow</span>(AFVdat)),</span>
+<span id="cb8-15"><a href="#cb8-15"></a>               <span class="at">times =</span> <span class="fu">c</span>(<span class="dv">61</span>, <span class="dv">1</span>, <span class="dv">53</span>, <span class="dv">2</span>, <span class="dv">152</span>, <span class="dv">5</span>, <span class="dv">121</span>, <span class="dv">3</span>, <span class="dv">114</span>, <span class="dv">7</span>, <span class="dv">95</span>, <span class="dv">14</span>, <span class="dv">66</span>, <span class="dv">12</span>,</span>
+<span id="cb8-16"><a href="#cb8-16"></a>                         <span class="dv">103</span>, <span class="dv">27</span>, <span class="dv">81</span>, <span class="dv">40</span>, <span class="dv">64</span>, <span class="dv">51</span>, <span class="dv">28</span>, <span class="dv">101</span>, <span class="dv">7</span>, <span class="dv">29</span>, <span class="dv">0</span>, <span class="dv">64</span>, <span class="dv">0</span>, <span class="dv">13</span>))</span>
+<span id="cb8-17"><a href="#cb8-17"></a>AFVdat <span class="ot">&lt;-</span> AFVdat[AFVrows, ]</span>
+<span id="cb8-18"><a href="#cb8-18"></a>AFVdat<span class="sc">$</span>binage <span class="ot">&lt;-</span> <span class="fu">case_when</span>(AFVdat<span class="sc">$</span>age <span class="sc">&lt;</span> <span class="st">"65-74"</span> <span class="sc">~</span> <span class="st">"18-64"</span>,</span>
+<span id="cb8-19"><a href="#cb8-19"></a>                           AFVdat<span class="sc">$</span>age <span class="sc">&gt;=</span> <span class="st">"65-74"</span> <span class="sc">~</span> <span class="st">"65+"</span>)</span>
+<span id="cb8-20"><a href="#cb8-20"></a></span>
+<span id="cb8-21"><a href="#cb8-21"></a><span class="co"># binomial GLM with identity link for risk difference</span></span>
+<span id="cb8-22"><a href="#cb8-22"></a><span class="co"># Model without interaction requires a starting point for numerical stability.</span></span>
+<span id="cb8-23"><a href="#cb8-23"></a><span class="co"># We get a starting point from a linear regression model.</span></span>
+<span id="cb8-24"><a href="#cb8-24"></a>nointx_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(death <span class="sc">~</span> smoking <span class="sc">+</span> binage, <span class="at">data =</span> AFVdat)</span>
+<span id="cb8-25"><a href="#cb8-25"></a>nointx_idbinom <span class="ot">&lt;-</span> <span class="fu">glm</span>(death <span class="sc">~</span> smoking <span class="sc">+</span> binage, <span class="at">data =</span> AFVdat,</span>
+<span id="cb8-26"><a href="#cb8-26"></a>                      <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"identity"</span>),</span>
+<span id="cb8-27"><a href="#cb8-27"></a>                      <span class="at">start =</span> <span class="fu">coef</span>(nointx_lm))</span>
+<span id="cb8-28"><a href="#cb8-28"></a></span>
+<span id="cb8-29"><a href="#cb8-29"></a><span class="co"># risk difference collapsibility plot</span></span>
+<span id="cb8-30"><a href="#cb8-30"></a>pred_newdata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">binage =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"18-64"</span>, <span class="st">"65+"</span>), <span class="at">each =</span> <span class="dv">2</span>),</span>
+<span id="cb8-31"><a href="#cb8-31"></a>                           <span class="at">smoking =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">times =</span> <span class="dv">2</span>))</span>
+<span id="cb8-32"><a href="#cb8-32"></a>predformat <span class="ot">&lt;-</span> <span class="cf">function</span>(predrisk) {</span>
+<span id="cb8-33"><a href="#cb8-33"></a>  <span class="fu">data.frame</span>(<span class="fu">matrix</span>(predrisk, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb8-34"><a href="#cb8-34"></a>                    <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">"18-64"</span>, <span class="st">"65+"</span>),</span>
+<span id="cb8-35"><a href="#cb8-35"></a>                                    <span class="fu">c</span>(<span class="st">"nonsmokers"</span>, <span class="st">"smokers"</span>))))</span>
+<span id="cb8-36"><a href="#cb8-36"></a>}</span>
+<span id="cb8-37"><a href="#cb8-37"></a>predrisk_idbinom <span class="ot">&lt;-</span> <span class="fu">predformat</span>(<span class="fu">predict</span>(nointx_idbinom, <span class="at">type =</span> <span class="st">"response"</span>,</span>
+<span id="cb8-38"><a href="#cb8-38"></a>                                       <span class="at">newdata =</span> pred_newdata))</span>
+<span id="cb8-39"><a href="#cb8-39"></a><span class="fu">plot</span>(predrisk_idbinom<span class="sc">$</span>nonsmokers, predrisk_idbinom<span class="sc">$</span>smokers, <span class="at">pch =</span> <span class="dv">19</span>,</span>
+<span id="cb8-40"><a href="#cb8-40"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">asp =</span> <span class="dv">1</span>,</span>
+<span id="cb8-41"><a href="#cb8-41"></a>     <span class="at">xlab =</span> <span class="st">"Risk in the unexposed (nonsmokers)"</span>,</span>
+<span id="cb8-42"><a href="#cb8-42"></a>     <span class="at">ylab =</span> <span class="st">"Risk in the exposed (smokers)"</span>)</span>
+<span id="cb8-43"><a href="#cb8-43"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.01</span>)</span>
+<span id="cb8-44"><a href="#cb8-44"></a>y <span class="ot">&lt;-</span> x <span class="sc">+</span> <span class="fu">coef</span>(nointx_idbinom)[<span class="st">"smoking"</span>]</span>
+<span id="cb8-45"><a href="#cb8-45"></a>yrange <span class="ot">&lt;-</span> y <span class="sc">&gt;=</span> <span class="dv">0</span> <span class="sc">&amp;</span> y <span class="sc">&lt;=</span> <span class="dv">1</span></span>
+<span id="cb8-46"><a href="#cb8-46"></a><span class="fu">lines</span>(x[yrange], y[yrange], <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb8-47"><a href="#cb8-47"></a><span class="fu">segments</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="at">col =</span> <span class="st">"darkgray"</span>)</span>
+<span id="cb8-48"><a href="#cb8-48"></a><span class="fu">segments</span>(predrisk_idbinom[<span class="st">"18-64"</span>, <span class="st">"nonsmokers"</span>],</span>
+<span id="cb8-49"><a href="#cb8-49"></a>         predrisk_idbinom[<span class="st">"18-64"</span>, <span class="st">"smokers"</span>],</span>
+<span id="cb8-50"><a href="#cb8-50"></a>         predrisk_idbinom[<span class="st">"65+"</span>, <span class="st">"nonsmokers"</span>],</span>
+<span id="cb8-51"><a href="#cb8-51"></a>         predrisk_idbinom[<span class="st">"65+"</span>, <span class="st">"smokers"</span>])</span>
+<span id="cb8-52"><a href="#cb8-52"></a><span class="fu">grid</span>()</span>
+<span id="cb8-53"><a href="#cb8-53"></a><span class="fu">text</span>(<span class="fl">0.1</span>, <span class="fl">0.06</span>, <span class="at">srt =</span> <span class="dv">45</span>, <span class="at">col =</span> <span class="st">"darkgray"</span>, <span class="at">labels =</span> <span class="st">"Null line"</span>)</span>
+<span id="cb8-54"><a href="#cb8-54"></a><span class="fu">text</span>(<span class="fl">0.45</span>, <span class="fl">0.57</span>, <span class="at">srt =</span> <span class="dv">45</span>, <span class="at">labels =</span> <span class="st">"Common and standardized RD = 0.052"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output-display">
+<div id="fig-rothman-collaps" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rothman-collaps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="geometry_files/figure-html/fig-rothman-collaps-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;18.6: Collapsibility along a straight contour line. The entire standardized segment is contained on the common risk difference contour. The estimated risks are based on a binomial GLM with an identity link and no interaction."><img src="geometry_files/figure-html/fig-rothman-collaps-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rothman-collaps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;18.6: Collapsibility along a straight contour line. The entire standardized segment is contained on the common risk difference contour. The estimated risks are based on a binomial GLM with an identity link and no interaction.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Suppose <span class="math inline">\(M\)</span> has curved contour lines but there is no effect measure modification of <span class="math inline">\(M\)</span> by <span class="math inline">\(C\)</span>. Then all stratum-specific points for <span class="math inline">\(M\)</span> lie on the same curved contour corresponding to the common measure <span class="math inline">\(M = m\)</span>. If we pick any two stratum-specific points and connect them with a straight line segment, then this segment is not contained in the same contour of <span class="math inline">\(M\)</span>. Thus, we can find a standard population where the standardized <span class="math inline">\(M \neq m\)</span>. Therefore, <span class="math inline">\(M\)</span> is collapsible only if its contour lines are straight. This situation is illustrated in <a href="#fig-rothman-noncollaps" class="quarto-xref">Figure&nbsp;<span>18.7</span></a>, where the stratum-specific odds ratio is <span class="math inline">\(1.537\)</span> but the standardized segment has a minimum odds ratio of <span class="math inline">\(1.229\)</span>, which occurs in a standard population that is approximately <span class="math inline">\(48.4\%\)</span> aged 18-64 years and <span class="math inline">\(51.6\%\)</span> aged <span class="math inline">\(\geq 65\)</span> years.</p>
+<div class="cell">
+<div class="code-with-filename">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-with-filename-file">
+<pre><strong>rothman-noncollaps.R</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="do">## Noncollapsibility and curved contour lines (odds ratio)</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="co"># load R packages</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="fu">library</span>(dplyr)      <span class="co"># for case_when()</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="fu">library</span>(plotrix)    <span class="co"># for boxed.labels()</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="co"># odds ratio and inverse</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a>odds <span class="ot">&lt;-</span> <span class="cf">function</span>(p) p <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb9-9"><a href="#cb9-9"></a>invodds <span class="ot">&lt;-</span> <span class="cf">function</span>(odds) odds <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> odds)</span>
+<span id="cb9-10"><a href="#cb9-10"></a></span>
+<span id="cb9-11"><a href="#cb9-11"></a><span class="co"># data from Appleton et al. (The American Statistician, 1996)</span></span>
+<span id="cb9-12"><a href="#cb9-12"></a><span class="co"># Using an ordered factor allows the use of &lt;, =, and &gt; for comparison.</span></span>
+<span id="cb9-13"><a href="#cb9-13"></a>agegroups <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"18-24"</span>, <span class="st">"25-34"</span>, <span class="st">"35-44"</span>, <span class="st">"45-54"</span>, <span class="st">"55-64"</span>,</span>
+<span id="cb9-14"><a href="#cb9-14"></a>                      <span class="st">"65-74"</span>, <span class="st">"75+"</span>),</span>
+<span id="cb9-15"><a href="#cb9-15"></a>                    <span class="at">ordered =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-16"><a href="#cb9-16"></a>AFVdat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">smoking =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="at">times =</span> <span class="fu">length</span>(agegroups)),</span>
+<span id="cb9-17"><a href="#cb9-17"></a>                     <span class="at">death =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">times =</span> <span class="fu">length</span>(agegroups)),</span>
+<span id="cb9-18"><a href="#cb9-18"></a>                     <span class="at">age =</span> <span class="fu">rep</span>(agegroups, <span class="at">each =</span> <span class="dv">4</span>))</span>
+<span id="cb9-19"><a href="#cb9-19"></a>AFVrows <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">seq_len</span>(<span class="fu">nrow</span>(AFVdat)),</span>
+<span id="cb9-20"><a href="#cb9-20"></a>               <span class="at">times =</span> <span class="fu">c</span>(<span class="dv">61</span>, <span class="dv">1</span>, <span class="dv">53</span>, <span class="dv">2</span>, <span class="dv">152</span>, <span class="dv">5</span>, <span class="dv">121</span>, <span class="dv">3</span>, <span class="dv">114</span>, <span class="dv">7</span>, <span class="dv">95</span>, <span class="dv">14</span>, <span class="dv">66</span>, <span class="dv">12</span>,</span>
+<span id="cb9-21"><a href="#cb9-21"></a>                         <span class="dv">103</span>, <span class="dv">27</span>, <span class="dv">81</span>, <span class="dv">40</span>, <span class="dv">64</span>, <span class="dv">51</span>, <span class="dv">28</span>, <span class="dv">101</span>, <span class="dv">7</span>, <span class="dv">29</span>, <span class="dv">0</span>, <span class="dv">64</span>, <span class="dv">0</span>, <span class="dv">13</span>))</span>
+<span id="cb9-22"><a href="#cb9-22"></a>AFVdat <span class="ot">&lt;-</span> AFVdat[AFVrows, ]</span>
+<span id="cb9-23"><a href="#cb9-23"></a>AFVdat<span class="sc">$</span>binage <span class="ot">&lt;-</span> <span class="fu">case_when</span>(AFVdat<span class="sc">$</span>age <span class="sc">&lt;</span> <span class="st">"65-74"</span> <span class="sc">~</span> <span class="st">"18-64"</span>,</span>
+<span id="cb9-24"><a href="#cb9-24"></a>                           AFVdat<span class="sc">$</span>age <span class="sc">&gt;=</span> <span class="st">"65-74"</span> <span class="sc">~</span> <span class="st">"65+"</span>)</span>
+<span id="cb9-25"><a href="#cb9-25"></a></span>
+<span id="cb9-26"><a href="#cb9-26"></a><span class="co"># logistic regression (binomial GLM with logit link) for odds ratio</span></span>
+<span id="cb9-27"><a href="#cb9-27"></a>nointx_logistic <span class="ot">&lt;-</span> <span class="fu">glm</span>(death <span class="sc">~</span> smoking <span class="sc">+</span> binage, <span class="at">data =</span> AFVdat,</span>
+<span id="cb9-28"><a href="#cb9-28"></a>                       <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>))</span>
+<span id="cb9-29"><a href="#cb9-29"></a></span>
+<span id="cb9-30"><a href="#cb9-30"></a><span class="co"># noncollapsibility of the odds ratio</span></span>
+<span id="cb9-31"><a href="#cb9-31"></a>pred_newdata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">binage =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"18-64"</span>, <span class="st">"65+"</span>), <span class="at">each =</span> <span class="dv">2</span>),</span>
+<span id="cb9-32"><a href="#cb9-32"></a>                           <span class="at">smoking =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">times =</span> <span class="dv">2</span>))</span>
+<span id="cb9-33"><a href="#cb9-33"></a>predformat <span class="ot">&lt;-</span> <span class="cf">function</span>(predrisk) {</span>
+<span id="cb9-34"><a href="#cb9-34"></a>  <span class="fu">data.frame</span>(<span class="fu">matrix</span>(predrisk, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb9-35"><a href="#cb9-35"></a>                    <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">"18-64"</span>, <span class="st">"65+"</span>),</span>
+<span id="cb9-36"><a href="#cb9-36"></a>                                    <span class="fu">c</span>(<span class="st">"nonsmokers"</span>, <span class="st">"smokers"</span>))))</span>
+<span id="cb9-37"><a href="#cb9-37"></a>}</span>
+<span id="cb9-38"><a href="#cb9-38"></a>predrisk_logistic <span class="ot">&lt;-</span> <span class="fu">predformat</span>(<span class="fu">predict</span>(nointx_logistic, <span class="at">type =</span> <span class="st">"response"</span>,</span>
+<span id="cb9-39"><a href="#cb9-39"></a>                                        <span class="at">newdata =</span> pred_newdata))</span>
+<span id="cb9-40"><a href="#cb9-40"></a><span class="co"># find minimum odds ratio</span></span>
+<span id="cb9-41"><a href="#cb9-41"></a>std_odds <span class="ot">&lt;-</span> <span class="cf">function</span>(t) {</span>
+<span id="cb9-42"><a href="#cb9-42"></a>  xcoord <span class="ot">&lt;-</span> <span class="fu">with</span>(predrisk_logistic,</span>
+<span id="cb9-43"><a href="#cb9-43"></a>                 (<span class="dv">1</span> <span class="sc">-</span> t) <span class="sc">*</span> nonsmokers[<span class="dv">1</span>] <span class="sc">+</span> t <span class="sc">*</span> nonsmokers[<span class="dv">2</span>])</span>
+<span id="cb9-44"><a href="#cb9-44"></a>  ycoord <span class="ot">&lt;-</span> <span class="fu">with</span>(predrisk_logistic, (<span class="dv">1</span> <span class="sc">-</span> t) <span class="sc">*</span> smokers[<span class="dv">1</span>] <span class="sc">+</span> t <span class="sc">*</span> smokers[<span class="dv">2</span>])</span>
+<span id="cb9-45"><a href="#cb9-45"></a>  <span class="fu">odds</span>(ycoord) <span class="sc">/</span> <span class="fu">odds</span>(xcoord)</span>
+<span id="cb9-46"><a href="#cb9-46"></a>}</span>
+<span id="cb9-47"><a href="#cb9-47"></a>minodds <span class="ot">&lt;-</span> <span class="fu">optimize</span>(std_odds, <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb9-48"><a href="#cb9-48"></a>tmin <span class="ot">&lt;-</span> minodds<span class="sc">$</span>minimum</span>
+<span id="cb9-49"><a href="#cb9-49"></a>xmin <span class="ot">&lt;-</span> <span class="fu">with</span>(predrisk_logistic,</span>
+<span id="cb9-50"><a href="#cb9-50"></a>             (<span class="dv">1</span> <span class="sc">-</span> tmin) <span class="sc">*</span> nonsmokers[<span class="dv">1</span>] <span class="sc">+</span> tmin <span class="sc">*</span> nonsmokers[<span class="dv">2</span>])</span>
+<span id="cb9-51"><a href="#cb9-51"></a>ymin <span class="ot">&lt;-</span> <span class="fu">with</span>(predrisk_logistic, (<span class="dv">1</span> <span class="sc">-</span> tmin) <span class="sc">*</span> smokers[<span class="dv">1</span>] <span class="sc">+</span> tmin <span class="sc">*</span> smokers[<span class="dv">2</span>])</span>
+<span id="cb9-52"><a href="#cb9-52"></a></span>
+<span id="cb9-53"><a href="#cb9-53"></a><span class="co"># odds ratio noncollapsibility plot</span></span>
+<span id="cb9-54"><a href="#cb9-54"></a><span class="fu">plot</span>(predrisk_logistic<span class="sc">$</span>nonsmokers, predrisk_logistic<span class="sc">$</span>smokers, <span class="at">pch =</span> <span class="dv">19</span>,</span>
+<span id="cb9-55"><a href="#cb9-55"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">asp =</span> <span class="dv">1</span>,</span>
+<span id="cb9-56"><a href="#cb9-56"></a>     <span class="at">xlab =</span> <span class="st">"Risk in the unexposed (nonsmokers)"</span>,</span>
+<span id="cb9-57"><a href="#cb9-57"></a>     <span class="at">ylab =</span> <span class="st">"Risk in the exposed (smokers)"</span>)</span>
+<span id="cb9-58"><a href="#cb9-58"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.01</span>, <span class="fl">0.99</span>, <span class="at">by =</span> <span class="fl">0.01</span>)</span>
+<span id="cb9-59"><a href="#cb9-59"></a>common_OR <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fu">coef</span>(nointx_logistic)[<span class="st">"smoking"</span>])</span>
+<span id="cb9-60"><a href="#cb9-60"></a><span class="fu">lines</span>(x, <span class="fu">invodds</span>(common_OR <span class="sc">*</span> <span class="fu">odds</span>(x)), <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb9-61"><a href="#cb9-61"></a><span class="fu">segments</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="at">col =</span> <span class="st">"darkgray"</span>)</span>
+<span id="cb9-62"><a href="#cb9-62"></a><span class="fu">segments</span>(predrisk_logistic[<span class="st">"18-64"</span>, <span class="st">"nonsmokers"</span>],</span>
+<span id="cb9-63"><a href="#cb9-63"></a>         predrisk_logistic[<span class="st">"18-64"</span>, <span class="st">"smokers"</span>],</span>
+<span id="cb9-64"><a href="#cb9-64"></a>         predrisk_logistic[<span class="st">"65+"</span>, <span class="st">"nonsmokers"</span>],</span>
+<span id="cb9-65"><a href="#cb9-65"></a>         predrisk_logistic[<span class="st">"65+"</span>, <span class="st">"smokers"</span>])</span>
+<span id="cb9-66"><a href="#cb9-66"></a><span class="fu">points</span>(xmin, ymin)</span>
+<span id="cb9-67"><a href="#cb9-67"></a><span class="fu">grid</span>()</span>
+<span id="cb9-68"><a href="#cb9-68"></a><span class="fu">text</span>(<span class="fl">0.1</span>, <span class="fl">0.06</span>, <span class="at">srt =</span> <span class="dv">45</span>, <span class="at">col =</span> <span class="st">"darkgray"</span>, <span class="at">labels =</span> <span class="st">"Null line"</span>)</span>
+<span id="cb9-69"><a href="#cb9-69"></a><span class="fu">text</span>(<span class="fl">0.43</span>, <span class="fl">0.59</span>, <span class="at">srt =</span> <span class="dv">44</span>, <span class="at">labels =</span> <span class="st">"Common OR = 1.537"</span>)</span>
+<span id="cb9-70"><a href="#cb9-70"></a><span class="fu">text</span>(predrisk_logistic<span class="sc">$</span>nonsmokers <span class="sc">-</span> <span class="fl">0.02</span>,</span>
+<span id="cb9-71"><a href="#cb9-71"></a>     predrisk_logistic<span class="sc">$</span>smokers <span class="sc">+</span> <span class="fl">0.02</span>,</span>
+<span id="cb9-72"><a href="#cb9-72"></a>     <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>), <span class="at">labels =</span> <span class="fu">rownames</span>(predrisk_logistic))</span>
+<span id="cb9-73"><a href="#cb9-73"></a><span class="fu">boxed.labels</span>(xmin <span class="sc">+</span> <span class="fl">0.21</span>, ymin <span class="sc">-</span> <span class="fl">0.02</span>, <span class="at">labels =</span> <span class="st">"Standardized OR = 1.229"</span>,</span>
+<span id="cb9-74"><a href="#cb9-74"></a>             <span class="at">xpad =</span> <span class="dv">1</span>, <span class="at">ypad =</span> <span class="fl">1.5</span>, <span class="at">border =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb9-75"><a href="#cb9-75"></a><span class="fu">text</span>(xmin <span class="sc">+</span> <span class="fl">0.02</span>, ymin <span class="sc">-</span> <span class="fl">0.04</span>, <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb9-76"><a href="#cb9-76"></a>     <span class="at">labels =</span> <span class="fu">expression</span>(<span class="st">"when Pr"</span>[<span class="st">"std"</span>](<span class="st">"18-64"</span>) <span class="sc">==</span> <span class="fl">0.484</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output-display">
+<div id="fig-rothman-noncollaps" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rothman-noncollaps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="geometry_files/figure-html/fig-rothman-noncollaps-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure&nbsp;18.7: Noncollapsibility along a curved contour line. Except for its endpoints at the stratum-specific points, the entire standardized segment is between the null line and the contour for the common odds ratio. The estimated risks are based on a logistic regression model with no interaction."><img src="geometry_files/figure-html/fig-rothman-noncollaps-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rothman-noncollaps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;18.7: Noncollapsibility along a curved contour line. Except for its endpoints at the stratum-specific points, the entire standardized segment is between the null line and the contour for the common odds ratio. The estimated risks are based on a logistic regression model with no interaction.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="noncollapsibility-and-changes-upon-adjustment" class="level3" data-number="18.4.3">
+<h3 data-number="18.4.3" class="anchored" data-anchor-id="noncollapsibility-and-changes-upon-adjustment"><span class="header-section-number">18.4.3</span> Noncollapsibility and changes upon adjustment</h3>
+<p>A change in an estimated measure of association upon covariate adjustment is caused by a combination of confounding, selection bias, effect measure modification, and noncollapsibility. Generating a large difference between adjusted and unadjusted measures through noncollapsibility alone requires a common stratum-specific estimate far from the null (so the contour has high curvature) and large differences in risk between strata. For the odds ratio and cumulative hazard ratio, noncollapsibility generates bias toward the null but never across the null. Thus, the changes caused by noncollapsibility alone have a predictable direction and are usually small.</p>
+<p>Confounding, selection bias, and effect measure modification can generate large changes much more easily than noncollapsibility, and these changes can occur in any direction—including across the null. These sources of bias affect all measures of association, whether collapsible or not.</p>
+<p>Noncollapsibility reflects a genuine difference between marginal and conditional measures of association, not bias. Collapsible measures such as the risk difference or risk ratio allow us to ignore this difference under ideal conditions with no confounding, no selection bias, and no effect measure modification by <span class="math inline">\(C\)</span>. Noncollapsibility is not a reason to avoid using measures of association such as the odds ratio or cumulative hazard ratio.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-appleton1996ignoring" class="csl-entry" role="listitem">
 Appleton, David R, Joyce M French, and Mark P J Vanderpump. 1996. <span>“Ignoring a Covariate: An Example of <span class="nocase">Simpson’s</span> Paradox.”</span> <em>The American Statistician</em> 50 (4): 340–41.
+</div>
+<div id="ref-greenland1996absence" class="csl-entry" role="listitem">
+Greenland, Sander. 1996. <span>“Absence of Confounding Does Not Correspond to Collapsibility of the Rate Ratio or Rate Difference.”</span> <em>Epidemiology</em> 7 (5): 498–501.
+</div>
+<div id="ref-greenland1999confounding" class="csl-entry" role="listitem">
+Greenland, Sander, Judea Pearl, and James M Robins. 1999. <span>“Confounding and Collapsibility in Causal Inference.”</span> <em>Statistical Science</em> 14 (1): 29–46.
 </div>
 <div id="ref-hernanrobins2023" class="csl-entry" role="listitem">
 Hernán, Miguel A., and James M. Robins. 2023. <em>Causal Inference: What If</em>. Chapman &amp; Hall/CRC.
@@ -1313,6 +2153,9 @@ Kenah, Eben. 2024. <span>“Rothman Diagrams: The Geometry of Confounding and St
 </div>
 <div id="ref-labbe1987meta" class="csl-entry" role="listitem">
 L’Abbé, Kristan A, Allan S Detsky, and Keith O’Rourke. 1987. <span>“Meta-Analysis in Clinical Research.”</span> <em>Annals of Internal Medicine</em> 107 (2): 224–33.
+</div>
+<div id="ref-miettinen1981confounding" class="csl-entry" role="listitem">
+Miettinen, Olli S, and E Francis Cook. 1981. <span>“Confounding: Essence and Detection.”</span> <em>American Journal of Epidemiology</em> 114 (4): 593–603.
 </div>
 <div id="ref-pearl2009causality" class="csl-entry" role="listitem">
 Pearl, Judea. 2009. <em>Causality</em>. Second. Cambridge University Press.
@@ -1326,13 +2169,20 @@ Rothman, Kenneth J. 1975. <span>“A Pictorial Representation of Confounding in 
 <div id="ref-rubin1974estimating" class="csl-entry" role="listitem">
 Rubin, Donald B. 1974. <span>“Estimating Causal Effects of Treatments in Randomized and Nonrandomized Studies.”</span> <em>Journal of Educational Psychology</em> 66 (5): 688.
 </div>
+<div id="ref-samuels1981matching" class="csl-entry" role="listitem">
+Samuels, Myra L. 1981. <span>“Matching and Design Efficiency in Epidemiological Studies.”</span> <em>Biometrika</em> 68 (3): 577–88.
+</div>
 <div id="ref-tunbridge1977spectrum" class="csl-entry" role="listitem">
 Tunbridge, W M G, D C Evered, R Hall, D Appleton, M Brewis, F Clark, J Grimley Evans, E Young, T Bird, and PA Smith. 1977. <span>“The Spectrum of Thyroid Disease in a Community: The <span>Whickham</span> Survey.”</span> <em>Clinical Endocrinology</em> 7 (6): 481–93.
 </div>
 <div id="ref-vanderpump1995incidence" class="csl-entry" role="listitem">
 Vanderpump, MPJ, WMG Tunbrldge, JMl French, D Appleton, D Bates, F Clark, J Grimley Evans, et al. 1995. <span>“The Incidence of Thyroid Disorders in the Community: A Twenty-Year Follow-up of the <span>Whickham Survey</span>.”</span> <em>Clinical Endocrinology</em> 43 (1): 55–68.
 </div>
+<div id="ref-whittemore1978collapsibility" class="csl-entry" role="listitem">
+Whittemore, Alice S. 1978. <span>“Collapsibility of Multidimensional Contingency Tables.”</span> <em>Journal of the Royal Statistical Society: Series B (Methodological)</em> 40 (3): 328–40.
 </div>
+</div>
+</section>
 </section>
 
 </main> <!-- /main -->
