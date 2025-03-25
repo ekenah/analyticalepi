@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>19&nbsp; Stratified Analysis – Analytical Epidemiology</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./matching.html" rel="next">
+<link href="./geometry.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-747bc48f972f7c4036e4d8e8c6d9e55a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script>
+  window.MathJax = {
+    loader: {load: ['[tex]/centernot']},
+    tex: {
+      macros: {
+        A: "\\mathcal\{A\}",
+        approxsim: "\\stackrel\{\\text\{approx\}\}\{\\sim\}",
+        AR: "\\text\{AR\}",
+        B: "\\mathcal\{B\}",
+        Bernoulli: ["\\operatorname\{Bernoulli\}"],
+        binomial: ["\\operatorname\{binomial\}"],
+        C: "\\mathcal\{C\}",
+        chisqH: "\\chi^2_\\text\{H\}",
+        chisqP: "\\chi^2_\\text\{P\}",
+        chisqPobs: "\\chi^2_\\text\{Pobs\}",
+        cHR: "\\text\{cHR\}",
+        CHR: "\\text\{CHR\}",
+        cloglog: ["\\operatorname\{cloglog\}"],
+        comp: "\\mathsf\{C\}",
+        Cov: ["\\operatorname\{Cov\}"],
+        crude: "\\text\{crude\}",
+        D: "\\mathcal\{D\}",
+        data: "\\text\{data\}",
+        dif: "\\text\{d\}",
+        Dminus: "\\text\{D\}^-",
+        Dplus: "\\text\{D\}^+",
+        E: ["\\operatorname\{\\mathbb\{E\}\}"],
+        ESSR: "\\text\{ESSR\}",
+        expit: ["\\operatorname\{expit\}"],
+        given: ["\\, #1| \\, ", 1],
+        HR: "\\text\{HR\}",
+        indep: "\\perp\\!\\!\\!\\perp",
+        indicator: "\\mathbb\{1\}",
+        IRR: "\\text\{IRR\}",
+        K: "\\mathcal\{K\}",
+        logit: ["\\operatorname\{logit\}"],
+        margins: "\\text\{margins\}",
+        obs: "\\text\{obs\}",
+        odds: ["\\operatorname\{odds\}"],
+        OR: "\\text\{OR\}",
+        pa: "\\text\{pa\}",
+        PAR: "\\text\{PAR\}",
+        pcrude: "p^*\_\\text\{crude\}",
+        pmarg: "p\_\\text\{marg\}",
+        Prstd: "\\Pr\\nolimits\_\\text\{std\}",
+        ptrue: "p_\{\\text\{true\}\}",
+        R: "\\mathcal\{R\}",
+        RD: "\\text\{RD\}",
+        RR: "\\text\{RR\}",
+        sens: "\\text\{sens\}",
+        spec: "\\text\{spec\}",
+        std: "\\text\{std\}",
+        supp: ["\\operatorname\{supp\}"],
+        tcens: "t^\\text\{cens\}",
+        tentry: "t^\\text\{entry\}",
+        tevent: "t^\\text\{event\}",
+        texit: "t^\\text\{exit\}",
+        Tminus: "\\text\{T\}^-",
+        tonset: "t^\\text\{onset\}",
+        Tplus: "\\text\{T\}^+",
+        transpose: "\\mathsf{T}",
+        trec: "t^\\text\{rec\}",
+        true: "\\text\{true\}",
+        twobytwo: "2 \\times 2",
+        vand: "\\text\{ and \}",
+        Var: ["\\operatorname\{Var\}"],
+        Xminus: "\\text\{X\}^-",
+        Xobs: "\\text\{X\}^\\text\{obs\}",
+        Xplus: "\\text\{X\}^+"
+      }
+    }
+  };
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./stratification.html">Epidemologic and Statistical Methods for Causal Inference</a></li><li class="breadcrumb-item"><a href="./stratification.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Stratified Analysis</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Analytical Epidemiology</a> 
+        <div class="sidebar-tools-main">
+    <a href="./Analytical-Epidemiology.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Defining and Measuring Disease Occurrence</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./probability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Probability, Random Variables, and Disease Occurrence</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./condprob.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Conditional Probability and Diagnostic Tests</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mlestimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Maximum Likelihood Estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bayes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Bayesian Estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./longitudinal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Longitudinal Data, Rates, and Counts</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./survival.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">One-Sample Survival Analysis</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Study Design and Measures of Association</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./studydesign.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Cohort and Case-Control Studies</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./validity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Internal and External Validity</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cohort.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Measures of Association in Cohort Studies</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./survival2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Two-Sample Survival Analysis and the Cox Model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./casecontrol.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Design and Analysis of Case-Control and Case-Cohort studies</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bayes2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Bayesian analysis of cohort and case-control studies</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Principles of Causal Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./causality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Causality in Public Health</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./counterfactuals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Potential Outcomes and Attributable Risk</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dags.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Confounding and Selection Bias on DAGs</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./swigs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Confounding and Selection Bias on SWIGs</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./standardization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Causal Effects and Standardization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./geometry.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Geometry of Causal Inference</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Epidemologic and Statistical Methods for Causal Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./stratification.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Stratified Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./matching.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">matching.html</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./calculus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Calculus</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="2">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#pooled-measures-of-association" id="toc-pooled-measures-of-association" class="nav-link active" data-scroll-target="#pooled-measures-of-association"><span class="header-section-number">19.1</span> Pooled measures of association</a>
+  <ul class="collapse">
+  <li><a href="#woolf-estimators" id="toc-woolf-estimators" class="nav-link" data-scroll-target="#woolf-estimators"><span class="header-section-number">19.1.1</span> Woolf estimators</a></li>
+  <li><a href="#mantel-haenszel-estimators" id="toc-mantel-haenszel-estimators" class="nav-link" data-scroll-target="#mantel-haenszel-estimators"><span class="header-section-number">19.1.2</span> Mantel-Haenszel estimators</a></li>
+  </ul></li>
+  <li><a href="#testing-homogeneity" id="toc-testing-homogeneity" class="nav-link" data-scroll-target="#testing-homogeneity"><span class="header-section-number">19.2</span> Testing homogeneity</a>
+  <ul class="collapse">
+  <li><a href="#wald-chi2-tests" id="toc-wald-chi2-tests" class="nav-link" data-scroll-target="#wald-chi2-tests"><span class="header-section-number">19.2.1</span> Wald <span class="math inline">\(\chi^2\)</span> tests</a></li>
+  <li><a href="#interaction-terms" id="toc-interaction-terms" class="nav-link" data-scroll-target="#interaction-terms"><span class="header-section-number">19.2.2</span> Interaction terms</a></li>
+  <li><a href="#testing-the-null-hypothesis" id="toc-testing-the-null-hypothesis" class="nav-link" data-scroll-target="#testing-the-null-hypothesis"><span class="header-section-number">19.2.3</span> Testing the null hypothesis</a></li>
+  </ul></li>
+  <li><a href="#regression-models" id="toc-regression-models" class="nav-link" data-scroll-target="#regression-models"><span class="header-section-number">19.3</span> Regression models</a>
+  <ul class="collapse">
+  <li><a href="#conditional-logistic-regression" id="toc-conditional-logistic-regression" class="nav-link" data-scroll-target="#conditional-logistic-regression"><span class="header-section-number">19.3.1</span> Conditional logistic regression</a></li>
+  <li><a href="#stratified-aft-models" id="toc-stratified-aft-models" class="nav-link" data-scroll-target="#stratified-aft-models"><span class="header-section-number">19.3.2</span> Stratified AFT models</a></li>
+  <li><a href="#stratified-cox-model" id="toc-stratified-cox-model" class="nav-link" data-scroll-target="#stratified-cox-model"><span class="header-section-number">19.3.3</span> Stratified Cox model</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./stratification.html">Epidemologic and Statistical Methods for Causal Inference</a></li><li class="breadcrumb-item"><a href="./stratification.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Stratified Analysis</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Stratified Analysis</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>To interpret a measure of association as a causal effect, there must be no confounding or selection bias. We have discussed how stratification can help us control bias in causal inference. Suppose that we have a variable <span class="math inline">\(C\)</span> with <span class="math inline">\(k\)</span> different levels such that stratification on <span class="math inline">\(C\)</span> is sufficient to prevent confounding and selection bias. Also suppose that we have chosen a measure of association appropriate for the scientific or public health question we are trying to answer. The next steps are:</p>
+<ol type="1">
+<li><p>Decide whether there is effect modification. To test whether there is effect measure modification (which is often referred to as testing <em>homogeneity</em>), it is often necessary to calculate a pooled measure of association.</p></li>
+<li><p>If there is effect modification, report stratum-specific measures of association or standardize to a distribution of <span class="math inline">\(C\)</span>. In a case-control study, we may only be able to estimate the conditional odds ratios (which might estimate risk ratios or incidence rate ratios). In a cohort study, we can calculate stratum-specific risks and standardized measures of association.</p></li>
+<li><p>If there is no effect modification, report the pooled measure of association. If the measure is collapsible (or nearly collapsible), this will approximate the population-level measure of association.</p></li>
+</ol>
+<p>Unless we standardize, this approach estimates conditional measures of the association between <span class="math inline">\(X\)</span> and <span class="math inline">\(D\)</span> given <span class="math inline">\(C\)</span>. If conditioning on <span class="math inline">\(C\)</span> controls confounding and selection bias, then these conditional measures of association can be interpreted in terms of conditional causal effects. We will assume that each stratum has the stratum-specific 2x2 table shown in <a href="#tbl-2x2-strat" class="quarto-xref">Table&nbsp;<span>19.1</span></a> and that we ignore tables with <span class="math inline">\(n_i = 0\)</span>.</p>
+<div id="tbl-2x2-strat" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-2x2-strat-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;19.1: Stratum-specific 2x2 table
+</figcaption>
+<div aria-describedby="tbl-2x2-strat-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: center;"><span class="math inline">\(D = 1\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(D = 0\)</span></th>
+<th style="text-align: center;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(X = 1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(a_i\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(b_i\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(r_{1i}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(X = 0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(c_i\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(d_i\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(r_{0i}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Total</strong></td>
+<td style="text-align: center;"><span class="math inline">\(k_{1i}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(k_{0i}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n_i\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<section id="pooled-measures-of-association" class="level2" data-number="19.1">
+<h2 data-number="19.1" class="anchored" data-anchor-id="pooled-measures-of-association"><span class="header-section-number">19.1</span> Pooled measures of association</h2>
+<p>Estimators of a common measure of association have two goals that are not always compatible. First, minimize variance. Second, try to perform well in sparse strata. If you stratify by several variables, you will often end up with the data spread across many 2x2 tables that can have small numbers of individuals, including cells with zero individuals. Cells with zero individuals are often called <strong>zero cells</strong>, and data with a large number of cells with small numbers of individuals are called <strong>sparse data</strong>. There are three general methods of estimating common measures of association conditional on a set of covariates <span class="math inline">\(C\)</span>:</p>
+<ul>
+<li><p>Woolf estimators <span class="citation" data-cites="woolf1955estimating">(<a href="references.html#ref-woolf1955estimating" role="doc-biblioref">Woolf 1955</a>)</span>: These minimize variance but rely on having large samples in each stratum.</p></li>
+<li><p>Mantel-Haenszel estimators <span class="citation" data-cites="mantel1959statistical">(<a href="references.html#ref-mantel1959statistical" role="doc-biblioref">Mantel and Haenszel 1959</a>)</span>: These come close to minimizing variance but perform much better with sparse strata.</p></li>
+<li><p>Regression models: These can handle continuous covariates as well as categorical covariates. They have low variance and are almost (but not always) as tolerant of sparse strata as Mantel-Haenszel estimators. The regression models that can be used for this purpose include generalized linear models (GLMs), conditional logistic regression, and regression models from survival analysis. Because of their flexibility and performance, regression models are the most widely used of these methods.</p></li>
+</ul>
+<p>The Woolf and Mantel-Haenszel estimators are weighted averages of the stratum-specific measures of association: <span id="eq-wavg"><span class="math display">\[
+  \frac{\sum_{i = 1}^m w_i \hat{M}_i}{\sum_{i = 1}^k w_i}.
+\tag{19.1}\]</span></span> where <span class="math inline">\(\hat{M}_i\)</span> is the estimated stratum-specific measure of association, <span class="math inline">\(w_i\)</span> is the weight given to stratum <span class="math inline">\(i\)</span>, and <span class="math inline">\(m\)</span> is the number of strata. This weighted average is different from the weighted average that we use in standardization because it is an average of the stratum-specific measures of association rather than an average of stratum-specific risks (which are then compared using a measure of association).</p>
+<section id="woolf-estimators" class="level3" data-number="19.1.1">
+<h3 data-number="19.1.1" class="anchored" data-anchor-id="woolf-estimators"><span class="header-section-number">19.1.1</span> Woolf estimators</h3>
+<p>The variance of the weighted average in <a href="#eq-wavg" class="quarto-xref">Equation&nbsp;<span>19.1</span></a> is minimized by letting <span class="math display">\[
+  w_i = \frac{1}{\Var(\hat{M}_i)}.
+\]</span> These are the weights used by Woolf estimators <span class="citation" data-cites="woolf1955estimating">(<a href="references.html#ref-woolf1955estimating" role="doc-biblioref">Woolf 1955</a>)</span>. For ratio measures, Woolf estimators are calculated on the log scale and then transformed back to the odds ratio, risk ratio, or incidence rate ratio scale. For the odds ratio, the Woolf estimator is <span class="math display">\[
+  \ln \hat{\OR}_W
+  = \frac{\sum_{i = 1}^m w_i \ln \hat{\OR}_i}{\sum_{i = 1}^k w_i}
+\]</span> where <span class="math display">\[
+  w_i
+  = \bigg(\frac{1}{a_i} + \frac{1}{b_i}
+  + \frac{1}{c_i} + \frac{1}{d_i}\bigg)^{-1}.
+\]</span> If there is any stratum with a zero cell, this estimator is undefined. One correction that is sometimes used is to add <span class="math inline">\(0.5\)</span> to all cells before calculating the stratum-specific log odds ratios and variances <span class="citation" data-cites="jewell2003statistics">(<a href="references.html#ref-jewell2003statistics" role="doc-biblioref">Jewell 2003</a>)</span>, which is a small-sample correction for the log odds ratio.</p>
+</section>
+<section id="mantel-haenszel-estimators" class="level3" data-number="19.1.2">
+<h3 data-number="19.1.2" class="anchored" data-anchor-id="mantel-haenszel-estimators"><span class="header-section-number">19.1.2</span> Mantel-Haenszel estimators</h3>
+<p>Mantel-Haenszel estimators, which are sometimes called Cochran-Mantel-Haenszel estimators <span class="citation" data-cites="cochran1954some mantel1959statistical">(<a href="references.html#ref-cochran1954some" role="doc-biblioref">Cochran 1954</a>; <a href="references.html#ref-mantel1959statistical" role="doc-biblioref">Mantel and Haenszel 1959</a>)</span>, use weights that approximate inverse variance weights under the null hypothesis but do not blow up in sparse strata. Variance calculation for Mantel-Haenszel estimators can be complicated <span class="citation" data-cites="robins1986new">(<a href="references.html#ref-robins1986new" role="doc-biblioref">Robins 1986</a>)</span>.</p>
+<section id="odds-ratio" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="odds-ratio">Odds ratio</h4>
+<p>From <a href="#tbl-2x2-strat" class="quarto-xref">Table&nbsp;<span>19.1</span></a>, the odds ratio in stratum <span class="math inline">\(i\)</span> is <span class="math display">\[
+  \hat{\OR}_i
+  = \frac{a_i d_i}{b_i c_i}
+\]</span> The Mantel-Haenszel odds ratio is <span class="math display">\[
+  \hat{\OR}_\text{MH}
+  = \frac{\sum_{i = 1}^m a_i d_i / n_i}{\sum_{i = 1}^k b_i c_i / n_i},
+\]</span> which we get from <a href="#eq-wavg" class="quarto-xref">Equation&nbsp;<span>19.1</span></a> using <span class="math display">\[
+  w_i = \frac{b_i c_i}{n_i}.
+\]</span> These weights can be seen in the denominator of <span class="math inline">\(\hat{\OR}_\text{MH}\)</span>. Strata with <span class="math inline">\(b_i c_i = 0\)</span> will be ignored, but the estimator is defined whenever at least one stratum has <span class="math inline">\(b_i c_i \neq 0\)</span>. Because they can be used for case-control studies, the Mantel-Haenszel odds ratio is the most widely used of all Mantel-Haenszel pooled measures of association.</p>
+<p>The Mantel-Haenzsel weights for the odds ratio approximate inverse-variance weights under the null hypothesis that the common stratum-specific <span class="math inline">\(\OR = 1\)</span>. If <span class="math inline">\(\hat{OR}_i = 1\)</span>, then <span class="math inline">\(a_i d_i = b_i c_i\)</span>. We can rearrange <span class="math inline">\(\Var\bigl(\ln \hat{\OR}_i\bigr)\)</span> from <a href="cohort.html#eq-var-lnOR" class="quarto-xref">Equation&nbsp;<span>9.11</span></a> to get <span class="math display">\[
+  \frac{1}{a_i} + \frac{1}{b_i} + \frac{1}{c_i} + \frac{1}{d_i}
+  = \frac{a_i + d_i}{a_i d_i} + \frac{b_i + c_i}{b_i c_i}
+  = \frac{a_i + b_i + c_i + d_i}{b_i c_i}
+  = \frac{n}{b_i c_i}.
+\]</span> Using the delta method, we get <span id="eq-delta-mh"><span class="math display">\[
+  \Var\bigl(\hat{\OR}_i\bigr)
+  = \Var\Bigl(e^{\ln \hat{\OR}_i}\Bigr)
+  \approx \Bigl(e^{\ln \hat{\OR}_i}\Bigr)^2 \Var(\ln \hat{\OR}_i)
+  = \Var(\ln \hat{\OR}_i).
+\tag{19.2}\]</span></span> when <span class="math inline">\(\hat{\OR}_i \approx 1\)</span> in stratum <span class="math inline">\(i\)</span>. Therefore, the inverse variance weight of <span class="math inline">\(\hat{\OR}_i\)</span> under the null hypothesis is approximately <span class="math inline">\(b_i c_i / n_i\)</span>.</p>
+</section>
+<section id="risk-ratio" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="risk-ratio">Risk ratio</h4>
+<p>From <a href="#tbl-2x2-strat" class="quarto-xref">Table&nbsp;<span>19.1</span></a>, the risk ratio in stratum <span class="math inline">\(i\)</span> is <span class="math display">\[
+  \hat{\RR}_i
+  = \frac{a_i / r_{1i}}{c_i / r_{0i}}
+  = \frac{a_i r_{0i}}{c_i r_{1i}}.
+\]</span> The Mantel-Haenszel risk ratio is <span class="math display">\[
+  \hat{\RR}_\text{MH}
+  = \frac{\sum_{i = 1}^m a_i r_{0i} / n_i}{\sum_{i = 1}^k c_i r_{1i} / n_i}
+\]</span> which we get from <a href="#eq-wavg" class="quarto-xref">Equation&nbsp;<span>19.1</span></a> using the weights <span class="math display">\[
+  w_i = \frac{c_i r_{1i}}{n_i}
+\]</span> that can be seen in the denominator. Strata with <span class="math inline">\(c_i r_{1i} = 0\)</span> will be ignored, but the estimator is defined whenever at least one stratum has <span class="math inline">\(c_i r_{1i} \neq 0\)</span>.</p>
+<p>The Mantel-Haenszel weights for the risk ratio can be derived by assuming both the null hypothesis that <span class="math inline">\(\RR_i = 1\)</span> in each stratum <span class="math inline">\(i\)</span> and that the risk of disease is small in each stratum. If <span class="math inline">\(\hat{\RR}_i = 1\)</span>, then <span class="math inline">\(a_i r_{0i} = C_i r_{1i}\)</span>. We can rearrange <span class="math inline">\(\Var\bigl(\ln \hat{\RR}_i\bigr)\)</span> from <a href="cohort.html#eq-var-lnRR" class="quarto-xref">Equation&nbsp;<span>9.6</span></a> to get <span class="math display">\[
+  \frac{1}{a_i} - \frac{1}{r_{1i}} + \frac{1}{c_i} - \frac{1}{r_{0i}}
+  = \frac{r_{0i} - a_i}{a_i r_{1i}} + \frac{r_{1i} - c_i}{c_i r_{1i}}
+  = \frac{n_i - k_{1i}}{c_i r_{0i}}
+  \approx \frac{n_i}{c_i r_{0i}}
+\]</span> where the final approximation comes from the fact that <span class="math inline">\(k_{1i} \ll n_i\)</span> if the disease is rare in each stratum. By replacing <span class="math inline">\(\hat{\OR}_i\)</span> with <span class="math inline">\(\hat{\RR}_i\)</span> in <a href="#eq-delta-mh" class="quarto-xref">Equation&nbsp;<span>19.2</span></a>, we get <span class="math display">\[
+  \Var\bigl(\hat{\RR}_i\bigr) \approx \Var\bigl(\ln \hat{\RR}_i\bigr)
+\]</span> when <span class="math inline">\(\hat{\RR}_i \approx 1\)</span> in stratum <span class="math inline">\(i\)</span>. Therefore, the inverse variance weight of <span class="math inline">\(\hat{\RR}_i\)</span> for a rare disease under the null hypothesis is approximately <span class="math inline">\(b_i c_i / n_i\)</span>.</p>
+</section>
+<section id="incidence-rate-ratio" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="incidence-rate-ratio">Incidence rate ratio</h4>
+<p>In stratum <span class="math inline">\(i\)</span>, let <span class="math inline">\(T_{1i}\)</span> be the total exposed person-time, <span class="math inline">\(T_{0i}\)</span> be the total unexposed person-time, and <span class="math inline">\(T_i = T_{0i} + T_{1i}\)</span> be the total person-time. The incidence ratio ratio in stratum <span class="math inline">\(i\)</span> is <span class="math display">\[
+  \hat{\IRR}_i
+  = \frac{a_i / T_{1i}}{c_i / T_{0i}}
+  = \frac{a_i T_{0i}}{c_i T_{1i}}.
+\]</span> The Mantel-Haenszel risk ratio is <span class="math display">\[
+  \hat{\IRR}_\text{MH}
+  = \frac{\sum_{i = 1}^k a_i T_{0i} / T_i}{\sum_{i = 1}^k c_i T_{1i} / T_i}
+\]</span> which we get from <a href="#eq-wavg" class="quarto-xref">Equation&nbsp;<span>19.1</span></a> using the weights <span class="math display">\[
+  w_i = \frac{c_i T_{1i}}{T_i}
+\]</span> that can be seen in the denominator. Strata with <span class="math inline">\(c_i T_{1i} = 0\)</span> will be ignored, but the estimator is defined whenever at least one stratum has <span class="math inline">\(c_i T_{1i} \neq 0\)</span>.</p>
+<p>The Mantel-Haenszel weights for the risk ratio can be derived by assuming both the null hypothesis that <span class="math inline">\(\IRR_i = 1\)</span> in each stratum <span class="math inline">\(i\)</span>. It does not require any rare-disease assumption. If <span class="math inline">\(\hat{\IRR}_i = 1\)</span>, then <span class="math inline">\(a_i T_{0i} = c_i T_{1i}\)</span> so <span class="math display">\[
+  \frac{1}{a_i} = \frac{T_{0i}}{c_i T_{1i}}.
+\]</span> We can rearrange <span class="math inline">\(\Var\bigl(\ln \hat{\RR}_i\bigr)\)</span> from <a href="cohort.html#eq-var-lnIRR" class="quarto-xref">Equation&nbsp;<span>9.16</span></a> to get <span class="math display">\[
+  \frac{1}{a_i} + \frac{1}{c_i}
+  = \frac{T_{0i}}{c_i T_{1i}} + \frac{1}{c_i}
+  = \frac{T_{0i} + T_{1i}}{c_i T_{1i}}
+  = \frac{T_i}{c_i T_{1i}}
+\]</span> By replacing <span class="math inline">\(\hat{\OR}_i\)</span> with <span class="math inline">\(\hat{\IRR}_i\)</span> in <a href="#eq-delta-mh" class="quarto-xref">Equation&nbsp;<span>19.2</span></a>, we get <span class="math display">\[
+  \Var\bigl(\hat{\IRR}_i\bigr) \approx \Var\bigl(\ln \hat{\IRR}_i\bigr)
+\]</span> when <span class="math inline">\(\hat{\IRR}_i \approx 1\)</span> in stratum <span class="math inline">\(i\)</span>. Therefore, the inverse variance weight of <span class="math inline">\(\hat{\IRR}_i\)</span> under the null hypothesis is approximately <span class="math inline">\(c_i T_{1i} / T_i\)</span>.</p>
+</section>
+</section>
+</section>
+<section id="testing-homogeneity" class="level2" data-number="19.2">
+<h2 data-number="19.2" class="anchored" data-anchor-id="testing-homogeneity"><span class="header-section-number">19.2</span> Testing homogeneity</h2>
+<p>Tests of homogeneity typically have low power and require large samples within each stratum. With that caveat, the basic idea is to see whether assuming a constant measure of association is a reasonable approximation. A test of homogeneity can be done using a Wald <span class="math inline">\(\chi^2\)</span> test or by testing interaction terms in a regression model.</p>
+<section id="wald-chi2-tests" class="level3" data-number="19.2.1">
+<h3 data-number="19.2.1" class="anchored" data-anchor-id="wald-chi2-tests"><span class="header-section-number">19.2.1</span> Wald <span class="math inline">\(\chi^2\)</span> tests</h3>
+<p>Suppose we have <span class="math inline">\(k\)</span> strata, let <span class="math inline">\(M_i\)</span> be the stratum-specific measure of association, and <span class="math inline">\(M\)</span> be an estimate of a common measure of association. A Wald test of homogeneity uses the test statistic <span class="math display">\[
+  \sum_{i = i}^m \frac{(\hat{M}_i - \hat{M})^2}{\Var(\hat{M}_i)},
+\]</span> which has a <span class="math inline">\(\chi^2_{k - 1}\)</span> distribution under the null hypothesis that all <span class="math inline">\(M_i = M\)</span>.</p>
+<p>For ratio measures such as the risk ratio or odds ratio, <span class="math inline">\(M_i\)</span> and <span class="math inline">\(M\)</span> should be the logarithm of the ratio. For the Mantel-Haenszel odds ratio, the Wald <span class="math inline">\(\chi^2\)</span> statistic is <span class="math display">\[
+  \chi^2_\text{MH}
+  = \sum_{i = 1}^m \frac{(\ln \hat{\OR}_i - \ln \hat{\OR}_\text{MH})^2}{\Var(\ln \hat{\OR}_i)},
+\]</span> where <span class="math display">\[
+  \Var\bigl(\ln \hat{\OR}_i \bigr)
+  = \frac{1}{a_i} + \frac{1}{b_i} + \frac{1}{c_i} + \frac{1}{d_i}.
+\]</span> Under the null hypothesis that <span class="math inline">\(M_i = M\)</span> in each stratum <span class="math inline">\(i\)</span>, the test statistic <span class="math inline">\(\chi^2_\text{MH}\)</span> has a <span class="math inline">\(\chi^2_{k - 1}\)</span> distribution. It is important not to confuse this test of homogeneity with the test of the null hypothesis that the Mantel-Haenszel odds ratio equals one.</p>
+</section>
+<section id="interaction-terms" class="level3" data-number="19.2.2">
+<h3 data-number="19.2.2" class="anchored" data-anchor-id="interaction-terms"><span class="header-section-number">19.2.2</span> Interaction terms</h3>
+<p>As explained in <a href="geometry.html#sec-interaction" class="quarto-xref"><span>Section 18.3.2</span></a>, it is possible to test for homogeneity of an odds ratio, risk ratio, or incidence rate ratio by fitting an appropriate generalized linear model (GLM) or a model from survival analysis (accelerated failure time or Cox regression) with an interaction term. When <span class="math inline">\(C\)</span> is a covariate that has <span class="math inline">\(k\)</span> levels, the model would include <span class="math inline">\(k - 1\)</span> terms via indicator variables (sometimes called <em>dummy variables</em>), orthogonal polynomials, or splines. To test interaction with <span class="math inline">\(C\)</span>, we would include interactions between <span class="math inline">\(X\)</span> and all of the terms that encode <span class="math inline">\(C\)</span>. These interaction terms can be tested simultaneously using Wald, score, or likelihood ratio tests. Each of these tests produces a statistic that has a <span class="math inline">\(\chi^2_{k - 1}\)</span> distribution under the null hypothesis that <span class="math inline">\(M_i = M\)</span> in each stratum <span class="math inline">\(i\)</span>.</p>
+</section>
+<section id="testing-the-null-hypothesis" class="level3" data-number="19.2.3">
+<h3 data-number="19.2.3" class="anchored" data-anchor-id="testing-the-null-hypothesis"><span class="header-section-number">19.2.3</span> Testing the null hypothesis</h3>
+<p>If there is no effect measure modification, pooled estimators of a measure of association can be used to test the null hypothesis of no conditional association between exposure and disease within strata of <span class="math inline">\(C\)</span>. For the Woolf and Mantel-Haenzsel estimators, the test statistic is <span class="math display">\[
+  \frac{(M - M_\text{null})^2}{\Var(M)},
+\]</span> which has a <span class="math inline">\(\chi^2_1\)</span> distribution under <span class="math inline">\(H_0\)</span>. For the risk difference, <span class="math inline">\(M_\text{null} = 0\)</span>. For ratio measures, the test is done on the log scale so <span class="math inline">\(M_\text{null} = 0\)</span>.</p>
+</section>
+</section>
+<section id="regression-models" class="level2" data-number="19.3">
+<h2 data-number="19.3" class="anchored" data-anchor-id="regression-models"><span class="header-section-number">19.3</span> Regression models</h2>
+<p>A stratified regression model can achieve something similar to the Woolf and Mantel-Haenszel statistics. However, the strata in a regression model are not completely independent as they are in pooled estimators. In a regression model, the strata share information about the association between treatment or exposure <span class="math inline">\(X\)</span> and disease <span class="math inline">\(D\)</span>. When the model does not accurately capture the conditional association between <span class="math inline">\(X\)</span> and <span class="math inline">\(D\)</span> given <span class="math inline">\(C\)</span>, there can be residual confounding or selection bias. Another advantage of stratified regression models is that they can include predictors in addition to <span class="math inline">\(C\)</span> and <span class="math inline">\(X\)</span>.</p>
+<p>To test homogeneity in a regression model stratified by <span class="math inline">\(C\)</span>, we can include interaction terms between <span class="math inline">\(X\)</span> and <span class="math inline">\(C\)</span>.</p>
+<p>If there is no effect measure modification, we can test the null hypothesis of no conditional association between <span class="math inline">\(X\)</span> and <span class="math inline">\(D\)</span> given <span class="math inline">\(C\)</span> using a Wald, score, or likelihood ratio test of the coefficient on <span class="math inline">\(X\)</span>.</p>
+<section id="conditional-logistic-regression" class="level3" data-number="19.3.1">
+<h3 data-number="19.3.1" class="anchored" data-anchor-id="conditional-logistic-regression"><span class="header-section-number">19.3.1</span> Conditional logistic regression</h3>
+<p>The conditional logistic regression model that is used to analyze nested case-control studies (see <a href="casecontrol.html#sec-nested-cc" class="quarto-xref"><span>Section 11.3</span></a>) can also be used to estimate a common odds ratio from case-control data stratified on any confounder or set of confounders <span class="math inline">\(C\)</span>. Let <span class="math inline">\(\odds(p_{si})\)</span> be the odds of disease for person <span class="math inline">\(i\)</span> in stratum (i.e., case-control set) <span class="math inline">\(s\)</span>. Then the conditional logistic regression model assumes <span class="math display">\[
+  \ln \odds\bigl(\Pr(D = 1 \given{} C = c, X = x)\bigr) = \beta_{0c} + \beta x,
+\]</span> where <span class="math inline">\(\beta_{0c}\)</span> is a statum-specific intercept the stratum with <span class="math inline">\(C = c\)</span> and <span class="math inline">\(X\)</span> is the exposure or treatment. The odds ratio associated with a one-unit increase in <span class="math inline">\(X\)</span> within each stratum of <span class="math inline">\(C\)</span> is <span class="math inline">\(e^\beta\)</span>.</p>
+<p>Consider a matched set with one case and <span class="math inline">\(k\)</span> controls who all have <span class="math inline">\(C = c\)</span>, and let <span class="math inline">\(p_j\)</span> the risk of disease in person <span class="math inline">\(j\)</span>. Then the probability that there is one failure and no other failures is <span class="math display">\[
+  \sum_{i = 1}^{k + 1} \bigg(p_i \prod_{j \neq i} (1 - p_j) \bigg)
+  = \sum_{i = 1}^{k + 1} \frac{p_i}{1 - p_i} \prod_{j = 1}^{k + 1} (1 - p_j)
+  = \sum_{i = 1}^{k + 1} \odds(p_i) \prod_{j = 1}^{k + 1} (1 - p_j).
+\]</span> Without loss of generality, we can number the group members to that <span class="math inline">\(i = 1\)</span> is the case. The conditional probability that <span class="math inline">\(i = 1\)</span> is the case given that there is one failure in the group is <span id="eq-matched"><span class="math display">\[
+  \begin{aligned}
+    \frac{\odds(p_1) \prod_{j = 1}^k (1 - p_j)}{\sum_{i = 1}^k \odds(p_i) \prod_{j = 1}^{k + 1} (1 - p_j)}
+    &amp;= \frac{\odds(p_1)}{\sum_{i = 1}^{k + 1} \odds(p_i)} \\
+    &amp;= \frac{e^{\beta_{0c} + \beta x_1}}{\sum_{i = 1}^{k + 1} e^{\beta_{0c} + \beta_1 x_i}}
+      = \frac{e^{\beta x_1}}{\sum_{i = 1}^{k + 1} e^{\beta x_i}}.
+  \end{aligned}
+\tag{19.3}\]</span></span> The stratum-specific intercept <span class="math inline">\(\beta_{0c}\)</span> cancels out.</p>
+<p>The likelihood for <span class="math inline">\(\beta\)</span> is the product of the stratum-specific conditional probabilities in <a href="#eq-matched" class="quarto-xref">Equation&nbsp;<span>19.3</span></a>: <span class="math display">\[
+  L(\beta)
+  = \prod_{i = 1}^m \frac{e^{\beta x_i}}{\sum_{j \in R^*_i} e^{\beta x_j}}
+\]</span> where <span class="math inline">\(R^*_i\)</span> is the set containing the case and their matched controls. Maximum likelihood estimation yields consistent and asymptotically normal point and interval estimates for <span class="math inline">\(\beta_\true\)</span>. This is identical to the Cox partial likelihood from a nested case-control study, except the risk sets are replaced by matched case-control sets and the hazard ratio is replaced by a log odds. Exactly the same regression software can be used to fit both models—only the interpretation of the results is different. This model can be extended to include multiple predictors, including polynomials, splines, categorical variables, and interactions.</p>
+</section>
+<section id="stratified-aft-models" class="level3" data-number="19.3.2">
+<h3 data-number="19.3.2" class="anchored" data-anchor-id="stratified-aft-models"><span class="header-section-number">19.3.2</span> Stratified AFT models</h3>
+<p>In a stratified accelerated failure time (AFT) model, all strata of <span class="math inline">\(C\)</span> have the same underlying failure time distribution (e.g., Weibull, or log-logistic). However, each stratum of <span class="math inline">\(C\)</span> is allowed to have its own baseline rate parameter <span class="math inline">\(\lambda_{0c}\)</span> and shape parameter <span class="math inline">\(\gamma_c\)</span>. The other coefficients in the model are interpreted as before. In particular, <span class="math inline">\(e^{-\beta}\)</span> is the common rate ratio associated with a one-unit increase in <span class="math inline">\(X\)</span> within strata of <span class="math inline">\(C\)</span>. These models can be used to estimate a common rate ratio from stratified data.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>strat-aft.R</strong></pre>
+</div>
+<div class="sourceCode" id="cb1" data-filename="strat-aft.R"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="do">## Stratified accelerated failure time (AFT) models</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="co"># load R packages</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">library</span>(survival)</span>
+<span id="cb1-5"><a href="#cb1-5"></a></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="co"># unstratified log-logistic AFT model</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a>rat_unstrat <span class="ot">&lt;-</span> <span class="fu">survreg</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> rx <span class="sc">+</span> sex,</span>
+<span id="cb1-8"><a href="#cb1-8"></a>                       <span class="at">data =</span> rats, <span class="at">dist =</span> <span class="st">"loglogistic"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9"></a></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="co"># stratified log-logistic AFT model for rats data</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="co"># The strata() command only allows for different shape parameters.</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="co"># To get a truly stratified model, you need to include sex as a predictor.</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a>rat_strat <span class="ot">&lt;-</span> <span class="fu">survreg</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> rx <span class="sc">+</span> sex <span class="sc">+</span> <span class="fu">strata</span>(sex),</span>
+<span id="cb1-14"><a href="#cb1-14"></a>                     <span class="at">data =</span> rats, <span class="at">dist =</span> <span class="st">"loglogistic"</span>)</span>
+<span id="cb1-15"><a href="#cb1-15"></a><span class="fu">summary</span>(rat_strat)</span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="fu">exp</span>(<span class="sc">-</span><span class="fu">coef</span>(rat_strat))</span>
+<span id="cb1-17"><a href="#cb1-17"></a><span class="fu">exp</span>(<span class="sc">-</span><span class="fu">confint</span>(rat_strat))</span>
+<span id="cb1-18"><a href="#cb1-18"></a></span>
+<span id="cb1-19"><a href="#cb1-19"></a><span class="co"># baseline rates for female rats and male rats</span></span>
+<span id="cb1-20"><a href="#cb1-20"></a>lambda_f <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="fu">coef</span>(rat_strat)[<span class="st">"(Intercept)"</span>])</span>
+<span id="cb1-21"><a href="#cb1-21"></a>lambda_m <span class="ot">&lt;-</span> lambda_f <span class="sc">*</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="fu">coef</span>(rat_strat)[<span class="st">"sexm"</span>])</span>
+<span id="cb1-22"><a href="#cb1-22"></a></span>
+<span id="cb1-23"><a href="#cb1-23"></a><span class="co"># estimated logistic rate ratio (same for males and females)</span></span>
+<span id="cb1-24"><a href="#cb1-24"></a>rr <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="fu">coef</span>(rat_strat)[<span class="st">"rx"</span>])</span>
+<span id="cb1-25"><a href="#cb1-25"></a><span class="fu">exp</span>(<span class="sc">-</span><span class="fu">confint</span>(rat_strat)[<span class="st">"rx"</span>, ])</span>
+<span id="cb1-26"><a href="#cb1-26"></a></span>
+<span id="cb1-27"><a href="#cb1-27"></a><span class="co"># estimated shape parameters</span></span>
+<span id="cb1-28"><a href="#cb1-28"></a><span class="dv">1</span> <span class="sc">/</span> rat_strat<span class="sc">$</span>scale</span>
+<span id="cb1-29"><a href="#cb1-29"></a>shape_f <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> rat_strat<span class="sc">$</span>scale[<span class="st">"f"</span>]</span>
+<span id="cb1-30"><a href="#cb1-30"></a>shape_m <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> rat_strat<span class="sc">$</span>scale[<span class="st">"m"</span>]</span>
+<span id="cb1-31"><a href="#cb1-31"></a></span>
+<span id="cb1-32"><a href="#cb1-32"></a><span class="co"># estimated odds ratios (constant in a log-logistic AFT model)</span></span>
+<span id="cb1-33"><a href="#cb1-33"></a>or_f <span class="ot">&lt;-</span> rr<span class="sc">^</span>shape_f</span>
+<span id="cb1-34"><a href="#cb1-34"></a>or_m <span class="ot">&lt;-</span> rr<span class="sc">^</span>shape_m</span>
+<span id="cb1-35"><a href="#cb1-35"></a></span>
+<span id="cb1-36"><a href="#cb1-36"></a></span>
+<span id="cb1-37"><a href="#cb1-37"></a><span class="co"># residual confounding example</span></span>
+<span id="cb1-38"><a href="#cb1-38"></a><span class="co"># simulate censored Weibull with different shapes but constant rate ratio</span></span>
+<span id="cb1-39"><a href="#cb1-39"></a>n <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb1-40"><a href="#cb1-40"></a>fail0f <span class="ot">&lt;-</span> <span class="fu">rweibull</span>(<span class="dv">3</span> <span class="sc">*</span> n, <span class="at">shape =</span> .<span class="dv">5</span>, <span class="at">scale =</span> <span class="dv">1</span>)</span>
+<span id="cb1-41"><a href="#cb1-41"></a>fail1f <span class="ot">&lt;-</span> <span class="fu">rweibull</span>(n, <span class="at">shape =</span> .<span class="dv">5</span>, <span class="at">scale =</span> <span class="dv">1</span> <span class="sc">/</span> <span class="dv">2</span>)</span>
+<span id="cb1-42"><a href="#cb1-42"></a>fail0m <span class="ot">&lt;-</span> <span class="fu">rweibull</span>(n, <span class="at">shape =</span> <span class="dv">2</span>, <span class="at">scale =</span> <span class="dv">1</span>)</span>
+<span id="cb1-43"><a href="#cb1-43"></a>fail1m <span class="ot">&lt;-</span> <span class="fu">rweibull</span>(<span class="dv">3</span> <span class="sc">*</span> n, <span class="at">shape =</span> <span class="dv">2</span>, <span class="at">scale =</span> <span class="dv">1</span> <span class="sc">/</span> <span class="dv">2</span>)</span>
+<span id="cb1-44"><a href="#cb1-44"></a></span>
+<span id="cb1-45"><a href="#cb1-45"></a>fail <span class="ot">&lt;-</span> <span class="fu">c</span>(fail0f, fail1f, fail0m, fail1m)</span>
+<span id="cb1-46"><a href="#cb1-46"></a>cens <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb1-47"><a href="#cb1-47"></a>time <span class="ot">&lt;-</span> <span class="fu">pmin</span>(fail, cens)</span>
+<span id="cb1-48"><a href="#cb1-48"></a>event <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(cens <span class="sc">&lt;</span> fail, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb1-49"><a href="#cb1-49"></a>x <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="at">each =</span> n)</span>
+<span id="cb1-50"><a href="#cb1-50"></a>male <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">each =</span> <span class="dv">4</span> <span class="sc">*</span> n)</span>
+<span id="cb1-51"><a href="#cb1-51"></a>wdat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">time =</span> time, <span class="at">event =</span> event, <span class="at">x =</span> x, <span class="at">male =</span> male)</span>
+<span id="cb1-52"><a href="#cb1-52"></a></span>
+<span id="cb1-53"><a href="#cb1-53"></a><span class="co"># Weibull AFT model that does not include sex</span></span>
+<span id="cb1-54"><a href="#cb1-54"></a>crude <span class="ot">&lt;-</span> <span class="fu">survreg</span>(<span class="fu">Surv</span>(time, event) <span class="sc">~</span> x, <span class="at">data =</span> wdat)</span>
+<span id="cb1-55"><a href="#cb1-55"></a><span class="fu">exp</span>(<span class="sc">-</span><span class="fu">coef</span>(crude)[<span class="st">"x"</span>])</span>
+<span id="cb1-56"><a href="#cb1-56"></a><span class="fu">exp</span>(<span class="sc">-</span><span class="fu">confint</span>(crude)[<span class="st">"x"</span>, ])</span>
+<span id="cb1-57"><a href="#cb1-57"></a></span>
+<span id="cb1-58"><a href="#cb1-58"></a><span class="co"># unstratified Weibull AFT model that includes sex as a covariate</span></span>
+<span id="cb1-59"><a href="#cb1-59"></a>unstrat <span class="ot">&lt;-</span> <span class="fu">survreg</span>(<span class="fu">Surv</span>(time, event) <span class="sc">~</span> x <span class="sc">+</span> male, <span class="at">data =</span> wdat)</span>
+<span id="cb1-60"><a href="#cb1-60"></a><span class="fu">exp</span>(<span class="sc">-</span><span class="fu">coef</span>(unstrat)[<span class="st">"x"</span>])</span>
+<span id="cb1-61"><a href="#cb1-61"></a><span class="fu">exp</span>(<span class="sc">-</span><span class="fu">confint</span>(unstrat)[<span class="st">"x"</span>, ])</span>
+<span id="cb1-62"><a href="#cb1-62"></a></span>
+<span id="cb1-63"><a href="#cb1-63"></a><span class="co"># stratified Weibull AFT model that stratified by sex</span></span>
+<span id="cb1-64"><a href="#cb1-64"></a>strat <span class="ot">&lt;-</span> <span class="fu">survreg</span>(<span class="fu">Surv</span>(time, event) <span class="sc">~</span> x <span class="sc">+</span> male <span class="sc">+</span> <span class="fu">strata</span>(male),</span>
+<span id="cb1-65"><a href="#cb1-65"></a>                 <span class="at">data =</span> wdat)</span>
+<span id="cb1-66"><a href="#cb1-66"></a><span class="fu">exp</span>(<span class="sc">-</span><span class="fu">coef</span>(strat)[<span class="st">"x"</span>])</span>
+<span id="cb1-67"><a href="#cb1-67"></a><span class="fu">exp</span>(<span class="sc">-</span><span class="fu">confint</span>(strat)[<span class="st">"x"</span>, ])</span>
+<span id="cb1-68"><a href="#cb1-68"></a></span>
+<span id="cb1-69"><a href="#cb1-69"></a><span class="co"># Weibull AFT model that allows different shape parameters only</span></span>
+<span id="cb1-70"><a href="#cb1-70"></a>strat2 <span class="ot">&lt;-</span> <span class="fu">survreg</span>(<span class="fu">Surv</span>(time, event) <span class="sc">~</span> x <span class="sc">+</span> <span class="fu">strata</span>(male),</span>
+<span id="cb1-71"><a href="#cb1-71"></a>                 <span class="at">data =</span> wdat)</span>
+<span id="cb1-72"><a href="#cb1-72"></a></span>
+<span id="cb1-73"><a href="#cb1-73"></a><span class="co"># stratified Cox model (stratified Weibull AFT model is special case)</span></span>
+<span id="cb1-74"><a href="#cb1-74"></a>cox <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(time, event) <span class="sc">~</span> x <span class="sc">+</span> x<span class="sc">:</span>male <span class="sc">+</span> <span class="fu">strata</span>(male), <span class="at">data =</span> wdat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="stratified-cox-model" class="level3" data-number="19.3.3">
+<h3 data-number="19.3.3" class="anchored" data-anchor-id="stratified-cox-model"><span class="header-section-number">19.3.3</span> Stratified Cox model</h3>
+<p>The Cox model assumes that the hazard of failure at time <span class="math inline">\(t\)</span> is <span class="math display">\[
+  h(t, \beta, x)
+  = e^{\beta_1 x_1 + \ldots + \beta_k x_k} h_0(t),
+\]</span> where <span class="math inline">\(X_1, \ldots, X_k\)</span> are covariates and <span class="math inline">\(h_0(t)\)</span> is the baseline hazard function. A <strong>stratified Cox model</strong> allows different groups to have different baseline hazard functions. Specifically, <span class="math display">\[
+  h(t, \beta, x, c)
+  = e^{\beta x} h_{0c}(t)
+\]</span> in the stratum with <span class="math inline">\(C = c\)</span>. Although the baseline hazard functions are stratum-specific, a stratified Cox model assumes that all strata have the same coefficient vector <span class="math inline">\(\beta\)</span>.</p>
+<p>In stratum <span class="math inline">\(C = c\)</span>, let <span class="math inline">\(m_c\)</span> be the number of distinct failure times, let <span class="math inline">\(t_{1c}, \ldots t_{m_c c}\)</span> denote the distinct failure times, let <span class="math inline">\(R_c(t_{ic})\)</span> denote the risk set in stratum <span class="math inline">\(C = c\)</span> at time <span class="math inline">\(t_{ic}\)</span>, and let <span class="math inline">\(x_{ic}\)</span> denote the covariate value(s) of the person in stratum <span class="math inline">\(C = c\)</span> who fails at time <span class="math inline">\(t_{ic}\)</span>. Then the partial likelihood for a stratified model with <span class="math inline">\(K\)</span> strata and no tied failure times is <span class="math display">\[
+  L(\beta) = \prod_c \prod_{i = 1}^{m_c} \frac{e^\beta x_{ic}\big)}{\sum_{j \in R_{ic}} e^{\beta x_j}}
+\]</span> where the product is over all strata defined by <span class="math inline">\(C\)</span>. The product over the failure times in stratum <span class="math inline">\(C = c\)</span> is just the Cox partial likelihood within the stratum. The different strata share only the coefficients <span class="math inline">\(\beta\)</span>.</p>
+<p>Stratification is a useful extension of the standard Cox model, but it comes at a price. When there is actually a single baseline hazard function, the stratified model is less efficient than an unstratified model. You cannot test the effect of the stratification variable(s), and you cannot compare the model to an unstratified model using a likelihood ratio test or Akaike Information Criterion.</p>
+<section id="stratified-log-rank-test" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="stratified-log-rank-test">Stratified log-rank test</h4>
+<p>The log-rank test can also be stratified. The observed and expected number of failures and the variances separately in each stratum and then combine them into a single <span class="math inline">\(\chi^2\)</span> statistic. In this case, the null hypothesis is that the survival functions of the exposed and unexposed are the same within each stratum. Just like the log-rank test is the score test from a Cox proportional hazards model with a single binary covariate <span class="math inline">\(X\)</span> and no ties, the stratified log-rank test is the score test for a stratified Cox model with a single binary covariate and no ties within strata.</p>
+<p>Let <span class="math inline">\(O_c\)</span> be the observed number of failures among the exposed in stratum <span class="math inline">\(C = c\)</span>, and let <span class="math inline">\(E_c\)</span> and <span class="math inline">\(V_c\)</span> be the expectation and variance of the number of failures among the exposed in stratum <span class="math inline">\(c\)</span> under the null hypothesis. Within each stratum, these are calculated in exactly the same way as in the log-rank test. The sum of the differences between the observed and expected number of failures among the exposed over all strata is<br>
+<span class="math display">\[
+    U = \sum_c (O_c - E_c).
+\]</span> and its estimated variance is <span class="math display">\[
+    V = \sum_c V_c.
+\]</span> The stratified log-rank chi-squared statistic is <span class="math display">\[
+  \chi^2_\text{log-rank} = \frac{U^2}{V},
+\]</span> which has a <span class="math inline">\(\chi^2_1\)</span> distribution under the null hypothesis that the exposed and unexposed have the same stratum-specific survival functions.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>strat-cox.R</strong></pre>
+</div>
+<div class="sourceCode" id="cb2" data-filename="strat-cox.R"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="do">## Stratified Cox model</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co"># load R packages</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="fu">library</span>(survival)</span>
+<span id="cb2-5"><a href="#cb2-5"></a></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="co"># unstratified Cox model and Nelson-Aalen estimator</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a>unstrat <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> rx <span class="sc">+</span> sex, <span class="at">data =</span> rats)</span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="fu">summary</span>(unstrat)</span>
+<span id="cb2-9"><a href="#cb2-9"></a>unstrat_na <span class="ot">&lt;-</span> <span class="fu">survfit</span>(unstrat, <span class="at">stype =</span>  <span class="dv">2</span>, <span class="at">ctype =</span> <span class="dv">2</span>, <span class="at">conf.type =</span> <span class="st">"log-log"</span>,</span>
+<span id="cb2-10"><a href="#cb2-10"></a>                      <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">rx =</span> <span class="dv">0</span>, <span class="at">sex =</span> <span class="fu">c</span>(<span class="st">"f"</span>, <span class="st">"m"</span>)))</span>
+<span id="cb2-11"><a href="#cb2-11"></a></span>
+<span id="cb2-12"><a href="#cb2-12"></a><span class="co"># stratified Cox model and Nelson-Aalen estimator</span></span>
+<span id="cb2-13"><a href="#cb2-13"></a>strat <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> rx <span class="sc">+</span> <span class="fu">strata</span>(sex), <span class="at">data =</span> rats)</span>
+<span id="cb2-14"><a href="#cb2-14"></a><span class="fu">summary</span>(strat)</span>
+<span id="cb2-15"><a href="#cb2-15"></a>strat_na <span class="ot">&lt;-</span> <span class="fu">survfit</span>(strat, <span class="at">stype =</span> <span class="dv">2</span>, <span class="at">ctype =</span> <span class="dv">2</span>, <span class="at">conf.type =</span> <span class="st">"log-log"</span>,</span>
+<span id="cb2-16"><a href="#cb2-16"></a>                    <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">rx =</span> <span class="dv">0</span>))</span>
+<span id="cb2-17"><a href="#cb2-17"></a></span>
+<span id="cb2-18"><a href="#cb2-18"></a><span class="co"># plot of stratified and unstratified cumulative hazard estimates</span></span>
+<span id="cb2-19"><a href="#cb2-19"></a><span class="fu">plot</span>(unstrat_na, <span class="at">fun =</span> <span class="st">"cumhaz"</span>, <span class="at">lty =</span> <span class="st">"dashed"</span>,</span>
+<span id="cb2-20"><a href="#cb2-20"></a>     <span class="at">xlab =</span> <span class="st">"Weeks since treatment"</span>, <span class="at">ylab =</span> <span class="st">"Cumulative hazard"</span>)</span>
+<span id="cb2-21"><a href="#cb2-21"></a><span class="fu">grid</span>()</span>
+<span id="cb2-22"><a href="#cb2-22"></a><span class="fu">lines</span>(strat_na, <span class="at">fun =</span> <span class="st">"cumhaz"</span>, <span class="at">conf.int =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-23"><a href="#cb2-23"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">bg =</span> <span class="st">"white"</span>, <span class="at">lty =</span> <span class="fu">c</span>(<span class="st">"solid"</span>, <span class="st">"dashed"</span>),</span>
+<span id="cb2-24"><a href="#cb2-24"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Stratified model"</span>, <span class="st">"Unstratified model"</span>))</span>
+<span id="cb2-25"><a href="#cb2-25"></a></span>
+<span id="cb2-26"><a href="#cb2-26"></a><span class="co"># unstratified and stratified log-rank tests</span></span>
+<span id="cb2-27"><a href="#cb2-27"></a><span class="fu">survdiff</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> rx <span class="sc">+</span> sex, <span class="at">data =</span> rats)</span>
+<span id="cb2-28"><a href="#cb2-28"></a><span class="fu">survdiff</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> rx <span class="sc">+</span> <span class="fu">strata</span>(sex), <span class="at">data =</span> rats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-cochran1954some" class="csl-entry" role="listitem">
+Cochran, William G. 1954. <span>“Some Methods for Strengthening the Common <span class="math inline">\(\chi\)</span> 2 Tests.”</span> <em>Biometrics</em> 10 (4): 417–51.
+</div>
+<div id="ref-jewell2003statistics" class="csl-entry" role="listitem">
+Jewell, Nicholas P. 2003. <em>Statistics for Epidemiology</em>. CRC Press.
+</div>
+<div id="ref-mantel1959statistical" class="csl-entry" role="listitem">
+Mantel, Nathan, and William Haenszel. 1959. <span>“Statistical Aspects of the Analysis of Data from Retrospective Studies of Disease.”</span> <em>Journal of the National Cancer Institute</em> 22 (4): 719–48.
+</div>
+<div id="ref-robins1986new" class="csl-entry" role="listitem">
+Robins, James. 1986. <span>“A New Approach to Causal Inference in Mortality Studies with a Sustained Exposure Periodapplication to Control of the Healthy Worker Survivor Effect.”</span> <em>Mathematical Modelling</em> 7 (9-12): 1393–1512.
+</div>
+<div id="ref-woolf1955estimating" class="csl-entry" role="listitem">
+Woolf, Barnet. 1955. <span>“On Estimating the Relation Between Blood Group and Disease.”</span> <em>Annals of Human Genetics</em> 19 (4): 251–53.
+</div>
+</div>
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./geometry.html" class="pagination-link" aria-label="Geometry of Causal Inference">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Geometry of Causal Inference</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./matching.html" class="pagination-link" aria-label="matching.html">
+        <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">matching.html</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

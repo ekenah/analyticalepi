@@ -417,8 +417,27 @@ window.Quarto = {
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">Epidemologic and Statistical Methods for Causal Inference</span></span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Epidemologic and Statistical Methods for Causal Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./stratification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Stratified Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./matching.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">matching.html</span></span></a>
+  </div>
+</li>
+      </ul>
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
@@ -463,7 +482,7 @@ window.Quarto = {
   <li><a href="#rare-diseases-with-rare-exposures" id="toc-rare-diseases-with-rare-exposures" class="nav-link" data-scroll-target="#rare-diseases-with-rare-exposures"><span class="header-section-number">11.2.1</span> Rare diseases with rare exposures</a></li>
   <li><a href="#estimation-without-the-rare-disease-assumption" id="toc-estimation-without-the-rare-disease-assumption" class="nav-link" data-scroll-target="#estimation-without-the-rare-disease-assumption"><span class="header-section-number">11.2.2</span> Estimation without the rare disease assumption*</a></li>
   </ul></li>
-  <li><a href="#nested-case-control-studies" id="toc-nested-case-control-studies" class="nav-link" data-scroll-target="#nested-case-control-studies"><span class="header-section-number">11.3</span> Nested case-control studies</a>
+  <li><a href="#sec-nested-cc" id="toc-sec-nested-cc" class="nav-link" data-scroll-target="#sec-nested-cc"><span class="header-section-number">11.3</span> Nested case-control studies</a>
   <ul class="collapse">
   <li><a href="#conditional-logistic-regression" id="toc-conditional-logistic-regression" class="nav-link" data-scroll-target="#conditional-logistic-regression"><span class="header-section-number">11.3.1</span> Conditional logistic regression</a></li>
   </ul></li>
@@ -948,8 +967,8 @@ Table&nbsp;11.2: Adjusted “2x2 table” of exposure, noncases, subcohort, and 
 </section>
 </section>
 </section>
-<section id="nested-case-control-studies" class="level2" data-number="11.3">
-<h2 data-number="11.3" class="anchored" data-anchor-id="nested-case-control-studies"><span class="header-section-number">11.3</span> Nested case-control studies</h2>
+<section id="sec-nested-cc" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="sec-nested-cc"><span class="header-section-number">11.3</span> Nested case-control studies</h2>
 <p>The nested case-control study is a generalization of the density case-control study that relaxes the assumption of constant hazards of failure. It was first used to study lung cancer among asbestos miners in Quebec <span class="citation" data-cites="liddell1977methods thomas1977addendum">(<a href="references.html#ref-liddell1977methods" role="doc-biblioref">Liddell, McDonald, and Thomas 1977</a>; <a href="references.html#ref-thomas1977addendum" role="doc-biblioref">Thomas 1977</a>)</span>. Let <span class="math inline">\(X_j\)</span> denote the exposure status of person <span class="math inline">\(j\)</span>. The Cox partial likelihood for the log hazard ratio <span class="math inline">\(\beta\)</span> is <span class="math display">\[
   L(\beta) = \prod_{i = 1}^m \frac{e^{\beta X_i})}{\sum_{j \in \mathcal{R}(t_i)} e^{\beta X_j}},
 \]</span> where <span class="math inline">\(t_1 &lt; t_2 &lt; \ldots &lt; t_m\)</span> are the distinct failure times, person <span class="math inline">\(i\)</span> is the person who fails at time <span class="math inline">\(t_i\)</span>, and <span class="math inline">\(\mathcal{R}(t)\)</span> is the risk set at time <span class="math inline">\(t\)</span> as in <a href="survival2.html#sec-Cox-model" class="quarto-xref"><span>Section 10.4</span></a>. In a nested case-control study, each risk set <span class="math inline">\(\mathcal{R}(t_i)\)</span> is replaced by a sample <span class="math inline">\(R^*(t_i)\)</span> that includes the individual who had an event and a random sample of other members of <span class="math inline">\(R(t_i)\)</span>. The Cox partial likelihood becomes <span id="eq-Cox-nested"><span class="math display">\[

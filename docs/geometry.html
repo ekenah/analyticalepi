@@ -84,7 +84,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="next">
+<link href="./stratification.html" rel="next">
 <link href="./standardization.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -417,8 +417,27 @@ window.Quarto = {
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">Epidemologic and Statistical Methods for Causal Inference</span></span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Epidemologic and Statistical Methods for Causal Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./stratification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Stratified Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./matching.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">matching.html</span></span></a>
+  </div>
+</li>
+      </ul>
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
@@ -468,7 +487,7 @@ window.Quarto = {
   <li><a href="#effect-measure-modification" id="toc-effect-measure-modification" class="nav-link" data-scroll-target="#effect-measure-modification"><span class="header-section-number">18.3</span> Effect measure modification</a>
   <ul class="collapse">
   <li><a href="#contour-lines" id="toc-contour-lines" class="nav-link" data-scroll-target="#contour-lines"><span class="header-section-number">18.3.1</span> Contour lines</a></li>
-  <li><a href="#interaction" id="toc-interaction" class="nav-link" data-scroll-target="#interaction"><span class="header-section-number">18.3.2</span> Interaction</a></li>
+  <li><a href="#sec-interaction" id="toc-sec-interaction" class="nav-link" data-scroll-target="#sec-interaction"><span class="header-section-number">18.3.2</span> Interaction</a></li>
   </ul></li>
   <li><a href="#collapsibility" id="toc-collapsibility" class="nav-link" data-scroll-target="#collapsibility"><span class="header-section-number">18.4</span> Collapsibility</a>
   <ul class="collapse">
@@ -503,9 +522,9 @@ window.Quarto = {
 
 <blockquote class="blockquote">
 <div class="line-block">Let no one ignorant of geometry enter here.<br>
-(possibly apocryphal inscription above the entrance to Plato’s Academy, circa 387 BC)</div>
+(inscription above the entrance to <a href="https://en.wikipedia.org/wiki/Platonic_Academy">Plato’s Academy</a>, circa 387 BC)</div>
 </blockquote>
-<p>While algebra is useful and often definitive, a geometric perspective can be a more useful guide to intuition. A geometrical perspective on causal inference first proposed in <span class="citation" data-cites="rothman1975pictorial">Rothman (<a href="references.html#ref-rothman1975pictorial" role="doc-biblioref">1975</a>)</span> clarifies the relationships between confounding, effect measure modification, and collapsibility <span class="citation" data-cites="kenah2024rothman">(<a href="references.html#ref-kenah2024rothman" role="doc-biblioref">Kenah 2024</a>)</span>. Through the lens of regression models, these concepts blend together almost inextricably. Through the lens of standardization and geometry, the distinctions are clear.</p>
+<p>While algebra is useful and often definitive, a geometric perspective can be a more useful guide to intuition. A geometrical perspective on causal inference first proposed in <span class="citation" data-cites="rothman1975pictorial">Rothman (<a href="references.html#ref-rothman1975pictorial" role="doc-biblioref">1975</a>)</span> clarifies the relationships between confounding, effect measure modification, and collapsibility <span class="citation" data-cites="kenah2024rothman">(<a href="references.html#ref-kenah2024rothman" role="doc-biblioref">Kenah 2024</a>)</span>. Through the lens of regression models, these concepts blend together almost inextricably. Through the lens of standardization and geometry, the distinctions between them are clear.</p>
 <section id="rothman-diagrams" class="level2" data-number="18.1">
 <h2 data-number="18.1" class="anchored" data-anchor-id="rothman-diagrams"><span class="header-section-number">18.1</span> Rothman diagrams</h2>
 <p>The <strong>unit square</strong> is the set of all ordered pairs <span class="math inline">\((x, y) \in \mathbb{R}^2\)</span> where both <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are in the interval <span class="math inline">\([0, 1]\)</span> (i.e., the interval including zero, one, and all real numbers in between). To represent the point <span class="math inline">\((x, y)\)</span>, we can plot <span class="math inline">\(x\)</span> on a horizontal axis (the x-axis) and <span class="math inline">\(y\)</span> on a vertical axis (the y-axis). <span class="citation" data-cites="rothman1975pictorial">Rothman (<a href="references.html#ref-rothman1975pictorial" role="doc-biblioref">1975</a>)</span> introduced a geometric perspective on causal inference where <span class="math inline">\(x\)</span> represents the risk of disease in the unexposed or untreated and <span class="math inline">\(y\)</span> represents the risk of disease in the exposed or treated. A similar plot was introduced by <span class="citation" data-cites="labbe1987meta">L’Abbé, Detsky, and O’Rourke (<a href="references.html#ref-labbe1987meta" role="doc-biblioref">1987</a>)</span> for meta-analysis, and these <em>L’Abbé plots</em> were used by <span class="citation" data-cites="richardson2017modeling">Richardson, Robins, and Wang (<a href="references.html#ref-richardson2017modeling" role="doc-biblioref">2017</a>)</span> to discuss the estimation of risk differences and risk ratios.</p>
@@ -1412,8 +1431,8 @@ Figure&nbsp;18.4: Contour lines for the odds ratio, risk ratio, risk difference,
 </div>
 </div>
 </section>
-<section id="interaction" class="level3" data-number="18.3.2">
-<h3 data-number="18.3.2" class="anchored" data-anchor-id="interaction"><span class="header-section-number">18.3.2</span> Interaction</h3>
+<section id="sec-interaction" class="level3" data-number="18.3.2">
+<h3 data-number="18.3.2" class="anchored" data-anchor-id="sec-interaction"><span class="header-section-number">18.3.2</span> Interaction</h3>
 <p>In a regression model, an <strong>interaction term</strong> is used to allow a measure of association between exposure and disease to differ between groups defined by third covariate. If <span class="math inline">\(X\)</span> is treatment and <span class="math inline">\(C\)</span> is a stratification variable (possibly but not necessarily to control confounding and selection bias), then a GLM with an interaction term is <span class="math display">\[
   g\bigl(\Pr(D = 1 \given{} C = c, X = x, S = 1)\bigr)
   = \beta_0 + \beta_1 x + \beta_2 c + \beta_3 xc.
@@ -2615,8 +2634,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link" aria-label="References">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./stratification.html" class="pagination-link" aria-label="Stratified Analysis">
+        <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Stratified Analysis</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

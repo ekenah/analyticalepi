@@ -417,8 +417,27 @@ window.Quarto = {
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">Epidemologic and Statistical Methods for Causal Inference</span></span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Epidemologic and Statistical Methods for Causal Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./stratification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Stratified Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./matching.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">matching.html</span></span></a>
+  </div>
+</li>
+      </ul>
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
@@ -947,7 +966,7 @@ Figure&nbsp;10.2: Odds (top) and odds ratio (bottom) for Weibull distributions w
   \Var(U)
   = \sum_{i = 1}^m p_{1i} (1 - p_{1i}) \frac{d_i (n_i - d_i)}{n_i - 1}
 \]</span> because the <span class="math inline">\(D_{1i}\)</span> are independent. The log-rank test statistic is <span id="eq-logrank-S"><span class="math display">\[
-  \chi^2_\text{logrank} = \frac{U^2}{\Var(U)}.
+  \chi^2_\text{log-rank} = \frac{U^2}{\Var(U)}.
 \tag{10.7}\]</span></span> When the number of observed failures is large, this has a chi-squared distribution with one degree of freedom under the null. We reject the null hypothesis for large values of <span class="math inline">\(\chi^2_\text{logrank}\)</span>. We get exactly the same chi-squared statistic and p-value if we use the observed and expected number of failures among the unexposed.</p>
 <!-- Explain why we get the same statistic if we used observed and expected failures among the unexposed. -->
 </section>
