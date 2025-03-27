@@ -1,4 +1,4 @@
-# DAG for cohort study with confounding and selection bias
+# DAG for cohort study matched on a confounder
 
 # load R packages
 library(dagitty)

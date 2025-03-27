@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>matching – Analytical Epidemiology</title>
+<title>20&nbsp; Matching in Cohort and Case-Control Studies – Analytical Epidemiology</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,7 +20,61 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -41,6 +95,9 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-747bc48f972f7c4036e4d8e8c6d9e55a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -143,10 +200,39 @@ ul.task-list li input[type="checkbox"] {
   };
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
-<body class="nav-sidebar floating fullcontent">
+<body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -155,7 +241,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./stratification.html">Epidemologic and Statistical Methods for Causal Inference</a></li><li class="breadcrumb-item"><a href="./matching.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">matching.html</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./stratification.html">Epidemologic and Statistical Methods for Causal Inference</a></li><li class="breadcrumb-item"><a href="./matching.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Matching in Cohort and Case-Control Studies</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -348,7 +434,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./matching.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">matching.html</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Matching in Cohort and Case-Control Studies</span></span></a>
   </div>
 </li>
       </ul>
@@ -381,15 +467,235 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="2">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#matching-in-a-cohort-study" id="toc-matching-in-a-cohort-study" class="nav-link active" data-scroll-target="#matching-in-a-cohort-study"><span class="header-section-number">20.0.1</span> Matching in a cohort study</a></li>
+  <li><a href="#matching-on-non-confounders" id="toc-matching-on-non-confounders" class="nav-link" data-scroll-target="#matching-on-non-confounders"><span class="header-section-number">20.0.2</span> Matching on non-confounders</a></li>
+  <li><a href="#matching-and-efficiency" id="toc-matching-and-efficiency" class="nav-link" data-scroll-target="#matching-and-efficiency"><span class="header-section-number">20.0.3</span> Matching and efficiency</a></li>
+  <li><a href="#matching-in-a-case-control-study" id="toc-matching-in-a-case-control-study" class="nav-link" data-scroll-target="#matching-in-a-case-control-study"><span class="header-section-number">20.1</span> Matching in a case-control study</a>
+  <ul class="collapse">
+  <li><a href="#matching-on-non-confounders-1" id="toc-matching-on-non-confounders-1" class="nav-link" data-scroll-target="#matching-on-non-confounders-1"><span class="header-section-number">20.1.1</span> Matching on non-confounders</a></li>
+  <li><a href="#matching-and-efficency" id="toc-matching-and-efficency" class="nav-link" data-scroll-target="#matching-and-efficency"><span class="header-section-number">20.1.2</span> Matching and efficency</a></li>
+  </ul></li>
+  <li><a href="#overmatching" id="toc-overmatching" class="nav-link" data-scroll-target="#overmatching"><span class="header-section-number">20.2</span> Overmatching</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./stratification.html">Epidemologic and Statistical Methods for Causal Inference</a></li><li class="breadcrumb-item"><a href="./matching.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">matching.html</span></a></li></ol></nav></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./stratification.html">Epidemologic and Statistical Methods for Causal Inference</a></li><li class="breadcrumb-item"><a href="./matching.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Matching in Cohort and Case-Control Studies</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Matching in Cohort and Case-Control Studies</span></h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
 
 
+</header>
 
+
+<blockquote class="blockquote">
+<p>For an observational study to compare two groups with respect to a dichotomous outcome variable, the design strategy of matching observational units with respect to a potential confounding variable X is compared with the strategy of selecting independent samples with possible poststratification on X for bias control. … It is found that proper understanding requires that the prospective and the retrospective study designs be separately considered, and that in certain circumstances the effect of matching on design efficiency is entirely different for the two designs. <span class="citation" data-cites="samuels1981matching">(<a href="references.html#ref-samuels1981matching" role="doc-biblioref">Samuels 1981</a>)</span></p>
+</blockquote>
+<p>When exchangeability (no confounding) and the analytic cohort condition (no selection bias) hold given a set of variables <span class="math inline">\(C\)</span>, then the conditional estimates of risk in the exposed and unexposed in the study sample are unbiased estimates of the causal risks of disease under exposure and no exposure in the eligible population. We have several ways to summarize the causal effect of exposure on disease:</p>
+<ul>
+<li><p>If there is no effect measure modification on the desired scale, we can use stratified analysis (e.g., Mantel-Haenszel) or a regression model to estimate a common conditional measure of association given <span class="math inline">\(C\)</span>.</p></li>
+<li><p>If there is effect measure modification, we can estimate stratum-specific conditional measures of association given <span class="math inline">\(C\)</span>. This can be done nonparametrically or using a regression model with interaction terms for <span class="math inline">\(X\)</span> and <span class="math inline">\(C\)</span>.</p></li>
+<li><p>Whether or not there is effect modification, we can use standardization to estimate marginal causal risks of disease. These marginal causal risks can be used to estimate marginal causal effects. If there is no effect measure modification and the measure is collapsible, the standardized measure of association will equal the common conditional measure of association given <span class="math inline">\(C\)</span>.</p></li>
+</ul>
+<p>If the case-control condition holds but not the cohort condition, then our only choice is to estimate conditional odds ratios given <span class="math inline">\(C\)</span>. Depending on the selection of controls, these can approximate conditional risk ratios or hazard ratios given <span class="math inline">\(C\)</span>.</p>
+<p>Sometimes <span class="math inline">\(C\)</span> may consist of more than one variable. When we match on multiple covariates (e.g., age and biological sex), we match participants who have similar values for all of the matching variables. When <span class="math inline">\(C\)</span> has many levels, some strata may have no members from one of the two exposure groups. This can result in estimates that do not converge or have high variance.</p>
+<p><strong>Matching</strong> can be used to ensure that we have individuals from both exposure or treatment groups in all levels of <span class="math inline">\(C\)</span>. When we match in a cohort study, we ensure that there is at least one individual from both treatment or exposure groups in each level of <span class="math inline">\(C\)</span>. When we match in a case-control study, we ensure that there is at least one case and one control from all levels of <span class="math inline">\(C\)</span>. It turns out that matching has different consequences in cohort and case-control studies:</p>
+<ul>
+<li><p>In a cohort study, matching is generally used to prevent confounding by ensuring that both exposure or treatment groups have the same distribution of <span class="math inline">\(C\)</span>. It is often not necessary to stratify or standardize by <span class="math inline">\(C\)</span>, except possibly to generalize to the eligible population.</p></li>
+<li><p>In a case-control study, matching does not prevent confounding by <span class="math inline">\(C\)</span>. Instead, it is used to improve statistical efficiency in an analysis stratified by <span class="math inline">\(C\)</span>.</p></li>
+</ul>
+<p>Causal graphs can be used to understand these differences. In all cases, it is important to weigh the advantages and disadvantages of matching against those of analytical control for confounding through stratification or weighting.</p>
+<section id="matching-in-a-cohort-study" class="level3" data-number="20.0.1">
+<h3 data-number="20.0.1" class="anchored" data-anchor-id="matching-in-a-cohort-study"><span class="header-section-number">20.0.1</span> Matching in a cohort study</h3>
+<p>In a matched cohort study, matching ensures that the exposure groups have the same distribution of <span class="math inline">\(C\)</span>. If exposure is less common than non-exposure, then we choose one or more non-exposed individuals from the same stratum of <span class="math inline">\(C\)</span> for each exposed individual. <a href="#fig-mcoh-swig" class="quarto-xref">Figure&nbsp;<span>20.1</span></a> shows a single-world intervention graph (SWIG) for a cohort study matched on a confounder <span class="math inline">\(C\)</span>. The cohort condition holds given <span class="math inline">\(C\)</span> because <span class="math inline">\(S^x \indep D^x \given X, C\)</span>.</p>
+<div class="cell">
+<div class="code-with-filename">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-with-filename-file">
+<pre><strong>matching-swig-coh.R</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># DAG for cohort study matched on a confounder</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="co"># load R packages</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">library</span>(dagitty)</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="fu">library</span>(ggdag, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-7"><a href="#cb1-7"></a></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="co"># define the DAG</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a>cohort <span class="ot">&lt;-</span> <span class="fu">dagitty</span>(<span class="st">'dag{</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="st">  C -&gt; D</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="st">  C -&gt; S</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="st">  C -&gt; X</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="st">  x -&gt; D</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="st">  x -&gt; S</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a><span class="st">}'</span>)</span>
+<span id="cb1-16"><a href="#cb1-16"></a></span>
+<span id="cb1-17"><a href="#cb1-17"></a><span class="co"># generate data for plotting DAG using ggplot()</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="co"># Use geom_dag_label() for adjusted variables to get a box around them.</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a><span class="fu">coordinates</span>(cohort) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="at">C =</span> <span class="dv">0</span>, <span class="at">X =</span> <span class="fl">0.9</span>, <span class="at">x =</span> <span class="fl">1.1</span>, <span class="at">S =</span> <span class="dv">2</span>, <span class="at">D =</span> <span class="dv">3</span>),</span>
+<span id="cb1-20"><a href="#cb1-20"></a>                            <span class="at">y =</span> <span class="fu">c</span>(<span class="at">C =</span> <span class="dv">0</span>, <span class="at">X =</span> <span class="dv">0</span>, <span class="at">x =</span> <span class="dv">0</span>, <span class="at">S =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">D =</span> <span class="dv">0</span>))</span>
+<span id="cb1-21"><a href="#cb1-21"></a>cohort_dat <span class="ot">&lt;-</span> <span class="fu">control_for</span>(cohort, <span class="fu">c</span>(<span class="st">"C"</span>, <span class="st">"x"</span>), <span class="at">activate_colliders =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-22"><a href="#cb1-22"></a><span class="fu">label</span>(cohort_dat) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"C"</span> <span class="ot">=</span> <span class="st">"C"</span>, <span class="st">"X"</span> <span class="ot">=</span> <span class="st">"X"</span>, <span class="st">"x"</span> <span class="ot">=</span> <span class="st">"x"</span>,</span>
+<span id="cb1-23"><a href="#cb1-23"></a>                       <span class="st">"D"</span> <span class="ot">=</span> <span class="st">"D^x"</span>, <span class="st">"S"</span> <span class="ot">=</span> <span class="st">"S^x"</span>)</span>
+<span id="cb1-24"><a href="#cb1-24"></a>cohort_adj <span class="ot">&lt;-</span> <span class="fu">filter</span>(cohort_dat, adjusted <span class="sc">==</span> <span class="st">"adjusted"</span>)</span>
+<span id="cb1-25"><a href="#cb1-25"></a>cohort_unadj <span class="ot">&lt;-</span> <span class="fu">filter</span>(cohort_dat, adjusted <span class="sc">==</span> <span class="st">"unadjusted"</span>)</span>
+<span id="cb1-26"><a href="#cb1-26"></a></span>
+<span id="cb1-27"><a href="#cb1-27"></a><span class="co"># plot DAG with ggplot() to allow for boxes and curved arrows</span></span>
+<span id="cb1-28"><a href="#cb1-28"></a>(<span class="fu">ggplot</span>(cohort_dat, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend))</span>
+<span id="cb1-29"><a href="#cb1-29"></a>  <span class="sc">+</span> <span class="fu">theme_dag_gray_grid</span>()</span>
+<span id="cb1-30"><a href="#cb1-30"></a>  <span class="sc">+</span> <span class="fu">coord_equal</span>()</span>
+<span id="cb1-31"><a href="#cb1-31"></a>  <span class="sc">+</span> <span class="fu">geom_dag_label</span>(<span class="at">data =</span> cohort_adj, <span class="at">parse =</span> <span class="cn">TRUE</span>, <span class="at">size =</span> <span class="dv">8</span>, <span class="at">fill =</span> <span class="cn">NA</span>,</span>
+<span id="cb1-32"><a href="#cb1-32"></a>                   <span class="at">label.padding =</span> <span class="fu">unit</span>(<span class="fl">0.15</span>, <span class="st">"lines"</span>))</span>
+<span id="cb1-33"><a href="#cb1-33"></a>  <span class="sc">+</span> <span class="fu">geom_dag_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> label), <span class="at">data =</span> cohort_unadj, <span class="at">parse =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb1-34"><a href="#cb1-34"></a>                  <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">8</span>)</span>
+<span id="cb1-35"><a href="#cb1-35"></a>  <span class="sc">+</span> <span class="fu">geom_dag_edges_arc</span>(<span class="at">curvature =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="sc">-</span><span class="fl">0.15</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb1-36"><a href="#cb1-36"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="fl">0.01</span>, <span class="at">size =</span> <span class="dv">8</span>, <span class="at">label =</span> <span class="st">"|"</span>)</span>
+<span id="cb1-37"><a href="#cb1-37"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output-display">
+<div id="fig-mcoh-swig" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mcoh-swig-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="matching_files/figure-html/fig-mcoh-swig-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;20.1: SWIG for selection a cohort study matched on a confounder C. Exchangeability and the analytic cohort condition hold given C. Because of matching, both exposure groups have the same distribution of C."><img src="matching_files/figure-html/fig-mcoh-swig-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mcoh-swig-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;20.1: SWIG for selection a cohort study matched on a confounder <span class="math inline">\(C\)</span>. Exchangeability and the analytic cohort condition hold given <span class="math inline">\(C\)</span>. Because of matching, both exposure groups have the same distribution of <span class="math inline">\(C\)</span>.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Matching ensures that the distribution of <span class="math inline">\(C\)</span> is the same in both exposure groups and in the study sample, so a crude measure of association based on disease risks is implicitly standardized to this distribution of <span class="math inline">\(C\)</span>. Therefore, adjustment for <span class="math inline">\(C\)</span> is not necessary to estimate the marginal causal effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(D\)</span> in the study sample (i.e., in a standard population with the same distribution of <span class="math inline">\(C\)</span> as the study sample). However, generalization to the eligible population (or to the exposed or unexposed groups in the eligible population) can require adjustment for <span class="math inline">\(C\)</span> if there is effect measure modification or noncollapsibility. If <span class="math inline">\(C\)</span> is conditionally independent of <span class="math inline">\(S\)</span> given <span class="math inline">\(X = 1\)</span>, then the distribution of <span class="math inline">\(C\)</span> in the study sample is the same as the distribution of <span class="math inline">\(C\)</span> among the exposed in the eligible population. In this, the marginal causal effect in the study sample is a consistent estimate of the marginal causal effect among the exposed in the eligible population.</p>
+</section>
+<section id="matching-on-non-confounders" class="level3" data-number="20.0.2">
+<h3 data-number="20.0.2" class="anchored" data-anchor-id="matching-on-non-confounders"><span class="header-section-number">20.0.2</span> Matching on non-confounders</h3>
+<p>If we remove the edge from <span class="math inline">\(C\)</span> to <span class="math inline">\(X\)</span> in <a href="#fig-mcoh-swig" class="quarto-xref">Figure&nbsp;<span>20.1</span></a>, then <span class="math inline">\(C\)</span> is associated with <span class="math inline">\(D\)</span> but not a confounder. Because of the path <span class="math inline">\(S^x \leftarrow C \rightarrow D^x\)</span>, we still need to condition on <span class="math inline">\(C\)</span> to prevent selection bias. However, this is necessary only because of the path <span class="math inline">\(C \rightarrow S^x\)</span> caused by matching. The result is the same as before: The causal effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(D\)</span> in a standard population with the same distribution of <span class="math inline">\(C\)</span> as the study sample can be estimated without adjustment for <span class="math inline">\(C\)</span>, but generalization to the eligible population requires adjustment for <span class="math inline">\(C\)</span> if there is effect modification or noncollapsibility.</p>
+<p>If we remove the edge from <span class="math inline">\(C\)</span> to <span class="math inline">\(D\)</span> in Figure~<a href="#fig:mcohort" data-reference-type="ref" data-reference="fig:mcohort">[fig:mcohort]</a>, then <span class="math inline">\(C\)</span> is associated with <span class="math inline">\(X\)</span> but not a confounder. In this case, the cohort condition holds without conditioning on <span class="math inline">\(C\)</span>, so no adjustment for <span class="math inline">\(C\)</span> is necessary for estimation of marginal causal effects or generalization to the eligible population.</p>
+</section>
+<section id="matching-and-efficiency" class="level3" data-number="20.0.3">
+<h3 data-number="20.0.3" class="anchored" data-anchor-id="matching-and-efficiency"><span class="header-section-number">20.0.3</span> Matching and efficiency</h3>
+<p>In a clinical trial, <strong>blocking</strong> refers to assigning treatment within groups defined by baseline variables. In <em>pairwise blocking</em>, participants are grouped into pairs based on baseline variables and treatment is assigned to one person in each pair. Blocking usually improves the efficiency of a clinical trial when the blocks are defined by risk factors for disease.</p>
+<p>By analogy to blocking in a clinical trial, it is often thought that matching will improve the efficiency of a cohort study. However, <span class="citation" data-cites="greenland1990matching">Greenland and Morgenstern (<a href="references.html#ref-greenland1990matching" role="doc-biblioref">1990</a>)</span> showed that this is not always the case. In particular, matching in a cohort study can change the distribution of <span class="math inline">\(C\)</span> in the study sample in a way that increases the variance of the effect estimate. By contrast, blocking never changes the distribution of <span class="math inline">\(C\)</span> in a clinical trial. The key difference is that blocking in a clinical trial is a method of treatment assignment while matching in an observational cohort study is a method of selecting study participants. Matching can increase or decrease efficiency in a cohort study, and it will almost alway make participant selection more difficult.</p>
+</section>
+<section id="matching-in-a-case-control-study" class="level2" data-number="20.1">
+<h2 data-number="20.1" class="anchored" data-anchor-id="matching-in-a-case-control-study"><span class="header-section-number">20.1</span> Matching in a case-control study</h2>
+<p><a href="#fig-mcc-swig" class="quarto-xref">Figure&nbsp;<span>20.2</span></a> shows a SWIG for a case-control study matched on a confounder <span class="math inline">\(C\)</span>. The cohort condition fails because <span class="math inline">\(S\)</span> is a child of <span class="math inline">\(D\)</span>, but the case-control condition holds given <span class="math inline">\(C\)</span> because <span class="math inline">\(S^d \indep X \given D, C\)</span>. It follows that our measure of association must be based on the prevalence of exposure in cases and controls and that we must control for <span class="math inline">\(C\)</span> to avoid selection bias.</p>
+<div class="cell">
+<div class="code-with-filename">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-with-filename-file">
+<pre><strong>matching-swig-cc.R</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># DAG for cohort study matched on a confounder</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co"># load R packages</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="fu">library</span>(dagitty)</span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="fu">library</span>(ggdag)</span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-7"><a href="#cb2-7"></a></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="co"># define the DAG</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a>casecontrol <span class="ot">&lt;-</span> <span class="fu">dagitty</span>(<span class="st">'dag{</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="st">  C -&gt; D</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a><span class="st">  C -&gt; S</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a><span class="st">  C -&gt; X</span></span>
+<span id="cb2-13"><a href="#cb2-13"></a><span class="st">  d -&gt; S</span></span>
+<span id="cb2-14"><a href="#cb2-14"></a><span class="st">  X -&gt; D</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a><span class="st">}'</span>)</span>
+<span id="cb2-16"><a href="#cb2-16"></a></span>
+<span id="cb2-17"><a href="#cb2-17"></a><span class="co"># generate data for plotting DAG using ggplot()</span></span>
+<span id="cb2-18"><a href="#cb2-18"></a><span class="co"># Use geom_dag_label() for adjusted variables to get a box around them.</span></span>
+<span id="cb2-19"><a href="#cb2-19"></a><span class="fu">coordinates</span>(casecontrol) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="at">C =</span> <span class="dv">0</span>, <span class="at">X =</span> <span class="fl">0.9</span>, <span class="at">D =</span> <span class="fl">1.9</span>, <span class="at">d =</span> <span class="fl">2.1</span>, <span class="at">S =</span> <span class="dv">3</span>),</span>
+<span id="cb2-20"><a href="#cb2-20"></a>                                 <span class="at">y =</span> <span class="fu">c</span>(<span class="at">C =</span> <span class="dv">0</span>, <span class="at">X =</span> <span class="dv">0</span>, <span class="at">D =</span> <span class="dv">0</span>, <span class="at">d =</span> <span class="dv">0</span>, <span class="at">S =</span> <span class="sc">-</span><span class="fl">0.4</span>))</span>
+<span id="cb2-21"><a href="#cb2-21"></a>cc_dat <span class="ot">&lt;-</span> <span class="fu">control_for</span>(casecontrol, <span class="fu">c</span>(<span class="st">"C"</span>, <span class="st">"d"</span>), <span class="at">activate_colliders =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-22"><a href="#cb2-22"></a><span class="fu">label</span>(cc_dat) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"C"</span> <span class="ot">=</span> <span class="st">"C"</span>, <span class="st">"X"</span> <span class="ot">=</span> <span class="st">"X"</span>, <span class="st">"x"</span> <span class="ot">=</span> <span class="st">"x"</span>, <span class="st">"D"</span> <span class="ot">=</span> <span class="st">"D"</span>,</span>
+<span id="cb2-23"><a href="#cb2-23"></a>                   <span class="st">"d"</span> <span class="ot">=</span> <span class="st">"d"</span>, <span class="st">"S"</span> <span class="ot">=</span> <span class="st">"S^d"</span>)</span>
+<span id="cb2-24"><a href="#cb2-24"></a>cc_adj <span class="ot">&lt;-</span> <span class="fu">filter</span>(cc_dat, adjusted <span class="sc">==</span> <span class="st">"adjusted"</span>)</span>
+<span id="cb2-25"><a href="#cb2-25"></a>cc_unadj <span class="ot">&lt;-</span> <span class="fu">filter</span>(cc_dat, adjusted <span class="sc">==</span> <span class="st">"unadjusted"</span>)</span>
+<span id="cb2-26"><a href="#cb2-26"></a></span>
+<span id="cb2-27"><a href="#cb2-27"></a><span class="co"># plot DAG with ggplot() to allow for boxes and curved arrows</span></span>
+<span id="cb2-28"><a href="#cb2-28"></a>(<span class="fu">ggplot</span>(cc_dat, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend))</span>
+<span id="cb2-29"><a href="#cb2-29"></a>  <span class="sc">+</span> <span class="fu">theme_dag_gray_grid</span>()</span>
+<span id="cb2-30"><a href="#cb2-30"></a>  <span class="sc">+</span> <span class="fu">coord_equal</span>()</span>
+<span id="cb2-31"><a href="#cb2-31"></a>  <span class="sc">+</span> <span class="fu">geom_dag_label</span>(<span class="at">data =</span> cc_adj, <span class="at">parse =</span> <span class="cn">TRUE</span>, <span class="at">size =</span> <span class="dv">8</span>, <span class="at">fill =</span> <span class="cn">NA</span>,</span>
+<span id="cb2-32"><a href="#cb2-32"></a>                   <span class="at">label.padding =</span> <span class="fu">unit</span>(<span class="fl">0.15</span>, <span class="st">"lines"</span>))</span>
+<span id="cb2-33"><a href="#cb2-33"></a>  <span class="sc">+</span> <span class="fu">geom_dag_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> label), <span class="at">data =</span> cc_unadj, <span class="at">parse =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb2-34"><a href="#cb2-34"></a>                  <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">8</span>)</span>
+<span id="cb2-35"><a href="#cb2-35"></a>  <span class="sc">+</span> <span class="fu">geom_dag_edges_arc</span>(<span class="at">curvature =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="sc">-</span><span class="fl">0.1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb2-36"><a href="#cb2-36"></a>  <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">2</span>, <span class="at">y =</span> <span class="fl">0.01</span>, <span class="at">size =</span> <span class="dv">8</span>, <span class="at">label =</span> <span class="st">"|"</span>)</span>
+<span id="cb2-37"><a href="#cb2-37"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output-display">
+<div id="fig-mcc-swig" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mcc-swig-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="matching_files/figure-html/fig-mcc-swig-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;20.2: SWIG for a case-control study matched on a confounder C. The analytic case-control condition holds given C. Because of matching, the case and control groups have the same distribution of C."><img src="matching_files/figure-html/fig-mcc-swig-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mcc-swig-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;20.2: SWIG for a case-control study matched on a confounder <span class="math inline">\(C\)</span>. The analytic case-control condition holds given <span class="math inline">\(C\)</span>. Because of matching, the case and control groups have the same distribution of <span class="math inline">\(C\)</span>.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>In a case-control study, matching ensures that the distribution of <span class="math inline">\(C\)</span> is equal in the case and control groups, not in the exposure groups. Because the exposure groups have different distributions of <span class="math inline">\(C\)</span>, the crude odds ratio cannot be interpreted as a causal effect of exposure within the study sample. The <span class="math inline">\(C\)</span>-conditional odds ratios have a causal interpretation, and they are identical (up to random variation) in the study sample and the eligible population. Away from the null, the <span class="math inline">\(C\)</span>-conditional odds ratios in the eligible population differ from the <span class="math inline">\(C\)</span>-marginal odds ratio in the study sample even when there is no effect modification, so adjustment for <span class="math inline">\(C\)</span> is necessary.</p>
+<section id="matching-on-non-confounders-1" class="level3" data-number="20.1.1">
+<h3 data-number="20.1.1" class="anchored" data-anchor-id="matching-on-non-confounders-1"><span class="header-section-number">20.1.1</span> Matching on non-confounders</h3>
+<p>If we remove the edge from <span class="math inline">\(C\)</span> to <span class="math inline">\(X\)</span> in <a href="#fig-mcc-swig" class="quarto-xref">Figure&nbsp;<span>20.2</span></a>, then <span class="math inline">\(C\)</span> is associated with <span class="math inline">\(D\)</span> but not a confounder. Thus, both the marginal odds ratio and conditional odds ratios given <span class="math inline">\(C\)</span> in the eligible population have causal interpretations. Conditioning on the collider at <span class="math inline">\(D\)</span> opens the path <span class="math inline">\(X \rightarrow D \leftarrow C \rightarrow S^d\)</span>, so the case-control condition holds only given <span class="math inline">\(C\)</span>. Away from the null, the marginal odds ratios and conditional odds ratios given <span class="math inline">\(C\)</span> in the eligible population differ even when there is no effect modification by <span class="math inline">\(C\)</span>. When there is no effect modification, the conditional odds ratio given <span class="math inline">\(C\)</span> in the eligible population matches the marginal odds ratio in the study sample. Thus, matching on <span class="math inline">\(C\)</span> is harmful if the marginal odds ratio in the eligible population is of primary interest. Under the null, the case-control condition holds without conditioning on <span class="math inline">\(C\)</span> so no adjustment for <span class="math inline">\(C\)</span> is necessary.</p>
+<p>If we remove the edge from <span class="math inline">\(C\)</span> to <span class="math inline">\(D\)</span> in <a href="#fig-mcc-swig" class="quarto-xref">Figure&nbsp;<span>20.2</span></a>, then <span class="math inline">\(C\)</span> is associated with <span class="math inline">\(X\)</span> but not a confounder. However, the case-control condition holds only given <span class="math inline">\(C\)</span> because of the path <span class="math inline">\(X \leftarrow C \rightarrow S^d\)</span>. When there is no effect modification by <span class="math inline">\(C\)</span>, the marginal odds ratio and conditional odds ratios given <span class="math inline">\(C\)</span> in the eligible population are equal. In the study sample, the marginal odds ratio and conditional odds ratio given <span class="math inline">\(C\)</span> differ away from the null even when there is no effect modification. Under the null, the marginal odds ratios are the same (up to random variation) in the study sample and the eligible population. Thus, adjustment for <span class="math inline">\(C\)</span> is necessary away from the null but not under the null.</p>
+</section>
+<section id="matching-and-efficency" class="level3" data-number="20.1.2">
+<h3 data-number="20.1.2" class="anchored" data-anchor-id="matching-and-efficency"><span class="header-section-number">20.1.2</span> Matching and efficency</h3>
+<p>In a case-control study, matching improves efficiency by ensuring that there is balance between cases and controls in the strata defined by <span class="math inline">\(C\)</span>. This can improve efficiency even when these strata are not sparse. Earlier, we saw that the power of a case-control study is maximized for a fixed total number of participants when we have equal numbers of cases and controls <span class="citation" data-cites="jewell2003statistics">(<a href="references.html#ref-jewell2003statistics" role="doc-biblioref">Jewell 2003</a>)</span>. Because controls are generally easier to find than cases of a rare disease, it is common to enroll 3–5 controls per case. Matching ensures that no strata of <span class="math inline">\(C\)</span> contain only cases, in which case they would be discarded in a Mantel-Haenszel estimate (and possibly in a GLM as well). Although matching on a confounder consistently improves the efficiency of case-control studies, its use must be balanced against the additional difficulty of finding controls and the availability of analytical methods such as stratification and weighting that can control for confounding.</p>
+<p>Matching on a non-confounder necessitates a stratified analysis that can lead to a loss of statistical efficiency compared to a non-matched case control study with the same number of participants.</p>
+</section>
+</section>
+<section id="overmatching" class="level2" data-number="20.2">
+<h2 data-number="20.2" class="anchored" data-anchor-id="overmatching"><span class="header-section-number">20.2</span> Overmatching</h2>
+<p>Matching can be useful, but it can also be harmful. Harmful matching is called <strong>overmatching</strong>, and it takes three forms <span class="citation" data-cites="rothman2008modern">(<a href="references.html#ref-rothman2008modern" role="doc-biblioref">Rothman, Greenland, and Lash 2008</a>)</span>: matching that reduces statistical efficiency, matching that induces bias, and matching that reduces cost efficiency.</p>
+<ul>
+<li><p>Statistical efficiency is about the precision of a causal effect estimate achieved with a given total number of participants. In a cohort study, matching prevents confounding but its effect on statistical efficiency can be difficult to predict. In a case-control study, it consistently improves statistical efficency for a given total number of participants, but it might harm overall efficiency if it leads to a lower total number of participants. It also necessitates a stratified analysis, which can reduce statistical efficiency if stratification by <span class="math inline">\(C\)</span> would not otherwise be needed.</p></li>
+<li><p>Matching on a causal intermediate or a collider can cause bias just like stratifying on a causal intermediate or a collider. Matching should generally be done only on variables that are likely to be important confounders.</p></li>
+<li><p>Cost efficiency is about the precision of a causal effect estimate achieved with a given total cost of a study. Some methods of recruiting controls lend themselves naturally to matching by neighborhood, family, friends etc. However, the potential for bias or loss of statistical efficiency should always be balanced against the convenience of control recruitment. It is also important to calibrate the closeness of the matching needed to control confounding. Requiring extremely close matches can greatly increase cost with little improvement in control for confounding or precision.</p></li>
+</ul>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-greenland1990matching" class="csl-entry" role="listitem">
+Greenland, Sander, and Hal Morgenstern. 1990. <span>“Matching and Efficiency in Cohort Studies.”</span> <em>American Journal of Epidemiology</em> 131 (1): 151–59.
+</div>
+<div id="ref-jewell2003statistics" class="csl-entry" role="listitem">
+Jewell, Nicholas P. 2003. <em>Statistics for Epidemiology</em>. CRC Press.
+</div>
+<div id="ref-rothman2008modern" class="csl-entry" role="listitem">
+Rothman, Kenneth J, Sander Greenland, and Timothy L Lash. 2008. <em>Modern Epidemiology</em>. Lippincott Williams &amp; Wilkins.
+</div>
+<div id="ref-samuels1981matching" class="csl-entry" role="listitem">
+Samuels, Myra L. 1981. <span>“Matching and Design Efficiency in Epidemiological Studies.”</span> <em>Biometrika</em> 68 (3): 577–88.
+</div>
+</div>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -827,6 +1133,38 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 
