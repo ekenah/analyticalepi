@@ -490,7 +490,8 @@ window.Quarto = {
   <li><a href="#simpsons-paradox-standardized" id="toc-simpsons-paradox-standardized" class="nav-link" data-scroll-target="#simpsons-paradox-standardized"><span class="header-section-number">17.3</span> Simpson’s paradox standardized</a>
   <ul class="collapse">
   <li><a href="#crude-risks-and-measures-of-association" id="toc-crude-risks-and-measures-of-association" class="nav-link" data-scroll-target="#crude-risks-and-measures-of-association"><span class="header-section-number">17.3.1</span> Crude risks and measures of association</a></li>
-  <li><a href="#conditional-risks-and-measures-of-association-given-sex" id="toc-conditional-risks-and-measures-of-association-given-sex" class="nav-link" data-scroll-target="#conditional-risks-and-measures-of-association-given-sex"><span class="header-section-number">17.3.2</span> Conditional risks and measures of association given sex</a></li>
+  <li><a href="#conditional-risks-and-measures-of-association" id="toc-conditional-risks-and-measures-of-association" class="nav-link" data-scroll-target="#conditional-risks-and-measures-of-association"><span class="header-section-number">17.3.2</span> Conditional risks and measures of association</a></li>
+  <li><a href="#standardized-risks-and-measures-of-association-1" id="toc-standardized-risks-and-measures-of-association-1" class="nav-link" data-scroll-target="#standardized-risks-and-measures-of-association-1"><span class="header-section-number">17.3.3</span> Standardized risks and measures of association</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -713,7 +714,7 @@ Figure&nbsp;17.2: Single-world intervention graph (SWIG) for setting <span class
     &amp;\qquad = \Pr(D = 1 \given{} C = c, X = x, S = 1)       &amp;&amp;\text{by consistency.}
   \end{aligned}
 \tag{17.8}\]</span></span> Thus, the estimated conditional risk given <span class="math inline">\(C = c\)</span> in each exposure group is an unbiased estimate of the causal conditional risk given <span class="math inline">\(C = c\)</span> in the eligible subpopulation if we intervene to set the same exposure. Therefore, each conditional measure of association is a consistent estimator of a <strong>conditional causal effect</strong>, which is a measure of association that compares <span class="math inline">\(\Pr(D^1 = 1 \given{} C = c)\)</span> to <span class="math inline">\(\Pr(D^0 = 1 \given{} C = c)\)</span>. In terms of a hypothetical experiment, this is the causal effect we would see if we compared the entire eligible subpopulation with <span class="math inline">\(C = c\)</span> under an intervention that set <span class="math inline">\(X = 1\)</span> to itself under an intervention that set <span class="math inline">\(X = 0\)</span>.</p>
-<p>In a study represented by the DAG in <a href="#fig-dag-cxsd" class="quarto-xref">Figure&nbsp;<span>17.1</span></a>, both equalities in <a href="#eq-cond-causal" class="quarto-xref">Equation&nbsp;<span>17.8</span></a> hold because conditioning on <span class="math inline">\(C\)</span> controls confounding and selection bias. If there is residual confounding or selection bias after conditioning on <span class="math inline">\(C\)</span>, at least one of the stratum-specific measures of association does not represent a conditional causal effect. This could happen, for example, if there are common causes of two or more variables on the DAG that are not included. In practice, there is always residual confounding and selection bias. Our goal in study design and analysis is to reduce these to the point that the resulting bias is small compared to the causal effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(D\)</span> that we are looking for.</p>
+<p>In a study represented by the DAG in <a href="#fig-dag-cxsd" class="quarto-xref">Figure&nbsp;<span>17.1</span></a>, both equalities in <a href="#eq-cond-causal" class="quarto-xref">Equation&nbsp;<span>17.8</span></a> hold because conditioning on <span class="math inline">\(C\)</span> controls confounding and selection bias. If there is residual confounding or selection bias after conditioning on <span class="math inline">\(C\)</span>, at least one of the stratum-specific measures of association does not represent a conditional causal effect. This could happen, for example, if there are common causes of two or more variables on the DAG that are not included. In practice, there is always residual confounding and selection bias. Our goal in study design and analysis is to reduce these to the point that the remaning bias is small compared to the causal effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(D\)</span> that we are looking for.</p>
 </section>
 </section>
 <section id="standardization" class="level2" data-number="17.2">
@@ -737,23 +738,25 @@ Figure&nbsp;17.2: Single-world intervention graph (SWIG) for setting <span class
   \Prstd(C = c).
 \]</span> The corresponding <strong>standardized risk</strong> given <span class="math inline">\(X = x\)</span> based on data from our study sample is <span class="math display">\[
   \Prstd(D = 1 \given{} X = x, S = 1)
-  = \sum_{c} \Pr(D = 1 \given{} C = c, X = x, S = 1) \Prstd(C = c),
-\]</span> where we assume that each possible value of <span class="math inline">\(C\)</span> is represented in the study sample.</p>
-<p>Because the distribution of <span class="math inline">\(C\)</span> is the same in both exposure groups, any measure of association that compares <span class="math inline">\(\Pr_\std(D = 1 \given{} X = 1, S = 1)\)</span> and <span class="math inline">\(\Pr_\std(D = 1 \given{} X = 0, S = 1)\)</span> represents a marginal causal effect in our standard population. The standardized risk difference is <span id="eq-stdRD"><span class="math display">\[
+  = \sum_{c} p_{xc} \Prstd(C = c),
+\]</span> where <span class="math display">\[
+  p_{xc} = \Pr(D = 1 \given{} C = c, X = x, S = 1).
+\]</span> To calculate a standardized estimate, we need each possible value of <span class="math inline">\(C\)</span> in the standard population to be represented in the study sample.</p>
+<p>Because the same distribution of <span class="math inline">\(C\)</span> is used for both exposure groups and there is no causal effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(C\)</span>, any measure of association that compares <span class="math inline">\(\Pr_\std(D = 1 \given{} X = 1, S = 1)\)</span> and <span class="math inline">\(\Pr_\std(D = 1 \given{} X = 0, S = 1)\)</span> represents a marginal causal effect in our standard population. The standardized risk difference is <span id="eq-RDstd"><span class="math display">\[
   \RD_\std
   = \Prstd(D = 1 \given{} X = 1, S = 1) - \Prstd(D = 1 \given{} X = 0, S = 1),
-\tag{17.10}\]</span></span> the standardized risk ratio is <span class="math display">\[
+\tag{17.10}\]</span></span> the standardized risk ratio is <span id="eq-RRstd"><span class="math display">\[
   \RR_\std
   = \frac{\Prstd(D = 1 \given{} X = 1, S = 1)}{\Prstd(D = 1 \given{} X = 0, S = 1)},
-\]</span> the standardized odds ratio is <span id="eq-crudeOR"><span class="math display">\[
+\tag{17.11}\]</span></span> the standardized odds ratio is <span id="eq-ORstd"><span class="math display">\[
   \OR_\std
   = \frac{\odds\bigl(\Prstd(D = 1 \given{} X = 1, S = 1)\bigr)}
       {\odds\bigl(\Prstd(D = 0 \given{} X = 0, S = 1)\bigr)},
-\tag{17.11}\]</span></span> and the standardized cumulative hazard ratio is <span class="math display">\[
+\tag{17.12}\]</span></span> and the standardized cumulative hazard ratio is <span id="eq-CHRstd"><span class="math display">\[
   \CHR_\std
   = \frac{-\ln\bigl(1 - \Prstd(D = 1 \given{} X = 1, S = 1)\bigr)}
     {-\ln\bigl(1 - \Prstd(D = 1 \given{} X = 0, S = 1)\bigr)}.
-\]</span> When conditioning on <span class="math inline">\(C\)</span> controls confounding and selection bias, these represent marginal causal effects in the standard population. For some distribution of <span class="math inline">\(C\)</span>, they would represent marginal causal effects in the eligible population. We may or may not be able to estimate this distribution of <span class="math inline">\(C\)</span> using our study sample.</p>
+\tag{17.13}\]</span></span> When conditioning on <span class="math inline">\(C\)</span> controls confounding and selection bias, these represent marginal causal effects in the standard population. For some distribution of <span class="math inline">\(C\)</span>, they would represent marginal causal effects in the eligible population. However, we may or may not be able to estimate this distribution of <span class="math inline">\(C\)</span> using our study sample.</p>
 </section>
 <section id="treatment-effects" class="level3" data-number="17.2.3">
 <h3 data-number="17.2.3" class="anchored" data-anchor-id="treatment-effects"><span class="header-section-number">17.2.3</span> Treatment effects</h3>
@@ -769,25 +772,22 @@ Figure&nbsp;17.2: Single-world intervention graph (SWIG) for setting <span class
 <li><p>When there is selection bias by <span class="math inline">\(C\)</span>, both the marginal distribution of <span class="math inline">\(C\)</span> and the conditional distribution of <span class="math inline">\(C\)</span> given <span class="math inline">\(X\)</span> differs systematically between the study sample and the eligible population because there is open path from <span class="math inline">\(C\)</span> to <span class="math inline">\(S\)</span> that is not closed by conditioning on <span class="math inline">\(X\)</span>.</p></li>
 </ul>
 <p>For the risk difference, calculating standardized risks and then taking the difference is the same as taking the same weighted average of the stratum-specific risk differences. The standardized risk difference <span class="math inline">\(\RR_\std\)</span> equals <span class="math display">\[
-  \begin{aligned}
-    &amp;\sum_c \Pr(D = 1 \given{} C = c, X = 1, S = 1) \Prstd(C = c) \\
-    &amp;\qquad - \sum_c(\Pr(D = 1 \given{} C = c, X = 0, S = 1)) \Prstd(C = c) \\
-    &amp;= \sum_c \Big(\Pr(D = 1 \given{} C = c, X = 1, S = 1) - \Pr(D = 1 \given{} C = c, X = 0, S = 1)\Big) \Prstd(C = c).
-  \end{aligned}
-\]</span> The standardized risk difference using the entire population is called the <strong>average treatment effect</strong> (ATE). This can be estimated using data from a cohort study if there is no confounding or selection bias by <span class="math inline">\(C\)</span>. The standardized risk difference using the exposed or treated population is the <strong>average treatment effect among the treated</strong> (ATET), and the standardized risk difference using the unexposed or control population is the <strong>average treatment effect among controls</strong> (ATEC). These can be estimated using data from a cohort study when there is no selection bias by <span class="math inline">\(C\)</span>.</p>
+  \sum_c p_{1c} \Prstd(C = c) - \sum_c p_{0c} \Prstd(C = c) \\
+  = \sum_c (p_{1c} - p_{0c}) \Prstd(C = c).
+\]</span> The standardized risk difference using the entire population is called the <strong>average treatment effect</strong> (ATE). This can be estimated using data from a cohort study if there is no confounding or selection bias by <span class="math inline">\(C\)</span>. The <strong>average treatment effect among the treated</strong> (ATET) is the standardized risk difference using the distribution of <span class="math inline">\(C\)</span> in the exposed or treated population, and the <strong>average treatment effect among controls</strong> (ATEC) is the standardized risk difference using the distribution of <span class="math inline">\(C\)</span> unexposed or control population. These can be estimated when there is no selection bias through <span class="math inline">\(C\)</span>. For measures other than the risk difference, we can talk about the marginal treatment effect, the treatment effect among the treated, or the treatment effect among controls.</p>
 </section>
 <section id="confidence-limits" class="level3" data-number="17.2.4">
 <h3 data-number="17.2.4" class="anchored" data-anchor-id="confidence-limits"><span class="header-section-number">17.2.4</span> Confidence limits</h3>
-<p>For a fixed standard distribution of <span class="math inline">\(C\)</span> and independent estimation of the risks in different strata of <span class="math inline">\(C\)</span>, the variance of a standardized risk can be calculated using <a href="probability.html#eq-lincomV" class="quarto-xref">Equation&nbsp;<span>1.12</span></a>: <span class="math display">\[
-  \Var\bigl(\Prstd(D = 1 \given{} X = x, S = 1)\bigr)
-  = \sum_c \Pr(D = 1 \given{} C = c, X = x, S = 1) \Prstd(C = c)^2
-\]</span> The variance of a standardized measure of association can then be obtained using the delta method. For the risk difference, no transformation is needed. For the risk ratio, we use a log transformation. For the odds ratio, we use a logit transformation. For the cumulative hazard ratio, we use a complementary log-log transformation.</p>
+<p>When the standard distribution of <span class="math inline">\(C\)</span> is fixed and the stratum-specific risks are estimated independently (i.e., the estimated risks are independent), the variance of a standardized risk can be estimated using <a href="probability.html#eq-lincomV" class="quarto-xref">Equation&nbsp;<span>1.12</span></a>: <span class="math display">\[
+  \hat{\Var}\bigl(\hat{\Prstd}(D = 1 \given{} X = x, S = 1)\bigr)
+  = \sum_c \hat{\Var}(\hat{p}_{xc}) \Prstd(C = c)^2
+\]</span> The variance of a standardized measure of association can then be obtained using the delta method from <a href="mlestimation.html#sec-delta" class="quarto-xref"><span>Section 3.4.1</span></a>. For the risk difference, no transformation is needed. For the risk ratio, we use a log transformation. For the odds ratio, we use a logit transformation. For the cumulative hazard ratio, we use a complementary log-log transformation.</p>
 <p>When the estimated risks in different strata of <span class="math inline">\(C\)</span> are not independent (e.g., they are estimated using <span class="math inline">\(C\)</span> as a predictor in a regression model), then we must account for the covariances of the estimated risks in different strata. When the distribution of <span class="math inline">\(C\)</span> is estimated (e.g., we are using the distribution of <span class="math inline">\(C\)</span> in the study sample), then we must account for the uncertainty in the distribution of <span class="math inline">\(C\)</span>. Bootstrapping can account for all of these sources of variation.</p>
 </section>
 </section>
 <section id="simpsons-paradox-standardized" class="level2" data-number="17.3">
 <h2 data-number="17.3" class="anchored" data-anchor-id="simpsons-paradox-standardized"><span class="header-section-number">17.3</span> Simpson’s paradox standardized</h2>
-<p>The DAG in <a href="dags.html#fig-simpson-dag" class="quarto-xref">Figure&nbsp;<span>15.6</span></a> shows the causal structure underlying the example given by <span class="citation" data-cites="simpson1951interpretation">Simpson (<a href="references.html#ref-simpson1951interpretation" role="doc-biblioref">1951</a>)</span> that is reproduced in <a href="dags.html#tbl-simpson" class="quarto-xref">Table&nbsp;<span>15.1</span></a>. Using DAGs and SWIGs, we could show that conditioning on biological sex would remove all confounding and selection bias, so the conditional odds ratio is a better estimate of the effect of treatment than the crude odds ratio. The example is constructed so that the conditional odds ratio is the same for males and females, but this is too much to hope for in reality. Standardization gives us a less fragile point of view.</p>
+<p>The DAG in <a href="dags.html#fig-simpson-dag" class="quarto-xref">Figure&nbsp;<span>15.6</span></a> shows the causal structure underlying the example given by <span class="citation" data-cites="simpson1951interpretation">Simpson (<a href="references.html#ref-simpson1951interpretation" role="doc-biblioref">1951</a>)</span> that is reproduced in <a href="dags.html#tbl-simpson" class="quarto-xref">Table&nbsp;<span>15.1</span></a>. Using DAGs and SWIGs, we could show that conditioning on biological sex would remove all confounding and selection bias, so the conditional odds ratio is a better estimate of the effect of treatment than the crude odds ratio. The example is constructed so that the conditional odds ratio is exactly the same for males and females, but this is too much to hope for in reality. Standardization gives us a less fragile point of view.</p>
 <section id="crude-risks-and-measures-of-association" class="level3" data-number="17.3.1">
 <h3 data-number="17.3.1" class="anchored" data-anchor-id="crude-risks-and-measures-of-association"><span class="header-section-number">17.3.1</span> Crude risks and measures of association</h3>
 <p>In this example, the crude risk of death under treatment is <span class="math display">\[
@@ -808,7 +808,7 @@ Figure&nbsp;17.2: Single-world intervention graph (SWIG) for setting <span class
   = \frac{13}{13 + 27}
   = 0.325.
 \]</span> There are <span class="math inline">\(3 + 4 = 7\)</span> untreated males and <span class="math inline">\(3 + 2 = 5\)</span> untreated females, so <span class="math display">\[
-  \Pr(\text{male} \given X = 0, S = 1)
+  \Pr(\text{male} \given{} X = 0, S = 1)
   = \frac{7}{7 + 5}
   \approx 0.583.
 \]</span> The crude risks do not have a causal interpretation in terms of a hypothetical experiment, and the crude measures of association do not represent marginal causal effects.</p>
@@ -852,8 +852,8 @@ Figure&nbsp;17.2: Single-world intervention graph (SWIG) for setting <span class
 </div>
 </div>
 </section>
-<section id="conditional-risks-and-measures-of-association-given-sex" class="level3" data-number="17.3.2">
-<h3 data-number="17.3.2" class="anchored" data-anchor-id="conditional-risks-and-measures-of-association-given-sex"><span class="header-section-number">17.3.2</span> Conditional risks and measures of association given sex</h3>
+<section id="conditional-risks-and-measures-of-association" class="level3" data-number="17.3.2">
+<h3 data-number="17.3.2" class="anchored" data-anchor-id="conditional-risks-and-measures-of-association"><span class="header-section-number">17.3.2</span> Conditional risks and measures of association</h3>
 <p>According to the DAG in <a href="dags.html#fig-simpson-dag" class="quarto-xref">Figure&nbsp;<span>15.6</span></a>, conditioning on biological sex removes all confounding and selection bias. Among females, the risk of death in the treated is <span class="math display">\[
   \Pr(D = 1 \given{} \text{female}, X = 1, S = 1)
   = \frac{15}{15 + 12}
@@ -862,7 +862,24 @@ Figure&nbsp;17.2: Single-world intervention graph (SWIG) for setting <span class
   \Pr(D = 1 \given{} \text{female}, X = 0, S = 1)
   = \frac{3}{3 + 2}
   = 0.6.
-\]</span> Among males, the risk of death in the treated is <span class="math display">\[
+\]</span> Assuming the DAG in <a href="dags.html#fig-simpson-dag" class="quarto-xref">Figure&nbsp;<span>15.6</span></a> is correct, these can be interpreted as conditional causal risks given female sex. The causal risk of death under treatment is less than the causal risk of death under no treatment, suggesting that treatment reduces mortality in females. Given female sex, the conditional risk difference is <span class="math display">\[
+  \RD_\text{female}
+  = \frac{15}{27} - \frac{3}{5}
+  \approx -0.044,
+\]</span> the conditional risk ratio is <span class="math display">\[
+  \RR_\text{female}
+  = \frac{15 / 27}{3 / 5}
+  \approx 0.926,
+\]</span> the conditional odds ratio is <span class="math display">\[
+  \OR_\text{female}
+  = \frac{\odds(15 / 27)}{\odds(3 / 5)}
+  \approx 0.833,
+\]</span> and the conditional cumulative hazard ratio is <span class="math display">\[
+  \CHR_\text{female}
+  = \frac{-\ln(1 - 15 / 27)}{-\ln(1 - 3 / 5)}
+  \approx 0.885.
+\]</span> The risk difference is below zero and the ratio measures are all below one. Because they are based on conditional causal risks, these estimate the conditional causal effect of treatment given female sex.</p>
+<p>Among males, the risk of death in the treated is <span class="math display">\[
   \Pr(D = 1 \given{} \text{male}, X = 1, S = 1)
   = \frac{5}{5 + 8}
   \approx 0.385
@@ -870,7 +887,152 @@ Figure&nbsp;17.2: Single-world intervention graph (SWIG) for setting <span class
   \Pr(D = 1 \given{} \text{male}, X = 0, S = 1)
   = \frac{3}{3 + 4}
   \approx 0.429.
-\]</span></p>
+\]</span> Assuming the DAG in <a href="dags.html#fig-simpson-dag" class="quarto-xref">Figure&nbsp;<span>15.6</span></a> is correct, these can be interpreted as conditional causal risks given male sex. As in females, the causal risk of death under treatment is less than the causal risk of death under no treatment, suggesting that treatment reduces mortality among males. Given male sex, the conditional risk difference is <span class="math display">\[
+  \RD_\text{male}
+  = \frac{5}{13} - \frac{3}{7}
+  \approx -0.044,
+\]</span> the conditional risk ratio is <span class="math display">\[
+  \RR_\text{male}
+  = \frac{5 / 13}{3 / 7}
+  \approx 0.897,
+\]</span> the conditional odds ratio is <span class="math display">\[
+  \OR_\text{male}
+  = \frac{\odds(5 / 13)}{\odds(3 / 7)}
+  \approx 0.833,
+\]</span> and the conditional cumulative hazard ratio is <span class="math display">\[
+  \CHR_\text{male}
+  = \frac{-\ln(1 - 5 / 13)}{-\ln(1 - 3 / 7)}
+  \approx 0.868.
+\]</span> Because they are based on conditional causal risks, these estimate the conditional causal effect of treatment given male sex. These are similar to the causal effect estimates for females, but only the odds ratios are identical (both equal to <span class="math inline">\(5 / 6\)</span>). There is effect measure modification on all other scales.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>simpson-cond.R</strong></pre>
+</div>
+<div class="sourceCode" id="cb4" data-filename="simpson-cond.R"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Conditional measures of association in Simpson's paradox (JRSSB, 1951)</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="co"># data frame</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>simpson <span class="ot">&lt;-</span>  <span class="fu">data.frame</span>(<span class="at">male =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">each =</span> <span class="dv">4</span>),</span>
+<span id="cb4-5"><a href="#cb4-5"></a>                       <span class="at">treated =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">each =</span> <span class="dv">2</span>),</span>
+<span id="cb4-6"><a href="#cb4-6"></a>                       <span class="at">dead =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">times =</span> <span class="dv">4</span>),</span>
+<span id="cb4-7"><a href="#cb4-7"></a>                       <span class="at">count =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">12</span>, <span class="dv">15</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb4-8"><a href="#cb4-8"></a></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="co"># function to calculate risk</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a>risk <span class="ot">&lt;-</span> <span class="cf">function</span>(rows) {</span>
+<span id="cb4-11"><a href="#cb4-11"></a>  <span class="co"># rows is a vector of TRUE/FALSE that selects rows</span></span>
+<span id="cb4-12"><a href="#cb4-12"></a>  count <span class="ot">&lt;-</span> simpson<span class="sc">$</span>count[rows]</span>
+<span id="cb4-13"><a href="#cb4-13"></a>  dead <span class="ot">&lt;-</span> simpson<span class="sc">$</span>dead[rows]</span>
+<span id="cb4-14"><a href="#cb4-14"></a>  <span class="fu">sum</span>(count <span class="sc">*</span> dead) <span class="sc">/</span> <span class="fu">sum</span>(count)</span>
+<span id="cb4-15"><a href="#cb4-15"></a>}</span>
+<span id="cb4-16"><a href="#cb4-16"></a></span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="co"># odds and cumulative hazard</span></span>
+<span id="cb4-18"><a href="#cb4-18"></a>odds <span class="ot">&lt;-</span> <span class="cf">function</span>(p) p <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb4-19"><a href="#cb4-19"></a>chaz <span class="ot">&lt;-</span> <span class="cf">function</span>(p) <span class="sc">-</span><span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb4-20"><a href="#cb4-20"></a></span>
+<span id="cb4-21"><a href="#cb4-21"></a><span class="co"># conditional risks and measures of association among females</span></span>
+<span id="cb4-22"><a href="#cb4-22"></a>p1f <span class="ot">&lt;-</span> <span class="fu">risk</span>(<span class="fu">with</span>(simpson, treated <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> male <span class="sc">==</span> <span class="dv">0</span>))</span>
+<span id="cb4-23"><a href="#cb4-23"></a>p0f <span class="ot">&lt;-</span> <span class="fu">risk</span>(<span class="fu">with</span>(simpson, treated <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> male <span class="sc">==</span> <span class="dv">0</span>))</span>
+<span id="cb4-24"><a href="#cb4-24"></a>RDf <span class="ot">&lt;-</span> p1f <span class="sc">-</span> p0f</span>
+<span id="cb4-25"><a href="#cb4-25"></a>RRf <span class="ot">&lt;-</span> p1f <span class="sc">/</span> p0f</span>
+<span id="cb4-26"><a href="#cb4-26"></a>ORf <span class="ot">&lt;-</span> <span class="fu">odds</span>(p1f) <span class="sc">/</span> <span class="fu">odds</span>(p0f)</span>
+<span id="cb4-27"><a href="#cb4-27"></a>CHRf <span class="ot">&lt;-</span> <span class="fu">chaz</span>(p1f) <span class="sc">/</span> <span class="fu">chaz</span>(p0f)</span>
+<span id="cb4-28"><a href="#cb4-28"></a></span>
+<span id="cb4-29"><a href="#cb4-29"></a><span class="co"># conditional risks and measures of association among females</span></span>
+<span id="cb4-30"><a href="#cb4-30"></a>p1m <span class="ot">&lt;-</span> <span class="fu">risk</span>(<span class="fu">with</span>(simpson, treated <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> male <span class="sc">==</span> <span class="dv">1</span>))</span>
+<span id="cb4-31"><a href="#cb4-31"></a>p0m <span class="ot">&lt;-</span> <span class="fu">risk</span>(<span class="fu">with</span>(simpson, treated <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> male <span class="sc">==</span> <span class="dv">1</span>))</span>
+<span id="cb4-32"><a href="#cb4-32"></a>RDm <span class="ot">&lt;-</span> p1m <span class="sc">-</span> p0m</span>
+<span id="cb4-33"><a href="#cb4-33"></a>RRm <span class="ot">&lt;-</span> p1m <span class="sc">/</span> p0m</span>
+<span id="cb4-34"><a href="#cb4-34"></a>ORm <span class="ot">&lt;-</span> <span class="fu">odds</span>(p1m) <span class="sc">/</span> <span class="fu">odds</span>(p0m)</span>
+<span id="cb4-35"><a href="#cb4-35"></a>CHRm <span class="ot">&lt;-</span> <span class="fu">chaz</span>(p1m) <span class="sc">/</span> <span class="fu">chaz</span>(p0m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="standardized-risks-and-measures-of-association-1" class="level3" data-number="17.3.3">
+<h3 data-number="17.3.3" class="anchored" data-anchor-id="standardized-risks-and-measures-of-association-1"><span class="header-section-number">17.3.3</span> Standardized risks and measures of association</h3>
+<p>Assuming the DAG in <a href="dags.html#fig-simpson-dag" class="quarto-xref">Figure&nbsp;<span>15.6</span></a> is correct, we can calculate marginal causal risks by standardizing to the same distribution of biological sex under treatment and no treatment. In a population that is half female and half male, the causal risk of death under treatment is <span class="math display">\[
+  \begin{aligned}
+    &amp;\Prstd(D = 1 \given{} X = 1, S = 1) \\
+    &amp;\qquad = \frac{1}{2} \Pr(D = 1 \given{} \text{female}, X = 1, S = 1)
+      + \frac{1}{2} \Pr(D = 1 \given{} \text{male}, X = 1, S = 1) \\
+    &amp;\qquad \approx 0.470
+  \end{aligned}
+\]</span> and the causal risk of death under no treatment is <span class="math display">\[
+  \begin{aligned}
+    &amp;\Prstd(D = 1 \given{} X = 1, S = 1) \\
+    &amp;\qquad = \frac{1}{2} \Pr(D = 1 \given{} \text{female}, X = 0, S = 1)
+      + \frac{1}{2} \Pr(D = 1 \given{} \text{male}, X = 0, S = 1) \\
+    &amp;\qquad \approx 0.514.
+  \end{aligned}
+\]</span> The causal risk of death under treatment is lower, suggesting that treatment would reduce mortality in this population. These estimated causal risks can be used to calculate standardized measures of association. From <a href="#eq-RDstd" class="quarto-xref">Equation&nbsp;<span>17.10</span></a>, the standardized risk difference is <span class="math display">\[
+  \RD_\std
+  \approx -0.044.
+\]</span> From <a href="#eq-RRstd" class="quarto-xref">Equation&nbsp;<span>17.11</span></a>, the standardized risk ratio is <span class="math display">\[
+  \RR_\std
+  \approx 0.914.
+\]</span> From <a href="#eq-ORstd" class="quarto-xref">Equation&nbsp;<span>17.12</span></a>, the standardized odds ratio is <span class="math display">\[
+  \OR_\std
+  \approx 0.873.
+\]</span> From <a href="#eq-CHRstd" class="quarto-xref">Equation&nbsp;<span>17.13</span></a>, the standardized cumulative hazard ratio is <span class="math display">\[
+  \CHR_\std
+  \approx 0.879.
+\]</span> As with crude and conditional measures, the standardized cumulative hazard ratio is between the standardized risk ratio and odds ratio.</p>
+<p>If there is no effect measure modification on a scale that is collapsible, the standardized measure will equal the conditional measures of association in all standard populations. If there is effect measure modification or noncollapsibility, the standardized measure will depend on the standard population used. In this example, there is effect measure modification on the risk difference and risk ratio scales. There is no effect measure modification on the odds ratio scale, but the odds ratio is noncollapsible. There is both effect measure modification and noncollapsibility on the cumulative hazard ratio scale. Therefore, all four standardized measures of association depend on the standard population used.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">R</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>simpson-std.R</strong></pre>
+</div>
+<div class="sourceCode" id="cb5" data-filename="simpson-std.R"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Standardized measures of association in Simpson's paradox (JRSSB, 1951)</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="co"># data frame</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a>simpson <span class="ot">&lt;-</span>  <span class="fu">data.frame</span>(<span class="at">male =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">each =</span> <span class="dv">4</span>),</span>
+<span id="cb5-5"><a href="#cb5-5"></a>                       <span class="at">treated =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">each =</span> <span class="dv">2</span>),</span>
+<span id="cb5-6"><a href="#cb5-6"></a>                       <span class="at">dead =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">times =</span> <span class="dv">4</span>),</span>
+<span id="cb5-7"><a href="#cb5-7"></a>                       <span class="at">count =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">12</span>, <span class="dv">15</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb5-8"><a href="#cb5-8"></a></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="co"># function to calculate risk</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a>risk <span class="ot">&lt;-</span> <span class="cf">function</span>(rows) {</span>
+<span id="cb5-11"><a href="#cb5-11"></a>  <span class="co"># rows is a vector of TRUE/FALSE that selects rows</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a>  count <span class="ot">&lt;-</span> simpson<span class="sc">$</span>count[rows]</span>
+<span id="cb5-13"><a href="#cb5-13"></a>  dead <span class="ot">&lt;-</span> simpson<span class="sc">$</span>dead[rows]</span>
+<span id="cb5-14"><a href="#cb5-14"></a>  <span class="fu">sum</span>(count <span class="sc">*</span> dead) <span class="sc">/</span> <span class="fu">sum</span>(count)</span>
+<span id="cb5-15"><a href="#cb5-15"></a>}</span>
+<span id="cb5-16"><a href="#cb5-16"></a></span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="co"># odds and cumulative hazard</span></span>
+<span id="cb5-18"><a href="#cb5-18"></a>odds <span class="ot">&lt;-</span> <span class="cf">function</span>(p) p <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb5-19"><a href="#cb5-19"></a>chaz <span class="ot">&lt;-</span> <span class="cf">function</span>(p) <span class="sc">-</span><span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb5-20"><a href="#cb5-20"></a></span>
+<span id="cb5-21"><a href="#cb5-21"></a><span class="co"># conditional risks among females</span></span>
+<span id="cb5-22"><a href="#cb5-22"></a>p1f <span class="ot">&lt;-</span> <span class="fu">risk</span>(<span class="fu">with</span>(simpson, treated <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> male <span class="sc">==</span> <span class="dv">0</span>))</span>
+<span id="cb5-23"><a href="#cb5-23"></a>p0f <span class="ot">&lt;-</span> <span class="fu">risk</span>(<span class="fu">with</span>(simpson, treated <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> male <span class="sc">==</span> <span class="dv">0</span>))</span>
+<span id="cb5-24"><a href="#cb5-24"></a></span>
+<span id="cb5-25"><a href="#cb5-25"></a><span class="co"># conditional risks among males</span></span>
+<span id="cb5-26"><a href="#cb5-26"></a>p1m <span class="ot">&lt;-</span> <span class="fu">risk</span>(<span class="fu">with</span>(simpson, treated <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> male <span class="sc">==</span> <span class="dv">1</span>))</span>
+<span id="cb5-27"><a href="#cb5-27"></a>p0m <span class="ot">&lt;-</span> <span class="fu">risk</span>(<span class="fu">with</span>(simpson, treated <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> male <span class="sc">==</span> <span class="dv">1</span>))</span>
+<span id="cb5-28"><a href="#cb5-28"></a></span>
+<span id="cb5-29"><a href="#cb5-29"></a><span class="co"># standardized risks (standard population half female and half male)</span></span>
+<span id="cb5-30"><a href="#cb5-30"></a>pf <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb5-31"><a href="#cb5-31"></a>pm <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> pf</span>
+<span id="cb5-32"><a href="#cb5-32"></a>p1std <span class="ot">&lt;-</span> pf <span class="sc">*</span> p1f <span class="sc">+</span> pm <span class="sc">*</span> p1m</span>
+<span id="cb5-33"><a href="#cb5-33"></a>p0std <span class="ot">&lt;-</span> pf <span class="sc">*</span> p0f <span class="sc">+</span> pm <span class="sc">*</span> p0m</span>
+<span id="cb5-34"><a href="#cb5-34"></a></span>
+<span id="cb5-35"><a href="#cb5-35"></a><span class="co"># standardized measures of association</span></span>
+<span id="cb5-36"><a href="#cb5-36"></a>RDstd <span class="ot">&lt;-</span> p1std <span class="sc">-</span> p0std</span>
+<span id="cb5-37"><a href="#cb5-37"></a>RRstd <span class="ot">&lt;-</span> p1std <span class="sc">/</span> p0std</span>
+<span id="cb5-38"><a href="#cb5-38"></a>ORstd <span class="ot">&lt;-</span> <span class="fu">odds</span>(p1std) <span class="sc">/</span> <span class="fu">odds</span>(p0std)</span>
+<span id="cb5-39"><a href="#cb5-39"></a>CHRstd <span class="ot">&lt;-</span> <span class="fu">chaz</span>(p1std) <span class="sc">/</span> <span class="fu">chaz</span>(p0std)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">

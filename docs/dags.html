@@ -1123,9 +1123,9 @@ If the arrow from $C$ to $D$ is present, then all of the causal effect of $C$ on
 <span id="cb10-2"><a href="#cb10-2"></a></span>
 <span id="cb10-3"><a href="#cb10-3"></a><span class="co"># load R packages</span></span>
 <span id="cb10-4"><a href="#cb10-4"></a><span class="fu">library</span>(dagitty)</span>
-<span id="cb10-5"><a href="#cb10-5"></a><span class="fu">library</span>(ggdag, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="fu">library</span>(ggdag)</span>
 <span id="cb10-6"><a href="#cb10-6"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb10-7"><a href="#cb10-7"></a><span class="fu">library</span>(ggraph)                           <span class="co"># for label_rect()</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a><span class="fu">library</span>(ggraph)   <span class="co"># for label_rect()</span></span>
 <span id="cb10-8"><a href="#cb10-8"></a></span>
 <span id="cb10-9"><a href="#cb10-9"></a><span class="co"># define the DAG</span></span>
 <span id="cb10-10"><a href="#cb10-10"></a>simpson <span class="ot">&lt;-</span> <span class="fu">dagitty</span>(<span class="st">'dag{</span></span>
@@ -1137,22 +1137,28 @@ If the arrow from $C$ to $D$ is present, then all of the causal effect of $C$ on
 <span id="cb10-16"><a href="#cb10-16"></a></span>
 <span id="cb10-17"><a href="#cb10-17"></a><span class="co"># generate tidy DAG data</span></span>
 <span id="cb10-18"><a href="#cb10-18"></a><span class="fu">coordinates</span>(simpson) <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb10-19"><a href="#cb10-19"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="st">"Sex"</span> <span class="ot">=</span> <span class="dv">0</span>, <span class="st">"Selection"</span> <span class="ot">=</span> <span class="fl">0.5</span>, <span class="st">"Treatment"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Death"</span> <span class="ot">=</span> <span class="dv">2</span>),</span>
+<span id="cb10-19"><a href="#cb10-19"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="st">"Sex"</span> <span class="ot">=</span> <span class="dv">0</span>, <span class="st">"Selection"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Treatment"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Death"</span> <span class="ot">=</span> <span class="dv">2</span>),</span>
 <span id="cb10-20"><a href="#cb10-20"></a>  <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"Sex"</span> <span class="ot">=</span> <span class="dv">0</span>, <span class="st">"Selection"</span> <span class="ot">=</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="st">"Treatment"</span> <span class="ot">=</span> <span class="dv">0</span>, <span class="st">"Death"</span> <span class="ot">=</span> <span class="dv">0</span>))</span>
-<span id="cb10-21"><a href="#cb10-21"></a>simpson_dat <span class="ot">&lt;-</span> <span class="fu">tidy_dagitty</span>(simpson)</span>
-<span id="cb10-22"><a href="#cb10-22"></a></span>
-<span id="cb10-23"><a href="#cb10-23"></a><span class="co"># plot the DAG using ggplot() to allow curved arrows</span></span>
-<span id="cb10-24"><a href="#cb10-24"></a><span class="co"># Uncomment "+ coord_equal()" to get a better-looking plot in an R window.</span></span>
-<span id="cb10-25"><a href="#cb10-25"></a><span class="co"># The start_cap and end_cap arguments keep the arrows from covering the text.</span></span>
-<span id="cb10-26"><a href="#cb10-26"></a><span class="co"># The size for label_rect should be 3.57 * the text font size.</span></span>
-<span id="cb10-27"><a href="#cb10-27"></a>(<span class="fu">ggplot</span>(simpson_dat, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend))</span>
-<span id="cb10-28"><a href="#cb10-28"></a>  <span class="sc">+</span> <span class="fu">theme_dag_gray_grid</span>()</span>
-<span id="cb10-29"><a href="#cb10-29"></a>  <span class="co"># + coord_equal()</span></span>
-<span id="cb10-30"><a href="#cb10-30"></a>  <span class="sc">+</span> <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> name), <span class="at">size =</span> <span class="dv">8</span>, <span class="at">col =</span> <span class="st">"black"</span>)</span>
-<span id="cb10-31"><a href="#cb10-31"></a>  <span class="sc">+</span> <span class="fu">geom_dag_edges_arc</span>(<span class="fu">aes</span>(<span class="at">start_cap =</span> <span class="fu">label_rect</span>(name, <span class="at">fontsize =</span> <span class="dv">8</span> <span class="sc">*</span> <span class="fl">3.57</span>),</span>
-<span id="cb10-32"><a href="#cb10-32"></a>                           <span class="at">end_cap =</span> <span class="fu">label_rect</span>(to, <span class="at">fontsize =</span> <span class="dv">8</span> <span class="sc">*</span> <span class="fl">3.57</span>)),</span>
-<span id="cb10-33"><a href="#cb10-33"></a>                       <span class="at">curvature =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), <span class="at">inherit =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb10-34"><a href="#cb10-34"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-21"><a href="#cb10-21"></a><span class="co"># simpson_dat &lt;- tidy_dagitty(simpson)</span></span>
+<span id="cb10-22"><a href="#cb10-22"></a>simpson_dat <span class="ot">&lt;-</span> <span class="fu">control_for</span>(simpson, <span class="st">"Selection"</span>, <span class="at">activate_colliders =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb10-23"><a href="#cb10-23"></a>simpson_adj <span class="ot">&lt;-</span> <span class="fu">filter</span>(simpson_dat, adjusted <span class="sc">==</span> <span class="st">"adjusted"</span>)</span>
+<span id="cb10-24"><a href="#cb10-24"></a>simpson_unadj <span class="ot">&lt;-</span> <span class="fu">filter</span>(simpson_dat, adjusted <span class="sc">==</span> <span class="st">"unadjusted"</span>)</span>
+<span id="cb10-25"><a href="#cb10-25"></a></span>
+<span id="cb10-26"><a href="#cb10-26"></a><span class="co"># plot the DAG using ggplot() to allow curved arrows</span></span>
+<span id="cb10-27"><a href="#cb10-27"></a><span class="co"># Uncomment "+ coord_equal()" to get a better-looking plot in an R window.</span></span>
+<span id="cb10-28"><a href="#cb10-28"></a><span class="co"># The start_cap and end_cap arguments keep the arrows from covering the text.</span></span>
+<span id="cb10-29"><a href="#cb10-29"></a><span class="co"># The size for label_rect should be 3.57 * the text font size.</span></span>
+<span id="cb10-30"><a href="#cb10-30"></a>(<span class="fu">ggplot</span>(simpson_dat, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend))</span>
+<span id="cb10-31"><a href="#cb10-31"></a>  <span class="sc">+</span> <span class="fu">theme_dag_gray_grid</span>()</span>
+<span id="cb10-32"><a href="#cb10-32"></a>  <span class="sc">+</span> <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.6</span>, <span class="fl">0.6</span>))</span>
+<span id="cb10-33"><a href="#cb10-33"></a>  <span class="sc">+</span> <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> name), <span class="at">data =</span> simpson_unadj, <span class="at">parse =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb10-34"><a href="#cb10-34"></a>              <span class="at">size =</span> <span class="dv">8</span>, <span class="at">col =</span> <span class="st">"black"</span>)</span>
+<span id="cb10-35"><a href="#cb10-35"></a>  <span class="sc">+</span> <span class="fu">geom_dag_label</span>(<span class="at">data =</span> simpson_adj, <span class="at">parse =</span> <span class="cn">TRUE</span>, <span class="at">size =</span> <span class="dv">8</span>, <span class="at">fill =</span> <span class="cn">NA</span>,</span>
+<span id="cb10-36"><a href="#cb10-36"></a>                   <span class="at">label.padding =</span> <span class="fu">unit</span>(<span class="fl">0.1</span>, <span class="st">"lines"</span>))</span>
+<span id="cb10-37"><a href="#cb10-37"></a>  <span class="sc">+</span> <span class="fu">geom_dag_edges_arc</span>(<span class="fu">aes</span>(<span class="at">start_cap =</span> <span class="fu">label_rect</span>(name, <span class="at">fontsize =</span> <span class="dv">8</span> <span class="sc">*</span> <span class="fl">3.57</span>),</span>
+<span id="cb10-38"><a href="#cb10-38"></a>                           <span class="at">end_cap =</span> <span class="fu">label_rect</span>(to, <span class="at">fontsize =</span> <span class="dv">8</span> <span class="sc">*</span> <span class="fl">3.57</span>)),</span>
+<span id="cb10-39"><a href="#cb10-39"></a>                       <span class="at">curvature =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), <span class="at">inherit =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-40"><a href="#cb10-40"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell-output-display">
