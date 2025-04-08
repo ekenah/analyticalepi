@@ -599,7 +599,7 @@ Table&nbsp;23.1: Simpson’s paradox data under different weights based on treat
 <h3 data-number="23.1.2" class="anchored" data-anchor-id="propensity-scores-and-ipt-weights"><span class="header-section-number">23.1.2</span> Propensity scores and IPT weights</h3>
 <p>The propensity score <span class="math display">\[
   \pi(c) = \Pr(X = 1 \given{} C = c, S = 1)
-\]</span> is the conditional probability of being treated given <span class="math inline">\(C = c\)</span> <span class="citation" data-cites="rosenbaum1983central">(<a href="references.html#ref-rosenbaum1983central" role="doc-biblioref">Rosenbaum and Rubin 1983</a>)</span>. In <a href="propensityscores.html" class="quarto-xref"><span>Chapter 22</span></a>, we saw that propensity scores can be used control confounding and selection bias via matching or stratifying by the propensity score or by include the propensity score as a predictor in an outcome regression model. They can also be used to calculate inverse probability of treatment weights. However, please note the difference in the definition of “treatment” in the two settings:</p>
+\]</span> is the conditional probability of being treated given <span class="math inline">\(C = c\)</span> <span class="citation" data-cites="rosenbaum1983central">(<a href="references.html#ref-rosenbaum1983central" role="doc-biblioref">Rosenbaum and Rubin 1983</a>)</span>. In <a href="propensityscores.html" class="quarto-xref"><span>Chapter 22</span></a>, we saw that propensity scores can be used control confounding and selection bias via matching or stratifying by the propensity score or by including the propensity score as a predictor in an outcome regression model. They can also be used to calculate inverse probability of treatment weights. However, please note the difference in the definition of “treatment” in the two settings:</p>
 <ul>
 <li><p>For propensity scores, “treatment” means being in the group defined as treated or exposed.</p></li>
 <li><p>For IPT weights, “treatment” means the treatment that each individual received whether they are in the treated (or exposed) group or the untreated (or unexposed) group.</p></li>
@@ -613,8 +613,8 @@ Table&nbsp;23.1: Simpson’s paradox data under different weights based on treat
 \]</span> where <span class="math inline">\(\pi(c) = Pr(X = 1 \given{} C = c, S = 1)\)</span> is the propensity score. The stabilized IPT weight is <span class="math display">\[
   \frac{\Pr(X = x \given{} S = 1)}{\Pr(X = x \given{} C = c, S = 1)} =
   \begin{cases}
-    \frac{\Pr(X = 1)}{\pi(c)}       &amp;\text{for a treated individual,}\\[4pt]
-    \frac{\Pr(X = 0)}{1 - \pi(c)}   &amp;\text{for an untreated undividual}.
+    \frac{\Pr(X = 1 \given{} S = 1)}{\pi(c)}       &amp;\text{for a treated individual,}\\[4pt]
+    \frac{\Pr(X = 0 \given{} S = 1)}{1 - \pi(c)}   &amp;\text{for an untreated undividual}.
   \end{cases}
 \]</span></p>
 </section>
@@ -634,7 +634,7 @@ Table&nbsp;23.1: Simpson’s paradox data under different weights based on treat
 \]</span> where <span class="math inline">\(w(x, c)\)</span> could be the stabilized IPT weights, unstabilized IPT weights, or any other set of weights that depends only on <span class="math inline">\(x\)</span> and <span class="math inline">\(c\)</span>. Combining these results, we get <span class="math display">\[
   \Pr(D^x = 1 \given{} C = c)
   = \Pr\nolimits^*(D = 1 \given{} X = x, C = c).
-\]</span> Up to sampling variation, the conditional risks of disease given <span class="math inline">\(X\)</span> and <span class="math inline">\(C\)</span> in the pseudopopulation equal the conditional causal risks given <span class="math inline">\(C\)</span> that would occur in the eligible population if we intervened to set <span class="math inline">\(X = x\)</span>.</p>
+\]</span> Up to sampling variation, the conditional risks of disease given <span class="math inline">\(X\)</span> and <span class="math inline">\(C\)</span> in the pseudopopulation equal the conditional causal risks given <span class="math inline">\(C\)</span> in the eligible population.</p>
 <p>The marginal risk of disease given <span class="math inline">\(X = x\)</span> in the pseudopopulation is <span class="math display">\[
   \begin{aligned}
     \Pr\nolimits^*(D = 1 \given{} X = x)
@@ -642,10 +642,14 @@ Table&nbsp;23.1: Simpson’s paradox data under different weights based on treat
     &amp;= \sum_c \Pr(D = 1 \given{} X = x, C = c, S = 1) \Pr(C = c \given{} S = 1).
   \end{aligned}
 \]</span> The last expression is the risk of disease standardized to the distribution of <span class="math inline">\(C\)</span> in the study sample. Up to sampling variation, this standardized risk equals the causal risk of disease in the study sample if we intervened to set <span class="math inline">\(X = x\)</span>. Using <span class="math inline">\(\Pr^*(D = 1 \given{} X = 1)\)</span> and <span class="math inline">\(\Pr^*(D = 1 \given{} X = 0)\)</span>, we can calculate the standarized risk difference, risk ratio, odds ratio, or cumulative hazard ratio for the study sample. The same result holds if we use the unstabilized weights. If conditioning on <span class="math inline">\(C\)</span> is sufficient to control confounding and selection bias, these can be interpreted as causal risks and measures of causal effect.</p>
-<p>Inverse probability weighting can be used to standardize to any distribution of <span class="math inline">\(C\)</span> <span class="citation" data-cites="sato2003marginal">(<a href="references.html#ref-sato2003marginal" role="doc-biblioref">Sato and Matsuyama 2003</a>)</span>. To get a measure of association standardized to a distribution <span class="math inline">\(\Prstd(C = c)\)</span>, we can use the weights <span id="eq-wstd"><span class="math display">\[
-  w_\std(x, c)
-  = \frac{\Prstd(C = c)}{\Pr(X = x \given{} C = c, S = 1)}
-  = \frac{\Prstd(C = c) \Pr(X = x \given{} S = 1)}{\Pr(X = x, C = c \given{} S = 1)}.
+<p>Inverse probability weighting can be used to standardize to any distribution of <span class="math inline">\(C\)</span> <span class="citation" data-cites="sato2003marginal">(<a href="references.html#ref-sato2003marginal" role="doc-biblioref">Sato and Matsuyama 2003</a>)</span>. To get a measure of association standardized to a distribution <span class="math inline">\(\Prstd(C = c)\)</span>, we can use the stabilized weights <span id="eq-wstd"><span class="math display">\[
+  \begin{aligned}
+    w_\std(x, c)
+    &amp;= \frac{\Pr(X = x \given{} S = 1) \Pr_\std(C = c)}
+      {\Pr(X = x, C = c \given{} S = 1)} \\
+    &amp;= \frac{\Pr(X = x \given{} S = 1) \Pr_\std(C = c)}
+      {\Pr(X = x \given{} C = c, S = 1) \Pr(C = c \given{} S = 1)}.
+  \end{aligned}
 \tag{23.5}\]</span></span> This creates a pseudopopulation with the standard distribution of <span class="math inline">\(C\)</span> and the same distribution of <span class="math inline">\(X\)</span> as the study sample. If we let <span class="math inline">\(\Prstd(C = c) = \Pr(C = c \given S = 1)\)</span>, then we get the stabilized IPT weights. Because these weights depend only on <span class="math inline">\(X\)</span> and <span class="math inline">\(C\)</span>, the conditional risk of disease given <span class="math inline">\(X\)</span> and <span class="math inline">\(C\)</span> is the same in the pseudopopulation and the study sample. Because the numerator of the weight is a product of a probability involving only <span class="math inline">\(X\)</span> and a probability involving only <span class="math inline">\(C\)</span>, <span class="math inline">\(X\)</span> and <span class="math inline">\(C\)</span> are independent in the pseudopopulation. Let <span class="math inline">\(\Pr^*()\)</span> represent probabilities in the pseudopopulation created by these weights. The marginal risk of disease given <span class="math inline">\(X = x\)</span> in the pseudopopulation is <span class="math display">\[
   \begin{aligned}
     \Pr\nolimits^*(D = 1 \given{} X = x)
@@ -654,17 +658,17 @@ Table&nbsp;23.1: Simpson’s paradox data under different weights based on treat
     &amp;= \sum_c \Pr(D = 1 \given{} X = x, C = c, S = 1) \Prstd(C = c)
   \end{aligned}
 \]</span> because <span class="math inline">\(\Pr^*(C = c \given{} X = x) = \Prstd(C = c)\)</span> in all treatment groups. As before, we can calculate standardized risks in the study sample by calculating marginal risks in the pseudopopulation.</p>
-<p>This approach can be used to estimate causal effects in the treated, in the controls, or in the study sample. If we let <span class="math inline">\(\Prstd(C = c) = \Pr(C = c \given{} X = 1, S = 1)\)</span> in <a href="#eq-wstd" class="quarto-xref">Equation&nbsp;<span>23.5</span></a>, then we get the weights <span class="math display">\[
-  w^*_\text{treated} =
+<p>This approach can be used to estimate causal risks and effects in the treated, in the controls, or in the study sample. If we let <span class="math inline">\(\Prstd(C = c) = \Pr(C = c \given{} X = 1, S = 1)\)</span> in <a href="#eq-wstd" class="quarto-xref">Equation&nbsp;<span>23.5</span></a> and rearrange to express everything in terms of the propensity score, we get the weights <span class="math display">\[
+  w_\text{treated} =
   \begin{cases}
-    \frac{\pi(c)}{1 - \pi(c)} = \frac{\iptw(0, c)}{\iptw(1, c)} &amp;\text{if } x = 0, \\
-    1                                                           &amp;\text{if } x = 1.
+    \frac{\pi(c)}{1 - \pi(c)}   &amp;\text{if } x = 0, \\
+    1                           &amp;\text{if } x = 1.
   \end{cases}
-\]</span> If we let <span class="math inline">\(\Prstd(C = c) = \Pr(C = c \given{} X = 0, S = 1)\)</span>, then we get the weights <span class="math display">\[
-  w^*_\text{treated} =
+\]</span> <span class="citation" data-cites="sato2003marginal">Sato and Matsuyama (<a href="references.html#ref-sato2003marginal" role="doc-biblioref">2003</a>)</span> calls these the <strong>SMR weights</strong> where SMR stands for <em>standardized morbidity ratio</em>. If we let <span class="math inline">\(\Prstd(C = c) = \Pr(C = c \given{} X = 0, S = 1)\)</span> and rearrange, we get the weights <span class="math display">\[
+  w_\text{control}(x, c) =
   \begin{cases}
-    \frac{1 - \pi(c)}{\pi(c)} = \frac{\iptw(1, c)}{\iptw(0, c)} &amp;\text{if } x = 0, \\
-    1                                                           &amp;\text{if } x = 1.
+    \frac{1 - \pi(c)}{\pi(c)}   &amp;\text{if } x = 0, \\
+    1                           &amp;\text{if } x = 1.
   \end{cases}
 \]</span> In a cohort study where selection depends on exposure, the conditional distribution of <span class="math inline">\(C\)</span> given <span class="math inline">\(X\)</span> is more scientifically meaningful than the marginal distribution of <span class="math inline">\(C\)</span> in the study sample.</p>
 </section>
