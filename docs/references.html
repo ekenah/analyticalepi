@@ -50,7 +50,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./calculus.html" rel="next">
-<link href="./matching.html" rel="prev">
+<link href="./marginalstructural.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -121,6 +121,8 @@ div.csl-indent {
         HR: "\\text\{HR\}",
         indep: "\\perp\\!\\!\\!\\perp",
         indicator: "\\mathbb\{1\}",
+        iptw: ["\\operatorname\{iptw\}"],
+        ipw: ["\\operatorname\{ipw\}"],
         IRR: "\\text\{IRR\}",
         K: "\\mathcal\{K\}",
         logit: ["\\operatorname\{logit\}"],
@@ -368,6 +370,24 @@ div.csl-indent {
   <div class="sidebar-item-container"> 
   <a href="./matching.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Matching in Cohort and Case-Control Studies</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./outcomereg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Multivariable Outcome Regression Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./propensityscores.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Propensity Scores</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marginalstructural.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Marginal Structural Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -968,6 +988,12 @@ Hernán, Miguel Á, Sonia Hernández-Dı́az, and James M Robins. 2004.
 <span>“A Structural Approach to Selection Bias.”</span>
 <em>Epidemiology</em> 15 (5): 615–25.
 </div>
+<div id="ref-hernan2000marginal" class="csl-entry" role="listitem">
+Hernán, Miguel Ángel, Babette Brumback, and James M Robins. 2000.
+<span>“Marginal Structural Models to Estimate the Causal Effect of
+Zidovudine on the Survival of <span>HIV</span>-Positive Men.”</span>
+<em>Epidemiology</em> 11: 561–70.
+</div>
 <div id="ref-hernanrobins2023" class="csl-entry" role="listitem">
 Hernán, Miguel A., and James M. Robins. 2023. <em>Causal Inference: What
 If</em>. Chapman &amp; Hall/CRC.
@@ -976,6 +1002,12 @@ If</em>. Chapman &amp; Hall/CRC.
 Hill, Sir Austin Bradford. 1965. <span>“The Environment and Disease:
 Association or Causation?”</span> <em>Proceedings of the Royal Society
 of Medicine</em> 58: 295–300.
+</div>
+<div id="ref-horvitz1952generalization" class="csl-entry" role="listitem">
+Horvitz, Daniel G, and Donovan J Thompson. 1952. <span>“A Generalization
+of Sampling Without Replacement from a Finite Universe.”</span>
+<em>Journal of the American Statistical Association</em> 47 (260):
+663–85.
 </div>
 <div id="ref-howard1973gelsenkirchen" class="csl-entry" role="listitem">
 Howard-Jones, Norman. 1973. <span>“Gelsenkirchen Typhoid Epidemic of
@@ -1365,6 +1397,11 @@ Robins, James M, and Sander Greenland. 1989. <span>“Estimability and
 Estimation of Excess and Etiologic Fractions.”</span> <em>Statistics in
 Medicine</em> 8 (7): 845–59.
 </div>
+<div id="ref-robins2000marginal" class="csl-entry" role="listitem">
+Robins, James M, Miguel Ángel Hernán, and Babette Brumback. 2000.
+<span>“Marginal Structural Models and Causal Inference in
+Epidemiology.”</span> <em>Epidemiology</em> 11: 550–60.
+</div>
 <div id="ref-rogot1961note" class="csl-entry" role="listitem">
 Rogot, Eugene. 1961. <span>“A Note on Measurement Errors and Detecting
 Real Differences.”</span> <em>Journal of the American Statistical
@@ -1380,6 +1417,11 @@ Statistical Association</em> 66 (336): 755–59.
 Rose, Geoffrey. 1985. <span>“Sick Individuals and Sick
 Populations.”</span> <em>International Journal of Epidemiology</em> 14:
 32–38.
+</div>
+<div id="ref-rosenbaum1987model" class="csl-entry" role="listitem">
+Rosenbaum, Paul R. 1987. <span>“Model-Based Direct Adjustment.”</span>
+<em>Journal of the American Statistical Association</em> 82 (398):
+387–94.
 </div>
 <div id="ref-rosenbaum1983central" class="csl-entry" role="listitem">
 Rosenbaum, Paul R, and Donald B Rubin. 1983. <span>“The Central Role of
@@ -1481,6 +1523,11 @@ Thomas, DC. 1977. <span>“Appendum to <span>‘Methods of Cohort Analysis:
 Appraisal by Application to Asbestos Mining,’</span> by Liddell, FDK,
 McDonald, JC and Thomas, DC.”</span> <em>Journal of the Royal
 Statistical Society: Series A (General)</em> 140: 469–90.
+</div>
+<div id="ref-truett1967multivariate" class="csl-entry" role="listitem">
+Truett, Jeanne, Jerome Cornfield, and William Kannel. 1967. <span>“A
+Multivariate Analysis of the Risk of Coronary Heart Disease in
+Framingham.”</span> <em>Journal of Chronic Diseases</em> 20 (7): 511–24.
 </div>
 <div id="ref-tukey1960conclusions" class="csl-entry" role="listitem">
 Tukey, John W. 1960. <span>“Conclusions Vs Decisions.”</span>
@@ -2069,8 +2116,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./matching.html" class="pagination-link" aria-label="Matching in Cohort and Case-Control Studies">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Matching in Cohort and Case-Control Studies</span></span>
+      <a href="./marginalstructural.html" class="pagination-link" aria-label="Marginal Structural Models">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Marginal Structural Models</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

@@ -159,6 +159,8 @@ div.csl-indent {
         HR: "\\text\{HR\}",
         indep: "\\perp\\!\\!\\!\\perp",
         indicator: "\\mathbb\{1\}",
+        iptw: ["\\operatorname\{iptw\}"],
+        ipw: ["\\operatorname\{ipw\}"],
         IRR: "\\text\{IRR\}",
         K: "\\mathcal\{K\}",
         logit: ["\\operatorname\{logit\}"],
@@ -176,6 +178,7 @@ div.csl-indent {
         RD: "\\text\{RD\}",
         RR: "\\text\{RR\}",
         sens: "\\text\{sens\}",
+        siptw: ["\\operatorname\{siptw\}"],
         spec: "\\text\{spec\}",
         std: "\\text\{std\}",
         supp: ["\\operatorname\{supp\}"],
@@ -437,6 +440,24 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Matching in Cohort and Case-Control Studies</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./outcomereg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Multivariable Outcome Regression Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./propensityscores.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Propensity Scores</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marginalstructural.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Marginal Structural Models</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item">
@@ -490,7 +511,7 @@ window.Quarto = {
   <li><a href="#simpsons-paradox-standardized" id="toc-simpsons-paradox-standardized" class="nav-link" data-scroll-target="#simpsons-paradox-standardized"><span class="header-section-number">17.3</span> Simpson’s paradox standardized</a>
   <ul class="collapse">
   <li><a href="#crude-risks-and-measures-of-association" id="toc-crude-risks-and-measures-of-association" class="nav-link" data-scroll-target="#crude-risks-and-measures-of-association"><span class="header-section-number">17.3.1</span> Crude risks and measures of association</a></li>
-  <li><a href="#conditional-risks-and-measures-of-association" id="toc-conditional-risks-and-measures-of-association" class="nav-link" data-scroll-target="#conditional-risks-and-measures-of-association"><span class="header-section-number">17.3.2</span> Conditional risks and measures of association</a></li>
+  <li><a href="#sec-simpson-cond" id="toc-sec-simpson-cond" class="nav-link" data-scroll-target="#sec-simpson-cond"><span class="header-section-number">17.3.2</span> Conditional risks and measures of association</a></li>
   <li><a href="#standardized-risks-and-measures-of-association-1" id="toc-standardized-risks-and-measures-of-association-1" class="nav-link" data-scroll-target="#standardized-risks-and-measures-of-association-1"><span class="header-section-number">17.3.3</span> Standardized risks and measures of association</a></li>
   </ul></li>
   </ul>
@@ -787,7 +808,7 @@ Figure&nbsp;17.2: Single-world intervention graph (SWIG) for setting <span class
 </section>
 <section id="simpsons-paradox-standardized" class="level2" data-number="17.3">
 <h2 data-number="17.3" class="anchored" data-anchor-id="simpsons-paradox-standardized"><span class="header-section-number">17.3</span> Simpson’s paradox standardized</h2>
-<p>The DAG in <a href="dags.html#fig-simpson-dag" class="quarto-xref">Figure&nbsp;<span>15.6</span></a> shows the causal structure underlying the example given by <span class="citation" data-cites="simpson1951interpretation">Simpson (<a href="references.html#ref-simpson1951interpretation" role="doc-biblioref">1951</a>)</span> that is reproduced in <a href="dags.html#tbl-simpson" class="quarto-xref">Table&nbsp;<span>15.1</span></a>. Using DAGs and SWIGs, we could show that conditioning on biological sex would remove all confounding and selection bias, so the conditional odds ratio is a better estimate of the effect of treatment than the crude odds ratio. The example is constructed so that the conditional odds ratio is exactly the same for males and females, but this is too much to hope for in reality. Standardization gives us a less fragile point of view.</p>
+<p>The DAG in <a href="dags.html#fig-simpson-dag" class="quarto-xref">Figure&nbsp;<span>15.6</span></a> shows the causal structure underlying the example given by <span class="citation" data-cites="simpson1951interpretation">Simpson (<a href="references.html#ref-simpson1951interpretation" role="doc-biblioref">1951</a>)</span> that is reproduced in <a href="dags.html#tbl-simpson" class="quarto-xref">Table&nbsp;<span>15.1</span></a>. They show that conditioning on biological sex removes all confounding and selection bias, so the conditional odds ratio is a better estimate of the effect of treatment than the crude odds ratio. The example is constructed so that the conditional odds ratio is exactly the same for males and females, but this is too much to hope for in reality. Standardization gives us a less fragile point of view.</p>
 <section id="crude-risks-and-measures-of-association" class="level3" data-number="17.3.1">
 <h3 data-number="17.3.1" class="anchored" data-anchor-id="crude-risks-and-measures-of-association"><span class="header-section-number">17.3.1</span> Crude risks and measures of association</h3>
 <p>In this example, the crude risk of death under treatment is <span class="math display">\[
@@ -852,8 +873,8 @@ Figure&nbsp;17.2: Single-world intervention graph (SWIG) for setting <span class
 </div>
 </div>
 </section>
-<section id="conditional-risks-and-measures-of-association" class="level3" data-number="17.3.2">
-<h3 data-number="17.3.2" class="anchored" data-anchor-id="conditional-risks-and-measures-of-association"><span class="header-section-number">17.3.2</span> Conditional risks and measures of association</h3>
+<section id="sec-simpson-cond" class="level3" data-number="17.3.2">
+<h3 data-number="17.3.2" class="anchored" data-anchor-id="sec-simpson-cond"><span class="header-section-number">17.3.2</span> Conditional risks and measures of association</h3>
 <p>According to the DAG in <a href="dags.html#fig-simpson-dag" class="quarto-xref">Figure&nbsp;<span>15.6</span></a>, conditioning on biological sex removes all confounding and selection bias. Among females, the risk of death in the treated is <span class="math display">\[
   \Pr(D = 1 \given{} \text{female}, X = 1, S = 1)
   = \frac{15}{15 + 12}
@@ -981,7 +1002,6 @@ Figure&nbsp;17.2: Single-world intervention graph (SWIG) for setting <span class
   \CHR_\std
   \approx 0.879.
 \]</span> As with crude and conditional measures, the standardized cumulative hazard ratio is between the standardized risk ratio and odds ratio.</p>
-<p>If there is no effect measure modification on a scale that is collapsible, the standardized measure will equal the conditional measures of association in all standard populations. If there is effect measure modification or noncollapsibility, the standardized measure will depend on the standard population used. In this example, there is effect measure modification on the risk difference and risk ratio scales. There is no effect measure modification on the odds ratio scale, but the odds ratio is noncollapsible. There is both effect measure modification and noncollapsibility on the cumulative hazard ratio scale. Therefore, all four standardized measures of association depend on the standard population used.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">R</a></li></ul>
 <div class="tab-content">
@@ -1019,10 +1039,10 @@ Figure&nbsp;17.2: Single-world intervention graph (SWIG) for setting <span class
 <span id="cb5-27"><a href="#cb5-27"></a>p0m <span class="ot">&lt;-</span> <span class="fu">risk</span>(<span class="fu">with</span>(simpson, treated <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> male <span class="sc">==</span> <span class="dv">1</span>))</span>
 <span id="cb5-28"><a href="#cb5-28"></a></span>
 <span id="cb5-29"><a href="#cb5-29"></a><span class="co"># standardized risks (standard population half female and half male)</span></span>
-<span id="cb5-30"><a href="#cb5-30"></a>pf <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
-<span id="cb5-31"><a href="#cb5-31"></a>pm <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> pf</span>
-<span id="cb5-32"><a href="#cb5-32"></a>p1std <span class="ot">&lt;-</span> pf <span class="sc">*</span> p1f <span class="sc">+</span> pm <span class="sc">*</span> p1m</span>
-<span id="cb5-33"><a href="#cb5-33"></a>p0std <span class="ot">&lt;-</span> pf <span class="sc">*</span> p0f <span class="sc">+</span> pm <span class="sc">*</span> p0m</span>
+<span id="cb5-30"><a href="#cb5-30"></a>propf <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb5-31"><a href="#cb5-31"></a>propm <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> pf</span>
+<span id="cb5-32"><a href="#cb5-32"></a>p1std <span class="ot">&lt;-</span> propf <span class="sc">*</span> p1f <span class="sc">+</span> propm <span class="sc">*</span> p1m</span>
+<span id="cb5-33"><a href="#cb5-33"></a>p0std <span class="ot">&lt;-</span> propf <span class="sc">*</span> p0f <span class="sc">+</span> propm <span class="sc">*</span> p0m</span>
 <span id="cb5-34"><a href="#cb5-34"></a></span>
 <span id="cb5-35"><a href="#cb5-35"></a><span class="co"># standardized measures of association</span></span>
 <span id="cb5-36"><a href="#cb5-36"></a>RDstd <span class="ot">&lt;-</span> p1std <span class="sc">-</span> p0std</span>
@@ -1030,6 +1050,78 @@ Figure&nbsp;17.2: Single-world intervention graph (SWIG) for setting <span class
 <span id="cb5-38"><a href="#cb5-38"></a>ORstd <span class="ot">&lt;-</span> <span class="fu">odds</span>(p1std) <span class="sc">/</span> <span class="fu">odds</span>(p0std)</span>
 <span id="cb5-39"><a href="#cb5-39"></a>CHRstd <span class="ot">&lt;-</span> <span class="fu">chaz</span>(p1std) <span class="sc">/</span> <span class="fu">chaz</span>(p0std)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div>
+</div>
+</div>
+<p>If there is no effect measure modification on a scale that is collapsible, the standardized measure will equal the conditional measures of association in all standard populations. If there is effect measure modification or noncollapsibility, the standardized measure will depend on the standard population used. In this example, there is effect measure modification on the risk difference and risk ratio scales. There is no effect measure modification on the odds ratio scale, but the odds ratio is noncollapsible. There is both effect measure modification and noncollapsibility on the cumulative hazard ratio scale. Therefore, all four standardized measures of association depend on the standard population used. <a href="#fig-simpson-std" class="quarto-xref">Figure&nbsp;<span>17.3</span></a> shows this for the risk ratio, odds ratio, and cumulative hazard ratio.</p>
+<div class="cell">
+<div class="code-with-filename">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-with-filename-file">
+<pre><strong>simpson-std-plot.R</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># Standardized measures of association in Simpson's paradox (JRSSB, 1951)</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="co"># data frame</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a>simpson <span class="ot">&lt;-</span>  <span class="fu">data.frame</span>(<span class="at">male =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">each =</span> <span class="dv">4</span>),</span>
+<span id="cb6-5"><a href="#cb6-5"></a>                       <span class="at">treated =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">each =</span> <span class="dv">2</span>),</span>
+<span id="cb6-6"><a href="#cb6-6"></a>                       <span class="at">dead =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">times =</span> <span class="dv">4</span>),</span>
+<span id="cb6-7"><a href="#cb6-7"></a>                       <span class="at">count =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">12</span>, <span class="dv">15</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb6-8"><a href="#cb6-8"></a></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="co"># function to calculate risk</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a>risk <span class="ot">&lt;-</span> <span class="cf">function</span>(rows) {</span>
+<span id="cb6-11"><a href="#cb6-11"></a>  <span class="co"># rows is a vector of TRUE/FALSE that selects rows</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a>  count <span class="ot">&lt;-</span> simpson<span class="sc">$</span>count[rows]</span>
+<span id="cb6-13"><a href="#cb6-13"></a>  dead <span class="ot">&lt;-</span> simpson<span class="sc">$</span>dead[rows]</span>
+<span id="cb6-14"><a href="#cb6-14"></a>  <span class="fu">sum</span>(count <span class="sc">*</span> dead) <span class="sc">/</span> <span class="fu">sum</span>(count)</span>
+<span id="cb6-15"><a href="#cb6-15"></a>}</span>
+<span id="cb6-16"><a href="#cb6-16"></a></span>
+<span id="cb6-17"><a href="#cb6-17"></a><span class="co"># odds and cumulative hazard</span></span>
+<span id="cb6-18"><a href="#cb6-18"></a>odds <span class="ot">&lt;-</span> <span class="cf">function</span>(p) p <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb6-19"><a href="#cb6-19"></a>chaz <span class="ot">&lt;-</span> <span class="cf">function</span>(p) <span class="sc">-</span><span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb6-20"><a href="#cb6-20"></a></span>
+<span id="cb6-21"><a href="#cb6-21"></a><span class="co"># conditional risks among females</span></span>
+<span id="cb6-22"><a href="#cb6-22"></a>p1f <span class="ot">&lt;-</span> <span class="fu">risk</span>(<span class="fu">with</span>(simpson, treated <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> male <span class="sc">==</span> <span class="dv">0</span>))</span>
+<span id="cb6-23"><a href="#cb6-23"></a>p0f <span class="ot">&lt;-</span> <span class="fu">risk</span>(<span class="fu">with</span>(simpson, treated <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> male <span class="sc">==</span> <span class="dv">0</span>))</span>
+<span id="cb6-24"><a href="#cb6-24"></a></span>
+<span id="cb6-25"><a href="#cb6-25"></a><span class="co"># conditional risks among males</span></span>
+<span id="cb6-26"><a href="#cb6-26"></a>p1m <span class="ot">&lt;-</span> <span class="fu">risk</span>(<span class="fu">with</span>(simpson, treated <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> male <span class="sc">==</span> <span class="dv">1</span>))</span>
+<span id="cb6-27"><a href="#cb6-27"></a>p0m <span class="ot">&lt;-</span> <span class="fu">risk</span>(<span class="fu">with</span>(simpson, treated <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> male <span class="sc">==</span> <span class="dv">1</span>))</span>
+<span id="cb6-28"><a href="#cb6-28"></a></span>
+<span id="cb6-29"><a href="#cb6-29"></a><span class="co"># standardized risks as a function of proportion female</span></span>
+<span id="cb6-30"><a href="#cb6-30"></a><span class="co"># Both functions are designed to work if propf is a vector.</span></span>
+<span id="cb6-31"><a href="#cb6-31"></a>p1std <span class="ot">&lt;-</span> <span class="cf">function</span>(propf) {</span>
+<span id="cb6-32"><a href="#cb6-32"></a>  propm <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> propf</span>
+<span id="cb6-33"><a href="#cb6-33"></a>  propf <span class="sc">*</span> p1f <span class="sc">+</span> propm <span class="sc">*</span> p1m</span>
+<span id="cb6-34"><a href="#cb6-34"></a>}</span>
+<span id="cb6-35"><a href="#cb6-35"></a>p0std <span class="ot">&lt;-</span> <span class="cf">function</span>(propf) {</span>
+<span id="cb6-36"><a href="#cb6-36"></a>  propm <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> propf</span>
+<span id="cb6-37"><a href="#cb6-37"></a>  propf <span class="sc">*</span> p0f <span class="sc">+</span> propm <span class="sc">*</span> p0m</span>
+<span id="cb6-38"><a href="#cb6-38"></a>}</span>
+<span id="cb6-39"><a href="#cb6-39"></a></span>
+<span id="cb6-40"><a href="#cb6-40"></a><span class="co"># plot of standardized risk ratio, odds ratio, and cumulative hazard ratio</span></span>
+<span id="cb6-41"><a href="#cb6-41"></a>propf <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.01</span>)</span>
+<span id="cb6-42"><a href="#cb6-42"></a><span class="fu">plot</span>(propf, <span class="fu">p1std</span>(propf) <span class="sc">/</span> <span class="fu">p0std</span>(propf), <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">0.8</span>, <span class="dv">1</span>),</span>
+<span id="cb6-43"><a href="#cb6-43"></a>     <span class="at">xlab =</span> <span class="st">"Proportion female in the standard population"</span>,</span>
+<span id="cb6-44"><a href="#cb6-44"></a>     <span class="at">ylab =</span> <span class="st">"Standardized measure of association"</span>)</span>
+<span id="cb6-45"><a href="#cb6-45"></a><span class="fu">lines</span>(propf, <span class="fu">odds</span>(<span class="fu">p1std</span>(propf)) <span class="sc">/</span> <span class="fu">odds</span>(<span class="fu">p0std</span>(propf)), <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb6-46"><a href="#cb6-46"></a><span class="fu">lines</span>(propf, <span class="fu">chaz</span>(<span class="fu">p1std</span>(propf)) <span class="sc">/</span> <span class="fu">chaz</span>(<span class="fu">p0std</span>(propf)), <span class="at">lty =</span> <span class="st">"dotted"</span>)</span>
+<span id="cb6-47"><a href="#cb6-47"></a><span class="fu">grid</span>()</span>
+<span id="cb6-48"><a href="#cb6-48"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">bg =</span> <span class="st">"white"</span>, <span class="at">lty =</span> <span class="fu">c</span>(<span class="st">"solid"</span>, <span class="st">"dotted"</span>, <span class="st">"dashed"</span>),</span>
+<span id="cb6-49"><a href="#cb6-49"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Risk ratio"</span>, <span class="st">"Cumulative hazard ratio"</span>, <span class="st">"Odds ratio"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell-output-display">
+<div id="fig-simpson-std" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-simpson-std-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="standardization_files/figure-html/fig-simpson-std-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;17.3: The standardized risk ratio, odds ratio, and cumulative hazard ratio comparing the standard population under treatment to itself under no treatment as a function of the proportion female. The odds ratio is nearly constant, with just a slight bend due to noncollapsibility."><img src="standardization_files/figure-html/fig-simpson-std-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-simpson-std-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;17.3: The standardized risk ratio, odds ratio, and cumulative hazard ratio comparing the standard population under treatment to itself under no treatment as a function of the proportion female. The odds ratio is nearly constant, with just a slight bend due to noncollapsibility.
+</figcaption>
+</figure>
 </div>
 </div>
 </div>
